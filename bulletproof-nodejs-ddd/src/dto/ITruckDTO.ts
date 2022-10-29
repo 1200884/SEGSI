@@ -1,4 +1,5 @@
-export default interface  TruckProps {
+export default interface  ITruckDTO {
+    truckid:string;
     tare:number;
     maxWeight:number;
     batteryCapacity: number;//in kwh

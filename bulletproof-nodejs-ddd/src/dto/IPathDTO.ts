@@ -1,5 +1,5 @@
 export default interface IPathDTO{
-
+    pathid:string;
     warehouseDestination:string;
     warehouseDeparture:string;
     distance: number;//in kms
