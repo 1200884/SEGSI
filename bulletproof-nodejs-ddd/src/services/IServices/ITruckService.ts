@@ -5,6 +5,5 @@ import ITruckDTO from "../../dto/ITruckDTO";
 export default interface ITruckService  {
   createTruck(TruckDTO: ITruckDTO): Promise<Result<ITruckDTO>>;
   updateTruck(TruckDTO: ITruckDTO): Promise<Result<ITruckDTO>>;
-listTruck();
   getTruck (truckId: string): Promise<Result<ITruckDTO>>;
 }

@@ -41,6 +41,12 @@ interface TruckProps {
           set batteryCapacity (value:number){
             this.props.batteryCapacity=value;
           }
+          set tare (value:number){
+            this.props.tare=value;
+          }
+          set maxWeight(value:number){
+            this.props.maxWeight=value;
+          }
           private constructor (props: TruckProps, id?: UniqueEntityID) {
             super(props, id);
         }

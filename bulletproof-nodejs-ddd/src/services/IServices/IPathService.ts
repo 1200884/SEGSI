@@ -5,6 +5,6 @@ import IPathDTO from "../../dto/IPathDTO";
 export default interface IPathService  {
   createPath(PathDTO: IPathDTO): Promise<Result<IPathDTO>>;
   updatePath(PathDTO: IPathDTO): Promise<Result<IPathDTO>>;
-  listPath();
+ // listPath();
   getPath (PathId: string): Promise<Result<IPathDTO>>;
 }
