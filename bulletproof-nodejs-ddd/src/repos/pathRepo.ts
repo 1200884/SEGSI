@@ -35,8 +35,8 @@ export default class PathRepo implements IPathRepo {
     const query = { domainId: path.id.toString()}; 
 
     const pathDocument = await this.pathSchema.findOne( query );
-/*  warehouseDestination:string;
-    warehouseDeparture:string;
+/*  warehouseDestination:number;
+    warehouseDeparture:number;
     distance: number;//in kms
     travelTime: number;//in minutes
     energyNecessary: number//in kwh

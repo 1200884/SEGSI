@@ -9,8 +9,8 @@ import path from "path";
 export class PathMap extends Mapper<Path> {
   
     /* pathid:string;
-    warehouseDestination:string;
-    warehouseDeparture:string;
+    warehouseDestination:number; warehouse id, 1 -> 17
+    warehouseDeparture:number; warehouse id, 1 -> 17
     distance: number;//in kms
     travelTime: number;//in minutes
     energyNecessary: number//in kwh

@@ -6,8 +6,8 @@ import IPathDto from "../dto/IPathDTO";
 import { Guard } from "../core/logic/Guard";
 
 interface PathProps {
-    warehouseDestination:string;
-    warehouseDeparture:string;
+    warehouseDestination:number;//warehouse id, 1 -> 17
+    warehouseDeparture:number;//warehouse id, 1 -> 17
     distance: number;//in kms
     travelTime: number;//in minutes
     energyNecessary: number//in kwh
@@ -20,11 +20,11 @@ interface PathProps {
       get pathId (): PathId {
         return PathId.caller(this.id)
       }
-      get warehouseDestination (): string {
+      get warehouseDestination (): number {
         return this.props.warehouseDestination;
       }
     
-      get warehouseDeparture (): string {
+      get warehouseDeparture (): number {
         return this.props.warehouseDestination
       }
     
@@ -43,13 +43,25 @@ interface PathProps {
         return this.props.additionalTime;
       }
       
-      set warehouseDestination (value: string) {
+      set warehouseDestination (value: number) {
           this.props.warehouseDestination = value;
       } 
 
-      set warehouseDeparture (value: string) {
+      set warehouseDeparture (value: number) {
         this.props.warehouseDeparture = value;
-    }//for now just one set method configured 
+      }
+        set distance(value: number){
+          this.props.distance=value;
+        }
+        set travelTime(value: number){
+          this.props.travelTime=value;
+        }
+        set energyNecessary(value: number){
+          this.props.energyNecessary=value;
+        }
+        set additionalTime(value:number){
+          this.props.additionalTime=value;
+        }
         
     private constructor (props: PathProps, id?: UniqueEntityID) {
         super(props, id);

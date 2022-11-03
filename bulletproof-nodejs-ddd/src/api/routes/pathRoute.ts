@@ -12,8 +12,8 @@ export default (app: Router) => {
   app.use('/path', route);
 
   const ctrl = Container.get(config.controllers.path.name) as IPathController;
-/*  warehouseDestination:string;
-    warehouseDeparture:string;
+/*  warehouseDestination:string; warehouse id, 1 -> 17
+    warehouseDeparture:string; warehouse id, 1 -> 17
     distance: number;//in kms
     travelTime: number;//in minutes
     energyNecessary: number//in kwh
@@ -21,8 +21,8 @@ export default (app: Router) => {
   route.post('',
     celebrate({
       body: Joi.object({
-        warehouseDestination: Joi.string().required(),
-        warehouseDeparture: Joi.string().required(),
+        warehouseDestination: Joi.number().required(),
+        warehouseDeparture: Joi.number().required(),
         distance: Joi.number().required(),
         travelTime: Joi.number().required(),
         energyNecessary: Joi.number().required(),
@@ -34,8 +34,8 @@ export default (app: Router) => {
   route.put('',
     celebrate({
       body: Joi.object({
-        warehouseDestination: Joi.string().required(),
-        warehouseDeparture: Joi.string().required(),
+        warehouseDestination: Joi.number().required(),
+        warehouseDeparture: Joi.number().required(),
         distance: Joi.number().required(),
         travelTime: Joi.number().required(),
         energyNecessary: Joi.number().required(),

@@ -44,6 +44,14 @@ export default {
     role: {
       name: "RoleController",
       path: "../controllers/roleController"
+    },
+    truck:{
+      name: "TruckController",
+      path: "../controllers/truckController"
+    },
+    path:{
+      name: "PathController",
+      path: "../controllers/pathController"
     }
   },
 
@@ -55,6 +63,14 @@ export default {
     user: {
       name: "UserRepo",
       path: "../repos/userRepo"
+    },
+    path: {
+      name: "PathRepo",
+      path: "../repos/pathRepo"
+    },
+    truck: {
+      name: "TruckRepo",
+      path: "../repos/truckRepo"
     }
   },
 
@@ -62,6 +78,14 @@ export default {
     role: {
       name: "RoleService",
       path: "../services/roleService"
+    },
+    truck: {
+      name: "TruckService",
+      path: "../services/truckService"
+    },
+    path: {
+      name: "PathService",
+      path: "../services/pathService"
     }
   },
 };

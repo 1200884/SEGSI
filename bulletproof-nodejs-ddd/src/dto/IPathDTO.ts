@@ -1,7 +1,7 @@
 export default interface IPathDTO{
     pathid:string;
-    warehouseDestination:string;
-    warehouseDeparture:string;
+    warehouseDestination:number;
+    warehouseDeparture:number;
     distance: number;//in kms
     travelTime: number;//in minutes
     energyNecessary: number//in kwh

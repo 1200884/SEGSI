@@ -58,8 +58,8 @@ export default class PathService implements IPathService {
       if (path === null) {
         return Result.fail<IPathDTO>("Path not found");
       }
-      /* warehouseDestination:string;
-    warehouseDeparture:string;
+      /* warehouseDestination:number;
+    warehouseDeparture:number;
     distance: number;//in kms
     travelTime: number;//in minutes
     energyNecessary: number//in kwh

@@ -47,6 +47,12 @@ interface TruckProps {
           set maxWeight(value:number){
             this.props.maxWeight=value;
           }
+          set truckAutonomy(value:number){
+            this.props.truckAutonomy=value;
+          }
+          set chargeTime(value:number){
+            this.props.chargeTime=value;
+          }
           private constructor (props: TruckProps, id?: UniqueEntityID) {
             super(props, id);
         }
