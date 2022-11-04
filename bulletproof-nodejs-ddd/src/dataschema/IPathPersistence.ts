@@ -1,5 +1,4 @@
 export interface IPathPersistence {
-
     pathid:string;
     warehouseDestination:number;
     warehouseDeparture:number;

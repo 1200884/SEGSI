@@ -1,4 +1,4 @@
-export default interface  ITruckDTO {
+export default interface ITruckDTO {
     truckid:string;
     tare:number;
     maxWeight:number;

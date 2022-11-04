@@ -22,7 +22,6 @@ describe('role controller', function () {
         };
 		let next: Partial<NextFunction> = () => {};
 
-
 		let roleSchemaInstance = require("../src/persistence/schemas/roleSchema").default;
 		Container.set("roleSchema", roleSchemaInstance);
 

@@ -14,7 +14,6 @@ export abstract class BaseController {
 
     this.executeImpl();
   }
-
   public static jsonResponse (res: express.Response, code: number, message: string) {
     return res.status(code).json({ message })
   }
