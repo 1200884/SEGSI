@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Utilizador\\OneDrive - Instituto Superior de Engenharia do Porto\\Documents\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj": {}
+    "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Utilizador\\OneDrive - Instituto Superior de Engenharia do Porto\\Documents\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj": {
+    "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Utilizador\\OneDrive - Instituto Superior de Engenharia do Porto\\Documents\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj",
+        "projectUniqueName": "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj",
         "projectName": "DDDNetCore",
-        "projectPath": "C:\\Users\\Utilizador\\OneDrive - Instituto Superior de Engenharia do Porto\\Documents\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj",
-        "packagesPath": "C:\\Users\\Utilizador\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Utilizador\\OneDrive - Instituto Superior de Engenharia do Porto\\Documents\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\obj\\",
+        "projectPath": "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj",
+        "packagesPath": "C:\\Users\\Tiago Branco\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Utilizador\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Tiago Branco\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp5.0"
@@ -79,6 +79,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.17, 5.0.17]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

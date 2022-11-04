@@ -87,7 +87,7 @@ namespace DDDSample1.Controllers
             return Ok(del);
         }
 
-        // DELETE: api/Warehouses/F5
+        // DELETE: api/Deliveries/D5
         [HttpDelete("{id}/hard")]
         public async Task<ActionResult<DeliveryDto>> HardDelete(String id)
         {
