@@ -15,7 +15,7 @@ export class TruckMap extends Mapper<Truck> {
     chargeTime:number;*/
     public static toDTO( truck: Truck): ITruckDTO {
       return {
-          truckid: truck.id.toString(),
+          truckId: truck.id.toString(),
           tare: truck.tare,
           maxWeight: truck.maxWeight,
           batteryCapacity: truck.batteryCapacity,

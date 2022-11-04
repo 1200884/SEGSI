@@ -6,6 +6,7 @@ import ITruckDto from "../dto/ITruckDTO";
 import { Guard } from "../core/logic/Guard";
 
 interface TruckProps {
+
     tare:number;
     maxWeight:number;
     batteryCapacity: number;//in kwh
@@ -17,7 +18,7 @@ interface TruckProps {
             return this._id;
           }
           get truckId (): TruckId {
-            return TruckId.caller(this.id)
+            return new TruckId(this.truckId.toValue());
           }
           get tare (): number {
             return this.props.tare;
@@ -55,7 +56,7 @@ interface TruckProps {
           }
           private constructor (props: TruckProps, id?: UniqueEntityID) {
             super(props, id);
-        }
+         }
           public static create (props: TruckProps, id?: UniqueEntityID): Result<Truck> {
 
             const guardedProps = [
@@ -65,8 +66,8 @@ interface TruckProps {
               { argument: props.truckAutonomy, argumentName: 'truckAutonomy' },
               { argument: props.chargeTime, argumentName: 'chargeTime' },
             ];
+
             const guardResult = Guard.againstNullOrUndefinedBulk(guardedProps);
-    
             if (!guardResult.succeeded) {
               return Result.fail<Truck>(guardResult.message)
             }     

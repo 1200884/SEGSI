@@ -32,6 +32,7 @@ export default class PathService implements IPathService {
 
 
   public async createPath(pathDTO: IPathDTO): Promise<Result<IPathDTO>> {
+    
     try {
 
       const pathOrError = await Path.create( pathDTO );
@@ -52,10 +53,13 @@ export default class PathService implements IPathService {
   }
 
   public async updatePath(pathDTO: IPathDTO): Promise<Result<IPathDTO>> {
+    console.log("teste put");
     try {
+      console.log("teste put2");
       const path = await this.pathRepo.findByDomainId(pathDTO.pathid);
 
       if (path === null) {
+        console.log("teste put3");
         return Result.fail<IPathDTO>("Path not found");
       }
       /* warehouseDestination:number;
@@ -65,6 +69,7 @@ export default class PathService implements IPathService {
     energyNecessary: number//in kwh
     additionalTime:number */
       else {
+        console.log("teste put4");
         path.warehouseDestination = pathDTO.warehouseDestination;
         path.warehouseDeparture=pathDTO.warehouseDeparture;
         path.distance=pathDTO.distance;
@@ -76,7 +81,7 @@ export default class PathService implements IPathService {
         return Result.ok<IPathDTO>( pathDTOResult )
         }
     } catch (e) {
-      throw e;
+       throw e;
     }
   }
 

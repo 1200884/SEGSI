@@ -6,6 +6,7 @@ import ITruckRepo from '../services/IRepos/ITruckRepo';
 import ITruckService from './IServices/ITruckService';
 import { Result } from "../core/logic/Result";
 import { TruckMap } from "../mappers/TruckMap";
+import { Console } from 'console';
 
 @Service()
 export default class TruckService implements ITruckService {
@@ -31,6 +32,7 @@ export default class TruckService implements ITruckService {
 
 
   public async createTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>> {
+    
     try {
       const truckOrError = await Truck.create( truckDTO );
       if (truckOrError.isFailure) {
@@ -50,26 +52,25 @@ export default class TruckService implements ITruckService {
 
   public async updateTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>> {
     try {
-      const truck = await this.truckRepo.findByDomainId(truckDTO.truckid);
-
+      const truck = await this.truckRepo.findByDomainId(truckDTO.truckId);
+      console.log("alf");
+      console.log(truck);
+      console.log("roverto");
       if (truck === null) {
-        return Result.fail<ITruckDTO>("Truck not found");
+        return Result.fail<ITruckDTO>("truck not found");
       }
-      /* tare:number;
-    maxWeight:number;
-    batteryCapacity: number;//in kwh
-    truckAutonomy: number;//in km
-    chargeTime:number;//in */ 
       else {
         truck.tare = truckDTO.tare;
-        truck.maxWeight=truckDTO.maxWeight;
-        truck.batteryCapacity=truckDTO.batteryCapacity;
-        truck.truckAutonomy=truckDTO.truckAutonomy;
-        truck.chargeTime=truckDTO.chargeTime;
+        truck.maxWeight = truckDTO.maxWeight;
+        truck.batteryCapacity = truckDTO.batteryCapacity;
+        truck.truckAutonomy = truckDTO.truckAutonomy;
+        truck.chargeTime = truckDTO.chargeTime;
         await this.truckRepo.save(truck);
+
         const truckDTOResult = TruckMap.toDTO( truck ) as ITruckDTO;
         return Result.ok<ITruckDTO>( truckDTOResult )
         }
+        
     } catch (e) {
       throw e;
     }

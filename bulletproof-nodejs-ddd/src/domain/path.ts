@@ -25,7 +25,7 @@ interface PathProps {
       }
     
       get warehouseDeparture (): number {
-        return this.props.warehouseDestination
+        return this.props.warehouseDeparture;
       }
     
       get distance (): number {

@@ -65,7 +65,7 @@ export default class PathRepo implements IPathRepo {
   }
 
   public async findByDomainId (pathId: PathId | string): Promise<Path> {
-    const query = { domainId: pathId};
+    const query = { pathId: pathId};
     const pathRecord = await this.pathSchema.findOne( query as FilterQuery<IPathPersistence & Document> );
 
     if( pathRecord != null) {

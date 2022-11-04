@@ -49,7 +49,7 @@ export default class TruckRepo implements ITruckRepo {
         return TruckMap.toDomain(truckCreated);
       } else {
         truckDocument.tare = truck.tare;
-        truckDocument.maxWeight = truck. maxWeight;
+        truckDocument.maxWeight = truck.maxWeight;
         truckDocument.batteryCapacity = truck.batteryCapacity;
         truckDocument.truckAutonomy = truck.truckAutonomy;
         truckDocument.chargeTime = truck.chargeTime;

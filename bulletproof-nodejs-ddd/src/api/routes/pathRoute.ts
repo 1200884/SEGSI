@@ -34,6 +34,7 @@ export default (app: Router) => {
   route.put('',
     celebrate({
       body: Joi.object({
+        pathId: Joi.string().required(),
         warehouseDestination: Joi.number().required(),
         warehouseDeparture: Joi.number().required(),
         distance: Joi.number().required(),

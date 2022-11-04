@@ -69,7 +69,7 @@ export default {
       path: "../repos/pathRepo"
     },
     truck: {
-      name: "TruckRepo",
+      name: "truckRepo",
       path: "../repos/truckRepo"
     }
   },

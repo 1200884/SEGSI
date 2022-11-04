@@ -12,29 +12,19 @@ const TruckSchema =new mongoose.Schema(
     unique: true
   },
   tare: {
-    type: Number,
-    required: [true, 'Please enter tare'],
-    index: true,
+    type: Number
   },
   maxWeight: {
-    type: Number,
-    required: [true, 'Please enter max weight'],
-    index: true,
+    type: Number
   },
   batteryCapacity: {
-    type: Number,
-    required: [true, 'Please enter battery capacity'],
-    index: true,
+    type: Number
   },
   truckAutonomy: {
-    type: Number,
-    required: [true, 'Please enter truck autonomy'],
-    index: true,
+    type: Number
   },
   chargeTime: {
-    type: Number,
-    required: [true, 'Please enter charge time'],
-    index: true,
+    type: Number
   },
 
 })

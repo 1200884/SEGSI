@@ -29,9 +29,10 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createTruck(req, res, next) );
 
-  route.put('',
+    route.put('',
     celebrate({
       body: Joi.object({
+        truckId: Joi.string().required(),
         tare: Joi.number().required(),
         maxWeight: Joi.number().required(),
         batteryCapacity: Joi.number().required(),
@@ -40,9 +41,6 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updateTruck(req, res, next) );
-    route.get('/',(req,res,next)=>{
-        ctrl.updateTruck(req,res,next);
-    })
+};
 
 
-}
