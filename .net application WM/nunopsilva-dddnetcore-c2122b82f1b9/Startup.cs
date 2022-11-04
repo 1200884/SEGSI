@@ -11,11 +11,13 @@ using DDDSample1.Infrastructure.Warehouses;
 using DDDSample1.Infrastructure.Products;
 using DDDSample1.Infrastructure.Families;
 using DDDSample1.Infrastructure.Shared;
+using DDDSample1.Infrastructure.Deliveries;
 using DDDSample1.Domain.Shared;
 using DDDSample1.Domain.Categories;
 using DDDSample1.Domain.Products;
 using DDDSample1.Domain.Families;
 using DDDSample1.Domain.Warehouses;
+using DDDSample1.Domain.Deliveries;
 
 namespace DDDSample1
 {
@@ -81,6 +83,9 @@ namespace DDDSample1
 
             services.AddTransient<IWarehouseRepository,WarehouseRepository>();
             services.AddTransient<WarehouseService>();
+
+            services.AddTransient<IDeliveryRepository,DeliveryRepository>();
+            services.AddTransient<DeliveryService>();
         }
     }
 }

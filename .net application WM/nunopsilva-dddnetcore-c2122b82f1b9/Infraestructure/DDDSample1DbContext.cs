@@ -6,6 +6,8 @@ using DDDSample1.Infrastructure.Categories;
 using DDDSample1.Infrastructure.Products;
 using DDDSample1.Domain.Warehouses;
 using DDDSample1.Infrastructure.Warehouses;
+using DDDSample1.Domain.Deliveries;
+using DDDSample1.Infraestructure.Deliveries;
 
 namespace DDDSample1.Infrastructure
 {
@@ -18,6 +20,8 @@ namespace DDDSample1.Infrastructure
         public DbSet<Family> Families { get; set; }
 
         public DbSet<Warehouse> Warehouses { get; set; }
+
+        public DbSet<Delivery> Deliveries { get; set; }
 
         public DDDSample1DbContext(DbContextOptions options) : base(options)
         {
@@ -32,6 +36,7 @@ namespace DDDSample1.Infrastructure
             modelBuilder.ApplyConfiguration(new WarehouseEntityTypeConfiguration());
             modelBuilder.Entity<Warehouse>().OwnsOne(b => b.address);
             modelBuilder.Entity<Warehouse>().OwnsOne(b => b.coordinates);
+            modelBuilder.ApplyConfiguration(new DeliveryEntityTypeConfiguration());
         }
     }
 }
