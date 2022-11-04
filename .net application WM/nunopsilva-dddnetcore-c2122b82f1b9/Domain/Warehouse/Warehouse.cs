@@ -35,18 +35,18 @@ namespace DDDSample1.Domain.Warehouses
             this.Description = description;
         }
 
-        public void ChangeAddress(Address address)
+        public void ChangeAddress(string street, string city, string country)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the description to an inactive Warehouse.");
-            this.address = address;
+            this.address = new Address(street,city,country);
         }
 
-        public void ChangeCoordinates(Coordinates coordinates)
+        public void ChangeCoordinates(string latitude, string longitude)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the description to an inactive Warehouse.");
-            this.coordinates = coordinates;
+            this.coordinates = new Coordinates(latitude,latitude);
         }
         public void MarkAsInative()
         {

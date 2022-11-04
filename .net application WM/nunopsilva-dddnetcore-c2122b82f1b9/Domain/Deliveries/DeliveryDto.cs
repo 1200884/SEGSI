@@ -11,10 +11,12 @@ namespace DDDSample1.Domain.Deliveries
 
         public int weight { get;  set;}
                 
-        public WarehouseId warehouseDeliveryId  {get;  set;}
+        public string warehouseDeliveryId  {get;  set;}
 
         public int loadTime { get;  set;}
 
         public int unloadTime { get;  set;}
+
+        
     }
 }

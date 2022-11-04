@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using DDDSample1.Domain.Shared;
+using DDDSample1.Domain.Warehouses;
 
 namespace DDDSample1.Domain.Deliveries
 {
@@ -11,10 +12,13 @@ namespace DDDSample1.Domain.Deliveries
 
         private readonly IDeliveryRepository _repo;
 
-        public DeliveryService(IUnitOfWork unitOfWork, IDeliveryRepository repo)
+        private readonly IWarehouseRepository _repo2;
+
+        public DeliveryService(IUnitOfWork unitOfWork, IDeliveryRepository repo, IWarehouseRepository repo2)
         {
             _unitOfWork = unitOfWork;
             _repo = repo;
+            _repo2=repo2;
         }
 
         public async Task<List<DeliveryDto>> GetAllAsync()
@@ -51,14 +55,9 @@ namespace DDDSample1.Domain.Deliveries
 
         public async Task<DeliveryDto> AddAsync(DeliveryDto dto)
         {
+            await checkWarehouseIdAsync(new WarehouseId(dto.warehouseDeliveryId));
 
-            Console.WriteLine(dto.Id);
-            Console.WriteLine(dto.date);
-            Console.WriteLine(dto.weight);
-            Console.WriteLine(dto.warehouseDeliveryId.AsString());
-            Console.WriteLine(dto.loadTime);
-            Console.WriteLine(dto.unloadTime);
-            var del = new Delivery(dto.Id, dto.date, dto.weight, dto.warehouseDeliveryId.AsString(), dto.loadTime, dto.unloadTime);
+            var del = new Delivery(dto.Id, dto.date, dto.weight, dto.warehouseDeliveryId, dto.loadTime, dto.unloadTime);
 
             await this._repo.AddAsync(del);
 
@@ -83,7 +82,7 @@ namespace DDDSample1.Domain.Deliveries
             // change all field
             del.ChangeDate(dto.date);
             del.ChangeWeight(dto.weight);
-            del.ChangeWarehouseDeliveryId(dto.warehouseDeliveryId.AsString());
+            del.ChangeWarehouseDeliveryId(dto.warehouseDeliveryId);
             del.ChangeLoadTime(dto.loadTime);
             del.ChangeUnloadTime(dto.unloadTime);
             
@@ -139,6 +138,12 @@ namespace DDDSample1.Domain.Deliveries
                 warehouseDeliveryId = del.warehouseDeliveryId,
                 loadTime = del.loadTime, 
                 unloadTime = del.unloadTime};
-        }       
+        }    
+
+        private async Task checkWarehouseIdAsync(WarehouseId warehouseId){
+            var war = await _repo2.GetByIdAsync(warehouseId);
+            if (war == null)
+                throw new BusinessRuleValidationException("Invalid Warehouse Id.");
+        }   
     }
 }
