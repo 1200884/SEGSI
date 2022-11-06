@@ -25,7 +25,13 @@ export default async ({ expressApp }) => {
     // compare with the approach followed in repos and services
     name: 'truckSchema',
     schema: '../persistence/schemas/truckSchema',
-  }
+  };
+
+  const pathSchema = {
+    // compare with the approach followed in repos and services
+    name: 'pathSchema',
+    schema: '../persistence/schemas/pathSchema',
+  };
 
   const roleController = {
     name: config.controllers.role.name,
@@ -35,6 +41,11 @@ export default async ({ expressApp }) => {
   const truckController = {
     name: config.controllers.truck.name,
     path: config.controllers.truck.path
+  }
+
+  const pathController = {
+    name: config.controllers.path.name,
+    path: config.controllers.path.path
   }
 
   const roleRepo = {
@@ -51,6 +62,11 @@ export default async ({ expressApp }) => {
     name: config.repos.truck.name,
     path: config.repos.truck.path
   }
+ 
+  const pathRepo = {
+    name: config.repos.path.name,
+    path: config.repos.path.path
+  }
 
   const roleService = {
     name: config.services.role.name,
@@ -62,25 +78,34 @@ export default async ({ expressApp }) => {
     path: config.services.truck.path
   }
 
+  const pathService = {
+    name: config.services.path.name,
+    path: config.services.path.path
+  }
+
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
       userSchema,
       roleSchema,
-      truckSchema
+      truckSchema,
+      pathSchema
     ],
     controllers: [
       roleController,
-      truckController
+      truckController,
+      pathController
     ],
     repos: [
       roleRepo,
       userRepo,
-      truckRepo
+      truckRepo,
+      pathRepo
     ],
     services: [
       roleService,
-      truckService
+      truckService,
+      pathService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');

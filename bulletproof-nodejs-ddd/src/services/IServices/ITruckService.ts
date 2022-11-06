@@ -2,6 +2,7 @@ import { Result } from "../../core/logic/Result";
 import ITruckDTO from "../../dto/ITruckDTO";
 
 export default interface ITruckService  {
+  patchTruck(info: string): Result<ITruckDTO> | PromiseLike<Result<ITruckDTO>>;
   createTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>>;
   updateTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>>;
 
