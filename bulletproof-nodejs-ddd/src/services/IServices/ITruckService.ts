@@ -7,4 +7,6 @@ export default interface ITruckService  {
 
   getTruck (truckId: string): Promise<Result<ITruckDTO>>;
   getTrucks (): Promise<Result<ITruckDTO[]>>;
+
+  patchTruck (truckInfo: string): Promise<Result<ITruckDTO>>;
 }

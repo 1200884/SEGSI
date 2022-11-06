@@ -44,5 +44,18 @@ export default (app: Router) => {
         id: Joi.string().required()
       }),
     }),
-    (req, res, next) => ctrl.getTruck(req, res, next) );  
+    (req, res, next) => ctrl.getTruck(req, res, next) );
+
+  route.patch('',
+    celebrate({
+      body: Joi.object({
+        id: Joi.string().required(),
+        tare: Joi.number(),
+        maxWeight: Joi.number(),
+        batteryCapacity: Joi.number(),
+        truckAutonomy: Joi.number(),
+        chargeTime: Joi.number()
+      }),
+    }),
+    (req, res, next) => ctrl.patchTruck(req, res, next) );
 };

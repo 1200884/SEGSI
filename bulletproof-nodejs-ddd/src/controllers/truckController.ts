@@ -66,4 +66,22 @@ export default class TruckController implements ITruckController /* TODO: extend
       return next(e);
     }
   };
+
+  public async patchTruck(req: Request, res: Response, next: NextFunction) {
+    try {
+      let info = JSON.stringify(req.body);
+      console.log(info);
+      let truckOrError = await this.truckServiceInstance.patchTruck(info) as Result<ITruckDTO>;
+
+      if (truckOrError.isFailure) {
+        return res.status(404).send();
+      }
+
+      const truckDTO = truckOrError.getValue();
+      return res.status(201).json( truckDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  };
 }
