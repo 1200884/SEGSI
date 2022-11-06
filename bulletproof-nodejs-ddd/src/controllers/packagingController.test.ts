@@ -39,5 +39,5 @@ describe('packaging controller', function () {
 
 		sinon.assert.calledOnce(res.json);
 		sinon.assert.calledWith(res.json, sinon.match({ "pathid": "437","warehouseDestination": req.body.warehouseDestination, "warehouseDeparture":req.body.warehouseDeparture,"distance":req.body.distance,"travelTime":req.body.travelTime,"energyNecessary":req.body.energyNecessary,"additionalTime":req.body.additionalTime}));
-	*/});
-});
+	})*/});
+;
