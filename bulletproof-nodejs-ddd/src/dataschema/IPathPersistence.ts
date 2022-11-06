@@ -1,4 +1,4 @@
-export interface IPathDTO {
+export interface IPathPersistence {
     domainId:string;
     warehouseDeparture: number;
     warehouseDestination: number;

@@ -21,7 +21,7 @@ export default (app: Router) => {
         distance: Joi.number().required(),
         travelTime:Joi.number().required(),
         energyNecessary: Joi.number().required(),
-        chargeTime: Joi.number().required()
+        additionalTime: Joi.number().required()
       })
     }),
     (req, res, next) => ctrl.createPath(req, res, next) );
@@ -35,7 +35,7 @@ export default (app: Router) => {
         distance: Joi.number().required(),
         travelTime:Joi.number().required(),
         energyNecessary: Joi.number().required(),
-        chargeTime: Joi.number().required()
+        additionalTime: Joi.number().required()
       }),
     }),
     (req, res, next) => ctrl.updatePath(req, res, next) );
@@ -57,7 +57,7 @@ export default (app: Router) => {
         distance: Joi.number().required(),
         travelTime:Joi.number().required(),
         energyNecessary: Joi.number().required(),
-        chargeTime: Joi.number().required()
+        additionalTime: Joi.number().required()
       }),
     }),
     (req, res, next) => ctrl.patchPath(req, res, next) );
