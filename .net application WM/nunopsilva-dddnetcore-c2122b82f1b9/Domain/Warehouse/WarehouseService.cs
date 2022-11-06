@@ -33,18 +33,20 @@ namespace DDDSample1.Domain.Warehouses
             if(war == null)
                 return null;
 
-            return new WarehouseDto{Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude};
+            var dto = WarehouseMap.ToDTO(war);
+            return dto;
         }
 
         public async Task<WarehouseDto> AddAsync(WarehouseDto dto)
         {
-            var war = new Warehouse(dto.Id, dto.Description,dto.Latitude, dto.Longitude, dto.Street, dto.City, dto.Country);
+            var war = WarehouseMap.ToWarehouse(dto);
 
             await this._repo.AddAsync(war);
 
             await this._unitOfWork.CommitAsync();
 
-            return new WarehouseDto { Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude};
+            var dto2 = WarehouseMap.ToDTO(war);
+            return dto2;        
         }
 
         public async Task<WarehouseDto> UpdateAsync(WarehouseDto dto)
@@ -61,8 +63,9 @@ namespace DDDSample1.Domain.Warehouses
             
             await this._unitOfWork.CommitAsync();
 
-            return new WarehouseDto { Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude};
-        }
+            var dto2 = WarehouseMap.ToDTO(war);
+            return dto2;        
+            }
 
         public async Task<WarehouseDto> InactivateAsync(WarehouseId id)
         {
@@ -76,7 +79,8 @@ namespace DDDSample1.Domain.Warehouses
             
             await this._unitOfWork.CommitAsync();
 
-            return new WarehouseDto { Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude };
+            var dto = WarehouseMap.ToDTO(war);
+            return dto;        
         }
 
          public async Task<WarehouseDto> DeleteAsync(WarehouseId id)
@@ -92,7 +96,8 @@ namespace DDDSample1.Domain.Warehouses
             this._repo.Remove(war);
             await this._unitOfWork.CommitAsync();
 
-            return new WarehouseDto { Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude};
+            var dto = WarehouseMap.ToDTO(war);
+            return dto;        
         }
 
     }
