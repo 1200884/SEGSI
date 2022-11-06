@@ -95,6 +95,7 @@ export default class TruckService implements ITruckService {
   }
 
   public async patchTruck(truckInfo: string): Promise<Result<ITruckDTO>> {
+    //"{"id":"adwdawd","tare":2,"max":5}"
     try {
       const info = truckInfo.split('"');
       let vars = [info[1]];
@@ -123,7 +124,6 @@ export default class TruckService implements ITruckService {
           string = string.replace(',', '');
           string = string.replace(':', '');
           string = string.replace('}', '');
-          console.log(string);
           truck.tare = parseInt(string);
         }
         if (vars.includes("maxWeight")) {
