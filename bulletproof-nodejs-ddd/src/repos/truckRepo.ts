@@ -4,8 +4,10 @@ import ITruckRepo from "../services/IRepos/ITruckRepo";
 import { Truck } from "../domain/truck";
 import { TruckId } from "../domain/truckId";
 import { TruckMap } from "../mappers/TruckMap";
+
 import { Document, FilterQuery, Model } from 'mongoose';
 import { ITruckPersistence } from '../dataschema/ITruckPersistence';
+import ITruckDTO from '../dto/ITruckDTO';
 
 @Service()
 export default class TruckRepo implements ITruckRepo {
@@ -31,20 +33,18 @@ export default class TruckRepo implements ITruckRepo {
     return !!truckDocument === true;
   }
 
-  public async save (truck:Truck): Promise<Truck> {
+  public async save (truck: Truck): Promise<Truck> {
     const query = { domainId: truck.id.toString()}; 
 
     const truckDocument = await this.truckSchema.findOne( query );
-/* tare:number;
-    maxWeight:number;
-    batteryCapacity: number;//in kwh
-    truckAutonomy: number;//in km
-    chargeTime:number;//in */ 
+
     try {
       if (truckDocument === null ) {
         const rawTruck: any = TruckMap.toPersistence(truck);
-        
+
+        console.log(rawTruck);
         const truckCreated = await this.truckSchema.create(rawTruck);
+        console.log(truckCreated);
 
         return TruckMap.toDomain(truckCreated);
       } else {
@@ -68,6 +68,20 @@ export default class TruckRepo implements ITruckRepo {
 
     if( truckRecord != null) {
       return TruckMap.toDomain(truckRecord);
+    }
+    else
+      return null;
+  }
+
+  public async findAll(): Promise<Truck[]> {
+    const truckRecord = await this.truckSchema.find();
+
+    if( truckRecord != null) {
+      var trucksArray: Array<Truck> = [];
+      for (var i = 0; i < truckRecord.length; i++) {
+        trucksArray.push(TruckMap.toDomain(truckRecord[i]));
+      }
+      return trucksArray;
     }
     else
       return null;

@@ -6,7 +6,6 @@ import ITruckRepo from '../services/IRepos/ITruckRepo';
 import ITruckService from './IServices/ITruckService';
 import { Result } from "../core/logic/Result";
 import { TruckMap } from "../mappers/TruckMap";
-import { Console } from 'console';
 
 @Service()
 export default class TruckService implements ITruckService {
@@ -16,7 +15,9 @@ export default class TruckService implements ITruckService {
 
   public async getTruck( truckId: string): Promise<Result<ITruckDTO>> {
     try {
-      const truck = await this.truckRepo.findByDomainId(truckId);
+      const id = truckId.split('"')[3];
+      
+      const truck = await this.truckRepo.findByDomainId(id);
 
       if (truck === null) {
         return Result.fail<ITruckDTO>("Truck not found");
@@ -30,11 +31,31 @@ export default class TruckService implements ITruckService {
     }
   }
 
+  public async getTrucks(): Promise<Result<ITruckDTO[]>> {
+    try {
+      const trucks = await this.truckRepo.findAll();
+      var finalTrucks: Array<ITruckDTO> = [];
+
+      if (trucks == null) {
+        return Result.fail<ITruckDTO[]>("There was a problem assembling the trucks");
+      }
+      else {
+        for (var i = 0; i < trucks.length; i++) {
+          finalTrucks.push(TruckMap.toDTO( trucks[i] ) as ITruckDTO);
+        }
+        return Result.ok<ITruckDTO[]>( finalTrucks )
+      }
+    }catch (e) {
+      throw e;
+    }
+  }
+
 
   public async createTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>> {
-    
     try {
+
       const truckOrError = await Truck.create( truckDTO );
+
       if (truckOrError.isFailure) {
         return Result.fail<ITruckDTO>(truckOrError.errorValue());
       }
@@ -52,25 +73,22 @@ export default class TruckService implements ITruckService {
 
   public async updateTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>> {
     try {
-      const truck = await this.truckRepo.findByDomainId(truckDTO.truckId);
-      console.log("alf");
-      console.log(truck);
-      console.log("roverto");
+      const truck = await this.truckRepo.findByDomainId(truckDTO.id);
+
       if (truck === null) {
-        return Result.fail<ITruckDTO>("truck not found");
+        return Result.fail<ITruckDTO>("Truck not found");
       }
       else {
         truck.tare = truckDTO.tare;
         truck.maxWeight = truckDTO.maxWeight;
         truck.batteryCapacity = truckDTO.batteryCapacity;
         truck.truckAutonomy = truckDTO.truckAutonomy;
-        truck.chargeTime = truckDTO.chargeTime;
+        truck.chargeTime = truckDTO.chargeTime
         await this.truckRepo.save(truck);
 
         const truckDTOResult = TruckMap.toDTO( truck ) as ITruckDTO;
         return Result.ok<ITruckDTO>( truckDTOResult )
         }
-        
     } catch (e) {
       throw e;
     }

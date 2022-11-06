@@ -5,5 +5,9 @@ import { TruckId } from "../../domain/truckId";
 export default interface ITruckRepo extends Repo<Truck> {
   save(truck: Truck): Promise<Truck>;
   findByDomainId (truckId: TruckId | string): Promise<Truck>;
+  findAll (): Promise<Truck[]>;
 
+  //findByIds (trucksIds: TruckId[]): Promise<Truck[]>;
+  //saveCollection (trucks: Truck[]): Promise<Truck[]>;
+  //removeByTruckIds (trucks: TruckId[]): Promise<any>
 }
