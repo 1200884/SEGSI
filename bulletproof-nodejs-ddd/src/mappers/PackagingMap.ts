@@ -8,11 +8,11 @@ import { Packaging } from "../domain/packaging";
 
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 // Packaging packaging
-export class PathMap extends Mapper<Packaging> {
+export class PackagingMap extends Mapper<Packaging> {
   
   public static toDTO( packaging: Packaging): IPackagingDTO {
     return {
-      packagingId: packaging.id.toString(),
+      id: packaging.id.toString(),
       boxId: packaging.boxId,
       positionX: packaging.positionX,
       positionY: packaging.positionY,
@@ -23,7 +23,7 @@ export class PathMap extends Mapper<Packaging> {
   public static toDomain (packaging: any | Model<IPackagingPersistence & Document> ): Packaging {
     const packagingOrError = Packaging.create(
       packaging,
-      new UniqueEntityID(packaging.domainId)
+      new UniqueEntityID(packaging.packagingId)
     );
 
     packagingOrError.isFailure ? console.log(packagingOrError.error) : '';

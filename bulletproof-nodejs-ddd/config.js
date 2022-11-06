@@ -54,7 +54,7 @@ export default {
       name: "PathController",
       path: "../controllers/pathController"
     },
-    packagingRoute: {
+    packaging: {
       name: "PackagingController",
       path: "../controllers/packagingController"
     }

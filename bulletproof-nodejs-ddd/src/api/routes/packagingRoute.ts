@@ -32,7 +32,7 @@ export default (app: Router) => {
   route.put('',
     celebrate({
       body: Joi.object({
-        packagingId: Joi.number().required(),
+        id: Joi.string().required(),
         boxId: Joi.number().required(),
         positionX: Joi.number().required(),
         positionY: Joi.number().required(),
@@ -53,11 +53,11 @@ export default (app: Router) => {
   route.patch('',
     celebrate({
       body: Joi.object({
-        packagingId: Joi.number().required(),
-        boxId: Joi.number().required(),
-        positionX: Joi.number().required(),
-        positionY: Joi.number().required(),
-        positionZ: Joi.number().required()
+        id: Joi.string().required(),
+        boxId: Joi.number(),
+        positionX: Joi.number(),
+        positionY: Joi.number(),
+        positionZ: Joi.number()
       }),
     }),
     (req, res, next) => ctrl.patchPackaging(req, res, next) );

@@ -28,14 +28,14 @@ export default class PackagingRepo implements IPackagingRepo {
     
     const idX = packaging.id instanceof PackagingId ? (<PackagingId>packaging.id).toValue() : packaging.id;
 
-    const query = { domainId: idX}; 
+    const query = { packagingId: idX}; 
     const packagingDocument = await this.packagingSchema.findOne( query as FilterQuery<IPackagingPersistence & Document>);
 
     return !!packagingDocument === true;
   }
 
   public async save (packaging: Packaging): Promise<Packaging> {
-    const query = { domainId: packaging.id.toString()}; 
+    const query = { packagingId: packaging.id.toString()}; 
 
     const packagingDocument = await this.packagingSchema.findOne( query );
 
@@ -61,9 +61,9 @@ export default class PackagingRepo implements IPackagingRepo {
   }
 //Packaging packaging 
   public async findByDomainId (packagingId: PackagingId | string): Promise<Packaging> {
-    const query = { domainId: packagingId};
+    const query = { packagingId: packagingId};
     const packagingRecord = await this.packagingSchema.findOne( query as FilterQuery<IPackagingPersistence & Document> );
-
+    console.log(packagingId +"\n"+ packagingRecord);
     if( packagingRecord != null) {
       return PackagingMap.toDomain(packagingRecord);
     }

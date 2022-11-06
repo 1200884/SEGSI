@@ -57,7 +57,7 @@ export class Packaging extends AggregateRoot<PackagingProps> {
     const positionY =packagingDTO.positionY;
     const positionZ =packagingDTO.positionZ;
 
-    if (positionX > 0 || positionY > 0 || positionZ > 0 || positionX < 10 || positionY < 20 || positionZ < 8) {
+    if (!(positionX > 0 || positionY > 0 || positionZ > 0 || positionX < 10 || positionY < 20 || positionZ < 8)) {
       return Result.fail<Packaging>('Must provide positions within the range')
     } else {
       const packaging = new Packaging({ boxId: boxId, positionX: positionX, positionY: positionY, positionZ: positionZ }, id);

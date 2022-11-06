@@ -1,5 +1,5 @@
 export default interface IPackagingDTO {
-  packagingId: string;
+  id: string;
   boxId: number;
   positionX : number;
   positionY : number;
