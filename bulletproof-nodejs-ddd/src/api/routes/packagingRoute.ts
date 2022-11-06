@@ -40,9 +40,25 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updatePackaging(req, res, next) );
-    route.get('/',(req,res,next)=>{
-        ctrl.updatePackaging(req,res,next);
-    })
+    
 
+    route.get('',
+    celebrate({
+      body: Joi.object({
+        id: Joi.string().required()
+      }),
+    }),
+    (req, res, next) => ctrl.getPackaging(req, res, next) );
 
+  route.patch('',
+    celebrate({
+      body: Joi.object({
+        packagingId: Joi.number().required(),
+        boxId: Joi.number().required(),
+        positionX: Joi.number().required(),
+        positionY: Joi.number().required(),
+        positionZ: Joi.number().required()
+      }),
+    }),
+    (req, res, next) => ctrl.patchPackaging(req, res, next) );
 }

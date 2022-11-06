@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import packagingRoute from './src/api/routes/packagingRoute';
 
 // Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -52,6 +53,10 @@ export default {
     path: {
       name: "PathController",
       path: "../controllers/pathController"
+    },
+    packagingRoute: {
+      name: "PackagingController",
+      path: "../controllers/packagingController"
     }
   },
 
@@ -71,6 +76,10 @@ export default {
     path: {
       name: "PathRepo",
       path: "../repos/pathRepo"
+    },
+    packaging: {
+      name: "PackagingRepo",
+      path: "../repos/packagingRepo"
     }
   },
 
@@ -86,6 +95,10 @@ export default {
     path: {
       name: "PathService",
       path: "../services/pathService"
+    },
+    packaging: {
+      name: "PackagingService",
+      path: "../services/packagingService"
     }
   },
 };

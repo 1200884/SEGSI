@@ -6,7 +6,7 @@ import { PackagingId } from "./packagingId";
 
 import IPackagingDTO from "../dto/IPackagingDTO";
 
-interface PackgingProps {
+interface PackagingProps {
   boxId: number;
   positionX : number;
   positionY : number;
@@ -51,14 +51,17 @@ export class Packaging extends AggregateRoot<PackagingProps> {
     super(props, id);
   }
 
-  public static create (roleDTO: IRoleDTO, id?: UniqueEntityID): Result<Role> {
-    const name = roleDTO.name;
+  public static create (packagingDTO: IPackagingDTO, id?: UniqueEntityID): Result<Packaging> {
+    const boxId =packagingDTO.boxId;
+    const positionX =packagingDTO.positionX;
+    const positionY =packagingDTO.positionY;
+    const positionZ =packagingDTO.positionZ;
 
-    if (!!name === false || name.length === 0) {
-      return Result.fail<Role>('Must provide a role name')
+    if (positionX > 0 || positionY > 0 || positionZ > 0 || positionX < 10 || positionY < 20 || positionZ < 8) {
+      return Result.fail<Packaging>('Must provide positions within the range')
     } else {
-      const role = new Role({ name: name }, id);
-      return Result.ok<Role>( role )
+      const packaging = new Packaging({ boxId: boxId, positionX: positionX, positionY: positionY, positionZ: positionZ }, id);
+      return Result.ok<Packaging>( packaging )
     }
   }
 }
