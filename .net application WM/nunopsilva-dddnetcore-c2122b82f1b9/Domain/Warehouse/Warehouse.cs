@@ -46,7 +46,7 @@ namespace DDDSample1.Domain.Warehouses
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the description to an inactive Warehouse.");
-            this.coordinates = new Coordinates(latitude,latitude);
+            this.coordinates = new Coordinates(latitude,longitude);
         }
         public void MarkAsInative()
         {
