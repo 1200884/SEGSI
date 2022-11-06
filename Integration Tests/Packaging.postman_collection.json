@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "e74dd13b-05eb-4764-a9d1-eb2d91388b78",
+		"name": "Packaging",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all Packagings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Packaging List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(\"47\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/Packaging/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"Packaging",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Packaging",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Packaging\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful retrived response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"47\");\r",
+							"        let text = pm.response.text();\r",
+							"        \r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.globals.set(\"id\", jsonData.id);\r",
+							"    console.log(pm.globals.get(\"TOKEN\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"boxId\":47, \"positionX\":5, \"positionY\":3, \"positionZ\":5}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/Packaging/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"Packaging",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get packaging by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Packaging by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"47\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"{{id}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/Packaging",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"Packaging"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Packaging",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Packaging\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Packaging by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"6\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"{{id}}\", \"boxId\": 47,\"positionX\": 6,\"positionY\": 3,\"positionZ\": 5}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/Packaging",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"Packaging"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Packaging by id Updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Packaging by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"6\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"{{id}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/Packaging",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"Packaging"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ID",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

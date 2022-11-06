@@ -82,8 +82,7 @@ export class Path extends AggregateRoot<PathProps> {
     const travelTime = pathDTO.travelTime;
     const energyNecessary = pathDTO.energyNecessary;
     const additionalTime = pathDTO.additionalTime;
-
-    if (warehouseDeparture < 0 || warehouseDestination < 0 || distance < 0 || travelTime < 0 || energyNecessary < 0||additionalTime<0) {
+    if (warehouseDeparture < 0 || warehouseDeparture > 17 || warehouseDestination < 0 || warehouseDestination > 17 || distance < 0 || travelTime < 0 || energyNecessary < 0||additionalTime<0) {
       return Result.fail<Path>('Must provide positive data')
     } else {
       const path = new Path({ warehouseDeparture: warehouseDeparture, warehouseDestination: warehouseDestination, distance: distance, travelTime: travelTime, energyNecessary: energyNecessary,additionalTime:additionalTime }, id);
