@@ -66,6 +66,7 @@ namespace WarehouseManagment.Domain.Deliveries
                 throw new BusinessRuleValidationException("It is not possible to change the date to an inactive delivery.");
             if (date == null)
                 throw new BusinessRuleValidationException("The date of a delivery can't be null");
+                this.date=date;
         }
 
         public void ChangeWeight(int weight)
