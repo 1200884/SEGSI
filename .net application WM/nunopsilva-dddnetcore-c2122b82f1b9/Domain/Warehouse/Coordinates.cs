@@ -7,7 +7,6 @@ public class Coordinates : IValueObject
     public string Longitude { get; private set; }
 
     public Coordinates() { }
-
     public Coordinates(string latitude, string longitude)
     {
         this.Latitude = latitude;

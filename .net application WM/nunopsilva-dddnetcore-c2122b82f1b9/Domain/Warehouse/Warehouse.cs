@@ -52,5 +52,6 @@ namespace DDDSample1.Domain.Warehouses
         {
             this.Active = false;
         }
+        
     }
 }

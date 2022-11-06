@@ -94,5 +94,6 @@ namespace DDDSample1.Domain.Warehouses
 
             return new WarehouseDto { Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude};
         }
+        
     }
 }    
