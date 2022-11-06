@@ -3,11 +3,11 @@ namespace DDDSample1.Domain.Warehouses
 {
 public class Coordinates : IValueObject
 {
-    public string Latitude { get; private set; }
-    public string Longitude { get; private set; }
+    public double Latitude { get; private set; }
+    public double Longitude { get; private set; }
 
     public Coordinates() { }
-    public Coordinates(string latitude, string longitude)
+    public Coordinates(double latitude, double longitude)
     {
         this.Latitude = latitude;
         this.Longitude = longitude;

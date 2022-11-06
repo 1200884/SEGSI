@@ -56,8 +56,8 @@ namespace DDDSample1.Domain.Warehouses
 
             // change all field
             war.ChangeDescription(dto.Description);
-            war.ChangeAddress(war.address.Street , war.address.City, war.address.Country);
-            war.ChangeCoordinates(war.coordinates.Latitude, war.coordinates.Longitude);
+            war.ChangeAddress(dto.Street , dto.City, dto.Country);
+            war.ChangeCoordinates(dto.Latitude, dto.Longitude);
             
             await this._unitOfWork.CommitAsync();
 
@@ -94,6 +94,6 @@ namespace DDDSample1.Domain.Warehouses
 
             return new WarehouseDto { Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude};
         }
-        
+
     }
 }    

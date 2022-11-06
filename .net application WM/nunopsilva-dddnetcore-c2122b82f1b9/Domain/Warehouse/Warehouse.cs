@@ -19,7 +19,7 @@ namespace DDDSample1.Domain.Warehouses
             this.Active = true;
         }
 
-        public Warehouse(string code, string description, string latitude, string longitude,string street, string city, string country)
+        public Warehouse(string code, string description, double latitude, double longitude,string street, string city, string country)
         {
             this.Id = new WarehouseId(code);
             this.Description = description;
@@ -42,7 +42,7 @@ namespace DDDSample1.Domain.Warehouses
             this.address = new Address(street,city,country);
         }
 
-        public void ChangeCoordinates(string latitude, string longitude)
+        public void ChangeCoordinates(double latitude, double longitude)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the description to an inactive Warehouse.");
@@ -52,6 +52,6 @@ namespace DDDSample1.Domain.Warehouses
         {
             this.Active = false;
         }
-        
+
     }
 }
