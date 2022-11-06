@@ -52,12 +52,12 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         id: Joi.string().required(),
-        warehouseDeparture: Joi.number().required(),
-        warehouseDestination: Joi.number().required(),
-        distance: Joi.number().required(),
-        travelTime:Joi.number().required(),
-        energyNecessary: Joi.number().required(),
-        additionalTime: Joi.number().required()
+        warehouseDeparture: Joi.number(),
+        warehouseDestination: Joi.number(),
+        distance: Joi.number(),
+        travelTime:Joi.number(),
+        energyNecessary: Joi.number(),
+        additionalTime: Joi.number()
       }),
     }),
     (req, res, next) => ctrl.patchPath(req, res, next) );

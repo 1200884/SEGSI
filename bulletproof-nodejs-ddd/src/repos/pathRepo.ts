@@ -42,9 +42,7 @@ export default class PathRepo implements IPathRepo {
       if (pathDocument === null ) {
         const rawPath: any = PathMap.toPersistence(path);
 
-        console.log(rawPath);
         const pathCreated = await this.pathSchema.create(rawPath);
-        console.log(pathCreated);
 
         return PathMap.toDomain(pathCreated);
       } else {

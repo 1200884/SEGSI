@@ -70,7 +70,7 @@ export default class TruckController implements ITruckController /* TODO: extend
   public async patchTruck(req: Request, res: Response, next: NextFunction) {
     try {
       let info = JSON.stringify(req.body);
-      console.log(info);
+      
       let truckOrError = await this.truckServiceInstance.patchTruck(info) as Result<ITruckDTO>;
 
       if (truckOrError.isFailure) {

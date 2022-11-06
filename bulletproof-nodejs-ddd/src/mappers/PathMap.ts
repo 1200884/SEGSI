@@ -35,12 +35,13 @@ export class PathMap extends Mapper<Path> {
 
   public static toPersistence (path: Path): any {
     return {
-        warehouseDeparture: path.warehouseDeparture,
-        warehouseDestination: path.warehouseDestination,
-        distance: path.distance,
-        travelTime: path.travelTime,
-        energyNecessary: path.energyNecessary,
-        additionalTime: path.additionalTime,
+      domainId: path.id.toString(),
+      warehouseDeparture: path.warehouseDeparture,
+      warehouseDestination: path.warehouseDestination,
+      distance: path.distance,
+      travelTime: path.travelTime,
+      energyNecessary: path.energyNecessary,
+      additionalTime: path.additionalTime,
     }
   }
 }
