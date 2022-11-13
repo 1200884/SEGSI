@@ -57,5 +57,5 @@ export default (app: Router) => {
         chargeTime: Joi.number()
       }),
     }),
-    (req, res, next) => ctrl.patchTruck(req, res, next) );
+    (req, res, next) => ctrl.patchTruck(req, res, next));
 };

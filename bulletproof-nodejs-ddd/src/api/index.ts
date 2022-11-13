@@ -7,8 +7,8 @@ import pathRoute from './routes/pathRoute';
 
 
 export default () => {
+	
 	const app = Router();
-
 	auth(app);
 	user(app);
 	role(app);

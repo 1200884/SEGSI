@@ -53,7 +53,7 @@ export default class PathService implements IPathService {
 
   public async createPath(pathDTO: IPathDTO): Promise<Result<IPathDTO>> {
     try {
-
+      
       const pathOrError = await Path.create( pathDTO );
 
       if (pathOrError.isFailure) {
