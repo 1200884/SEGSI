@@ -121,6 +121,7 @@ C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documen
 C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documents\lapr5_g07_22-23\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.pdb
 C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documents\lapr5_g07_22-23\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.genruntimeconfig.cache
 C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documents\lapr5_g07_22-23\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\ref\DDDNetCore.dll
+<<<<<<< HEAD
 <<<<<<< HEAD:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/Debug/netcoreapp5.0/DDDNetCore.csproj.FileListAbsolute.txt
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\appsettings.Development.json
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\appsettings.json
@@ -164,6 +165,9 @@ C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-d
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.genruntimeconfig.cache
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\ref\DDDNetCore.dll
 =======
+=======
+<<<<<<<< HEAD:WarehouseManagment/obj/Debug/netcoreapp5.0/DDDNetCore.csproj.FileListAbsolute.txt
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
 C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documents\lapr5_g07_22-23\.net application WM\WarehouseManagment\bin\Debug\netcoreapp5.0\appsettings.Development.json
 C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documents\lapr5_g07_22-23\.net application WM\WarehouseManagment\bin\Debug\netcoreapp5.0\appsettings.json
 C:\Users\Utilizador\OneDrive - Instituto Superior de Engenharia do Porto\Documents\lapr5_g07_22-23\.net application WM\WarehouseManagment\bin\Debug\netcoreapp5.0\DDDNetCore.exe
@@ -246,6 +250,7 @@ C:\Users\Tiago Branco\Documents\Faculdade\lapr5_g07_22-23\WarehouseManagment\obj
 C:\Users\Tiago Branco\Documents\Faculdade\lapr5_g07_22-23\WarehouseManagment\obj\Debug\netcoreapp5.0\DDDNetCore.pdb
 C:\Users\Tiago Branco\Documents\Faculdade\lapr5_g07_22-23\WarehouseManagment\obj\Debug\netcoreapp5.0\DDDNetCore.genruntimeconfig.cache
 C:\Users\Tiago Branco\Documents\Faculdade\lapr5_g07_22-23\WarehouseManagment\obj\Debug\netcoreapp5.0\ref\DDDNetCore.dll
+<<<<<<< HEAD
 >>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:WarehouseManagment/obj/Debug/netcoreapp5.0/DDDNetCore.csproj.FileListAbsolute.txt
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\WarehouseManagment\bin\Debug\netcoreapp5.0\appsettings.Development.json
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\WarehouseManagment\bin\Debug\netcoreapp5.0\appsettings.json
@@ -288,3 +293,48 @@ C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\WarehouseManagment\obj\Debug\net
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\WarehouseManagment\obj\Debug\netcoreapp5.0\DDDNetCore.pdb
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\WarehouseManagment\obj\Debug\netcoreapp5.0\DDDNetCore.genruntimeconfig.cache
 C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\WarehouseManagment\obj\Debug\netcoreapp5.0\ref\DDDNetCore.dll
+=======
+========
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\appsettings.Development.json
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\appsettings.json
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DDDNetCore.exe
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DDDNetCore.deps.json
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DDDNetCore.runtimeconfig.json
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DDDNetCore.runtimeconfig.dev.json
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DDDNetCore.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DDDNetCore.pdb
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\DnsClient.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\MongoDB.Bson.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\MongoDB.Driver.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\MongoDB.Driver.Core.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\MongoDB.Libmongocrypt.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Newtonsoft.Json.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Newtonsoft.Json.Bson.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\SharpCompress.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\Snappier.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\ZstdSharp.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\bin\Debug\netcoreapp5.0\runtimes\win\native\mongocrypt.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.csproj.AssemblyReference.cache
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.AssemblyInfoInputs.cache
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.AssemblyInfo.cs
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.csproj.CoreCompileInputs.cache
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.RazorTargetAssemblyInfo.cache
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.csproj.CopyComplete
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\refint\DDDNetCore.dll
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.pdb
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\DDDNetCore.genruntimeconfig.cache
+C:\Users\jgasp\OneDrive\Documents\lapr5_g072223\.net application WM\nunopsilva-dddnetcore-c2122b82f1b9\obj\Debug\netcoreapp5.0\ref\DDDNetCore.dll
+>>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/Debug/netcoreapp5.0/DDDNetCore.csproj.FileListAbsolute.txt
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f

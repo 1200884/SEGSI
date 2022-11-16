@@ -32,7 +32,7 @@ export default (app: Router) => {
   route.put('',
     celebrate({
       body: Joi.object({
-        packagingId: Joi.number().required(),
+        id: Joi.string().required(),
         boxId: Joi.number().required(),
         positionX: Joi.number().required(),
         positionY: Joi.number().required(),
@@ -40,9 +40,25 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updatePackaging(req, res, next) );
-    route.get('/',(req,res,next)=>{
-        ctrl.updatePackaging(req,res,next);
-    })
+    
 
+    route.get('',
+    celebrate({
+      body: Joi.object({
+        id: Joi.string().required()
+      }),
+    }),
+    (req, res, next) => ctrl.getPackaging(req, res, next) );
 
+  route.patch('',
+    celebrate({
+      body: Joi.object({
+        id: Joi.string().required(),
+        boxId: Joi.number(),
+        positionX: Joi.number(),
+        positionY: Joi.number(),
+        positionZ: Joi.number()
+      }),
+    }),
+    (req, res, next) => ctrl.patchPackaging(req, res, next) );
 }

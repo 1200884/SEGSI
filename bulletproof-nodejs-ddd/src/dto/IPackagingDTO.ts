@@ -1,5 +1,5 @@
-export default interface IRoleDTO {
-  packagingId: number;
+export default interface IPackagingDTO {
+  id: string;
   boxId: number;
   positionX : number;
   positionY : number;

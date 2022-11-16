@@ -6103,11 +6103,20 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\jgasp\\.nuget\\packages\\": {}
+=======
+<<<<<<<< HEAD:WarehouseManagment/obj/project.assets.json
+    "C:\\Users\\Tiago Branco\\.nuget\\packages\\": {}
+========
+    "C:\\Users\\jgasp\\.nuget\\packages\\": {}
+>>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/project.assets.json
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\jgasp\\OneDrive\\Documents\\lapr5_g072223\\WarehouseManagment\\DDDNetCore.csproj",
       "projectName": "DDDNetCore",
       "projectPath": "C:\\Users\\jgasp\\OneDrive\\Documents\\lapr5_g072223\\WarehouseManagment\\DDDNetCore.csproj",
@@ -6116,6 +6125,27 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jgasp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+<<<<<<<< HEAD:WarehouseManagment/obj/project.assets.json
+      "projectUniqueName": "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\WarehouseManagment\\DDDNetCore.csproj",
+      "projectName": "DDDNetCore",
+      "projectPath": "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\WarehouseManagment\\DDDNetCore.csproj",
+      "packagesPath": "C:\\Users\\Tiago Branco\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tiago Branco\\Documents\\Faculdade\\lapr5_g07_22-23\\WarehouseManagment\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Tiago Branco\\AppData\\Roaming\\NuGet\\NuGet.Config"
+========
+      "projectUniqueName": "C:\\Users\\jgasp\\OneDrive\\Documents\\lapr5_g072223\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj",
+      "projectName": "DDDNetCore",
+      "projectPath": "C:\\Users\\jgasp\\OneDrive\\Documents\\lapr5_g072223\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\DDDNetCore.csproj",
+      "packagesPath": "C:\\Users\\jgasp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jgasp\\OneDrive\\Documents\\lapr5_g072223\\.net application WM\\nunopsilva-dddnetcore-c2122b82f1b9\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\jgasp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/project.assets.json
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
       ],
       "originalTargetFrameworks": [
         "netcoreapp5.0"
@@ -6180,6 +6210,15 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+<<<<<<< HEAD
+=======
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[5.0.17, 5.0.17]"
+          }
+        ],
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -6188,7 +6227,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
       }
     }
   }

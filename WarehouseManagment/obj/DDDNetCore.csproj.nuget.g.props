@@ -5,17 +5,41 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+<<<<<<< HEAD
     <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\jgasp\.nuget\packages\</NuGetPackageFolders>
+=======
+<<<<<<<< HEAD:WarehouseManagment/obj/DDDNetCore.csproj.nuget.g.props
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Tiago Branco\.nuget\packages\</NuGetPackageFolders>
+========
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\jgasp\.nuget\packages\</NuGetPackageFolders>
+>>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/DDDNetCore.csproj.nuget.g.props
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
     <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.3.1</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+<<<<<<< HEAD
     <SourceRoot Include="C:\Users\jgasp\.nuget\packages\" />
+=======
+<<<<<<<< HEAD:WarehouseManagment/obj/DDDNetCore.csproj.nuget.g.props
+    <SourceRoot Include="C:\Users\Tiago Branco\.nuget\packages\" />
+========
+    <SourceRoot Include="C:\Users\jgasp\.nuget\packages\" />
+>>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/DDDNetCore.csproj.nuget.g.props
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.razor.design\2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.razor.design\2.2.0\build\netstandard2.0\Microsoft.AspNetCore.Razor.Design.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+<<<<<<< HEAD
     <PkgMicrosoft_AspNetCore_Razor_Design Condition=" '$(PkgMicrosoft_AspNetCore_Razor_Design)' == '' ">C:\Users\jgasp\.nuget\packages\microsoft.aspnetcore.razor.design\2.2.0</PkgMicrosoft_AspNetCore_Razor_Design>
+=======
+<<<<<<<< HEAD:WarehouseManagment/obj/DDDNetCore.csproj.nuget.g.props
+    <PkgMicrosoft_AspNetCore_Razor_Design Condition=" '$(PkgMicrosoft_AspNetCore_Razor_Design)' == '' ">C:\Users\Tiago Branco\.nuget\packages\microsoft.aspnetcore.razor.design\2.2.0</PkgMicrosoft_AspNetCore_Razor_Design>
+========
+    <PkgMicrosoft_AspNetCore_Razor_Design Condition=" '$(PkgMicrosoft_AspNetCore_Razor_Design)' == '' ">C:\Users\jgasp\.nuget\packages\microsoft.aspnetcore.razor.design\2.2.0</PkgMicrosoft_AspNetCore_Razor_Design>
+>>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f:.net application WM/nunopsilva-dddnetcore-c2122b82f1b9/obj/DDDNetCore.csproj.nuget.g.props
+>>>>>>> 536b0894d9d0b93d094761e4489e06d3a7308f8f
   </PropertyGroup>
 </Project>
