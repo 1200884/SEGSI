@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "dc112c30-6a43-448f-9088-251cdbeff709",
+		"name": "Trucks Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24229279"
+	},
+	"item": [
+		{
+			"name": "Get all Trucks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Truck List includes\", function () {\r",
+							"    var jsonData = pm.response.text();\r",
+							"    pm.expect(jsonData).to.include(\"b2b168a8-ff63-4f52-b853-a2295edc9df7\");\r",
+							"    pm.expect(jsonData).to.include(\"85733c75-8f9b-4a8c-b591-0da770afe85a\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Truck List doesn't include\", function () {\r",
+							"    var jsonData = pm.response.text();\r",
+							"    pm.expect(jsonData).to.not.include(\"truck-299-222-222\");\r",
+							"    pm.expect(jsonData).to.not.include(\"API TESTING\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/trucks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"trucks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Truck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Truck\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful retrived response\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    pm.globals.set(\"id\", text.split('{\"id\":\"')[1].split('\",')[0]);\r",
+							"    pm.expect(text).to.include(\"id\");\r",
+							"    pm.expect(text).to.include(pm.globals.get(\"id\"));\r",
+							"    pm.expect(text).to.include('\"tare\":1');\r",
+							"    pm.expect(text).to.include('\"maxWeight\":2');\r",
+							"    pm.expect(text).to.include('\"batteryCapacity\":3');\r",
+							"    pm.expect(text).to.include('\"truckAutonomy\":4');\r",
+							"    pm.expect(text).to.include('\"chargeTime\":5');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tare\":1,\r\n    \"maxWeight\":2,\r\n    \"batteryCapacity\":3,\r\n    \"truckAutonomy\":4,\r\n    \"chargeTime\":5\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/trucks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"trucks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Truck by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Truck by ID\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    console.log(text);\r",
+							"    pm.expect(text).to.include('\"tare\":1');\r",
+							"    pm.expect(text).to.include('\"maxWeight\":2');\r",
+							"    pm.expect(text).to.include('\"batteryCapacity\":3');\r",
+							"    pm.expect(text).to.include('\"truckAutonomy\":4');\r",
+							"    pm.expect(text).to.include('\"chargeTime\":5');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/trucks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"trucks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Truck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Truck\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Truck by ID\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    pm.expect(text).to.include('\"tare\":1');\r",
+							"    pm.expect(text).to.include('\"maxWeight\":2');\r",
+							"    pm.expect(text).to.include('\"batteryCapacity\":5');\r",
+							"    pm.expect(text).to.include('\"truckAutonomy\":4');\r",
+							"    pm.expect(text).to.include('\"chargeTime\":2');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\",\r\n    \"tare\":1,\r\n    \"maxWeight\":2,\r\n    \"batteryCapacity\":5,\r\n    \"truckAutonomy\":4,\r\n    \"chargeTime\":2\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/trucks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"trucks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Truck by id Updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Truck by ID\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    pm.expect(text).to.include('\"tare\":1');\r",
+							"    pm.expect(text).to.include('\"maxWeight\":2');\r",
+							"    pm.expect(text).to.include('\"batteryCapacity\":5');\r",
+							"    pm.expect(text).to.include('\"truckAutonomy\":4');\r",
+							"    pm.expect(text).to.include('\"chargeTime\":2');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/trucks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"trucks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
