@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using WarehouseManagment.Domain.Shared;
 using WarehouseManagment.Domain.Warehouses;
+using Microsoft.AspNetCore.Cors;
 
 namespace WarehouseManagment.Controllers
 {
