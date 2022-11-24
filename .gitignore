@@ -3,6 +3,9 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+# three folder
+three.js-master/
+
 # Node artifact files
 node_modules/
 dist/
