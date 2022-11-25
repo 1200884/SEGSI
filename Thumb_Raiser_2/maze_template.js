@@ -184,24 +184,42 @@ export default class Maze {
             for (var i = 0; i < 2; i++) {
                 console.log(angles[i]);
                 if((angles[i]>0 && angles[i]<Math.PI/2) || (angles[i]>-2*Math.PI && angles[i]<-Math.PI*3/4)){
+                    console.log("1");
                     result.push(armazens[i].position.x+Math.cos(angles[i])*0.2);
                     result.push(armazens[i].position.y);
                     result.push(armazens[i].position.z+Math.sin(angles[i])*0.2);
                 }
                 if((angles[i]>Math.PI/2 && angles[i]<Math.PI) || (angles[i]>-Math.PI*3/4 && angles[i]<-Math.PI/2)){
-                    result.push(armazens[i].position.x-Math.sin(angles[i])*0.2);
+                    console.log("2");
+                    let angulo=angles[i]-Math.PI/2;
+                    if(angulo<0){angulo=angles[i]+Math.PI*3/4;}
+                    let x = Math.cos(angulo)*0.2;
+                    let y = Math.sin(angulo)*0.2;
+                    result.push(armazens[i].position.x-y);
                     result.push(armazens[i].position.y);
-                    result.push(armazens[i].position.z+Math.cos(angles[i])*0.2);
+                    result.push(armazens[i].position.z+x);
+                
                 }
+
                 if((angles[i]>Math.PI && angles[i]<Math.PI*3/4) || (angles[i]<-Math.PI/2 && angles[i]>-Math.PI)){
-                    result.push(armazens[i].position.x-Math.cos(angles[i])*0.2);
+                    console.log("3");
+                    let angulo=angles[i]-Math.PI;
+                    if(angulo<0){angulo=angles[i]+Math.PI;}
+                    let x = Math.cos(angulo)*0.2;
+                    let y = Math.sin(angulo)*0.2;
+                    result.push(armazens[i].position.x-x);
                     result.push(armazens[i].position.y);
-                    result.push(armazens[i].position.z-Math.sin(angles[i])*0.2);
+                    result.push(armazens[i].position.z-y);
                 }
                 if((angles[i]>Math.PI*3/4 && angles[i]<2*Math.PI) || (angles[i]>-Math.PI/2 && angles[i]<0)){
-                    result.push(armazens[i].position.x+Math.sin(angles[i])*0.2);
+                    console.log("4");
+                    let angulo=angles[i]-Math.PI*3/4;
+                    if(angulo<0){angulo=angles[i]+Math.PI/2;}
+                    let x = Math.cos(angulo)*0.2;
+                    let y = Math.sin(angulo)*0.2;
+                    result.push(armazens[i].position.x+y);
                     result.push(armazens[i].position.y);
-                    result.push(armazens[i].position.z-Math.cos(angles[i])*0.2);
+                    result.push(armazens[i].position.z-x);
                 }
             }
             return result;
