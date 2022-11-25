@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="output">
+        <li *ngIf="!error">
+            <span class="badge">{{truck.id}}</span>
+            {{truck.tare}}{{truck.maxWeight}}{{truck.batteryCapacity}}{{truck.truckAutonomy}}{{truck.chargeTime}}
+        </li>
+        <li *ngIf="error">
+            <p>{{ content }}</p>
+        </li>
+    </div>
+
+    <div class="input-box">
+        <form #truckForm="ngForm" (ngSubmit)="putTruck(truckForm.value)">
+          <label>Id: </label>
+          <input type="text" name="id" ngModel>
+
+          <label>Tare: </label>
+          <input type="text" name="tare" ngModel>
+    
+          <label>Max Weight: </label>
+          <input type="text" name="maxWeight" ngModel>
+    
+          <label>Battery Capacity: </label>
+          <input type="text" name="batteryCapacity" ngModel>
+    
+          <label>Truck Autonomy: </label>
+          <input type="text" name="truckAutonomy" ngModel>
+    
+          <label>Charge Time: </label>
+          <input type="text" name="chargeTime" ngModel>
+          <h1></h1>
+          <input type="submit" value="Update Truck">
+        </form>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+.output {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    right: 75%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .get-trucks-center {
+    margin: 0;
+    position: absolute;
+    top: 35%;
+    right: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .get-truck-center {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    right: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .create-truck-center {
+    margin: 0;
+    position: absolute;
+    top: 45%;
+    right: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .put-truck-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .patch-truck-center {
+    margin: 0;
+    position: absolute;
+    top: 55%;
+    right: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .input-box {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    right: 20%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }

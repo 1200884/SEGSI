@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { celebrate, Joi } from 'celebrate';
 
 import { Container } from 'typedi';
-import ITruckController from '../../controllers/IControllers/ITruckController'; 
+import ITruckController from '../../controllers/IControllers/ITruckController';
 
 import config from "../../../config";
 
@@ -23,7 +23,7 @@ export default (app: Router) => {
         chargeTime: Joi.number().required()
       })
     }),
-    (req, res, next) => ctrl.createTruck(req, res, next) );
+    (req, res, next) => ctrl.createTruck(req, res, next));
 
   route.put('',
     celebrate({
@@ -36,16 +36,12 @@ export default (app: Router) => {
         chargeTime: Joi.number().required()
       }),
     }),
-    (req, res, next) => ctrl.updateTruck(req, res, next) );
+    (req, res, next) => ctrl.updateTruck(req, res, next));
 
-  route.get('',
-    celebrate({
-      body: Joi.object({
-        id: Joi.string().required()
-      }),
-    }),
-    (req, res, next) => ctrl.getTruck(req, res, next) );
+  route.get('', (req, res, next) => ctrl.getTrucks(req, res, next));
 
+  route.get('/:str', (req, res, next) => ctrl.getTruck(req.params.str, req, res, next));
+  
   route.patch('',
     celebrate({
       body: Joi.object({

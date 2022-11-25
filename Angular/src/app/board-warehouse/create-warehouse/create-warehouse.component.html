@@ -1,0 +1,30 @@
+<div>
+    <h2>Create Warehouse</h2>
+    <form #warehouseForm="ngForm" (ngSubmit)="onWarehouseCreate(warehouseForm.value)">
+        <label>Id: </label>
+        <input type="text" name="id" ngModel>
+  
+        <label>Description: </label>
+        <input type="text" name="description" ngModel>
+  
+        <label>Street: </label>
+        <input type="text" name="street" ngModel>
+  
+        <label>City: </label>
+        <input type="text" name="city" ngModel>
+  
+        <label>Country: </label>
+        <input type="text" name="country" ngModel>
+  
+        <label>Latitude: </label>
+        <input type="text" name="latitude" ngModel>
+  
+        <label>Longitude: </label>
+        <input type="text" name="longitude" ngModel>
+        <h1></h1>
+        <input type="submit" value="Add Warehouse">
+      </form>
+  </div>
+  <div *ngIf="message">
+    <h1>{{message}}</h1>
+  </div>
