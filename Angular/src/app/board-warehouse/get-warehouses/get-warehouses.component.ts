@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import {Warehouse} from '../../_models/Warehouse';
@@ -11,10 +12,15 @@ import {Warehouse} from '../../_models/Warehouse';
 export class WarehousesComponent implements OnInit {
   warehouses: Warehouse[] = [];
   content ?: string;
-  constructor(private warehouseService: WarehouseService) { }
+  constructor(private warehouseService: WarehouseService,
+              private location: Location) { }
 
   ngOnInit(): void {
     this.getWarehouses();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   getWarehouses(): void {
