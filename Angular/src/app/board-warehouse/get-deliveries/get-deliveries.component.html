@@ -1,0 +1,8 @@
+﻿<h2>My Deliveries</h2>
+<ul class="warehouses">
+  <li *ngFor="let delivery of deliveries">
+    <a routerLink="/detail/{{delivery.id}}">
+      <span class="badge">{{delivery.id}}</span> {{delivery.destinationWarehouseId}}
+    </a>
+  </li>
+</ul>

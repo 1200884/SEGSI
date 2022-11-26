@@ -23,6 +23,9 @@ import { PatchTruckComponent } from './board-fleet/patch-truck/patch-truck.compo
 import { PutTruckComponent } from './board-fleet/put-truck/put-truck.component';
 import { GetTruckComponent } from './board-fleet/get-truck/get-truck.component';
 import { CreateTruckComponent } from './board-fleet/create-truck/create-truck.component';
+import {DeliveriesComponent} from "./board-warehouse/get-deliveries/get-deliveries.component";
+import {CreateDeliveryComponent} from "./board-warehouse/create-delivery/create-delivery.component";
+import {UpdateDeliveryComponent} from "./board-warehouse/update-delivery/update-delivery.component";
 
 @NgModule({
   declarations: [
@@ -38,12 +41,14 @@ import { CreateTruckComponent } from './board-fleet/create-truck/create-truck.co
     BoardWarehouseComponent,
     UpdateWarehouseComponent,
     WarehousesComponent,
-    UpdateWarehouseComponent,
     CreateWarehouseComponent,
     PatchTruckComponent,
     PutTruckComponent,
     GetTruckComponent,
-    CreateTruckComponent
+    CreateTruckComponent,
+    DeliveriesComponent,
+    CreateDeliveryComponent,
+    UpdateDeliveryComponent
   ],
   imports: [
     BrowserModule,

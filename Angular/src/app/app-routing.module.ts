@@ -16,6 +16,9 @@ import { CreateTruckComponent } from './board-fleet/create-truck/create-truck.co
 import { PutTruckComponent } from './board-fleet/put-truck/put-truck.component';
 import { PatchTruckComponent } from './board-fleet/patch-truck/patch-truck.component';
 import { GetTruckComponent } from './board-fleet/get-truck/get-truck.component';
+import { DeliveriesComponent } from "./board-warehouse/get-deliveries/get-deliveries.component";
+import { CreateDeliveryComponent } from "./board-warehouse/create-delivery/create-delivery.component";
+import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/update-delivery.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,16 +26,20 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'fleet', component: BoardFleetComponent },
   { path: 'warehouse', component: BoardWarehouseComponent},
+  { path: 'fleet', component: BoardFleetComponent },
   { path: 'logistics', component: BoardLogisticsComponent},
   { path: 'warehouses', component: WarehousesComponent },
+  { path: 'deliveries', component: DeliveriesComponent},
+  { path: 'detail/:id', component: UpdateWarehouseComponent },
+  { path: 'deliveries/:id', component: UpdateDeliveryComponent },
   { path: 'Create warehouses', component: CreateWarehouseComponent},
+  { path: 'Create deliveries', component: CreateDeliveryComponent},
   { path: 'get-truck', component: GetTruckComponent},
   { path: 'create-truck', component: CreateTruckComponent},
   { path: 'put-truck', component: PutTruckComponent},
   { path: 'patch-truck', component: PatchTruckComponent},
-  { path: 'detail/:id', component: UpdateWarehouseComponent },
+
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
