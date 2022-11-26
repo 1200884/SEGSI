@@ -1,0 +1,32 @@
+﻿<div>
+  <h2>Create Delivery</h2>
+  <form #deliveryForm="ngForm" (ngSubmit)="onDeliveryCreate(deliveryForm.value)">
+    <br>
+    <br>
+    <label>Id: </label>
+    <input type="text" name="id" ngModel>
+    <br>
+    <label>Date: </label>
+    <input type="text" name="date" ngModel>
+    <br>
+    <label>Weight: </label>
+    <input type="text" name="weight" ngModel>
+    <br>
+    <label>DestinationWarehouseId: </label>
+    <input type="text" name="destinationWarehouseId" ngModel>
+    <br>
+    <label>LoadTime: </label>
+    <input type="text" name="loadTime" ngModel>
+    <br>
+    <label>UnloadTime: </label>
+    <input type="text" name="unloadTime" ngModel>
+    <br>
+    <br>
+    <h1></h1>
+    <input type="button" value="Add Delivery">
+    <button type="button" (click)="goBack()">GoBack</button>
+  </form>
+</div>
+<div *ngIf="message">
+  <h1>{{message}}</h1>
+</div>

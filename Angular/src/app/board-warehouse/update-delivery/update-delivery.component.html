@@ -1,0 +1,26 @@
+﻿<div *ngIf="delivery">
+  <h2>{{delivery.destinationWarehouseId | uppercase}} delivery Details</h2>
+  <div><span>id: </span>{{delivery.id}}</div>
+  <div>
+    <label for="delivery-description">description: </label>
+    <input id="delivery-description" [(ngModel)]="delivery.date" placeholder="delivery description"/>
+    <br>
+    <br>
+    <label for="delivery-street">street: </label>
+    <input id="delivery-street" [(ngModel)]="delivery.weight" placeholder="delivery street"/>
+    <br>
+    <br>
+    <label for="delivery-city">city: </label>
+    <input id="delivery-city" [(ngModel)]="delivery.destinationWarehouseId" placeholder="delivery city"/>
+    <br>
+    <br>
+    <label for="delivery-country">country: </label>
+    <input id="delivery-country" [(ngModel)]="delivery.loadTime" placeholder="delivery country"/>
+    <br>
+    <br>
+    <label for="delivery-latitude">latitude: </label>
+    <input id="delivery-latitude" [(ngModel)]="delivery.unloadTime" placeholder="delivery latitude"/>
+  </div>
+  <button type="button" (click)="goBack()">go back</button>
+  <button type="button" (click)="Save()">Save</button>
+</div>

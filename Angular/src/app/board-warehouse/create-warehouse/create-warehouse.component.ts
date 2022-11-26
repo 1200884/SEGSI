@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { Warehouse } from 'src/app/_models/Warehouse';
@@ -11,12 +12,16 @@ import { Warehouse } from 'src/app/_models/Warehouse';
 export class CreateWarehouseComponent implements OnInit {
   message:string | undefined;
   constructor(
-    private warehouseService: WarehouseService
+    private warehouseService: WarehouseService,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
   }
 
+  goBack(): void {
+    this.location.back();
+  }
   /*onWarehouseCreate(warehouse: [id: string, description: string, street:string, city:string, country:string,latitude:string,longitude:string]){
     this.warehouseService.addWarehouse(warehouse).subscribe();
   }*/
