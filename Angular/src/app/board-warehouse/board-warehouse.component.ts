@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board-warehouse.component.css']
 })
 export class BoardWarehouseComponent implements OnInit {
-  title = 'WarehousesUI';
+  title = 'Warehouse Manager Board';
 
   constructor() { }
 

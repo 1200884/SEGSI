@@ -22,9 +22,7 @@ export class CreateWarehouseComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-  /*onWarehouseCreate(warehouse: [id: string, description: string, street:string, city:string, country:string,latitude:string,longitude:string]){
-    this.warehouseService.addWarehouse(warehouse).subscribe();
-  }*/
+
   onWarehouseCreate(warehouse:Warehouse){
     this.warehouseService.addWarehouse(warehouse).subscribe(data=>{this.message="Warehouse Created"},err => {
         this.message="Error creating warehouse";

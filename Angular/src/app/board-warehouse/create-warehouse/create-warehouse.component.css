@@ -1,4 +1,4 @@
-label {
+  label {
     color: #435960;
     font-weight: bold;
   }
@@ -16,8 +16,14 @@ label {
   button:hover {
     background-color: #cfd8dc;
   }
-  button:disabled {
+
+  #addWarehouseButton {
+    margin-top: 20px;
     background-color: #eee;
-    color: #ccc;
-    cursor: auto;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  #addWarehouseButton:hover {
+    background-color: #cfd8dc;
   }

@@ -5,7 +5,7 @@ import { DeliveryService } from 'src/app/_services/delivery.service';
 import { Delivery } from 'src/app/_models/Delivery';
 
 @Component({
-  selector: 'app-create-warehouse',
+  selector: 'app-create-delivery',
   templateUrl: './create-delivery.component.html',
   styleUrls: ['./create-delivery.component.css']
 })
@@ -23,10 +23,8 @@ export class CreateDeliveryComponent implements OnInit {
     this.location.back();
   }
 
-  /*onDeliveryCreate(warehouse: [id: string, description: string, street:string, city:string, country:string,latitude:string,longitude:string]){
-    this.warehouseService.addWarehouse(warehouse).subscribe();
-  }*/
   onDeliveryCreate(delivery:Delivery){
+    console.log(delivery);
     this.deliveryService.addDelivery(delivery).subscribe(data=>{this.message="Delivery Created"},err => {
       this.message="Error creating delivery";
     });

@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'logistics', component: BoardLogisticsComponent},
   { path: 'warehouses', component: WarehousesComponent },
   { path: 'deliveries', component: DeliveriesComponent},
-  { path: 'detail/:id', component: UpdateWarehouseComponent },
+  { path: 'warehouses/:id', component: UpdateWarehouseComponent },
   { path: 'deliveries/:id', component: UpdateDeliveryComponent },
   { path: 'Create warehouses', component: CreateWarehouseComponent},
   { path: 'Create deliveries', component: CreateDeliveryComponent},
