@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Path } from '../_models/Path';
 
 const API_URL = 'http://localhost:3000/api';
 const PATHS_URL = '/paths';
@@ -24,7 +25,7 @@ export class LogisticsService {
   public putPath(info: string): Observable<any> {
     return this.http.put(API_URL + PATHS_URL, info, { responseType: 'text'});
   }
-  public postPath(info: string): Observable<any> {
-    return this.http.post(API_URL + PATHS_URL, info, { responseType: 'text' });
+  public postPath(path: any): Observable<any> {
+    return this.http.post(API_URL + PATHS_URL, path, { responseType: 'text' });
   }
 }

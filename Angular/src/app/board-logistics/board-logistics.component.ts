@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { LogisticsService } from '../_services/logistics.service';
+import { Path } from '../_models/Path';
 @Component({
   selector: 'app-board-logistics',
   templateUrl: './board-logistics.component.html',
