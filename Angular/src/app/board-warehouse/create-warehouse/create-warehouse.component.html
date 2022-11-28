@@ -1,6 +1,7 @@
 <div>
     <h2>Create Warehouse</h2>
     <form #warehouseForm="ngForm" (ngSubmit)="onWarehouseCreate(warehouseForm.value)">
+        <br>
         <label>Id: </label>
         <input type="text" name="id" ngModel>
         <br>
@@ -22,7 +23,7 @@
         <label>Longitude: </label>
         <input type="text" name="longitude" ngModel>
         <h1></h1>
-        <input type="submit" value="Add Warehouse">
+        <input id="addWarehouseButton" type="submit" value="Add Warehouse">
         <button type="button" (click)="goBack()">GoBack</button>
       </form>
   </div>

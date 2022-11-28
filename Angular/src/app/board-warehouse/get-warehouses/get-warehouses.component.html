@@ -1,11 +1,14 @@
 <h2>My Warehouses</h2>
 <ul class="warehouses">
+  <br>
   <li *ngFor="let warehouse of warehouses">
-    <a routerLink="/detail/{{warehouse.id}}">
+    <a routerLink="/warehouses/{{warehouse.id}}">
     <span class="badge">{{warehouse.id}}</span> {{warehouse.description}}
     </a>
     <!--<a routerLink="/detail/{{truck.id}}">
       <span class="badge">{{truck.id}}</span> {{truck.latitude}}
     </a>-->
   </li>
+  <br>
+  <button type="button" (click)="goBack()">GoBack</button>
 </ul>

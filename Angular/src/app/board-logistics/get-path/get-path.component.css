@@ -1,7 +1,7 @@
-.deliveries a {
-  color: #333;
+.paths a {
+  color: rgb(23, 232, 23);
   text-decoration: none;
-  background-color: #EEE;
+  background-color: rgb(152, 19, 235);
   margin: .5em;
   padding: .3em 0;
   height: 1.8em;
@@ -10,12 +10,12 @@
   width: 100%;
 }
 
-.deliveries .badge {
+.paths .badge {
   display: inline-block;
   font-size: small;
-  color: white;
+  color: rgb(219, 242, 15);
   padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
+  background-color: #ff0e9a;
   line-height: 1em;
   position: relative;
   left: -1px;
@@ -25,16 +25,4 @@
   text-align: right;
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
-}
-
-button {
-  margin-top: 20px;
-  background-color: #eee;
-  padding: 1rem;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-button:hover {
-  background-color: #cfd8dc;
 }

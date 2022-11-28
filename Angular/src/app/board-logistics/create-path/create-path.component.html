@@ -1,0 +1,27 @@
+<div>
+  <h2>Create Path</h2>
+  <form #pathForm="ngForm" (ngSubmit)="onPathCreate(pathForm.value)">
+      <label>Warehouse of Departure: </label>
+      <input type="text" name="warehouseDeparture" ngModel>
+      <br><br>
+      <label>Last Warehouse: </label>
+      <input type="text" name="warehouseDestination" ngModel>
+      <br><br>
+      <label>Path Distance: </label>
+      <input type="text" name="distance" ngModel>
+      <br><br>
+      <label>Time of Travelling: </label>
+      <input type="text" name="travelTime" ngModel>
+      <br><br>
+      <label>Energy Necessary: </label>
+      <input type="text" name="energyNecessary" ngModel>
+      <br><br>
+      <label>Additional Time to charge (if needed): </label>
+      <input type="text" name="aditionalTime" ngModel>
+      <h1></h1>
+      <input type="submit" value="Add Path">
+    </form>
+</div>
+<div *ngIf="message">
+  <h1>{{message}}</h1>
+</div>

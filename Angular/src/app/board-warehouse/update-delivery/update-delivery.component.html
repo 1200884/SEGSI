@@ -2,24 +2,24 @@
   <h2>{{delivery.destinationWarehouseId | uppercase}} delivery Details</h2>
   <div><span>id: </span>{{delivery.id}}</div>
   <div>
-    <label for="delivery-description">description: </label>
-    <input id="delivery-description" [(ngModel)]="delivery.date" placeholder="delivery description"/>
+    <label for="delivery-date">date: </label>
+    <input id="delivery-date" [(ngModel)]="delivery.date" placeholder="delivery date"/>
     <br>
     <br>
-    <label for="delivery-street">street: </label>
-    <input id="delivery-street" [(ngModel)]="delivery.weight" placeholder="delivery street"/>
+    <label for="delivery-weight">weight: </label>
+    <input id="delivery-weight" [(ngModel)]="delivery.weight" placeholder="delivery weight"/>
     <br>
     <br>
-    <label for="delivery-city">city: </label>
-    <input id="delivery-city" [(ngModel)]="delivery.destinationWarehouseId" placeholder="delivery city"/>
+    <label for="delivery-destinationWarehouseId">destinationWarehouseId: </label>
+    <input id="delivery-destinationWarehouseId" [(ngModel)]="delivery.destinationWarehouseId" placeholder="delivery destinationWarehouseId"/>
     <br>
     <br>
-    <label for="delivery-country">country: </label>
-    <input id="delivery-country" [(ngModel)]="delivery.loadTime" placeholder="delivery country"/>
+    <label for="delivery-loadTime">loadTime: </label>
+    <input id="delivery-loadTime" [(ngModel)]="delivery.loadTime" placeholder="delivery loadTime"/>
     <br>
     <br>
-    <label for="delivery-latitude">latitude: </label>
-    <input id="delivery-latitude" [(ngModel)]="delivery.unloadTime" placeholder="delivery latitude"/>
+    <label for="delivery-unloadTime">unloadTime: </label>
+    <input id="delivery-unloadTime" [(ngModel)]="delivery.unloadTime" placeholder="delivery unloadTime"/>
   </div>
   <button type="button" (click)="goBack()">go back</button>
   <button type="button" (click)="Save()">Save</button>

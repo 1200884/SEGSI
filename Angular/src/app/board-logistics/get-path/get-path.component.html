@@ -1,0 +1,8 @@
+﻿<h2>List of existent paths</h2>
+<ul class="path">
+  <li *ngFor="let path of paths">
+    <a routerLink="/detail/{{path.id}}">
+      <span class="badge">{{path.id}}</span>
+    </a>
+  </li>
+</ul>
