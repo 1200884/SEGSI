@@ -5,6 +5,7 @@ import role from './routes/roleRoute';
 import truckRoute from './routes/truckRoute';
 import pathRoute from './routes/pathRoute';
 import packagingRoute from './routes/packagingRoute';
+import planningRoute from './routes/planningRoute';
 
 
 export default () => {
@@ -16,6 +17,7 @@ export default () => {
 	truckRoute(app);
 	pathRoute(app);
 	packagingRoute(app);
+	planningRoute(app);
 	
 	return app
 }
