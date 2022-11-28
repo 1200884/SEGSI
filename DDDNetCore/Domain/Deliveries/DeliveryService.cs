@@ -29,7 +29,7 @@ namespace DDDNetCore.Domain.Deliveries
                 Id = del.Id.AsString(),
                 date = del.date, 
                 weight = del.weight,
-                destinationWarhouseId = del.destinationWarhouseId,
+                destinationWarehouseId = del.destinationWarehouseId,
                 loadTime = del.loadTime, 
                 unloadTime = del.unloadTime});
 
@@ -48,9 +48,9 @@ namespace DDDNetCore.Domain.Deliveries
 
         public async Task<DeliveryDto> AddAsync(DeliveryDto dto)
         {
-            await checkWarehouseIdAsync(new WarehouseId(dto.destinationWarhouseId));
+            await checkWarehouseIdAsync(new WarehouseId(dto.destinationWarehouseId));
 
-            var del = new Delivery(dto.Id, dto.date, dto.weight, dto.destinationWarhouseId, dto.loadTime, dto.unloadTime);
+            var del = new Delivery(dto.Id, dto.date, dto.weight, dto.destinationWarehouseId, dto.loadTime, dto.unloadTime);
 
             await this._repo.AddAsync(del);
 
@@ -69,7 +69,7 @@ namespace DDDNetCore.Domain.Deliveries
             // change all field
             del.ChangeDate(dto.date);
             del.ChangeWeight(dto.weight);
-            del.ChangeWarehouseDeliveryId(dto.destinationWarhouseId);
+            del.ChangeWarehouseDeliveryId(dto.destinationWarehouseId);
             del.ChangeLoadTime(dto.loadTime);
             del.ChangeUnloadTime(dto.unloadTime);
             

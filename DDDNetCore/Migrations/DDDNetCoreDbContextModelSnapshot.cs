@@ -29,7 +29,7 @@ namespace DDDNetCore.Migrations
                     b.Property<string>("date")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("destinationWarhouseId")
+                    b.Property<string>("destinationWarehouseId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("loadTime")

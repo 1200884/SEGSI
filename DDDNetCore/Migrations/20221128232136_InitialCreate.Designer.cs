@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDDNetCore.Migrations
 {
     [DbContext(typeof(DDDNetCoreDbContext))]
-    [Migration("20221124121941_InitialCreate")]
+    [Migration("20221128232136_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace DDDNetCore.Migrations
                     b.Property<string>("date")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("destinationWarhouseId")
+                    b.Property<string>("destinationWarehouseId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("loadTime")
