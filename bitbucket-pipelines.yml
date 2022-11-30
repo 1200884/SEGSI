@@ -17,10 +17,7 @@ pipelines:
               - dotnetcore
             script:
               - cd DDDNetCore
-              - REPORTS_PATH=./test-reports/build_${BITBUCKET_BUILD_NUMBER}
-              - dotnet restore
-              - dotnet build --no-restore --configuration Release
-              - dotnet test --no-build --configuration Release --test-adapter-path:. --logger:"junit;LogFilePath=$REPORTS_PATH/junit.xml"
+              - dotnet build
         - step:
             name: Build and Test 
             caches:
@@ -29,4 +26,4 @@ pipelines:
               - cd ..
               - cd NodeJs
               - npm install
-              - npm test
+              - npm run build
