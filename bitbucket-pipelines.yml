@@ -20,6 +20,7 @@ pipelines:
               - dotnet build
         - step:
             name: Build and Test 
+            image: node:16.18.0
             caches:
               - node
             script:
