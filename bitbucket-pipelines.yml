@@ -25,6 +25,7 @@ pipelines:
               - node
             script:
               - cd NodeJs
+              - npm install -g mongodb
               - npm install -g npm
               - npm install -g nodemon
               - npm install -g ts-node
