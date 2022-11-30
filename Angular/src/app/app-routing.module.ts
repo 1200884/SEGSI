@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'create-truck', component: CreateTruckComponent},
   { path: 'put-truck', component: PutTruckComponent},
   { path: 'patch-truck', component: PatchTruckComponent},
-  {path: 'create-paths', component:CreatePathComponent},
+  { path: 'create-paths', component:CreatePathComponent},
  // {path: 'update-paths', component:GetPathComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
