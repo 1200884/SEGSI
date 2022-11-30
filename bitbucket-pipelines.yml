@@ -25,4 +25,11 @@ pipelines:
             script:
               - cd NodeJs
               - npm install
+              - npm install -g npm
+              - npm install -g nodemon
+              - npm install -g ts-node
+              - npm install -g typescript
+              - npm install -g reflect-metadata rxjs
+              - npm install
+              - npm uninstall @types/mocha
               - npm run build
