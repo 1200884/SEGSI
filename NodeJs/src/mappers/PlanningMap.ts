@@ -1,12 +1,5 @@
 import { Mapper } from "../core/infra/Mapper";
 
-import { Document, Model } from 'mongoose';
-import { ITruckPersistence } from '../dataschema/ITruckPersistence';
-
-import ITruckDTO from "../dto/ITruckDTO";
-import { Truck } from "../domain/truck";
-
-import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { Planning } from "../domain/planning";
 import IPlanningDTO from "../dto/IPlanningDTO";
 

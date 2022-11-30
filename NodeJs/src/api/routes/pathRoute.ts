@@ -43,7 +43,7 @@ export default (app: Router) => {
   route.get('',
     celebrate({
       body: Joi.object({
-        id: Joi.string().required()
+        id: Joi.string()
       }),
     }),
     (req, res, next) => ctrl.getPath(req, res, next) );

@@ -19,8 +19,7 @@ path_creator(Request):-
                       path(PATH, [])
                     ]),
   voltamaiscedo(TRUCK,DATE,T,L),
-  working_directory(_, PATH),
-  open('teste.txt',write,STREAM),
+  open(PATH,write,STREAM),
   write(STREAM,T),nl(STREAM),
   write(STREAM,L),nl(STREAM),
   close(STREAM),
