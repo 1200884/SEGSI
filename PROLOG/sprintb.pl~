@@ -7,28 +7,42 @@
 :- http_handler('/lapr5', responde_ola, []).
 :- http_handler('/create_path',path_creator, []).
 :- http_handler('/send_file_post', send_file_post, []).
+:- http_handler('/planning', planning_post, []).
 
 % Criação de servidor HTTP no porto 'Port'
-server(Port) :-
-        http_server(http_dispatch, [port(Port)]).
+server() :-
+        http_server(http_dispatch, [port(5000)]).
 
 path_creator(Request):-
   http_parameters(Request,
                     [ truck(TRUCK, []),
-                      date(DATE, [between(20220101,20221231)]),
-                      path(PATH, [])
+                      date(DATE, [between(20220101,20221231)])
                     ]),
   voltamaiscedo(TRUCK,DATE,T,L),
-  open(PATH,write,STREAM),
-  write(STREAM,T),nl(STREAM),
-  write(STREAM,L),nl(STREAM),
-  close(STREAM),
   %json_write(STREAM,point{T,L}),
   format('Content-type: text/plain~n~n'),
   format('time: ~2f~nplances: ~w',[T,L]).
 
 responde_ola(_Request):-format('Content-type: text/plain~n~n'),
         format('Olá LAPR5!~n').
+
+% MÉTODO POST enviando um ficheiro de texto
+% http_client:http_post('http://localhost:5000/planning',form_data([file=file('./teste.txt')]), Reply, []).
+
+planning_post(Request):-
+        http_parameters(Request,[ file(X,[])]),
+        format('Content-type: text/plain~n~n'),
+        format('Received file: ~w~n',[X]).
+
+send_file_post(Request) :-
+	http_parameters(Request,[ file(X,[])]),
+    format('Content-type: text/plain~n~n'),
+	format('Received: ~w~n',[X]).
+
+
+
+
+
 
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
 entrega(4439, 20221205, 200, 1, 8, 10).
