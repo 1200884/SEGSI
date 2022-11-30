@@ -1,10 +1,7 @@
 import { AggregateRoot } from "../core/domain/AggregateRoot";
-import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import { Result } from "../core/logic/Result";
-import { TruckId } from "./truckId";
 
-import ITruckDTO from "../dto/ITruckDTO";
 import IPlanningDTO from "../dto/IPlanningDTO";
 
 interface PlanningProps {

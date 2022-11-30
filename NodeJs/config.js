@@ -57,6 +57,11 @@ export default {
     packaging: {
       name: "PackagingController",
       path: "../controllers/packagingController"
+    },
+    planning: {
+
+      name: "PlanningController",
+      path: "../controllers/planningController"
     }
   },
 
@@ -80,6 +85,10 @@ export default {
     packaging: {
       name: "PackagingRepo",
       path: "../repos/packagingRepo"
+    },
+    planning: {
+      name: "PlanningRepo",
+      path: "../repos/planningRepo"
     }
   },
 
@@ -99,6 +108,10 @@ export default {
     packaging: {
       name: "PackagingService",
       path: "../services/packagingService"
+    },
+    planning: {
+      name: "PlanningService",
+      path: "../services/planningService"
     }
   },
 };

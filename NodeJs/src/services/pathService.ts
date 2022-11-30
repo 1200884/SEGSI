@@ -13,19 +13,18 @@ export default class PathService implements IPathService {
       @Inject(config.repos.path.name) private pathRepo : IPathRepo
   ) {}
 
-  public async getPath( pathId: string): Promise<Result<IPathDTO>> {
+  public async getPath(pathId: string): Promise<Result<IPathDTO>> {
+    
     try {
-      const id = pathId.split('"')[3];
-      
-      const path = await this.pathRepo.findByDomainId(id);
+      const path = await this.pathRepo.findByDomainId(pathId);
 
       if (path === null) {
         return Result.fail<IPathDTO>("Path not found");
       }
       else {
-        const pathDTOResult = PathMap.toDTO( path ) as IPathDTO;
-        return Result.ok<IPathDTO>( pathDTOResult )
-        }
+        const pathDTOResult = PathMap.toDTO(path) as IPathDTO;
+        return Result.ok<IPathDTO>(pathDTOResult)
+      }
     } catch (e) {
       throw e;
     }
@@ -37,15 +36,15 @@ export default class PathService implements IPathService {
       var finalPaths: Array<IPathDTO> = [];
 
       if (paths == null) {
-        return Result.fail<IPathDTO[]>("There was a problem assembling the paths");
+        return Result.fail<IPathDTO[]>("There was a problem assembling the Pathss");
       }
       else {
         for (var i = 0; i < paths.length; i++) {
-          finalPaths.push(PathMap.toDTO( paths[i] ) as IPathDTO);
+          finalPaths.push(PathMap.toDTO(paths[i]) as IPathDTO);
         }
-        return Result.ok<IPathDTO[]>( finalPaths )
+        return Result.ok<IPathDTO[]>(finalPaths)
       }
-    }catch (e) {
+    } catch (e) {
       throw e;
     }
   }
