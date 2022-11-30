@@ -11,8 +11,8 @@ pipelines:
   default:
     - parallel:
         - step:
-            image: mcr.microsoft.com/dotnet/core/sdk:5.0
             name: Build and Test
+            image: mcr.microsoft.com/dotnet/core/sdk:5.0
             caches:
               - dotnetcore
             script:
