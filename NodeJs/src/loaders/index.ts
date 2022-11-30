@@ -88,12 +88,11 @@ export default async ({ expressApp }) => {
     name: config.repos.packaging.name,
     path: config.repos.packaging.path
   }
-
   const planningRepo = {
     name: config.repos.planning.name,
     path: config.repos.planning.path
   }
-
+ 
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -113,23 +112,14 @@ export default async ({ expressApp }) => {
     name: config.services.packaging.name,
     path: config.services.packaging.path
   }
-  const planningController = {
-    name: config.controllers.planning.name,
-    path: config.controllers.planning.path
-  }
-const planningRepo = {
-    name: config.repos.planning.name,
-    path: config.repos.planning.path
-  }
+  
+
 const planningService = {
     name: config.services.planning.name,
     path: config.services.planning.path
   }
 
-  const planningService = {
-    name: config.services.planning.name,
-    path: config.services.planning.path
-  }
+  
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -162,12 +152,7 @@ const planningService = {
       pathService,
       packagingService,
       planningService
-<<<<<<< HEAD
     ]  });
-=======
-    ]
-  });
->>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
 
   await expressLoader({ app: expressApp });

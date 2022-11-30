@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import {expressjwt} from 'express-jwt';
-=======
-import { expressjwt } from 'express-jwt';
->>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
 import config from '../../../config';
 
 /**
@@ -30,11 +26,7 @@ const getTokenFromHeader = req => {
 
 const isAuth = expressjwt({
   secret: config.jwtSecret, // The _secret_ to sign the JWTs
-<<<<<<< HEAD
-  algorithms:["HS256"],
-=======
   algorithms: ["HS256"], // Use req.token to store the JWT
->>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
   getToken: getTokenFromHeader, // How to extract the JWT from the request
 });
 
