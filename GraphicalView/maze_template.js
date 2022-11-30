@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Ground from "./ground_template.js";
 import Armazem from "./Armazem_template.js";
 import Base from "./Base.js";
+import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 
 /*
  * parameters = {
@@ -10,6 +11,9 @@ import Base from "./Base.js";
  *  scale: Vector3
  * }
  */
+
+
+let scene3D;
 
 export default class Maze {
     constructor(parameters) {
@@ -27,7 +31,7 @@ export default class Maze {
             // Create a wall
             maze.armazem = new Armazem({textureUrl: description.wallTextureUrl});
             maze.base = new Base({textureUrl: description.wallTextureUrl});
-
+            //maze.armazem3D.loaded=false;
             let base1;
             base1 = maze.base.object.clone();
             maze.object.add(base1);
@@ -35,6 +39,12 @@ export default class Maze {
             base2 = maze.base.object.clone();
             maze.object.add(base2);
             // Build the maze
+        
+
+            const light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(-1,-1,1);
+            maze.object.add(light);
+
             let armazem1;
             armazem1 = maze.armazem.object.clone();
             let armazem2;
@@ -101,6 +111,7 @@ export default class Maze {
             armazem14.position.set(-2.04,0.16,-4.87)  //14
             maze.object.add(armazem14);
             armazem15.position.set(-0.09,2.5,-2.205)  //15
+
             armazem5.add(base1);
             armazem15.add(base2);
             pointEachOther(armazem15,armazem5);
@@ -111,6 +122,30 @@ export default class Maze {
             maze.object.add(armazem17);
             maze.object.scale.set(maze.scale.x, maze.scale.y, maze.scale.z);
             maze.loaded = true;
+          
+            casinhas(armazem7.position.x, armazem7.position.y, armazem7.position.z, maze);
+            casinhas(armazem1.position.x, armazem1.position.y, armazem1.position.z, maze);
+            casinhas(armazem2.position.x, armazem2.position.y, armazem2.position.z, maze);
+            casinhas(armazem3.position.x, armazem3.position.y, armazem3.position.z, maze);
+            casinhas(armazem4.position.x, armazem4.position.y, armazem4.position.z, maze);
+            casinhas(3,0,3, maze);
+
+            //this.maze.armazem3D.loaded = false;
+
+        //}
+        }
+
+        function casinhas(x,y,z, maze){
+
+            const loader = new GLTFLoader();
+            loader.load('assets/warehouse.glb', (gltf) => {
+                const root = gltf.scene;
+                gltf.scene.scale.set(0.003,0.003,0.003);
+                root.position.setX(x);
+                root.position.setY(y+0.1);
+                root.position.setZ(z);
+                maze.object.add(root);
+              });
         }
 
         function pointEachOther(armazem,armazem1){
@@ -160,6 +195,9 @@ export default class Maze {
 
             // onError callback
             error => onError(this.url, error)
+
+            
         );
+     
     }
 }

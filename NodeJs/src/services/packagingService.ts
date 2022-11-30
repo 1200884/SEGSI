@@ -15,9 +15,9 @@ export default class PackagingService implements IPackagingService {
 
   public async getPackaging( packagingId: string): Promise<Result<IPackagingDTO>> {
     try {
-      const id = packagingId.split('"')[3];
+      //const id = packagingId.split('"')[3];
       
-      const packaging = await this.packagingRepo.findByDomainId(id);
+      const packaging = await this.packagingRepo.findByDomainId(packagingId);
 
       if (packaging === null) {
         return Result.fail<IPackagingDTO>("Packaging not found");

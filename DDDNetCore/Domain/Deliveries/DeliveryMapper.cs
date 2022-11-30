@@ -10,14 +10,14 @@ namespace DDDNetCore.Domain.Deliveries
                 Id = del.Id.AsString(),
                 date = del.date, 
                 weight = del.weight,
-                destinationWarhouseId = del.destinationWarhouseId,
+                destinationWarehouseId = del.destinationWarehouseId,
                 loadTime = del.loadTime, 
                 unloadTime = del.unloadTime
             };
         }
 
         public static Delivery toDelivery(DeliveryDto del){
-            return new Delivery(del.Id, del.date, del.weight, del.destinationWarhouseId, del.loadTime, del.unloadTime);
+            return new Delivery(del.Id, del.date, del.weight, del.destinationWarehouseId, del.loadTime, del.unloadTime);
                   
             
         }

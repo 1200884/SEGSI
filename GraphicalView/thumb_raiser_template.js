@@ -605,6 +605,7 @@ export default class ThumbRaiser {
     }
 
     update() {
+    
         if (!this.gameRunning) {
             if (this.maze.loaded && this.player.loaded) { // If all resources have been loaded
                 // Add the maze, the player and the lights to the scene

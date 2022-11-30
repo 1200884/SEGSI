@@ -46,16 +46,32 @@ export default class PackagingController implements IPackagingController /* TODO
     }
   };
 
-  //Packaging packaging
-  public async getPackaging(req: Request, res: Response, next: NextFunction) {
+  //Packagings packagings
+  public async getPackagings(req: Request, res: Response, next: NextFunction) {
     try {
-      let id = JSON.stringify(req.body);
+      let packagingOrError = await this.packagingServiceInstance.getPackagings() as Result<IPackagingDTO[]>;
+
+      if (packagingOrError.isFailure) {
+        return res.status(404).send();
+      }
+
+      const packagingDTO = packagingOrError.getValue();
+      return res.status(201).json( packagingDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  }
+  public async getPackaging(id:string, req: Request, res: Response, next: NextFunction) {
+    try {
+      let packagingOrError = await this.packagingServiceInstance.getPackaging(id) as Result<IPackagingDTO>;
+      /*let id = JSON.stringify(req.body);
       let packagingOrError;
       if (id === "{}" || id.length < 2) {
         packagingOrError = await this.packagingServiceInstance.getPackagings() as Result<IPackagingDTO[]>;
       }else {
         packagingOrError = await this.packagingServiceInstance.getPackaging(id) as Result<IPackagingDTO>;
-      }
+      }*/
       if (packagingOrError.isFailure) {
         return res.status(404).send();
       }

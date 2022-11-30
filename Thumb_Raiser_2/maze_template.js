@@ -103,7 +103,7 @@ export default class Maze {
 
 
 
-            createBridge(maze, description, armazem2, armazem8);
+            createBridge(maze, description, armazem3, armazem4);
 
 
             maze.object.scale.set(maze.scale.x, maze.scale.y, maze.scale.z);

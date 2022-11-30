@@ -13,7 +13,7 @@ namespace DDDNetCore.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     date = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     weight = table.Column<int>(type: "int", nullable: false),
-                    destinationWarhouseId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    destinationWarehouseId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     loadTime = table.Column<int>(type: "int", nullable: false),
                     unloadTime = table.Column<int>(type: "int", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false)

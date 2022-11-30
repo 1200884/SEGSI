@@ -24,7 +24,6 @@ export class CreateDeliveryComponent implements OnInit {
   }
 
   onDeliveryCreate(delivery:Delivery){
-    console.log(delivery);
     this.deliveryService.addDelivery(delivery).subscribe(data=>{this.message="Delivery Created"},err => {
       this.message="Error creating delivery";
     });

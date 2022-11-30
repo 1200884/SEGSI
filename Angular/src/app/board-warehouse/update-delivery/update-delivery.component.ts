@@ -26,7 +26,7 @@ export class UpdateDeliveryComponent implements OnInit{
   getDelivery(): void {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.deliveryService.getDelivery(id)
-      .subscribe(delivery => this.delivery = delivery);
+      .subscribe (delivery => this.delivery = delivery);
   }
 
   goBack(): void {
