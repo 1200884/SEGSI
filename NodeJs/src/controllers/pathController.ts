@@ -15,6 +15,7 @@ export default class PathController implements IPathController /* TODO: extends 
   ) {}
 
   public async createPath(req: Request, res: Response, next: NextFunction) {
+    console.log("19");
     try {
       const pathOrError = await this.pathServiceInstance.createPath(req.body as IPathDTO) as Result<IPathDTO>;
         
