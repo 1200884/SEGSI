@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { WarehouseService } from 'src/app/_services/warehouse.service';
+import { Warehouse } from '../_models/Warehouse';
+import * as saveAs from 'file-saver';
 
 @Component({
   selector: 'app-board-warehouse',
@@ -7,10 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardWarehouseComponent implements OnInit {
   title = 'Warehouse Manager Board';
-
-  constructor() { }
+  warehouses: Warehouse[] = [];
+  content ?: string;
+  constructor(private warehouseService: WarehouseService) { }
 
   ngOnInit(): void {
   }
-
+  redirect(){
+    //window.location.href = "http://127.0.0.1:5555/src/app/Graphical-View/canvas.html";
+  }
 }

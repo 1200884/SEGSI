@@ -19,14 +19,14 @@ namespace DDDNetCore.Domain.Warehouses
             this.Active = true;
         }
 
-        public Warehouse(string code, string description, string street, string city, string country, double latitude, double longitude)
+        public Warehouse(string code, string description, string street, string city, string country, double latitude, double longitude,double altitude)
         {
             if (code == null)
                 throw new BusinessRuleValidationException("Every warehouse requires an id.");
             this.Id = new WarehouseId(code);
             this.Description = description;
             this.address=new Address(street,city,country);
-            this.coordinates=new Coordinates(latitude,longitude);
+            this.coordinates=new Coordinates(latitude,longitude,altitude);
             this.Active = true;
         }
 
@@ -44,11 +44,11 @@ namespace DDDNetCore.Domain.Warehouses
             this.address = new Address(street,city,country);
         }
 
-        public void ChangeCoordinates(double latitude, double longitude)
+        public void ChangeCoordinates(double latitude, double longitude,double altitude)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the coordinates to an inactive warehouse.");
-            this.coordinates = new Coordinates(latitude,longitude);
+            this.coordinates = new Coordinates(latitude,longitude,altitude);
         }
         public void MarkAsInative()
         {

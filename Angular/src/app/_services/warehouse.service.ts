@@ -11,7 +11,7 @@ export class WarehouseService {
 
   private apiUri = "https://localhost:5001/api";
   private Warehouses = "/Warehouses"
-
+  ipAddress = '';
   constructor(private http: HttpClient) { }
 
   getWarehouses(): Observable<Warehouse[]> {
