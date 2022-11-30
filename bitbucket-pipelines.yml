@@ -26,13 +26,7 @@ pipelines:
             caches:
               - node
             script:
-              - cd Node
+              - cd ..
+              - cd NodeJs
               - npm install
               - npm test
-        - step:
-            name: Code linting
-            script:
-              - npm install eslint
-              - npx eslint .
-            caches:
-              - node
