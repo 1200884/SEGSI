@@ -57,7 +57,7 @@ namespace DDDNetCore.Domain.Warehouses
             // change all field
             war.ChangeDescription(dto.Description);
             war.ChangeAddress(dto.Street , dto.City, dto.Country);
-            war.ChangeCoordinates(dto.Latitude, dto.Longitude);
+            war.ChangeCoordinates(dto.Latitude, dto.Longitude,dto.Altitude);
             
             await this._unitOfWork.CommitAsync();
 
