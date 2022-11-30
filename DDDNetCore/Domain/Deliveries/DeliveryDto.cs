@@ -10,7 +10,7 @@ namespace DDDNetCore.Domain.Deliveries
 
         public int weight { get;  set;} 
 
-        public string destinationWarhouseId  {get;  set;}
+        public string destinationWarehouseId  {get;  set;}
 
         public int loadTime { get;  set;}
 

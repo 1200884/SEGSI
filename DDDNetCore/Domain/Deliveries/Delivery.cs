@@ -10,7 +10,7 @@ namespace DDDNetCore.Domain.Deliveries
 
         public int weight { get;  private set;}
                 
-        public string destinationWarhouseId  {get;  private set;}
+        public string destinationWarehouseId  {get;  private set;}
 
         public int loadTime { get;  private set;}
 
@@ -29,7 +29,7 @@ namespace DDDNetCore.Domain.Deliveries
             if (checkWeight(weight))
                 this.weight = weight;
             if (checkWarehouseDeliveryId(warId))
-                this.destinationWarhouseId = warId;
+                this.destinationWarehouseId = warId;
             if (checkLoadTime(loadTime))
                 this.loadTime = loadTime;
             if (checkUnloadTime(unloadTime))    
@@ -82,7 +82,7 @@ namespace DDDNetCore.Domain.Deliveries
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the delivery warehouse to an inactive delivery.");
             if (checkWarehouseDeliveryId(warId))
-                this.destinationWarhouseId = warId;
+                this.destinationWarehouseId = warId;
         }
 
         public void ChangeLoadTime(int loadTime)

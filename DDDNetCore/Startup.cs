@@ -31,7 +31,7 @@ namespace DDDNetCore
         {
             services.AddDbContext<DDDNetCoreDbContext>(opt =>
                 //opt.UseInMemoryDatabase("DDDNetCoreDB")
-                opt.UseSqlServer("Password=x96ovSTxyQ==Xa5;Persist Security Info=True;User ID=sa;Initial Catalog=master;Data Source=vs414.dei.isep.ipp.pt;")
+                opt.UseSqlServer("Password=x96ovSTxyQ==Xa5;Persist Security Info=True;User ID=sa;Initial Catalog=master;Data Source=vsgate-s1.dei.isep.ipp.pt,10414;")
                 .ReplaceService<IValueConverterSelector, StronglyEntityIdValueConverterSelector>());
             
             services.AddCors(options =>
