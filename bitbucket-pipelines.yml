@@ -30,7 +30,6 @@ pipelines:
               - npm install -g ts-node
               - npm install -g typescript
               - npm install -g reflect-metadata rxjs
-              - npm install uuidv4
               - npm install
               - npm uninstall @types/mocha
               - npm run build
