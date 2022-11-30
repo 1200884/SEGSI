@@ -46,21 +46,32 @@ export default class PathController implements IPathController /* TODO: extends 
     }
   };
 
-  public async getPath(req: Request, res: Response, next: NextFunction) {
+  public async getPaths(req: Request, res: Response, next: NextFunction) {
     try {
-      let id = JSON.stringify(req.body);
-      let pathOrError;
-      if (id === "{}" || id.length < 2) {
-        pathOrError = await this.pathServiceInstance.getPaths() as Result<IPathDTO[]>;
-      }else {
-        pathOrError = await this.pathServiceInstance.getPath(id) as Result<IPathDTO>;
-      }
+      let pathOrError = await this.pathServiceInstance.getPaths() as Result<IPathDTO[]>;
+
       if (pathOrError.isFailure) {
         return res.status(404).send();
       }
 
       const pathDTO = pathOrError.getValue();
-      return res.status(201).json( pathDTO );
+      return res.status(200).json( pathDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  }
+
+  public async getPath(id: string, req: Request, res: Response, next: NextFunction) {
+    try {
+      let pathOrError = await this.pathServiceInstance.getPath(id) as Result<IPathDTO>;
+      
+      if (pathOrError.isFailure) {
+        return res.status(404).send();
+      }
+
+      const pathDTO = pathOrError.getValue();
+      return res.status(200).json( pathDTO );
     }
     catch (e) {
       return next(e);
