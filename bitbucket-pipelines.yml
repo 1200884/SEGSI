@@ -25,6 +25,8 @@ pipelines:
               - node
             script:
               - cd NodeJs
+              - npm install uuid
+              - npm install express-jwt
               - npm install -g npm
               - npm install -g nodemon
               - npm install -g ts-node
