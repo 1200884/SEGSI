@@ -25,6 +25,7 @@ pipelines:
             script:
               - cd NodeJs
               - npm install
+              - npm install --save bufferutil@3 ws@1
               - npm install -g npm
               - npm install -g nodemon
               - npm install -g ts-node
