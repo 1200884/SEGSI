@@ -59,7 +59,11 @@ export default {
       path: "../controllers/packagingController"
     },
     planning: {
+<<<<<<< HEAD
       name: "PlanningControlller",
+=======
+      name: "PlanningController",
+>>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
       path: "../controllers/planningController"
     }
   },
@@ -85,7 +89,11 @@ export default {
       name: "PackagingRepo",
       path: "../repos/packagingRepo"
     },
+<<<<<<< HEAD
     planning:{
+=======
+    planning: {
+>>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
       name: "PlanningRepo",
       path: "../repos/planningRepo"
     }
@@ -108,9 +116,15 @@ export default {
       name: "PackagingService",
       path: "../services/packagingService"
     },
+<<<<<<< HEAD
     planning:{
       name: "PlanningService",
       path:"../services/planningService"
+=======
+    planning: {
+      name: "PlanningService",
+      path: "../services/planningService"
+>>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
     }
   },
 };

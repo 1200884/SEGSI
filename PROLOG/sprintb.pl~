@@ -8,7 +8,6 @@
 :- http_handler('/create_path',path_creator, []).
 :- http_handler('/send_file_post', send_file_post, []).
 :- http_handler('/planning', planning_post, []).
-:- http_handler('/planning_json', p_json, []).
 
 % Criação de servidor HTTP no porto 'Port'
 server() :-
@@ -29,14 +28,6 @@ responde_ola(_Request):-format('Content-type: text/plain~n~n'),
 
 % MÉTODO POST enviando um ficheiro de texto
 % http_client:http_post('http://localhost:5000/planning',form_data([file=file('./teste.txt')]), Reply, []).
-
-p_json(Request) :-
-        http_read_json(Request, JSON, [json_object(dict)]),
-%       R = json([name=joao,number=3000]),
-        R = student("joao",JSON.set_user),
-        prolog_to_json(R, JSONObject),
-        reply_json(JSONObject, [json_object(dict)]).
-
 
 planning_post(Request):-
         http_parameters(Request,[ file(X,[])]),

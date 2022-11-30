@@ -59,6 +59,11 @@ export default async ({ expressApp }) => {
     path: config.controllers.packaging.path
   }
 
+  const planningController = {
+    name: config.controllers.planning.name,
+    path: config.controllers.planning.path
+  }
+
   const roleRepo = {
     name: config.repos.role.name,
     path: config.repos.role.path
@@ -82,6 +87,11 @@ export default async ({ expressApp }) => {
   const packagingRepo = {
     name: config.repos.packaging.name,
     path: config.repos.packaging.path
+  }
+
+  const planningRepo = {
+    name: config.repos.planning.name,
+    path: config.repos.planning.path
   }
 
   const roleService = {
@@ -112,6 +122,11 @@ const planningRepo = {
     path: config.repos.planning.path
   }
 const planningService = {
+    name: config.services.planning.name,
+    path: config.services.planning.path
+  }
+
+  const planningService = {
     name: config.services.planning.name,
     path: config.services.planning.path
   }
@@ -147,7 +162,12 @@ const planningService = {
       pathService,
       packagingService,
       planningService
+<<<<<<< HEAD
     ]  });
+=======
+    ]
+  });
+>>>>>>> 54095912af589d2d554ee30f7d9b26d1d953b7d3
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
 
   await expressLoader({ app: expressApp });
