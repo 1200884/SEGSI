@@ -23,7 +23,6 @@ pipelines:
             caches:
               - node
             script:
-              - cd ..
               - cd NodeJs
               - npm install
               - npm run build
