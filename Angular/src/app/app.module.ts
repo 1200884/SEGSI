@@ -24,7 +24,7 @@ import { PutTruckComponent } from './board-fleet/put-truck/put-truck.component';
 import { GetTruckComponent } from './board-fleet/get-truck/get-truck.component';
 import { CreateTruckComponent } from './board-fleet/create-truck/create-truck.component';
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
-//import { GetPathComponent } from './board-logistics/get-path/get-path.component';
+import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
 
 import {DeliveriesComponent} from "./board-warehouse/get-deliveries/get-deliveries.component";
 import {CreateDeliveryComponent} from "./board-warehouse/create-delivery/create-delivery.component";
@@ -53,7 +53,7 @@ import {UpdateDeliveryComponent} from "./board-warehouse/update-delivery/update-
     CreateDeliveryComponent,
     UpdateDeliveryComponent,
     CreatePathComponent,
-    //GetPathComponent,
+    GetPathsComponent,
   ],
   imports: [
     BrowserModule,

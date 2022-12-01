@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { Warehouse } from '../_models/Warehouse';
-import * as saveAs from 'file-saver';
 
 @Component({
   selector: 'app-board-warehouse',
