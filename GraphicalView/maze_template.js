@@ -147,6 +147,15 @@ export default class Maze {
                 maze.object.add(root);
               });
         }
+        function longTox(longitude){
+            return ((100/0.5162)*(longitude-8.2451)-50)*15/50;
+        }
+        function latToy(latitude){
+            return ((100/1.2728)*(latitude-40.8387)-50)*15/50;
+        }
+        function altToz(alt){
+            return (50/800*alt)/10;
+        }
 
         function pointEachOther(armazem,armazem1){
             if(armazem.position.x-armazem1.position.x>0){

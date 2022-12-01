@@ -22,6 +22,7 @@ import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/updat
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
 
+import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -43,7 +44,7 @@ const routes: Routes = [
   { path: 'put-truck', component: PutTruckComponent},
   { path: 'patch-truck', component: PatchTruckComponent},
   { path: 'create-paths', component:CreatePathComponent},
- // {path: 'update-paths', component:GetPathComponent},
+  { path: 'get-paths', component:GetPathsComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -21,8 +21,8 @@ export class GetPlanningComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getPlanning(input: any): void {
-    this.logisticsService.getPlanning(input.).subscribe(
+  getPlanning(info: any): void {
+    this.logisticsService.getPlanning(info.id, info.date).subscribe(
       data => {
         this.error = false;
         this.content = '';

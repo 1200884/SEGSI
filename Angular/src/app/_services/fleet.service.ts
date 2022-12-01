@@ -22,6 +22,7 @@ export class FleetService {
   }
 
   postTruck(info: any): Observable<Truck> {
+    console.log(info);
     return this.http.post<Truck>(API_URL + TRUCKS_URL, info);
   }
 

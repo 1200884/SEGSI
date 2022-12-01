@@ -5,9 +5,13 @@
       <li class="nav-item">
         <a href="/home" class="nav-link" routerLink="home">Home </a>
       </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
+      <li class="nav-item" *ngIf="showAdminBoard">  
         <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
       </li>
+      <div class="nav-item">
+        <button type="button" class="nav-link" routerLink="admin"> Admin Board
+       </button>
+         </div>
       <li class="nav-item" *ngIf="showFleetBoard">
         <a href="/fleet" class="nav-link" routerLink="fleet">Fleet Board</a>
       </li>
@@ -19,15 +23,14 @@
       </li>
     </ul>
 
-    <!--<ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>-->
-
+    
+    <button type="button" class="btn btn-primary m-1" routerLink="/login"> Login
+     </button>
+       
+       
+    <button type="button" class="btn btn-primary m-1" routerLink="/register"> Register
+     </button>
+         
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
       <li class="nav-item">
         <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
