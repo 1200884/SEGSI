@@ -7,7 +7,7 @@ import { PlanningMap } from '../mappers/PlanningMap';
 @Service()
 export default class PlanningRepo implements IPlanningRepo {
 
-  constructor() {}
+  constructor() { }
   exists(t: Planning): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
@@ -15,56 +15,28 @@ export default class PlanningRepo implements IPlanningRepo {
     throw new Error('Method not implemented.');
   }
 
-  public async findByDomainId (truckId: string, data: string): Promise<Planning> {
+  public async findByDomainId(truckId: string, data: string): Promise<Planning> {
 
-    const {resolve} = require('path');
-    // 👇️ if using ES6 Modules syntax
-    // import { resolve } from 'path';
+    var request = require('request');
 
-    const absolutePath = resolve('../PROLOG/teste.txt');
+    var obj = { truckId: truckId, date: data };
 
-    console.log(absolutePath);
-
-    const http = require('http');
-
-    http.get('http://localhost:5000/create_path?truck='+truckId+'&date='+data+'&path'+absolutePath, (resp) => {
-      let data = '';
-    
-      // A chunk of data has been received.
-      resp.on('data', (chunk) => {
-        data += chunk;
-      });
-    
-      // The whole response has been received. Print out the result.
-      resp.on('end', () => {
-        console.log(data);
+    request.post(
+      'http://localhost:5000/planning',
+      {json: obj},
+      function (error, response, body) {
+        console.log(obj);
         console.log("-----------------------------------------------------------");
-        const fs = require('fs');
-
-        fs.readFile('../PROLOG/teste.txt', 'utf8', (err, info) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          console.log(info);
-          const planning = PlanningMap.toDomain(JSON.parse(info));
+        console.log(body);
+        /*if (!error && response.statusCode == 200) {
+          const planning = PlanningMap.toDomain(JSON.parse(body));
           console.log(planning);
-        });
-      });
-    
-    }).on("error", (err) => {
-      console.log("Error: " + err.message);
-    });
+        }else {
+          console.log(error);
+        }*/
+      }
+    );
 
-    /*chamar o coiso ao prolog
-    const query = { domainId: truckId};
-    const planningRecord = await this.truckSchema.findOne( query as FilterQuery<ITruckPersistence & Document> );
-
-    if( planningRecord != null) {
-      return PlanningMap.toDomain(planningRecord);
-    }
-    else
-      return null;*/
-      return null;
+    return null;
   }
 }

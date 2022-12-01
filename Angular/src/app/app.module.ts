@@ -29,6 +29,8 @@ import { CreatePathComponent } from './board-logistics/create-path/create-path.c
 import {DeliveriesComponent} from "./board-warehouse/get-deliveries/get-deliveries.component";
 import {CreateDeliveryComponent} from "./board-warehouse/create-delivery/create-delivery.component";
 import {UpdateDeliveryComponent} from "./board-warehouse/update-delivery/update-delivery.component";
+import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
+import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import {UpdateDeliveryComponent} from "./board-warehouse/update-delivery/update-
     CreateDeliveryComponent,
     UpdateDeliveryComponent,
     CreatePathComponent,
+    GetPlanningComponent,
+    GetTrucksComponent,
     //GetPathComponent,
   ],
   imports: [

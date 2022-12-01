@@ -60,6 +60,7 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13",
+    "request": "^2.88.2",
     "shallow-equal-object": "^1.1.1",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",

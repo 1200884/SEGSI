@@ -2,13 +2,16 @@
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_parameters)).
+% Bibliotecas JSON
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/json)).
+
+:- json_object data(time:number, places:list).
 
 % Relação entre pedidos HTTP e predicados que os processam
-:- http_handler('/lapr5', responde_ola, []).
 :- http_handler('/create_path',path_creator, []).
-:- http_handler('/send_file_post', send_file_post, []).
-:- http_handler('/planning', planning_post, []).
-:- http_handler('/planning_json', p_json, []).
+:- http_handler('/planning', p_json, []).
 
 % Criação de servidor HTTP no porto 'Port'
 server() :-
@@ -24,33 +27,21 @@ path_creator(Request):-
   format('Content-type: text/plain~n~n'),
   format('time: ~2f~nplances: ~w',[T,L]).
 
-responde_ola(_Request):-format('Content-type: text/plain~n~n'),
-        format('Olá LAPR5!~n').
-
-% MÉTODO POST enviando um ficheiro de texto
-% http_client:http_post('http://localhost:5000/planning',form_data([file=file('./teste.txt')]), Reply, []).
-
 p_json(Request) :-
-        http_read_json(Request, JSON, [json_object(dict)]),
-%       R = json([name=joao,number=3000]),
-        R = student("joao",JSON.set_user),
-        prolog_to_json(R, JSONObject),
-        reply_json(JSONObject, [json_object(dict)]).
+        http_read_json(Request, JSON),
+        json_to_prolog(JSON, JSON_TEXT),
+%        format('Content-type: text/plain~n~n'),
+%        format('~w~n', JSON_TEXT),
+        split(JSON_TEXT,TRUCK,DATE),
+%        format('~w ~n~w', [TRUCK, DATE]),
+        voltamaiscedo(TRUCK,DATE,T,L),
+%        format('~2f ~n~w', [T, L]).
+        D = data(T,L),
+%        format('~w', [D]),
+        prolog_to_json(D, X),
+        reply_json(X).
 
-
-planning_post(Request):-
-        http_parameters(Request,[ file(X,[])]),
-        format('Content-type: text/plain~n~n'),
-        format('Received file: ~w~n',[X]).
-
-send_file_post(Request) :-
-	http_parameters(Request,[ file(X,[])]),
-    format('Content-type: text/plain~n~n'),
-	format('Received: ~w~n',[X]).
-
-
-
-
+split(json([truckId=X,date=Y]),X,Y).
 
 
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
