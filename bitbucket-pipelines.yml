@@ -16,7 +16,7 @@ pipelines:
             caches:
               - dotnetcore
             script:
-              - cd DDDNetCore
+              - cd MasterDataWarehouseManagement/MasterDataWM
               - dotnet build
         - step:
             name: Build and Test 
