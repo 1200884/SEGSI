@@ -2,7 +2,7 @@
 
 import { GetAPathComponent } from './get-a-path.component';
 
-describe('PathsComponent', () => {
+describe('GetAPathComponent', () => {
   let component: GetAPathComponent;
   let fixture: ComponentFixture<GetAPathComponent>;
 
