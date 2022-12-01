@@ -23,6 +23,7 @@ import { CreatePathComponent } from './board-logistics/create-path/create-path.c
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
 
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },

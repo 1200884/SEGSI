@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e74dd13b-05eb-4764-a9d1-eb2d91388b78",
+		"_postman_id": "b0b736e5-e866-45f1-ba3a-47625d7695d6",
 		"name": "Packaging",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23447211"
 	},
 	"item": [
 		{
