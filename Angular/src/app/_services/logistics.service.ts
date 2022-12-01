@@ -16,9 +16,9 @@ export class LogisticsService {
    getPaths(): Observable<Path[]> {
    return this.http.get<Path[]>(API_URL + PATHS_URL, { responseType: 'json' });
   }
-  /*public getSpecificPath(id: string): Observable<any> {
+  public getSpecificPath(id: string): Observable<any> {
     return this.http.get(API_URL + PATHS_URL + '/' + id, { responseType: 'text'});
-  }*/
+  }
  // public patchPath(info: string): Observable<any> {
    // return this.http.patch(API_URL + PATHS_URL, info, { responseType: 'text'}); }
 //  public putPath(info: string): Observable<any> {

@@ -21,6 +21,7 @@ import { CreateDeliveryComponent } from "./board-warehouse/create-delivery/creat
 import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/update-delivery.component";
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
