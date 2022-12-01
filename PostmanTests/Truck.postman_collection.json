@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "dc112c30-6a43-448f-9088-251cdbeff709",
-		"name": "Trucks Tests",
+		"_postman_id": "3b15d888-ea34-4e11-b9f9-e80962aab9bb",
+		"name": "Truck",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24229279"
+		"_exporter_id": "23447211"
 	},
 	"item": [
 		{

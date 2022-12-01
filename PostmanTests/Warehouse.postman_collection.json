@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "d8821998-d29f-450b-88e3-921c7c36449b",
+		"name": "Warehouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23447211"
+	},
+	"item": [
+		{
+			"name": "Get all Warehouses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(\"_\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Warehouse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful retrived response\", function () {\r",
+							"        \r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.globals.set(\"ID\", jsonData.id);\r",
+							"    pm.globals.set(\"DESCRIPTION\", jsonData.description);\r",
+							"    pm.globals.set(\"STREET\", jsonData.street);\r",
+							"    pm.globals.set(\"CITY\", jsonData.city);\r",
+							"    pm.globals.set(\"COUNTRY\", jsonData.country);\r",
+							"    pm.globals.set(\"LATITUDE\", jsonData.latitude);\r",
+							"    pm.globals.set(\"LONGITUDE\", jsonData.longitude);\r",
+							"    pm.globals.set(\"ALTITUDE\", jsonData.altitude);\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"{{$guid}}\",\r\n    \"description\" : \"{{$randomWord}}\",\r\n    \"street\" : \"{{$randomStreetAddress}}\",\r\n    \"city\" : \"{{$randomCity}}\",\r\n    \"country\" : \"{{$randomCountry}}\",\r\n    \"latitude\" : {{$randomLatitude}},\r\n    \"longitude\" : {{$randomLongitude}},\r\n    \"altitude\" : {{$randomInt}}\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Warehouse by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ID check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ID\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"DESCRIPTION check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"DESCRIPTION\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"STREET check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"STREET\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CITY check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"CITY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"COUNTRY check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"COUNTRY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"LATITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"LATITUDE\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"LONGITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"LONGITUDE\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ALTITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ALTITUDE\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Warehouse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ID check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ID\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"DESCRIPTION check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"DESCRIPTION\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"STREET check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"STREET\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CITY check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"CITY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"COUNTRY check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"COUNTRY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"LATITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"LATITUDE\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"LONGITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"LONGITUDE\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ALTITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"ALTITUDE\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"{{ID}}\",\r\n    \"description\" : \"{{$randomWord}}\",\r\n    \"street\" : \"{{$randomStreetAddress}}\",\r\n    \"city\" : \"{{$randomCity}}\",\r\n    \"country\" : \"{{$randomCountry}}\",\r\n    \"latitude\" : {{$randomLatitude}},\r\n    \"longitude\" : {{$randomLongitude}},\r\n    \"altitude\" : {{$randomInt}}\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Warehouse by id updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ID check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ID\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"DESCRIPTION check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"DESCRIPTION\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"STREET check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"STREET\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"CITY check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"CITY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"COUNTRY check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"COUNTRY\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"LATITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"LATITUDE\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"LONGITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"LONGITUDE\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ALTITUDE check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"ALTITUDE\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Warehouse Soft",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ID\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Warehouse Hard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ID\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID}}/hard",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID}}",
+						"hard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Warehouse by id updated Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+							"});\r",
+							"pm.test(\"ID check\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.globals.get(\"ID\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
