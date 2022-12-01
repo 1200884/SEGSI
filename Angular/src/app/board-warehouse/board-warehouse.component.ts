@@ -16,6 +16,6 @@ export class BoardWarehouseComponent implements OnInit {
   ngOnInit(): void {
   }
   redirect(){
-    //window.location.href = "http://127.0.0.1:5555/src/app/Graphical-View/canvas.html";
+    window.location.href = "http://127.0.0.1:5555/src/app/Graphical-View/canvas.html";
   }
 }

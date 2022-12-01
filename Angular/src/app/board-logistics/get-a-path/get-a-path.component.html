@@ -1,0 +1,9 @@
+﻿<div class="container d-flex justify-content-center ">
+    <h2>List of paths</h2>
+  <div class="output">
+    <li *ngFor="let path of paths">
+      Warehouse of Departure, Warehouse of arrival --> [{{path.warehouseDeparture}},{{path.warehouseDestination}}] || Distance --> {{path.distance}} || Time of Travelling --> {{path.travelTime}} || Energy Necessary --> {{path.energyNecessary}} || Additional Time --> {{path.additionalTime}}
+    </li>
+    </div>
+</div>
+
