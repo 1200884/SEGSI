@@ -17,7 +17,7 @@ export class CreatePathComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("8");
+   
   }
 
 
