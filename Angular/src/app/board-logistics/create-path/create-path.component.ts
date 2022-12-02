@@ -22,7 +22,7 @@ export class CreatePathComponent implements OnInit {
 
 
   onPathCreate(path:Path){
-    console.log("8");
+    
     this.logisticsService.postPath(path).subscribe(data=>{this.message="Path Created"},err => {
         this.message="Error creating path";
       });

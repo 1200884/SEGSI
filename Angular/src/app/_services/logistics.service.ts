@@ -24,7 +24,7 @@ export class LogisticsService {
 
   postPath(path: any): Observable<Path> {
     console.log(API_URL + PATHS_URL);
-    console.log("batata");
+  
     console.log(path);
     return this.http.post<Path>(API_URL + PATHS_URL, path);
   }
