@@ -8,11 +8,11 @@ namespace MDWM.Domain.Deliveries
         public static DeliveryDto toDTO(Delivery del){
             return new DeliveryDto(){
                 Id = del.Id.AsString(),
-                date = del.date, 
-                weight = del.weight,
+                date = del.date._Date, 
+                weight = del.weight._Weight,
                 destinationWarehouseId = del.destinationWarehouseId,
-                loadTime = del.loadTime, 
-                unloadTime = del.unloadTime
+                loadTime = del.packagingTime._LoadTime, 
+                unloadTime = del.packagingTime._UnloadTime
             };
         }
 
