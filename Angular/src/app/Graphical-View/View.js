@@ -3,6 +3,7 @@ import Ground from "./Ground.js";
 import Armazem from "./Armazem.js";
 import Base from "./Base.js";
 import Arco from "./Arco.js";
+import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 
 export default class View {
     constructor(){
@@ -14,84 +15,42 @@ export default class View {
         view.ground = new Ground(size);
         view.object.add(view.ground.object);
         view.armazem = new Armazem();
-        let armazem1 = view.armazem.object.clone();
-        armazem1.position.set(-14.9,1.5,-12.3);
-        view.object.add(armazem1);
-        let armazem2 = view.armazem.object.clone();
-        armazem2.position.set(-7,1,-10);
-        view.object.add(armazem2);
-        let armazem3 = view.armazem.object.clone();
-        armazem3.position.set(14.9,1.1,14.9);
-        view.object.add(armazem3);
-        let armazem4 = view.armazem.object.clone();
-        armazem4.position.set(-7,4.6,5.8);
-        view.object.add(armazem4);
-        let armazem5 = view.armazem.object.clone();
-        armazem5.position.set(10,4.4,3.1);
-        view.object.add(armazem5);
-        let armazem6 = view.armazem.object.clone();
-        armazem6.position.set(-1.5,5,-14.9);
-        view.object.add(armazem6);
-        let armazem7 = view.armazem.object.clone();
-        armazem7.position.set(-9.5,0,-6.18);
-        view.object.add(armazem7);
-        let armazem8 = view.armazem.object.clone();
-        armazem8.position.set(6.9,2.4,6.9);
-        view.object.add(armazem8);
-        let armazem9 = view.armazem.object.clone();
-        armazem9.position.set(13,2.5,-1.5);
-        view.object.add(armazem9);
-        let armazem10 = view.armazem.object.clone();
-        armazem10.position.set(-3.7,0.62,12.6);
-        view.object.add(armazem10);
-        let armazem11 = view.armazem.object.clone();
-        armazem11.position.set(-1.6,4.0,-3.0);
-        view.object.add(armazem11);
-        let armazem12 = view.armazem.object.clone();
-        armazem12.position.set(6.65,2.1,-12.9);
-        view.object.add(armazem12);
-        let armazem13 = view.armazem.object.clone();
-        armazem13.position.set(3.2,2.5,-3.2);
-        view.object.add(armazem13);
-        let armazem14 = view.armazem.object.clone();
-        armazem14.position.set(-6.1,0.4,-13);
-        view.object.add(armazem14);
-        let armazem15 = view.armazem.object.clone();
-        armazem15.position.set(-9.1,5,10);
-        view.object.add(armazem15);
-        let armazem16 = view.armazem.object.clone();
-        armazem16.position.set(14.5,1.5,-7);
-        view.object.add(armazem16);
-        let armazem17 = view.armazem.object.clone();
-        armazem17.position.set(6.2,3.0,-7.3);
-        view.object.add(armazem17);
+        let coordinates=handleJSON(txt,view);
+        let armazens=[];
+        for(var i = 1; i<coordinates.length;i++){
+            let armazem1 = view.armazem.object.clone();
+            armazem1.position.set(coordinates[i][0],coordinates[i][1],coordinates[i][2]);
+            view.object.add(armazem1);
+            armazens[i]=armazem1;
+            model3D(coordinates[i][0],coordinates[i][1],coordinates[i][2],view);
+        }
 
         view.base = new Base();
-        createBridge(view, armazem1, armazem16);
-        createBridge(view, armazem16, armazem3);
-        createBridge(view, armazem2, armazem9);
-        createBridge(view, armazem2, armazem15);
-        createBridge(view, armazem3, armazem10);
-        createBridge(view, armazem3, armazem5);
-        createBridge(view, armazem4, armazem6);
-        createBridge(view, armazem4, armazem9);
-        createBridge(view, armazem16, armazem14);
-        createBridge(view, armazem8, armazem13);
-        createBridge(view, armazem7, armazem5);
-        createBridge(view, armazem17, armazem13);
-        createBridge(view, armazem12, armazem1);
-        createBridge(view, armazem8, armazem5);
-        createBridge(view,armazem10,armazem11);
-        createBridge(view,armazem14,armazem7);
-        createBridge(view,armazem15,armazem8);
-        createBridge(view,armazem6,armazem11);
-        createBridge(view,armazem9,armazem6);
-        createBridge(view,armazem12,armazem7);
-        createBridge(view,armazem5,armazem17);
-        createBridge(view,armazem15,armazem1);
-        createBridge(view,armazem13,armazem10);
-        createBridge(view,armazem4,armazem11);
-        createBridge(view,armazem16,armazem12);
+        createBridge(view, armazens[1], armazens[16]);
+        createBridge(view, armazens[16], armazens[3]);
+        createBridge(view, armazens[2], armazens[9]);
+        createBridge(view, armazens[2], armazens[15]);
+        createBridge(view, armazens[3], armazens[10]);
+        createBridge(view, armazens[3], armazens[5]);
+        createBridge(view, armazens[4], armazens[6]);
+        createBridge(view, armazens[4], armazens[9]);
+        createBridge(view, armazens[16], armazens[14]);
+        createBridge(view, armazens[8], armazens[13]);
+        createBridge(view, armazens[7], armazens[5]);
+        createBridge(view, armazens[17], armazens[13]);
+        createBridge(view, armazens[12], armazens[1]);
+        createBridge(view, armazens[8], armazens[5]);
+        createBridge(view, armazens[10] ,armazens[11]);
+        createBridge(view, armazens[14],armazens[7]);
+        createBridge(view,armazens[15],armazens[8]);
+        createBridge(view,armazens[6],armazens[11]);
+        createBridge(view,armazens[9],armazens[6]);
+        createBridge(view,armazens[12],armazens[7]);
+        createBridge(view,armazens[5],armazens[17]);
+        createBridge(view,armazens[15],armazens[1]);
+        createBridge(view,armazens[13],armazens[10]);
+        createBridge(view,armazens[4],armazens[11]);
+        createBridge(view,armazens[16],armazens[12]);
     }
 
     function readFile(){
@@ -104,8 +63,9 @@ export default class View {
         };
         xmlhttp.open("GET","https://localhost:5001/api/Warehouses",false);
         xmlhttp.send();
-        console.log(txt);
-        return txt;
+        var txt2= JSON.parse(txt);
+        console.log(txt2);
+        return txt2;
     }
 
     function createBridge(view,armazem1,armazem2){
@@ -186,7 +146,41 @@ export default class View {
         }
         return V;
     }
-    
+    function longTox(longitude){
+        return ((100/0.5162)*(longitude-8.2451)-50)*15/50;
+    }
+    function latToz(latitude){
+        return ((100/1.2728)*(latitude-40.8387)-50)*15/50;
+    }
+    function altToy(alt){
+        return (50/800*alt)/10;
+    }
+    function handleJSON(txt){
+        let coordinates = new Array(txt.length+1);
+        for(var i = 0; i<txt.length;i++){
+            var id = (txt[i].id);
+            coordinates[id] = new Array(3);
+            var x = longTox(txt[i].longitude);
+            var y = altToy(txt[i].altitude);
+            var z = latToz(txt[i].latitude);
+            coordinates[id][0]=x;
+            coordinates[id][1]=y;
+            coordinates[id][2]=z;
+        }
+        return coordinates;
+    }
+    function model3D(x,y,z, view){
+
+        const loader = new GLTFLoader();
+        loader.load('assets/warehouse.glb', (gltf) => {
+            const root = gltf.scene;
+            gltf.scene.scale.set(0.007,0.007,0.007);
+            root.position.setX(x);
+            root.position.setY(y+0.1);
+            root.position.setZ(z);
+            view.object.add(root);
+          });
+    }
     OnLoad(this);
     }
 }
