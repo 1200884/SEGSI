@@ -23,6 +23,9 @@ namespace MDWM.Infrastructure
             modelBuilder.Entity<Warehouse>().OwnsOne(b => b.address);
             modelBuilder.Entity<Warehouse>().OwnsOne(b => b.coordinates);
             modelBuilder.ApplyConfiguration(new DeliveryEntityTypeConfiguration());
+            modelBuilder.Entity<Delivery>().OwnsOne(d => d.date);
+            modelBuilder.Entity<Delivery>().OwnsOne(d => d.weight);
+            modelBuilder.Entity<Delivery>().OwnsOne(d => d.packagingTime);
         }
     }
 }

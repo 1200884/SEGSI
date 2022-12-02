@@ -6,15 +6,13 @@ namespace MDWM.Domain.Deliveries
     public class Delivery : Entity<DeliveryId>, IAggregateRoot 
     {
 
-        public string date { get;  private set;}
+        public Date date { get;  private set;}
 
-        public int weight { get;  private set;}
+        public Weight weight { get;  private set;}
                 
         public string destinationWarehouseId  {get;  private set;}
 
-        public int loadTime { get;  private set;}
-
-        public int unloadTime { get;  private set;}
+        public PackagingTime packagingTime { get;  private set;}
 
         public bool Active{ get;  private set; }
         
@@ -22,22 +20,20 @@ namespace MDWM.Domain.Deliveries
             this.Active = true;
         }
 
-        public Delivery(string Id, string date, int weight, string warId, int loadTime, int unloadTime)
+        public Delivery(string Id, DateTime date, double weight, string warId, int loadTime, int unloadTime)
         {
             this.Id = new DeliveryId(Id);
-            this.date = date;
+            this.date = new Date (date);
             if (checkWeight(weight))
-                this.weight = weight;
+                this.weight = new Weight(weight);
             if (checkWarehouseDeliveryId(warId))
                 this.destinationWarehouseId = warId;
             if (checkLoadTime(loadTime))
-                this.loadTime = loadTime;
-            if (checkUnloadTime(unloadTime))    
-                this.unloadTime = unloadTime;
+                this.packagingTime=new PackagingTime(loadTime,unloadTime);
             this.Active = true;
         }
 
-        public Boolean checkWeight (int weight){
+        public Boolean checkWeight (double weight){
             if (weight < 0)
                 throw new BusinessRuleValidationException("The weigth of a delivery can't be negative.");
             return true;    
@@ -60,21 +56,21 @@ namespace MDWM.Domain.Deliveries
             return true;    
         }
 
-        public void ChangeDate(string date)
+        public void ChangeDate(DateTime date)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the date to an inactive delivery.");
             if (date == null)
                 throw new BusinessRuleValidationException("The date of a delivery can't be null");
-                this.date=date;
+                this.date=new Date(date);
         }
 
-        public void ChangeWeight(int weight)
+        public void ChangeWeight(double weight)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the weight to an inactive delivery.");
             if (checkWeight(weight))
-                this.weight = weight;  
+                this.weight = new Weight(weight);  
         }
 
         public void ChangeWarehouseDeliveryId(string warId)
@@ -85,20 +81,11 @@ namespace MDWM.Domain.Deliveries
                 this.destinationWarehouseId = warId;
         }
 
-        public void ChangeLoadTime(int loadTime)
+        public void ChangeLoadTime(int loadTime, int unloadTime)
         {
             if (!this.Active)
                 throw new BusinessRuleValidationException("It is not possible to change the load time to an inactive delivery.");
-            if (checkLoadTime(loadTime))
-                this.loadTime = loadTime;
-        }
-
-        public void ChangeUnloadTime(int unloadTime)
-        {
-            if (!this.Active)
-                throw new BusinessRuleValidationException("It is not possible to change the unload time to an inactive delivery.");
-            if (checkUnloadTime(unloadTime))    
-                this.unloadTime = unloadTime;
+            this.packagingTime = new PackagingTime(loadTime,unloadTime);
         }
 
         public void MarkAsInative()
