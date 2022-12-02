@@ -10,14 +10,9 @@ import { FleetService } from 'src/app/_services/fleet.service';
 export class GetTruckComponent implements OnInit {
 
   content?: string;
-  truck: Truck = {
-    id: 'Teste',
-    tare: 0,
-    maxWeight: 0,
-    batteryCapacity: 0,
-    truckAutonomy: 0,
-    chargeTime: 0
-  };
+  header?: string;
+  body?: string;
+  truck: Truck | undefined;
   error = false;
 
   constructor(private fleetService: FleetService) { }
@@ -29,12 +24,18 @@ export class GetTruckComponent implements OnInit {
     this.fleetService.getTruck(input).subscribe(
       data => {
         this.error = false;
-        this.content = '';
         this.truck = data;
+        this.header = "ID: " + this.truck.id;
+        this.body =
+          " Tare: " + this.truck.tare +
+          " Max Weight: " + this.truck.maxWeight +
+          " Battery Capacity: " + this.truck.batteryCapacity +
+          " Truck Autonomy: " + this.truck.truckAutonomy +
+          " Charge Time: " + this.truck.chargeTime;
       },
       err => {
         this.error = true;
-        this.content = JSON.parse(err.error).message;
+        this.body = JSON.parse(err.error).message;
       }
     )
   }

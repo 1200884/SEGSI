@@ -27,11 +27,11 @@ namespace MDWM.Domain.Deliveries
             List<DeliveryDto> listDto = list.ConvertAll<DeliveryDto>
             (del => new DeliveryDto{
                 Id = del.Id.AsString(),
-                date = del.date, 
-                weight = del.weight,
+                date = del.date._Date, 
+                weight = del.weight._Weight,
                 destinationWarehouseId = del.destinationWarehouseId,
-                loadTime = del.loadTime, 
-                unloadTime = del.unloadTime});
+                loadTime = del.packagingTime._LoadTime, 
+                unloadTime = del.packagingTime._UnloadTime});
 
             return listDto;
         }
@@ -70,8 +70,7 @@ namespace MDWM.Domain.Deliveries
             del.ChangeDate(dto.date);
             del.ChangeWeight(dto.weight);
             del.ChangeWarehouseDeliveryId(dto.destinationWarehouseId);
-            del.ChangeLoadTime(dto.loadTime);
-            del.ChangeUnloadTime(dto.unloadTime);
+            del.ChangeLoadTime(dto.loadTime,dto.unloadTime);
             
             await this._unitOfWork.CommitAsync();
 
