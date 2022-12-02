@@ -123,18 +123,17 @@ export default class Maze {
             maze.object.scale.set(maze.scale.x, maze.scale.y, maze.scale.z);
             maze.loaded = true;
           
-            casinhas(armazem7.position.x, armazem7.position.y, armazem7.position.z, maze);
+           /* casinhas(armazem7.position.x, armazem7.position.y, armazem7.position.z, maze);
             casinhas(armazem1.position.x, armazem1.position.y, armazem1.position.z, maze);
             casinhas(armazem2.position.x, armazem2.position.y, armazem2.position.z, maze);
             casinhas(armazem3.position.x, armazem3.position.y, armazem3.position.z, maze);
             casinhas(armazem4.position.x, armazem4.position.y, armazem4.position.z, maze);
             casinhas(3,0,3, maze);
 
-            //this.maze.armazem3D.loaded = false;
+            //this.maze.armazem3D.loaded = false;*/
 
-        //}
         }
-
+/*
         function casinhas(x,y,z, maze){
 
             const loader = new GLTFLoader();
@@ -146,7 +145,7 @@ export default class Maze {
                 root.position.setZ(z);
                 maze.object.add(root);
               });
-        }
+        }*/
 
         function pointEachOther(armazem,armazem1){
             if(armazem.position.x-armazem1.position.x>0){

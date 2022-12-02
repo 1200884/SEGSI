@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 
 /*
  * parameters = {
@@ -18,6 +19,16 @@ export default class Armazem extends THREE.Mesh{
         face.position.set(0.0, 0.1, 0);
         face.rotation.x = -Math.PI/2;
         this.object.add(face);
+
+        const loader = new GLTFLoader();
+            loader.load('assets/warehouse.glb', (gltf) => {
+                const root = gltf.scene;
+                gltf.scene.scale.set(0.003,0.003,0.003);
+                root.position.setX(0);
+                root.position.setY(0.1);
+                root.position.setZ(0);
+                face.add(root);
+              });
         this.initialize();
 
     }
