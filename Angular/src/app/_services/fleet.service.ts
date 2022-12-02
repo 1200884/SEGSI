@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Truck } from '../_models/Truck';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://vsgate-s1.dei.isep.ipp.pt:10775/api';
 const TRUCKS_URL = '/trucks';
 
 @Injectable({

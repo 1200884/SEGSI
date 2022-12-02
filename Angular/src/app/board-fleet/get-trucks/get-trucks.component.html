@@ -1,8 +1,9 @@
-<h2>List of paths</h2>
+<h2>List of trucks</h2>
 <div class="container">
   <div class="output">
     <li *ngFor="let truck of trucks">
-          {{truck.tare}},{{truck.maxWeight}},{{truck.batteryCapacity}},{{truck.truckAutonomy}},{{truck.chargeTime}}
+      <span class="badge">Truck ID: {{truck.id}}</span>
+      <p>Tare:{{truck.tare}} Max Weight:{{truck.maxWeight}} Battery Capacity:{{truck.batteryCapacity}} Truck Autonomy:{{truck.truckAutonomy}} Charge Time:{{truck.chargeTime}}</p>
     </li>
-    </div>
+  </div>
 </div>

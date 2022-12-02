@@ -23,6 +23,7 @@ import { CreatePathComponent } from './board-logistics/create-path/create-path.c
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
 
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
+import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,22 +31,23 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'warehouse', component: BoardWarehouseComponent},
+  { path: 'warehouse', component: BoardWarehouseComponent },
   { path: 'fleet', component: BoardFleetComponent },
-  { path: 'logistics', component: BoardLogisticsComponent},
+  { path: 'logistics', component: BoardLogisticsComponent },
   { path: 'warehouses', component: WarehousesComponent },
-  { path: 'deliveries', component: DeliveriesComponent},
+  { path: 'deliveries', component: DeliveriesComponent },
   { path: 'warehouses/:id', component: UpdateWarehouseComponent },
   { path: 'deliveries/:id', component: UpdateDeliveryComponent },
-  { path: 'Create warehouses', component: CreateWarehouseComponent},
-  { path: 'Create deliveries', component: CreateDeliveryComponent},
-  { path: 'get-trucks', component: GetTrucksComponent},
-  { path: 'get-truck', component: GetTruckComponent},
-  { path: 'create-truck', component: CreateTruckComponent},
-  { path: 'put-truck', component: PutTruckComponent},
-  { path: 'patch-truck', component: PatchTruckComponent},
-  { path: 'create-paths', component:CreatePathComponent},
-  { path: 'get-paths', component:GetPathsComponent},
+  { path: 'Create warehouses', component: CreateWarehouseComponent },
+  { path: 'Create deliveries', component: CreateDeliveryComponent },
+  { path: 'get-trucks', component: GetTrucksComponent },
+  { path: 'get-truck', component: GetTruckComponent },
+  { path: 'create-truck', component: CreateTruckComponent },
+  { path: 'put-truck', component: PutTruckComponent },
+  { path: 'patch-truck', component: PatchTruckComponent },
+  { path: 'create-paths', component: CreatePathComponent },
+  { path: 'get-paths', component: GetPathsComponent },
+  { path: 'get-planning', component: GetPlanningComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
