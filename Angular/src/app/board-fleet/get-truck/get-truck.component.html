@@ -1,25 +1,23 @@
 <div class="container">
-    <div class="output">
-        <li *ngIf="!error">
-            <span class="badge">{{truck.id}}</span>
-            {{truck.tare}},{{truck.maxWeight}},{{truck.batteryCapacity}},{{truck.truckAutonomy}},{{truck.chargeTime}}
-        </li>
-        <li *ngIf="error">
-            <p>{{ content }}</p>
-        </li>
-    </div>
+  <div class="output">
+    <li *ngIf="!error">
+      {{header}}
+      <p>{{body}}</p>
+    </li>
+    <li *ngIf="error">
+      <p>{{ content }}</p>
+    </li>
+  </div>
 
-    <div class="input-box">
-        <p>
-          <input type="text" #truckInfo>
-        </p>
-      </div>
+  <div class="input-box">
+    <p>
+      <input type="text" #truckInfo>
+    </p>
+  </div>
 
-      <div class="get-button">
-        <button type="button">
-          <a class="btn" (click)="getTruck(truckInfo.value)">Get truck</a>
-        </button>
-      </div>
+  <div class="get-button">
+    <button type="button">
+      <a class="btn" (click)="getTruck(truckInfo.value)">Get truck</a>
+    </button>
+  </div>
 </div>
-
-
