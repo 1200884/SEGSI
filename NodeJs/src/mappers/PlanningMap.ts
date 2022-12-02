@@ -1,12 +1,5 @@
 import { Mapper } from "../core/infra/Mapper";
 
-import { Document, Model } from 'mongoose';
-import { ITruckPersistence } from '../dataschema/ITruckPersistence';
-
-import ITruckDTO from "../dto/ITruckDTO";
-import { Truck } from "../domain/truck";
-
-import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { Planning } from "../domain/planning";
 import IPlanningDTO from "../dto/IPlanningDTO";
 
@@ -14,7 +7,8 @@ export class PlanningMap extends Mapper<Planning> {
   
   public static toDTO( planning: Planning): IPlanningDTO {
     return {
-      time: planning.time
+      time: planning.time,
+      places: planning.places
     } as IPlanningDTO;
   }
 
@@ -30,7 +24,8 @@ export class PlanningMap extends Mapper<Planning> {
 
   public static toPersistence (planning: Planning): any {
     return {
-      time: planning.time
+      time: planning.time,
+      places: planning.places
     }
   }
 }

@@ -3,6 +3,7 @@ export interface Warehouse {
     description: string;
     latitude: number;         
     longitude: number;
+    altitude: number;
     street: string;
     city: string;
     country: string;

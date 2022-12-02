@@ -1,3 +1,49 @@
+% Bibliotecas
+:- use_module(library(http/thread_httpd)).
+:- use_module(library(http/http_dispatch)).
+:- use_module(library(http/http_parameters)).
+% Bibliotecas JSON
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/json)).
+
+:- json_object data(time:number, places:list).
+
+% Relação entre pedidos HTTP e predicados que os processam
+:- http_handler('/create_path',path_creator, []).
+:- http_handler('/planning', p_json, []).
+
+% Criação de servidor HTTP no porto 'Port'
+server() :-
+        http_server(http_dispatch, [port(5000)]).
+
+path_creator(Request):-
+  http_parameters(Request,
+                    [ truck(TRUCK, []),
+                      date(DATE, [between(20220101,20221231)])
+                    ]),
+  voltamaiscedo(TRUCK,DATE,T,L),
+  %json_write(STREAM,point{T,L}),
+  format('Content-type: text/plain~n~n'),
+  format('time: ~2f~nplances: ~w',[T,L]).
+
+p_json(Request) :-
+        http_read_json(Request, JSON),
+        json_to_prolog(JSON, JSON_TEXT),
+%        format('Content-type: text/plain~n~n'),
+%        format('~w~n', JSON_TEXT),
+        split(JSON_TEXT,TRUCK,DATE),
+%        format('~w ~n~w', [TRUCK, DATE]),
+        voltamaiscedo(TRUCK,DATE,T,L),
+%        format('~2f ~n~w', [T, L]).
+        D = data(T,L),
+%        format('~w', [D]),
+        prolog_to_json(D, X),
+        reply_json(X).
+
+split(json([truckId=X,date=Y]),X,Y).
+
+
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
 entrega(4439, 20221205, 200, 1, 8, 10).
 entrega(4438, 20221205, 150, 9, 7, 9).
@@ -335,7 +381,19 @@ partida_chegada(5).
 % agrega os predicados, recebendo todas as
 % trajetorias possiveis para os caminhos dados, devolve o caminho mais
 % rapido e o respetivo tempo
-voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA).
+
+voltamaiscedo(TRUCK,DIA,TEMPO_FINAL,LFINAL):-
+        carateristicasCam(TRUCK,_,_,BAT_INICIAL,_,_),
+        bateriamaxima(TRUCK,BAT_MAX),
+        bateriaminima(TRUCK,BAT_MIN),
+        pesomaximo(TRUCK,PESO_MAXIMO),
+        pesototal(TRUCK,PESOTOTAL),
+        calcula_trajetoria([A|LT],DIA),
+        trata_lista(A,TEMPO,PESO_MAXIMO,PESOTOTAL,BAT_MAX,BAT_MIN,BAT_INICIAL,TRUCK,DIA),
+        itera(DIA,TRUCK,BAT_INICIAL,BAT_MAX,BAT_MIN,PESO_MAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),
+        !,
+        trata_lista(LFINAL,TEMPO_FINAL,PESO_MAXIMO,PESOTOTAL,BAT_MAX,BAT_MIN,BAT_INICIAL,TRUCK,DIA).
+
 
 % itera é o metodo que trata de todos os caminhos possíveis, e envia
 % cada caminho ao trata_lista que lhe retorna o tempo de cada caminho,

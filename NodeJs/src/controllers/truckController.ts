@@ -55,7 +55,7 @@ export default class TruckController implements ITruckController /* TODO: extend
       }
 
       const truckDTO = truckOrError.getValue();
-      return res.status(201).json( truckDTO );
+      return res.status(200).json( truckDTO );
     }
     catch (e) {
       return next(e);
@@ -71,7 +71,7 @@ export default class TruckController implements ITruckController /* TODO: extend
       }
 
       const truckDTO = truckOrError.getValue();
-      return res.status(201).json( truckDTO );
+      return res.status(200).json( truckDTO );
     }
     catch (e) {
       return next(e);

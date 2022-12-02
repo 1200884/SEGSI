@@ -145,7 +145,20 @@ export default class Maze {
                 root.position.setZ(z);
                 maze.object.add(root);
               });
+<<<<<<< HEAD
         }*/
+=======
+        }
+        function longTox(longitude){
+            return ((100/0.5162)*(longitude-8.2451)-50)*15/50;
+        }
+        function latToy(latitude){
+            return ((100/1.2728)*(latitude-40.8387)-50)*15/50;
+        }
+        function altToz(alt){
+            return (50/800*alt)/10;
+        }
+>>>>>>> 36db49725f2a275252c744e20f7196e70c1fd116
 
         function pointEachOther(armazem,armazem1){
             if(armazem.position.x-armazem1.position.x>0){

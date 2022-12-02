@@ -6,30 +6,33 @@
 # To run your pipeline on a Windows machine, create a self-hosted Windows runner.
 # For instructions on setting up a Windows runner, see https://support.atlassian.com/bitbucket-cloud/docs/set-up-runners-for-windows/
 
-image: mcr.microsoft.com/dotnet/core/sdk:3.1
 
 pipelines:
   default:
     - parallel:
         - step:
             name: Build and Test
+            image: mcr.microsoft.com/dotnet/sdk:5.0
             caches:
               - dotnetcore
             script:
-              - REPORTS_PATH=./test-reports/build_${BITBUCKET_BUILD_NUMBER}
-              - dotnet restore
-              - dotnet build --no-restore --configuration Release
-              - dotnet test --no-build --configuration Release --test-adapter-path:. --logger:"junit;LogFilePath=$REPORTS_PATH/junit.xml"
+              - cd MasterDataWarehouseManagement/MasterDataWM
+              - dotnet build
         - step:
-            name: Lint the code
+            name: Build and Test 
+            image: node:16.18.0
             caches:
-              - dotnetcore
+              - node
             script:
-              - export SOLUTION_NAME=HelloProject
-              - export REPORTS_PATH=linter-reports
-              - dotnet new tool-manifest
-              - dotnet tool install JetBrains.ReSharper.GlobalTools
-              - dotnet tool restore
-              - dotnet jb inspectcode ${SOLUTION_NAME}.sln --output="${REPORTS_PATH}/jb-${BITBUCKET_BUILD_NUMBER}.xml"
-            artifacts:
-              - linter-reports/**
+              - cd NodeJs
+              - npm install uuid
+              - npm install express-jwt
+              - npm install -g npm
+              - npm install mongoose
+              - npm install -g nodemon
+              - npm install -g ts-node
+              - npm install -g typescript
+              - npm install -g reflect-metadata rxjs
+              - npm install
+              - npm uninstall @types/mocha
+              - npm run build

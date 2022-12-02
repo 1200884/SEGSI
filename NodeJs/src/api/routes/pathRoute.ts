@@ -40,13 +40,9 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.updatePath(req, res, next) );
 
-  route.get('',
-    celebrate({
-      body: Joi.object({
-        id: Joi.string().required()
-      }),
-    }),
-    (req, res, next) => ctrl.getPath(req, res, next) );
+    route.get('', (req, res, next) => ctrl.getPaths(req, res, next));
+
+    route.get('/:str', (req, res, next) => ctrl.getPath(req.params.str, req, res, next));
 
   route.patch('',
     celebrate({

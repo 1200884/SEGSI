@@ -52,7 +52,7 @@ Thumbs.db
 *.wmv
 
 #bin and obj
-/obj
-/bin
+DDDNetCore/obj
+DDDNetCore/bin
 
 NodeJs/node_modules.zip

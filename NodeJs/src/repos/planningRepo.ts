@@ -1,31 +1,78 @@
 import { Service, Inject } from 'typedi';
 
-import ITruckRepo from "../services/IRepos/ITruckRepo";
-import { Truck } from "../domain/truck";
-import { TruckId } from "../domain/truckId";
-import { TruckMap } from "../mappers/TruckMap";
-
-import { Document, FilterQuery, Model } from 'mongoose';
-import { ITruckPersistence } from '../dataschema/ITruckPersistence';
-import ITruckDTO from '../dto/ITruckDTO';
 import IPlanningRepo from '../services/IRepos/IPlanningRepo';
 import { Planning } from '../domain/planning';
 import { PlanningMap } from '../mappers/PlanningMap';
+import { callbackify } from 'util';
+import { reject } from 'lodash';
 
 @Service()
 export default class PlanningRepo implements IPlanningRepo {
 
-  constructor() {}
+  constructor() { }
+  exists(t: Planning): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  save(t: Planning): Promise<Planning> {
+    throw new Error('Method not implemented.');
+  }
 
-  public async findByDomainId (truckId: string, data: string): Promise<Planning> {
-    /*chamar o coiso ao prolog
-    const query = { domainId: truckId};
-    const planningRecord = await this.truckSchema.findOne( query as FilterQuery<ITruckPersistence & Document> );
+  public async findByDomainId(truckId: string, data: string): Promise<Planning> {
 
-    if( planningRecord != null) {
-      return PlanningMap.toDomain(planningRecord);
+    /*var request = require('request');
+    var options = {
+      'method': 'POST',
+      'url': 'http://localhost:5000/planning',
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "truckId": truckId,
+        "date": new Number(data)
+      })
+
+    };
+    let planning = null;
+    await request(options, function (error, response): Promise<Planning> {
+      if (error) {
+        throw new Error(error);
+      }
+      planning = PlanningMap.toDomain(JSON.parse(response.body));
+      console.log(planning);
+      return planning;
+    });
+    
+    return planning;*/
+
+    var request = require('request');
+    var options = {
+      'method': 'POST',
+      'url': 'http://localhost:5000/planning',
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "truckId": truckId,
+        "date": new Number(data)
+      })
+
+    };
+    let planning = null;
+
+    function getPromise(options) {
+      return new Promise((resolve, reject) => {
+        request(options, function (error, response) {
+          if (error) {
+            reject(error);
+          } else {
+            planning = PlanningMap.toDomain(JSON.parse(response.body));
+            resolve(planning);
+          }
+        })
+      })
     }
-    else
-      return null;*/
+
+    planning = getPromise(options);
+    return planning;
   }
 }
