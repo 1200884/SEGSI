@@ -3,6 +3,8 @@ import { Service, Inject } from 'typedi';
 import IPlanningRepo from '../services/IRepos/IPlanningRepo';
 import { Planning } from '../domain/planning';
 import { PlanningMap } from '../mappers/PlanningMap';
+import { callbackify } from 'util';
+import { reject } from 'lodash';
 
 @Service()
 export default class PlanningRepo implements IPlanningRepo {
@@ -17,26 +19,60 @@ export default class PlanningRepo implements IPlanningRepo {
 
   public async findByDomainId(truckId: string, data: string): Promise<Planning> {
 
-    var request = require('request');
+    /*var request = require('request');
+    var options = {
+      'method': 'POST',
+      'url': 'http://localhost:5000/planning',
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "truckId": truckId,
+        "date": new Number(data)
+      })
 
-    var obj = { truckId: truckId, date: data };
-
-    request.post(
-      'http://localhost:5000/planning',
-      {json: obj},
-      function (error, response, body) {
-        console.log(obj);
-        console.log("-----------------------------------------------------------");
-        console.log(body);
-        /*if (!error && response.statusCode == 200) {
-          const planning = PlanningMap.toDomain(JSON.parse(body));
-          console.log(planning);
-        }else {
-          console.log(error);
-        }*/
+    };
+    let planning = null;
+    await request(options, function (error, response): Promise<Planning> {
+      if (error) {
+        throw new Error(error);
       }
-    );
+      planning = PlanningMap.toDomain(JSON.parse(response.body));
+      console.log(planning);
+      return planning;
+    });
+    
+    return planning;*/
 
-    return null;
+    var request = require('request');
+    var options = {
+      'method': 'POST',
+      'url': 'http://localhost:5000/planning',
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "truckId": truckId,
+        "date": new Number(data)
+      })
+
+    };
+    let planning = null;
+
+    function getPromise(options) {
+      return new Promise((resolve, reject) => {
+        request(options, function (error, response) {
+          if (error) {
+            reject(error);
+          } else {
+            planning = PlanningMap.toDomain(JSON.parse(response.body));
+            resolve(planning);
+          }
+        })
+      })
+    }
+
+    planning = getPromise(options);
+    return planning;
   }
 }

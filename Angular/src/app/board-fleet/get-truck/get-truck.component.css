@@ -1,8 +1,8 @@
 .output {
     margin: 0;
     position: absolute;
-    top: 70%;
-    right: 75%;
+    top: 50%;
+    right: 60%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }

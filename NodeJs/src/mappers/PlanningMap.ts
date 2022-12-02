@@ -7,7 +7,8 @@ export class PlanningMap extends Mapper<Planning> {
   
   public static toDTO( planning: Planning): IPlanningDTO {
     return {
-      time: planning.time
+      time: planning.time,
+      places: planning.places
     } as IPlanningDTO;
   }
 
@@ -23,7 +24,8 @@ export class PlanningMap extends Mapper<Planning> {
 
   public static toPersistence (planning: Planning): any {
     return {
-      time: planning.time
+      time: planning.time,
+      places: planning.places
     }
   }
 }
