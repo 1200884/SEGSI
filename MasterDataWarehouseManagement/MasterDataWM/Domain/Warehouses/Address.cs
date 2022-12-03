@@ -11,9 +11,13 @@ public class Address : IValueObject
 
     public Address(string street, string city, string country)
     {
-        this.Street = street;
-        this.City = city;
-        this.Country = country;
+        if(string.IsNullOrEmpty(street) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country)){
+            throw new BusinessRuleValidationException("Invalid Address");
+        }else{
+            this.Street = street;
+            this.City = city;
+            this.Country = country;
+        }
     }
 }
 }
