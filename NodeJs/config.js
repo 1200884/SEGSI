@@ -59,7 +59,6 @@ export default {
       path: "../controllers/packagingController"
     },
     planning: {
-
       name: "PlanningController",
       path: "../controllers/planningController"
     }
@@ -89,6 +88,10 @@ export default {
     planning: {
       name: "PlanningRepo",
       path: "../repos/planningRepo"
+    },
+    delivery: {
+      name: "DeliveryRepo",
+      path: "../repos/deliveryRepo"
     }
   },
 

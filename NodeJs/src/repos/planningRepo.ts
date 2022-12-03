@@ -19,31 +19,6 @@ export default class PlanningRepo implements IPlanningRepo {
 
   public async findByDomainId(truckId: string, data: string): Promise<Planning> {
 
-    /*var request = require('request');
-    var options = {
-      'method': 'POST',
-      'url': 'http://localhost:5000/planning',
-      'headers': {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "truckId": truckId,
-        "date": new Number(data)
-      })
-
-    };
-    let planning = null;
-    await request(options, function (error, response): Promise<Planning> {
-      if (error) {
-        throw new Error(error);
-      }
-      planning = PlanningMap.toDomain(JSON.parse(response.body));
-      console.log(planning);
-      return planning;
-    });
-    
-    return planning;*/
-
     var request = require('request');
     var options = {
       'method': 'POST',
@@ -69,7 +44,7 @@ export default class PlanningRepo implements IPlanningRepo {
             resolve(planning);
           }
         })
-      })
+      });
     }
 
     planning = getPromise(options);
