@@ -19,7 +19,7 @@ export class GetPathsComponent implements OnInit {
 
   getPaths(): void {
     this.logisticsservice.getPaths().subscribe(data => {
-      console.log("banana");
+    
         this.paths = data;
       },
       
