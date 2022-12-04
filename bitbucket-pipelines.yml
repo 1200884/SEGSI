@@ -37,8 +37,15 @@ pipelines:
               - npm uninstall @types/mocha
               - npm run build
         - step:
-            name: Deploy to test
-            deployment: test
-              # trigger: manual  # Uncomment to make this a manual deployment.
+            name: 'Deployment NodeJS'
+            deployment: production
             script:
-              - echo "Deploying to test environment"
+              - pipe: atlassian/sftp-deploy:0.5.7
+                variables:
+                  USER: 'root'
+                  PASSWORD: 'nps2W367wgTr'
+                  SERVER: 'vsgate-ssh.dei.isep.ipp.pt'
+                  REMOTE_PATH: 'NodeJs'
+                  LOCAL_PATH: '/opt/atlassian/pipelines/agent/build/NodeJs/*'
+                  DEBUG: 'false'
+                  EXTRA_ARGS: '-P 10844'
