@@ -17,12 +17,10 @@ export class CreatePathComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-   
   }
 
 
   onPathCreate(path:Path){
-    
     this.logisticsService.postPath(path).subscribe(data=>{this.message="Path Created"},err => {
         this.message="Error creating path";
       });

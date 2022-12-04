@@ -8,8 +8,9 @@ export default class LAPR5 {
         this.view = new View();
         this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
         this.camera.rotateX(Math.PI/4);
-        this.camera.position.z = 5;
-        this.camera.position.y = 9;
+        this.camera.position.z = 14;
+        this.camera.position.y = 16;
+        this.camera.position.x = -7;
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( this.renderer.domElement );

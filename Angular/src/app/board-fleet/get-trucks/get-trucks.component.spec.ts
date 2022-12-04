@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GetTrucksComponent } from './get-trucks.component';
 
@@ -22,4 +22,4 @@ describe('GetTrucksComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+});*/

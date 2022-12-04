@@ -1,0 +1,985 @@
+{
+	"info": {
+		"_postman_id": "37a4e08b-b76f-465b-8dc5-8bf7a84fe708",
+		"name": "Warehouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24057387"
+	},
+	"item": [
+		{
+			"name": "Get all Warehouses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(pm.collectionVariables.get(\"ID\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/Warehouses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Warehouse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Warehouse\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful retrived response\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.collectionVariables.get(\"ID\"));\r",
+							"        let text = pm.response.text();\r",
+							"        \r",
+							"    pm.globals.set(\"ID\", text.split('{\"id\":\"')[1].split('\",')[0]);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"2323232\",\r\n    \"Description\" : \"API TESTING2\",\r\n    \"latitude\" : \"41.9321\",\r\n    \"longitude\" : \"9.2451\",\r\n    \"street\" : \"rua de Ermesinde\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/Warehouses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Warehouse by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(pm.globals.get(\"ID2\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Warehouse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Warehouse\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"API TESTING2 UPDATED\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"{{ID2}}\",\r\n    \"Description\" : \"API TESTING2 UPDATED\",\r\n    \"latitude\" : \"41.9321\",\r\n    \"longitude\" : \"9.2451\",\r\n    \"street\" : \"rua de Ermesinde\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Warehouse by id Updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"API TESTING2 UPDATED\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deactivate Warehouse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"API TESTING2 UPDATED\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Warehouse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"API TESTING2 UPDATED\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/{{ID2}}/hard",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						"{{ID2}}",
+						"hard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Delete Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Warehouse List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(\"API TESTING2 UPDATE\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Latitude bigger 90",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"{{ID}}\",\r\n    \"Description\" : \"API TESTING\",\r\n    \"latitude\" : \"91\",\r\n    \"longitude\" : \"9.2451\",\r\n    \"street\" : \"rua de Ermesinde\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Latitude less than 90",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"{{ID}}\",\r\n    \"Description\" : \"API TESTING\",\r\n    \"latitude\" : \"-91\",\r\n    \"longitude\" : \"9.2451\",\r\n    \"street\" : \"rua de Ermesinde\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Longitude bigger 180",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"{{ID}}\",\r\n    \"Description\" : \"API TESTING\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"181\",\r\n    \"street\" : \"rua de Ermesinde\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Longitude less than 180",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : \"\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Null Street",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : null,\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Null City",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : \"rua 1\",\r\n    \"city\" : null,\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Null Country",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : \"rua 1\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empty Country",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : \"rua 1\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empty City",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : \"rua 1\",\r\n    \"city\" : \"\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empty Street",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var uuid = require('uuid');\r",
+							"var myUUID = uuid.v4();\r",
+							"console.log(\"variavel\");\r",
+							"console.log(myUUID);\r",
+							"pm.collectionVariables.set(\"ID\", myUUID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\" : \"23\",\r\n    \"Description\" : \"oooo\",\r\n    \"latitude\" : \"10\",\r\n    \"longitude\" : \"150\",\r\n    \"street\" : \"\",\r\n    \"city\" : \"Porto\",\r\n    \"country\" : \"Portugal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Warehouses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Warehouses"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ID",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

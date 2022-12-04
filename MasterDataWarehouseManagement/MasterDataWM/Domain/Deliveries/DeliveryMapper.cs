@@ -10,7 +10,7 @@ namespace MDWM.Domain.Deliveries
                 Id = del.Id.AsString(),
                 date = del.date._Date, 
                 weight = del.weight._Weight,
-                destinationWarehouseId = del.destinationWarehouseId,
+                destinationWarehouseId = del.destinationWarehouseId.AsString(),
                 loadTime = del.packagingTime._LoadTime, 
                 unloadTime = del.packagingTime._UnloadTime
             };

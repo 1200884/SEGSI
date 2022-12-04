@@ -1,4 +1,5 @@
 using MDWM.Domain.Shared;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 
 namespace MDWM.Domain.Warehouses
@@ -21,8 +22,12 @@ namespace MDWM.Domain.Warehouses
 
         public Warehouse(string code, string description, string street, string city, string country, double latitude, double longitude,double altitude)
         {
-            if (code == null)
+            if (string.IsNullOrEmpty(code))
                 throw new BusinessRuleValidationException("Every warehouse requires an id.");
+            if (string.IsNullOrEmpty(description)) 
+                throw new BusinessRuleValidationException("Every warehouse requires a description");
+            if (description.Length > 50)
+                throw new BusinessRuleValidationException("Description can't be longer than 50");
             this.Id = new WarehouseId(code);
             this.Description = description;
             this.address=new Address(street,city,country);
