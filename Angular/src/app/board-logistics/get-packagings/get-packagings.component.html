@@ -1,0 +1,9 @@
+<h2>List of packagings</h2>
+<div class="container">
+  <div class="output">
+    <li *ngFor="let packaging of packagings">
+      <span class="badge">Packaging ID: {{packaging.id}}</span>
+      <p>boxId:{{packaging.boxId}}, Position X:{{packaging.positionX}}, Position Y:{{packaging.positionY}}, Position Z:{{packaging.positionZ}}</p>
+    </li>
+  </div>
+</div>

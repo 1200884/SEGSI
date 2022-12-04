@@ -3,10 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Path } from '../_models/Path';
 import { Planning } from '../_models/Planning';
+import { Packaging } from '../_models/Packaging';
 
 const API_URL = 'http://vsgate-s1.dei.isep.ipp.pt:10136/api';
 const PATHS_URL = '/paths';
 const PLANNING_URL = '/planning';
+<<<<<<< HEAD
+const PACKAGING_URL = '/packaging';
+
+=======
+>>>>>>> 4ceec25fe803e2efa9330a8b045186025b5da2a9
 @Injectable({
   providedIn: 'root'
 })
@@ -32,5 +38,23 @@ export class LogisticsService {
     console.log(truckId);
     console.log(date);
     return this.http.get<Planning>(API_URL + PLANNING_URL + '/' + truckId + '/' + date, { responseType: 'json' });
+  }
+
+  //Packaging packaging
+  getPackagings(): Observable<Packaging[]> {
+    return this.http.get<Packaging[]>(API_URL + PACKAGING_URL, { responseType: 'json' });
+  }
+
+  getPackaging(id: string): Observable<Packaging> {
+    return this.http.get<Packaging>(API_URL + PACKAGING_URL + '/' + id, { responseType: 'json'});
+  }
+
+  postPackaging(info: any): Observable<Packaging> {
+    console.log(info);
+    return this.http.post<Packaging>(API_URL + PACKAGING_URL, info);
+  }
+  putPackaging(info: any): Observable<Packaging> {
+    console.log(info);
+    return this.http.put<Packaging>(API_URL + PACKAGING_URL, info);
   }
 }
