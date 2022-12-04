@@ -8,7 +8,7 @@ describe('PathsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetPathsComponent ]
+      declarations: [GetPathsComponent]
     })
       .compileComponents();
 
