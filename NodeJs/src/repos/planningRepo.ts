@@ -22,7 +22,7 @@ export default class PlanningRepo implements IPlanningRepo {
     var request = require('request');
     var options = {
       'method': 'POST',
-      'url': 'http://localhost:5000/planning',
+      'url': 'http://vs136.dei.isep.ipp.pt:5000/planning',
       'headers': {
         'Content-Type': 'application/json'
       },
@@ -40,6 +40,8 @@ export default class PlanningRepo implements IPlanningRepo {
           if (error) {
             reject(error);
           } else {
+            console.log(response.body);
+            
             planning = PlanningMap.toDomain(JSON.parse(response.body));
             resolve(planning);
           }
