@@ -12,8 +12,10 @@ namespace MDWM.Domain.Deliveries
 
         public PackagingTime(int loadTime, int unloadTime)
         {
-            if (loadTime <= 0 || unloadTime <= 0)
-                throw new BusinessRuleValidationException("Load and unload times must be higher than 0");
+            if (loadTime <= 0)
+                throw new BusinessRuleValidationException("Load time must be higher than 0");
+            if (unloadTime <= 0)
+                throw new BusinessRuleValidationException("Unload time must be higher than 0");
             this._LoadTime = loadTime;
             this._UnloadTime = unloadTime;
         }
