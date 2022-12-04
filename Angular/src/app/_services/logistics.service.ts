@@ -8,11 +8,8 @@ import { Packaging } from '../_models/Packaging';
 const API_URL = 'http://vsgate-s1.dei.isep.ipp.pt:10136/api';
 const PATHS_URL = '/paths';
 const PLANNING_URL = '/planning';
-<<<<<<< HEAD
 const PACKAGING_URL = '/packaging';
 
-=======
->>>>>>> 4ceec25fe803e2efa9330a8b045186025b5da2a9
 @Injectable({
   providedIn: 'root'
 })
