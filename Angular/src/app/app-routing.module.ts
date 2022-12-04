@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -22,6 +21,10 @@ import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/updat
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
 
+import { GetPackagingComponent } from './board-logistics/get-packaging/get-packaging.component';
+import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
+import { PutPackagingComponent } from './board-logistics/put-packaging/put-packaging.component';
+import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
 import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
 
@@ -48,6 +51,10 @@ const routes: Routes = [
   { path: 'create-paths', component: CreatePathComponent },
   { path: 'get-paths', component: GetPathsComponent },
   { path: 'get-planning', component: GetPlanningComponent },
+  { path: 'get-packagings', component: GetPackagingsComponent },
+  { path: 'get-packaging', component: GetPackagingComponent },
+  { path: 'create-packaging', component: CreatePackagingComponent },
+  { path: 'put-packaging', component: PutPackagingComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
