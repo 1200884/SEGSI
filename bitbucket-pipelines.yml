@@ -37,7 +37,7 @@ pipelines:
               - npm uninstall @types/mocha
               - npm run build
         - step:
-            name: 'Deployment NodeJS'
+            name: 'Deployment Node'
             deployment: production
             script:
               - pipe: atlassian/sftp-deploy:0.5.7
