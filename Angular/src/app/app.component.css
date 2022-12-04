@@ -1,4 +1,5 @@
 #app{
     background-image:url("../images/camiao.jpg");
+    background-repeat: no-repeat;
     min-height: 713px;  
 }

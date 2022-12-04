@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreatePathComponent } from './create-path.component';
 
@@ -22,4 +22,4 @@ describe('CreatePathComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+});*/

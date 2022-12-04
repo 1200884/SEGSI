@@ -1,25 +1,57 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { CreateWarehouseComponent } from './create-warehouse.component';
+import { Warehouse } from 'src/app/_models/Warehouse';
+import { of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+
 
 describe('CreateWarehouseComponent', () => {
+  let mockWarehouseService: any;
   let component: CreateWarehouseComponent;
   let fixture: ComponentFixture<CreateWarehouseComponent>;
+  let WAREHOUSE: Warehouse;
 
+  mockWarehouseService = jasmine.createSpyObj(['getWarehouses','getWarehouse','update','addWarehouse',]);
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CreateWarehouseComponent ]
+    WAREHOUSE =
+    {
+        id: 123,
+        description: "Arouca",
+        street: "Rua de Arouca",
+        city: "Porto",
+        country: "Portugal",
+        latitude: 40.9321,
+        longitude: 8.2451,
+        altitude: 250.0
+      };
+    TestBed.configureTestingModule({
+      declarations: [ CreateWarehouseComponent ],
+      imports : [FormsModule],
+      providers: [
+        {
+        provide: WarehouseService,
+        useValue: mockWarehouseService,
+        },
+      ]
     })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(CreateWarehouseComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
+  describe('add', () => {
+    beforeEach(() => {
+      mockWarehouseService.addWarehouse.and.returnValue(of(true));
+      component.message = "";
+    });
+    it('should create the selected Warehouse', () => {
+        component.onWarehouseCreate(WAREHOUSE);
+        expect(component.message).toBe("Warehouse Created");
+    });
+    it('should call the create method in service only once', () => {
+        component.onWarehouseCreate(WAREHOUSE);
+        expect(mockWarehouseService.addWarehouse).toHaveBeenCalledTimes(1);
+    });
+  })
 });

@@ -1,4 +1,4 @@
-﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿/*import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdateDeliveryComponent } from './update-delivery.component';
 
@@ -20,4 +20,4 @@ describe('UpdateDeliveryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+});*/
