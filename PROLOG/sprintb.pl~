@@ -30,15 +30,15 @@ path_creator(Request):-
 p_json(Request) :-
         http_read_json(Request, JSON),
         json_to_prolog(JSON, JSON_TEXT),
-        format('Content-type: text/plain~n~n'),
+%        format('Content-type: text/plain~n~n'),
 %        format('~w~n', JSON_TEXT),
         split(JSON_TEXT,TRUCK,DATE),
-        format('~w ~n~w', [TRUCK, DATE]),
-%        voltamaiscedo(TRUCK,DATE,T,L),
+%        format('~w ~n~w', [TRUCK, DATE]),
+        voltamaiscedo(TRUCK,DATE,T,L),
 %        format('~2f ~n~w', [T, L]).
-%        D = data(T,L),
+        D = data(T,L),
 %        format('~w', [D]),
-        prolog_to_json(TRUCK, X),
+        prolog_to_json(D, X),
         reply_json(X).
 
 split(json([truckId=X,date=Y]),X,Y).
