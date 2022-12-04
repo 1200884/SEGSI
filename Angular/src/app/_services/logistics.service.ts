@@ -7,7 +7,6 @@ import { Planning } from '../_models/Planning';
 const API_URL = 'http://vsgate-s1.dei.isep.ipp.pt:10136/api';
 const PATHS_URL = '/paths';
 const PLANNING_URL = '/planning';
-
 @Injectable({
   providedIn: 'root'
 })

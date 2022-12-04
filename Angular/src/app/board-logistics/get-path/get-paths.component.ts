@@ -16,7 +16,6 @@ export class GetPathsComponent implements OnInit {
   ngOnInit(): void {
     this.getPaths();
   }
-
   getPaths(): void {
     this.logisticsservice.getPaths().subscribe(data => {
     
