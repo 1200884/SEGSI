@@ -1,0 +1,17 @@
+.output {
+    margin: 0;
+    position: absolute;
+    top: 70%;
+    right: 75%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.input-box {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    right: 20%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
