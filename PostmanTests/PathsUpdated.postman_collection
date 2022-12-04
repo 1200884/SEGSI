@@ -1,0 +1,478 @@
+{
+	"info": {
+		"_postman_id": "cc7020cc-54a3-437c-a1d4-5058c79f36f7",
+		"name": "Path",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24229088"
+	},
+	"item": [
+		{
+			"name": "Get all Paths",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Path List\", function () {\r",
+							"        pm.expect(pm.response.text()).to.not.include(\"test\");});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Path",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Path\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful retrived response\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    pm.globals.set(\"id\", text.split('{\"id\":\"')[1].split('\",')[0]);\r",
+							"    pm.expect(text).to.include(\"id\");\r",
+							"    pm.expect(text).to.include(pm.globals.get(\"id\"));\r",
+							"    pm.expect(text).to.include('\"warehouseDeparture\":10');\r",
+							"    pm.expect(text).to.include('\"warehouseDestination\":5');\r",
+							"    pm.expect(text).to.include('\"distance\":30');\r",
+							"    pm.expect(text).to.include('\"travelTime\":40');\r",
+							"    pm.expect(text).to.include('\"energyNecessary\":50');\r",
+							"    pm.expect(text).to.include('\"additionalTime\":60');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"warehouseDeparture\" : 10,\r\n    \"warehouseDestination\" : 5,\r\n    \"distance\" : 30,\r\n    \"travelTime\" : 40,\r\n    \"energyNecessary\" : 50,\r\n    \"additionalTime\" : 60\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Path by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Path by ID\", function () {\r",
+							"        let text = pm.response.text();\r",
+							"    console.log(text);\r",
+							"    pm.expect(text).to.include('\"warehouseDeparture\":10');\r",
+							"    pm.expect(text).to.include('\"warehouseDestination\":5');\r",
+							"    pm.expect(text).to.include('\"distance\":30');\r",
+							"    pm.expect(text).to.include('\"travelTime\":40');\r",
+							"    pm.expect(text).to.include('\"energyNecessary\":50');\r",
+							"    pm.expect(text).to.include('\"additionalTime\":60');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Path",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful Created a Path\", function () {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Path by ID\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include('\"warehouseDeparture\":1');\r",
+							"        pm.expect(pm.response.text()).to.include('\"warehouseDestination\":13');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{id}}\",\r\n    \"warehouseDeparture\" : 1,\r\n    \"warehouseDestination\" : 13,\r\n    \"distance\" : 3,\r\n    \"travelTime\" : 4,\r\n    \"energyNecessary\" : 5,\r\n    \"additionalTime\" : 6\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Path by id Updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Path by ID\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    pm.expect(text).to.include('\"warehouseDeparture\":1');\r",
+							"    pm.expect(text).to.include('\"warehouseDestination\":13');\r",
+							"    pm.expect(text).to.include('\"distance\":3');\r",
+							"    pm.expect(text).to.include('\"travelTime\":4');\r",
+							"    pm.expect(text).to.include('\"energyNecessary\":5');\r",
+							"    pm.expect(text).to.include('\"additionalTime\":6');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"{{id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Path by id Updated Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response Code Successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200 ,201 , 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Path by ID\", function () {\r",
+							"    let text = pm.response.text();\r",
+							"    pm.expect(text).to.include('\"warehouseDeparture\":1');\r",
+							"    pm.expect(text).to.include('\"warehouseDestination\":13');\r",
+							"    pm.expect(text).to.include('\"distance\":3');\r",
+							"    pm.expect(text).to.include('\"travelTime\":4');\r",
+							"    pm.expect(text).to.include('\"energyNecessary\":5');\r",
+							"    pm.expect(text).to.include('\"additionalTime\":6');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"1223113132132\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a path with  server error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Handled a Path not following business rules\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"warehouseDeparture\" : 10,\r\n    \"warehouseDestination\" : \"warehouseDestination\",\r\n    \"distance\" : 30,\r\n    \"travelTime\" : 40,\r\n    \"energyNecessary\" : 50,\r\n    \"additionalTime\" : 60\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Bad Format Path",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Handled a Path not following format  rules\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\"warehouseDeparture\" : teste,\r\n    \"warehouseDestination\" : \"5\",\r\n    \"distance\" : \"30\",\r\n    \"travelTime\" : \"40\",\r\n    \"energyNecessary\" : \"50\",\r\n    \"additionalTime\" : \"60\"}"
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Bad Path",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Handled a Path not following business rules\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"warehouseDeparture\" : 10,\r\n    \"warehouseDestination\" : 19,\r\n    \"distance\" : 30,\r\n    \"travelTime\" : 40,\r\n    \"energyNecessary\" : 50,\r\n    \"additionalTime\" : 60\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:2223/api/paths",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2223",
+					"path": [
+						"api",
+						"paths"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
