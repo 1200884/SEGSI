@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="output">
+      <li *ngIf="!error">
+        {{header}}
+        <p>{{body}}</p>
+      </li>
+      <li *ngIf="error">
+        <p>{{ content }}</p>
+      </li>
+    </div>
+  
+    <div class="input-box">
+      <p>
+        <input type="text" #packagingInfo>
+      </p>
+    </div>
+  
+    <div class="get-button">
+      <button type="button">
+        <a class="btn" (click)="getPackaging(packagingInfo.value)">Get packaging</a>
+      </button>
+    </div>
+  </div>

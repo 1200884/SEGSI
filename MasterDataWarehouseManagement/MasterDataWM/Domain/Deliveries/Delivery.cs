@@ -23,6 +23,10 @@ namespace MDWM.Domain.Deliveries
 
         public Delivery(string Id, DateTime date, double weight, string destinationWarehouseId, int loadTime, int unloadTime)
         {
+            if (string.IsNullOrEmpty(Id))
+                throw new BusinessRuleValidationException("Every delivery requires an id.");
+            if (string.IsNullOrEmpty(destinationWarehouseId))
+                throw new BusinessRuleValidationException("Every delivery requires a delivery warehouse id.");
             this.Id = new DeliveryId(Id);
             this.date = new Date (date);
             this.weight = new Weight(weight);

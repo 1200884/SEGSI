@@ -1,25 +1,57 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { LogisticsService } from 'src/app/_services/logistics.service';
 import { CreatePathComponent } from './create-path.component';
+import { Path } from 'src/app/_models/Path';
+import { of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+
 
 describe('CreatePathComponent', () => {
+  let mockPathService: any;
   let component: CreatePathComponent;
   let fixture: ComponentFixture<CreatePathComponent>;
+  let PATH: Path;
+  let BADPATH:Path;
 
+  mockPathService = jasmine.createSpyObj(['getPaths','getPath','update','postPath',]);
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CreatePathComponent ]
-    })
-    .compileComponents();
-  });
+    PATH =
+    {
+      warehouseDeparture: 1,
+      warehouseDestination: 2,
+      distance:3,
+      travelTime:4,
+      energyNecessary:5,
+      additionalTime:6
+      };
 
-  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ CreatePathComponent ],
+      imports : [FormsModule],
+      providers: [
+        {
+        provide: LogisticsService,
+        useValue: mockPathService,
+        },
+      ]
+    })
     fixture = TestBed.createComponent(CreatePathComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
+  describe('add', () => {
+    beforeEach(() => {
+      mockPathService.postPath.and.returnValue(of(true));
+      component.message = "";
+    });
+    it('should create the selected Path', () => {
+        component.onPathCreate(PATH);
+        expect(component.message).toBe("Path Created");
+    });
+    it('should call the create method in service only once', () => {
+        component.onPathCreate(PATH);
+        expect(mockPathService.postPath).toHaveBeenCalledTimes(1);
+    });
+  })
 });
