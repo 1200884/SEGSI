@@ -36,3 +36,16 @@ pipelines:
               - npm install
               - npm uninstall @types/mocha
               - npm run build
+        - step:
+            name: 'Deployment Node'
+            deployment: production
+            script:
+              - pipe: atlassian/sftp-deploy:0.5.7
+                variables:
+                  USER: 'root'
+                  PASSWORD: 'H5d2z9biko1T'
+                  SERVER: 'vsgate-ssh.dei.isep.ipp.pt'
+                  REMOTE_PATH: 'NodeJs'
+                  LOCAL_PATH: '/opt/atlassian/pipelines/agent/build/NodeJs/*'
+                  DEBUG: 'false'
+                  EXTRA_ARGS: '-P 10844'

@@ -29,7 +29,7 @@ namespace MDWM.Domain.Deliveries
                 Id = del.Id.AsString(),
                 date = del.date._Date, 
                 weight = del.weight._Weight,
-                destinationWarehouseId = del.destinationWarehouseId,
+                destinationWarehouseId = del.destinationWarehouseId.AsString(),
                 loadTime = del.packagingTime._LoadTime, 
                 unloadTime = del.packagingTime._UnloadTime});
 
@@ -70,7 +70,7 @@ namespace MDWM.Domain.Deliveries
             del.ChangeDate(dto.date);
             del.ChangeWeight(dto.weight);
             del.ChangeWarehouseDeliveryId(dto.destinationWarehouseId);
-            del.ChangeLoadTime(dto.loadTime,dto.unloadTime);
+            del.ChangePackagingTime(dto.loadTime,dto.unloadTime);
             
             await this._unitOfWork.CommitAsync();
 
