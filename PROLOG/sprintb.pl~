@@ -1,3 +1,4 @@
+%set_prolog_flag(answer_write_options,[max_depth(0)]).
 % Bibliotecas
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).

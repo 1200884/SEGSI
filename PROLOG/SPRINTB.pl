@@ -450,6 +450,7 @@ tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,TOE,TOEUTIL):-TOEUTIL is TOE*PESOCAMIAO
 
 tempoaconsiderar(TEMPOCARREGARCAMIAO,TEMPODESCARGAENCOMENDAS,TEMPOACONSIDERAR):-TEMPOCARREGARCAMIAO>TEMPODESCARGAENCOMENDAS,!,TEMPOACONSIDERAR is TEMPOCARREGARCAMIAO;TEMPOACONSIDERAR is TEMPODESCARGAENCOMENDAS.
 
+
 temporecarregamentototal(TRUCK,TEMPO):-carateristicasCam(TRUCK,_,_,_,_,TEMPO),!.
 % Se o penï¿½ltimo argumento for 5, significa que o tempo de
 % recarregamento necessita apenas de ser o estritamente necessï¿½rio para
@@ -462,3 +463,75 @@ temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMA
 bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
 bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
 amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
+
+% dia = soma dia=LC[p,b,g] dia+LC=LLC[[p,2,3],[b,1,7],[g,5,4]] LLC
+somafinal(DIA,MAJ1_MIN2, S):-
+    listaCidades(DIA,LLC),
+    fatiaDeLLC(DIA,MAJ1_MIN2, LLC,LLTRsC),
+    (MAJ1_MIN2 is 2 ->listaMin(LLTRsC, LM); listaMaj(LLTRsC, LM)),
+     list_sum(LM,S).
+%([20,30],[10,70],[50,40])--->([20,10,40])
+listaMin([],[]).
+listaMin([B|C], [M|LM]):- list_min(B,M), listaMin(C,LM).
+list_min([L|Ls], Min) :- list_min(Ls, L, Min).
+list_min([], Min, Min).
+list_min([L|Ls], Min0, Min) :-Min1 is min(L, Min0), list_min(Ls, Min1, Min).
+
+listaMaj([],[]).
+listaMaj([B|C], [M|LM]):- list_max(B,M), listaMaj(C,LM).
+list_max([P|T], O) :- list_max(T, P, O).
+list_max([], P, P).
+list_max([H|T], P, O):-( H>P -> list_max(T, H, O);list_max(T, P, O)).
+
+list_sum([],0).
+list_sum([Head | Tail], TotalSum) :- list_sum(Tail, Sum1),TotalSum is Head+Sum1.
+%dia=LC[p,b,g], todas as cidades para 1 dia
+%(20221205)--->([p,b,g])
+listaCidades(DIA, LLC):- findall(CD,entrega(_,DIA,_,CD,_,_),LC),length(LC, TAMANHO), metodoLCpLLC(LC, TAMANHO,LLC).
+%metodoLCpLLC(_,0,[]).
+% metodoLCpLLC([H|T], S, [LLC|LLC2]):- append([LLC], [T|H], LLC2), S1 is
+% (S-1), metodoLCpLLC([T|H], S1, LLC2).
+metodoLCpLLC(_,0,[]):-!.
+metodoLCpLLC([A|B],TAMANHO,[[A|B],LISTADECAMINHOS]):-TAMANHO1 is TAMANHO-1,last(B,C),delete(B,C,D) ,metodoLCpLLC([C,A|D],TAMANHO1,LISTADECAMINHOS).
+
+%[b,c,a],[c,a,b],[a,b,c].
+fatiaDeLLC(_,_,[],_).
+fatiaDeLLC(DIA,MAJ1_MIN2,[LC|LLC], LLTRsC):- listaCompleta(DIA,MAJ1_MIN2, LC,LTRsC), fatiaDeLLC(DIA,MAJ1_MIN2,LLC, [LLTRsC|LTRsC]).
+
+% dia+LC[p,b,g]= definimos LTGoGo[2,3]. transformamos GoGo em Real.
+% Acrescentamos a lista de tempos reais a LLTsC (Lista de listas de
+% tempos sem cidades).
+% (20221205, [p,b,g])--->([20,30],[10,70],[50,40])
+listaCompleta(_,_,[],[]).
+listaCompleta(DIA,MAJ1_MIN2, [C|LC],[LLTRsC|LTReal]):-
+    findall(T,dadosCam_t_e_ta(_,_,C,T,_,_), LTGoGo),
+    listaTempos(C,DIA,10,MAJ1_MIN2 ,LTGoGo,  LTReal),
+    listaCompleta(DIA,MAJ1_MIN2, LC,LLTRsC).
+% recebemos cidade, dia e LTGoGo. Transformamos cada elemento da LTGoGo
+% em Tempos reais sabendo o dia e a cidade. Metodo recursivo.
+% (p, 20221205, [2,3])--->([20,30])
+listaTempos(_,_,_,_,[],[]).
+listaTempos(C,DIA,TA,MAJ1_MIN2, [X|Y], [Z|LTR]):-
+    contas(MAJ1_MIN2, TA, C, DIA, X, Z),
+    listaTempos(C, DIA,TA,MAJ1_MIN2, Y,LTR) .
+% recebemos cidade, dia e X(tempo de trajeto). acedemos Ã  massa(M) e ao
+% tempo de descarga(T) de mercadoria. calculamos o Z (tempo real).
+% (p, 20221205, 2)--->(20)
+contas(MAJ1_MIN2,TA,C,DIA,X,Z):-
+
+    (MAJ1_MIN2 is 2 ->
+    (findall(M,entrega(_,DIA,M,C,_,_),ME),
+    findall(T,entrega(_,DIA,_,C,_,T),TR),
+     (length(ME,TM),TM=0,M is 0,A is 0;M is ME,A is TR),
+    Z is (A+((X*(7500+M))/11800))
+
+    );
+
+    %MAJ1_MIN2 is 1, para o majorante
+    (   findall(M,entrega(_,DIA,M,C,_,_),ME),
+    findall(T,entrega(_,DIA,_,C,_,T),TR),
+        (length(ME,TM),TM=0,M is 0,A is 0;M is ME,A is TR),
+%!
+    Z is (A+((X*(7500+(4300-M)))/11800)+TA)
+    )
+    ).

@@ -49,9 +49,5 @@ describe('CreatePathComponent', () => {
         component.onPathCreate(PATH);
         expect(component.message).toBe("Path Created");
     });
-    it('should call the create method in service only once', () => {
-        component.onPathCreate(PATH);
-        expect(mockPathService.postPath).toHaveBeenCalledTimes(1);
-    });
   })
 });
