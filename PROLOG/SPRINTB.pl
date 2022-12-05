@@ -1,3 +1,4 @@
+%set_prolog_flag(answer_write_options,[max_depth(0)]).
 % Bibliotecas
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
@@ -9,11 +10,11 @@
 
 :- json_object data(time:number, places:list).
 
-% Relação entre pedidos HTTP e predicados que os processam
+% Relaï¿½ï¿½o entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
 :- http_handler('/planning', p_json, []).
 
-% Criação de servidor HTTP no porto 'Port'
+% Criaï¿½ï¿½o de servidor HTTP no porto 'Port'
 server() :-
         http_server(http_dispatch, [port(5000)]).
 
@@ -50,6 +51,18 @@ entrega(4438, 20221205, 150, 9, 7, 9).
 entrega(4445, 20221205, 100, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
 entrega(4449, 20221205, 300, 11, 15, 20).
+%entrega(4398, 20221205, 310, 17, 16, 20).
+%entrega(4432, 20221205, 270, 14, 14, 18).
+%entrega(4437, 20221205, 180, 12, 9, 11).
+%entrega(4451, 20221205, 220, 6, 9, 12).
+%entrega(4452, 20221205, 390, 13, 21, 26).
+%entrega(4444, 20221205, 380, 2, 20, 25).
+
+%entrega(4455, 20221205, 280, 7, 14, 19).
+%entrega(4399, 20221205, 260, 15, 13, 18).
+%entrega(4454, 20221205, 350, 10, 18, 22).
+%entrega(4446, 20221205, 260, 4, 14, 17).
+%entrega(4456, 20221205, 330, 16, 17, 21).
 %carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
 carateristicasCam(eTruck01,7500,4300,80,100,60).
 
@@ -344,11 +357,24 @@ dadosCam_t_e_ta(eTruck01,17,15,53,18,0).
 dadosCam_t_e_ta(eTruck01,17,16,67,25,0).
 
 cidade_inicial(5).
-% começar no armazem origem e verificar dos armazéns da lista o que está
-% mais proximo.Depois, retirar esse armazém da lista e fazer o mesmo a
-% começar neste armazém.
+% comeï¿½ar no armazem origem e verificar dos armazï¿½ns da lista o que estï¿½
+% mais proximo.Depois, retirar esse armazï¿½m da lista e fazer o mesmo a
+% comeï¿½ar neste armazï¿½m.
 
-closest_path(DATE,[A|LF]):-findall(C,entrega(_,DATE,_,C,_,_),LC),cidade_inicial(A),closest(LC,A,LF2),append(LF2,[A],LF),carateristicasCam(eTruck01,T,CM,_,_,_),tempo([A|LF],DATE,T,CM).
+combinacao_heuristicas(DATE,[A|LF],F):-get_time(Ti),findall([M,C],entrega(_,DATE,M,C,_,_),LCM),findall(C,entrega(_,DATE,_,C,_,_),LC1),
+        cidade_inicial(A),createList(LC1,A,LC),combinar(LC1,LC,LCM,LF2),append(LF2,[A],LF),carateristicasCam(eTruck01,T,CM,_,_,_),
+        tempo([A|LF],DATE,T,CM,F),get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
+
+combinar([],[],[],[]):-!.
+combinar(LC1,LC,LCM,[CF|LF]):- best_city(LC,LCM,CF),delete(LCM,[_,CF],LF2),delete(LC1,CF,LC2),createList(LC2,CF,LC3),combinar(LC2,LC3,LF2,LF).
+best_city([[T1,C1],[T2,C2]|L1],[[M1,C1],[M2,C2]|L2],L):-F1 is T1*M1,F2 is M2*T2,F1<F2,best_city([[T1,C1]|L1],[[M1,C1]|L2],L);
+        best_city([[T2,C2]|L1],[[M2,C2]|L2],L).
+best_city([[_,A]],[[_,A]],A).
+
+
+
+closest_path(DATE,[A|LF],F):-get_time(Ti),findall(C,entrega(_,DATE,_,C,_,_),LC),cidade_inicial(A),closest(LC,A,LF2),append(LF2,[A],LF),
+        carateristicasCam(eTruck01,T,CM,_,_,_),tempo([A|LF],DATE,T,CM,F),get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
 
 closest([],_,[]):-!.
 closest(LC,CI,[CF|LF]):-close_city(LC,CI,CF),delete(LC,CF,LF2),closest(LF2,CF,LF).
@@ -358,15 +384,18 @@ createList([],_,[]).
 minlista([[_,A]],A).
 minlista([[A,C1],[B,_]|C],L):- A<B,minlista([[A,C1]|C],L).
 minlista([[_,_],[B,C1]|C],L):-minlista([[B,C1]|C],L).
+maxlista([[_,A]],A).
+maxlista([[A,C1],[B,_]|C],L):- A>B,maxlista([[A,C1]|C],L).
+maxlista([[_,_],[B,C1]|C],L):-maxlista([[B,C1]|C],L).
 
-biggest_weight(DATE,[A|LF]):-findall([M,C],entrega(_,DATE,M,C,_,_),LCM),cidade_inicial(A),heaviest(LCM,LF2),append(LF2,[A],LF),carateristicasCam(eTruck01,T,CM,_,_,_),
-    tempo([A|LF],DATE,T,CM).
+biggest_weight(DATE,[A|LF],F):-get_time(Ti),findall([M,C],entrega(_,DATE,M,C,_,_),LCM),cidade_inicial(A),heaviest(LCM,LF2),append(LF2,[A],LF),
+        carateristicasCam(eTruck01,T,CM,_,_,_),tempo([A|LF],DATE,T,CM,F),get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
 
 heaviest([],[]):-!.
-heaviest(LCM,[CF|LF]):-minlista(LCM,CF),delete(LCM,[_,CF],LF2),heaviest(LF2,LF).
+heaviest(LCM,[CF|LF]):-maxlista(LCM,CF),delete(LCM,[_,CF],LF2),heaviest(LF2,LF).
 
-tempo(LC,DATE,TARA,CMAX):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
-    trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE),write("Tempo do trajeto:"),write(F).
+tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
+    trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
 somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.
 
 listaentregas(E,DIA):-findall(A,entrega(_,DIA,_,A,_,_),E).
@@ -382,20 +411,19 @@ partida_chegada(5).
 % trajetorias possiveis para os caminhos dados, devolve o caminho mais
 % rapido e o respetivo tempo
 
-voltamaiscedo(TRUCK,DIA,TEMPO_FINAL,LFINAL):-
-        carateristicasCam(TRUCK,_,_,BAT_INICIAL,_,_),
-        bateriamaxima(TRUCK,BAT_MAX),
-        bateriaminima(TRUCK,BAT_MIN),
-        pesomaximo(TRUCK,PESO_MAXIMO),
-        pesototal(TRUCK,PESOTOTAL),
-        calcula_trajetoria([A|LT],DIA),
-        trata_lista(A,TEMPO,PESO_MAXIMO,PESOTOTAL,BAT_MAX,BAT_MIN,BAT_INICIAL,TRUCK,DIA),
-        itera(DIA,TRUCK,BAT_INICIAL,BAT_MAX,BAT_MIN,PESO_MAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),
-        !,
-        trata_lista(LFINAL,TEMPO_FINAL,PESO_MAXIMO,PESOTOTAL,BAT_MAX,BAT_MIN,BAT_INICIAL,TRUCK,DIA).
+% voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-get_time(Ti),carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),get_time(Tf),TSol
+% is Tf-Ti,write('Tempo de ExecuÃ§Ã£o = '),write(TSol).
+
+voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-get_time(Ti),findall(C,entrega(_,DIA,_,C,_,_),LC),length(LC,LENGTH),
+        (LENGTH<9 ->(carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),
+        pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),
+        trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),
+        itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,
+        trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA));(closest_path(DIA,LFINAL,TEMPOFINAL))),get_time(Tf),
+        TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
 
 
-% itera é o metodo que trata de todos os caminhos possíveis, e envia
+% itera ï¿½ o metodo que trata de todos os caminhos possï¿½veis, e envia
 % cada caminho ao trata_lista que lhe retorna o tempo de cada caminho,
 % sendo o itera responsavel por devolver o caminho que demora menos
 % tempo
@@ -422,10 +450,11 @@ tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,TOE,TOEUTIL):-TOEUTIL is TOE*PESOCAMIAO
 
 tempoaconsiderar(TEMPOCARREGARCAMIAO,TEMPODESCARGAENCOMENDAS,TEMPOACONSIDERAR):-TEMPOCARREGARCAMIAO>TEMPODESCARGAENCOMENDAS,!,TEMPOACONSIDERAR is TEMPOCARREGARCAMIAO;TEMPOACONSIDERAR is TEMPODESCARGAENCOMENDAS.
 
+
 temporecarregamentototal(TRUCK,TEMPO):-carateristicasCam(TRUCK,_,_,_,_,TEMPO),!.
-% Se o penúltimo argumento for 5, significa que o tempo de
-% recarregamento necessita apenas de ser o estritamente necessário para
-% completar a viagem até ao armazém seguinte (ou seja, chegar a este com
+% Se o penï¿½ltimo argumento for 5, significa que o tempo de
+% recarregamento necessita apenas de ser o estritamente necessï¿½rio para
+% completar a viagem atï¿½ ao armazï¿½m seguinte (ou seja, chegar a este com
 % a bateria a 16%
 temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,5,BATUTNEC):-bateriaminima(TRUCK,BATMIN),B is BATATUAL-BATUTNEC, A is BATMIN-B,amplitudemaxima(TRUCK,AMPLITUDEMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO), TEMPO is TEMPOMAXIMO*A/AMPLITUDEMAX.
 temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO),amplitudemaxima(TRUCK,AMPLITUDEMAX),AMPLITUDEATUAL is BATMAX-BATATUAL, TEMPO is AMPLITUDEATUAL*TEMPOMAXIMO/AMPLITUDEMAX.
@@ -434,3 +463,75 @@ temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMA
 bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
 bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
 amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
+
+% dia = soma dia=LC[p,b,g] dia+LC=LLC[[p,2,3],[b,1,7],[g,5,4]] LLC
+somafinal(DIA,MAJ1_MIN2, S):-
+    listaCidades(DIA,LLC),
+    fatiaDeLLC(DIA,MAJ1_MIN2, LLC,LLTRsC),
+    (MAJ1_MIN2 is 2 ->listaMin(LLTRsC, LM); listaMaj(LLTRsC, LM)),
+     list_sum(LM,S).
+%([20,30],[10,70],[50,40])--->([20,10,40])
+listaMin([],[]).
+listaMin([B|C], [M|LM]):- list_min(B,M), listaMin(C,LM).
+list_min([L|Ls], Min) :- list_min(Ls, L, Min).
+list_min([], Min, Min).
+list_min([L|Ls], Min0, Min) :-Min1 is min(L, Min0), list_min(Ls, Min1, Min).
+
+listaMaj([],[]).
+listaMaj([B|C], [M|LM]):- list_max(B,M), listaMaj(C,LM).
+list_max([P|T], O) :- list_max(T, P, O).
+list_max([], P, P).
+list_max([H|T], P, O):-( H>P -> list_max(T, H, O);list_max(T, P, O)).
+
+list_sum([],0).
+list_sum([Head | Tail], TotalSum) :- list_sum(Tail, Sum1),TotalSum is Head+Sum1.
+%dia=LC[p,b,g], todas as cidades para 1 dia
+%(20221205)--->([p,b,g])
+listaCidades(DIA, LLC):- findall(CD,entrega(_,DIA,_,CD,_,_),LC),length(LC, TAMANHO), metodoLCpLLC(LC, TAMANHO,LLC).
+%metodoLCpLLC(_,0,[]).
+% metodoLCpLLC([H|T], S, [LLC|LLC2]):- append([LLC], [T|H], LLC2), S1 is
+% (S-1), metodoLCpLLC([T|H], S1, LLC2).
+metodoLCpLLC(_,0,[]):-!.
+metodoLCpLLC([A|B],TAMANHO,[[A|B],LISTADECAMINHOS]):-TAMANHO1 is TAMANHO-1,last(B,C),delete(B,C,D) ,metodoLCpLLC([C,A|D],TAMANHO1,LISTADECAMINHOS).
+
+%[b,c,a],[c,a,b],[a,b,c].
+fatiaDeLLC(_,_,[],_).
+fatiaDeLLC(DIA,MAJ1_MIN2,[LC|LLC], LLTRsC):- listaCompleta(DIA,MAJ1_MIN2, LC,LTRsC), fatiaDeLLC(DIA,MAJ1_MIN2,LLC, [LLTRsC|LTRsC]).
+
+% dia+LC[p,b,g]= definimos LTGoGo[2,3]. transformamos GoGo em Real.
+% Acrescentamos a lista de tempos reais a LLTsC (Lista de listas de
+% tempos sem cidades).
+% (20221205, [p,b,g])--->([20,30],[10,70],[50,40])
+listaCompleta(_,_,[],[]).
+listaCompleta(DIA,MAJ1_MIN2, [C|LC],[LLTRsC|LTReal]):-
+    findall(T,dadosCam_t_e_ta(_,_,C,T,_,_), LTGoGo),
+    listaTempos(C,DIA,10,MAJ1_MIN2 ,LTGoGo,  LTReal),
+    listaCompleta(DIA,MAJ1_MIN2, LC,LLTRsC).
+% recebemos cidade, dia e LTGoGo. Transformamos cada elemento da LTGoGo
+% em Tempos reais sabendo o dia e a cidade. Metodo recursivo.
+% (p, 20221205, [2,3])--->([20,30])
+listaTempos(_,_,_,_,[],[]).
+listaTempos(C,DIA,TA,MAJ1_MIN2, [X|Y], [Z|LTR]):-
+    contas(MAJ1_MIN2, TA, C, DIA, X, Z),
+    listaTempos(C, DIA,TA,MAJ1_MIN2, Y,LTR) .
+% recebemos cidade, dia e X(tempo de trajeto). acedemos Ã  massa(M) e ao
+% tempo de descarga(T) de mercadoria. calculamos o Z (tempo real).
+% (p, 20221205, 2)--->(20)
+contas(MAJ1_MIN2,TA,C,DIA,X,Z):-
+
+    (MAJ1_MIN2 is 2 ->
+    (findall(M,entrega(_,DIA,M,C,_,_),ME),
+    findall(T,entrega(_,DIA,_,C,_,T),TR),
+     (length(ME,TM),TM=0,M is 0,A is 0;M is ME,A is TR),
+    Z is (A+((X*(7500+M))/11800))
+
+    );
+
+    %MAJ1_MIN2 is 1, para o majorante
+    (   findall(M,entrega(_,DIA,M,C,_,_),ME),
+    findall(T,entrega(_,DIA,_,C,_,T),TR),
+        (length(ME,TM),TM=0,M is 0,A is 0;M is ME,A is TR),
+%!
+    Z is (A+((X*(7500+(4300-M)))/11800)+TA)
+    )
+    ).
