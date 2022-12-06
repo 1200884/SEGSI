@@ -43,9 +43,10 @@ pipelines:
               - pipe: atlassian/sftp-deploy:0.5.7
                 variables:
                   USER: 'root'
-                  PASSWORD: 'H5d2z9biko1T'
+                  #PASSWORD: 'H5d2z9biko1T'
                   SERVER: 'vsgate-ssh.dei.isep.ipp.pt'
                   REMOTE_PATH: 'NodeJs'
                   LOCAL_PATH: '/opt/atlassian/pipelines/agent/build/NodeJs/*'
-                  DEBUG: 'false'
+                  SSH_KEY: $SSH_KEY
+                  DEBUG: 'true'
                   EXTRA_ARGS: '-P 10844'
