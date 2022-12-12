@@ -414,13 +414,16 @@ partida_chegada(5).
 % voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-get_time(Ti),carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),get_time(Tf),TSol
 % is Tf-Ti,write('Tempo de ExecuÃ§Ã£o = '),write(TSol).
 
-voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-get_time(Ti),findall(C,entrega(_,DIA,_,C,_,_),LC),length(LC,LENGTH),
+voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-
+        %get_time(Ti),
+        findall(C,entrega(_,DIA,_,C,_,_),LC),length(LC,LENGTH),
         (LENGTH<9 ->(carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),
         pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),
         trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),
         itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,
-        trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA));(closest_path(DIA,LFINAL,TEMPOFINAL))),get_time(Tf),
-        TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
+        trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA));(closest_path(DIA,LFINAL,TEMPOFINAL))).
+%        ,get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução =
+%        '),write(TSol).
 
 
 % itera ï¿½ o metodo que trata de todos os caminhos possï¿½veis, e envia

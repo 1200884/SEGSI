@@ -4,6 +4,7 @@ import Armazem from "./Armazem.js";
 import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import Bola_Teste from "./Bola_Teste.js";
 
 export default class View {
     constructor(){
@@ -51,6 +52,12 @@ export default class View {
         createBridge(view,armazens[13],armazens[10]);
         createBridge(view,armazens[4],armazens[11]);
         createBridge(view,armazens[16],armazens[12]);
+
+        //teste simoes
+        view.bola = new Bola_Teste();
+        let bola = view.bola.object.clone();
+        bola.position.set(1,1,1);
+        view.object.add(bola);
     }
 
     function readFile(){
