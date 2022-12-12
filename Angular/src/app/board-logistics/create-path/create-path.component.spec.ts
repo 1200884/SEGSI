@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogisticsService } from 'src/app/_services/logistics.service';
 import { CreatePathComponent } from './create-path.component';
 import { Path } from 'src/app/_models/Path';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 
@@ -24,7 +24,7 @@ describe('CreatePathComponent', () => {
       energyNecessary:5,
       additionalTime:6
       };
-
+     
     TestBed.configureTestingModule({
       declarations: [ CreatePathComponent ],
       imports : [FormsModule],
@@ -49,5 +49,10 @@ describe('CreatePathComponent', () => {
         component.onPathCreate(PATH);
         expect(component.message).toBe("Path Created");
     });
+    it('should NOT create the selected Path', () => {
+      mockPathService.postPath.and.returnValue(throwError(() => new Error('Mock Error')));
+      component.onPathCreate(PATH);
+      expect(component.message).toBe("Error creating path");
+  });
   })
 });
