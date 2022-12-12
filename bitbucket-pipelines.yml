@@ -47,5 +47,5 @@ pipelines:
                   SERVER: 'vsgate-ssh.dei.isep.ipp.pt'
                   REMOTE_PATH: 'NodeJs'
                   LOCAL_PATH: '/opt/atlassian/pipelines/agent/build/NodeJs/*'
-                  DEBUG: 'false'
-                  EXTRA_ARGS: '-P 10844'
+                  DEBUG: 'true'
+                  EXTRA_ARGS: '-P 10819'
