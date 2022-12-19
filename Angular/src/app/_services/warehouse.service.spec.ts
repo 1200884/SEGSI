@@ -7,7 +7,7 @@ describe('WarehouseService', () => {
   let service: WarehouseService;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let WAREHOUSE = {
-    id: 125,
+    id: "125",
       description: "Arouca",
       street: "Rua de Arouca",
       city: "Porto",
@@ -18,7 +18,7 @@ describe('WarehouseService', () => {
   }
   let WAREHOUSES =[
     {
-      id: 123,
+      id: "123",
       description: "Arouca",
       street: "Rua de Arouca",
       city: "Porto",
@@ -28,7 +28,7 @@ describe('WarehouseService', () => {
       altitude: 250.0
     },
     {
-      id: 124,
+      id: "124",
       description: "PORTO",
       street: "Rua de porto",
       city: "Lisboa",

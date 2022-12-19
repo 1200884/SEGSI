@@ -11,6 +11,8 @@ export default class Ground {
         const geometry = new THREE.PlaneGeometry( size, size );
         const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: texture });
         this.object = new THREE.Mesh( geometry, material );
+        var ud = this.object.userData;
+        ud.name="Ground";
         this.object.rotation.x=-Math.PI/2;
     }
 }

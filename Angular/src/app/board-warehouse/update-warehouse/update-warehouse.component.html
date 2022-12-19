@@ -31,4 +31,9 @@
     </div>
     <button type="button" (click)="goBack()">go back</button>
     <button type="button" (click)="Save()">Save</button>
+    <button type="button" *ngIf="message2" (click)="Enable()">Enable</button>
+    <button type="button" *ngIf="!message2" (click)="Disable()">Disable</button>
+  </div>
+  <div *ngIf="message">
+    <h1>{{message}}</h1>
   </div>

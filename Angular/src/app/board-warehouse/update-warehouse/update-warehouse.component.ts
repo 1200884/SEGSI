@@ -12,7 +12,9 @@ import { WarehouseService } from 'src/app/_services/warehouse.service';
 })
 export class UpdateWarehouseComponent implements OnInit{
   warehouse: Warehouse | undefined;
-
+  message:string | undefined;
+  disable:string | undefined;
+  message2:boolean | undefined;
   constructor(
     private route: ActivatedRoute,
     private warehouseService: WarehouseService,
@@ -25,6 +27,12 @@ export class UpdateWarehouseComponent implements OnInit{
 
   getWarehouse(): void {
     const id = String(this.route.snapshot.paramMap.get('id'));
+    this.disable = String(this.route.snapshot.paramMap.get('check3'));
+    if(this.disable=="true"){
+      this.message2=true;
+    }else{
+      this.message2=false;
+    }
     this.warehouseService.getWarehouse(id)
       .subscribe(warehouse => this.warehouse = warehouse);
   }
@@ -38,4 +46,17 @@ export class UpdateWarehouseComponent implements OnInit{
       this.warehouseService.update(this.warehouse).subscribe(() => this.goBack());
     }
   }
+
+  Disable(): void {
+    if(this.warehouse){    
+      this.warehouseService.disable(this.warehouse.id).subscribe(data=>{this.message="Warehouse Disabled"});
+    }
+  }
+
+  Enable(): void {
+    if(this.warehouse){    
+      this.warehouseService.enable(this.warehouse.id).subscribe(data=>{this.message="Warehouse Enabled"});
+    }
+  }
+
 }

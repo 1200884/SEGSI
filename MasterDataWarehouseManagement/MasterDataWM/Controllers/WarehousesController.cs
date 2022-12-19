@@ -18,6 +18,20 @@ namespace MDWM.Controllers
             _service = service;
         }
 
+        // GET: api/Warehouses/Enabled
+        [HttpGet("Enabled")]
+        public async Task<ActionResult<IEnumerable<WarehouseDto>>> GetEnabled()
+        {
+            return await _service.GetEnabledAsync();
+        }
+
+        // GET: api/Warehouses/Disabled
+        [HttpGet("Disabled")]
+        public async Task<ActionResult<IEnumerable<WarehouseDto>>> GetDisabled()
+        {
+            return await _service.GetDisabledAsync();
+        }
+
         // GET: api/Warehouses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WarehouseDto>>> GetAll()
@@ -48,7 +62,20 @@ namespace MDWM.Controllers
             return CreatedAtAction(nameof(GetGetById), new { id = war.Id }, war);
         }
 
-        
+        // PATCH: api/Warehouses/W1
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<WarehouseDto>> Enable(String id)
+        {
+            var war = await _service.EnableAsync(new WarehouseId(id));
+
+            if (war == null)
+            {
+                return NotFound();
+            }
+
+            return war;
+        }
+
         // PUT: api/Warehouses/w5
         [HttpPut("{id}")]
         public async Task<ActionResult<WarehouseDto>> Update(String id,WarehouseDto dto)

@@ -60,5 +60,10 @@ namespace MDWM.Domain.Warehouses
             this.Active = false;
         }
 
+        public void MarkAsAtive()
+        {
+            this.Active = true;
+        }
+
     }
 }
