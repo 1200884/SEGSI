@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 
 describe('WarehousesComponent', () => {
   let WAREHOUSES: Warehouse[];
+  let NOWAREHOUSES: Warehouse[];
   let mockWarehouseService: any;
   let component: WarehousesComponent;
   let fixture: ComponentFixture<WarehousesComponent>;
@@ -32,6 +33,8 @@ describe('WarehousesComponent', () => {
         longitude: 7.2451,
         altitude: 450.0
       }];
+      NOWAREHOUSES =[];
+      
     TestBed.configureTestingModule({
       declarations: [ WarehousesComponent ],
       providers: [
@@ -52,4 +55,9 @@ describe('WarehousesComponent', () => {
     fixture.detectChanges();
     expect(component.warehouses.length).toBe(2);
   });
+  it('should set warehouses from the service directly', () => {
+    mockWarehouseService.getWarehouses.and.returnValue(of(NOWAREHOUSES));
+    fixture.detectChanges();
+    expect(component.warehouses.length).toBe(0);
+  })
 });

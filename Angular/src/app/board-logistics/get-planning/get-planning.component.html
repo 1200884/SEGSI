@@ -1,11 +1,6 @@
 <div class="container">
     <div class="output">
-        <li *ngIf="!error">
-            {{planning.time}}{{planning.places}}
-        </li>
-        <li *ngIf="error">
-            <p>{{ content }}</p>
-        </li>
+        Time: {{planning.time}}<p>Places: {{planning.places}}</p>
     </div>
 
     <div class="input-box">

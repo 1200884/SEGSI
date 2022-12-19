@@ -1,26 +1,8 @@
 .output {
   margin: 0;
   position: absolute;
-  top: 20%;
+  top: 25%;
   right:20%;
   -ms-transform: translateY(0%);
-  transform: translateY(-50%);
-}
-
-.input-box {
-  margin: 0;
-  position: absolute;
-  top: 40%;
-  right: 20%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-.get-button {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  right: 20%;
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }

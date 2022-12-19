@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { CreateWarehouseComponent } from './create-warehouse.component';
 import { Warehouse } from 'src/app/_models/Warehouse';
-import { of } from 'rxjs';
+import {of,throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 
@@ -39,19 +39,20 @@ describe('CreateWarehouseComponent', () => {
     component = fixture.componentInstance;
   });
 
-
   describe('add', () => {
     beforeEach(() => {
-      mockWarehouseService.addWarehouse.and.returnValue(of(true));
+      mockWarehouseService.addWarehouse.and.returnValue(of(WAREHOUSE));
       component.message = "";
     });
     it('should create the selected Warehouse', () => {
         component.onWarehouseCreate(WAREHOUSE);
         expect(component.message).toBe("Warehouse Created");
     });
-    it('should call the create method in service only once', () => {
-        component.onWarehouseCreate(WAREHOUSE);
-        expect(mockWarehouseService.addWarehouse).toHaveBeenCalledTimes(1);
-    });
+    it('should not create the Warehouse', () => {
+      mockWarehouseService.addWarehouse.and.returnValue(throwError(() => new Error('Mock Error')));
+      component.message = "";
+      component.onWarehouseCreate(WAREHOUSE);
+      expect(component.message).toBe("Error creating warehouse");
+  });
   })
 });

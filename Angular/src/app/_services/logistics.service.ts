@@ -32,8 +32,6 @@ export class LogisticsService {
   }
 
   getPlanning(truckId: string, date: string): Observable<Planning> {
-    console.log(truckId);
-    console.log(date);
     return this.http.get<Planning>(API_URL + PLANNING_URL + '/' + truckId + '/' + date, { responseType: 'json' });
   }
 
