@@ -35,6 +35,7 @@ describe('WarehousesComponent', () => {
         longitude: 7.2451,
         altitude: 450.0
       }];
+      
     TestBed.configureTestingModule({
       declarations: [ WarehousesComponent ],
       providers: [

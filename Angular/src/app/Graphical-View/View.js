@@ -4,6 +4,7 @@ import Armazem from "./Armazem.js";
 import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import Bola_Teste from "./Bola_Teste.js";
 
 export default class View {
     constructor() {
