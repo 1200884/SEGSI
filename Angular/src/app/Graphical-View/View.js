@@ -194,8 +194,8 @@ export default class View {
             loader.load('assets/truck.glb', (gltf) => {
                 const root = gltf.scene;
                 gltf.scene.scale.set(0.07, 0.07, 0.07);
-                root.position.setX(x + 0.5);
-                root.position.setY(y + 0.1);
+                root.position.setX(x + 0.65);
+                root.position.setY(y + 0.25);
                 root.position.setZ(z);
                 view.object.add(root);
             })
