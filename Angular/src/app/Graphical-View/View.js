@@ -25,8 +25,10 @@ export default class View {
                 view.object.add(armazem1);
                 armazens[i] = armazem1;
                 console.log(armazens)
-                model3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
+                warehouseModel3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
+                truckModel3D(coordinates[i][0],coordinates[i][1],coordinates[i][2], view);
             }
+            
 
             view.base = new Base();
             createBridge(view, armazens[1], armazens[16]);
@@ -174,7 +176,7 @@ export default class View {
             }
             return coordinates;
         }
-        function model3D(x, y, z, view) {
+        function warehouseModel3D(x, y, z, view) {
 
             const loader = new GLTFLoader();
             loader.load('assets/warehouse.glb', (gltf) => {
@@ -185,6 +187,18 @@ export default class View {
                 root.position.setZ(z);
                 view.object.add(root);
             });
+        }
+        function truckModel3D(x, y, z, view) {
+
+            const loader = new GLTFLoader();
+            loader.load('assets/truck.glb', (gltf) => {
+                const root = gltf.scene;
+                gltf.scene.scale.set(0.07, 0.07, 0.07);
+                root.position.setX(x + 0.5);
+                root.position.setY(y + 0.1);
+                root.position.setZ(z);
+                view.object.add(root);
+            })
         }
         OnLoad(this);
     }
