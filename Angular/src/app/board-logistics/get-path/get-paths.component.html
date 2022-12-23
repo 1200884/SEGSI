@@ -1,47 +1,55 @@
-﻿<div class="d-flex justify-content-center">
-    <h2>List of paths</h2>
-  <table class="table table-striped table-dark">
-    <thead><tr>
-      <th>
-      Warehouse of Departure
-      </th>
-      <th>
-      Warehouse Destination
-      </th>
-      <th>
-      Distance
-      </th>
-      <th>
-      Travel Time
-      </th>
-      <th>
-      Energy Necessary
-      </th>
-      <th>
-      Additional Time
-      </th>
+﻿<div class="align-self-md-end">
+  <h2>List of paths</h2>
+ 
+<div> <select (change)="onTableSizeChange($event)">
+  <option *ngFor="let size of tablesizes">
+    {{size}}
+  </option>
+</select></div>
+<table class="table table-striped table-dark">
+  <thead><tr>
+    <th>
+    Warehouse of Departure
+    </th>
+    <th>
+    Warehouse Destination
+    </th>
+    <th>
+    Distance
+    </th>
+    <th>
+    Travel Time
+    </th>
+    <th>
+    Energy Necessary
+    </th>
+    <th>
+    Additional Time
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor=" let path of paths | paginate: { 
+      itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
+
+   <th scope="row">{{ path.warehouseDeparture }}</th>
+      <td>{{ path.warehouseDestination }}</td>
+      <td>{{ path.distance }}</td>
+      <td>{{ path.travelTime }}</td>
+      <td>{{ path.energyNecessary }}</td>
+      <td>{{ path.additionalTime }}</td>
     </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor=" let path of paths | paginate: { 
-        itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
-
-     <th scope="row">{{ path.warehouseDeparture }}</th>
-        <td>{{ path.warehouseDestination }}</td>
-        <td>{{ path.distance }}</td>
-        <td>{{ path.travelTime }}</td>
-        <td>{{ path.energyNecessary }}</td>
-        <td>{{ path.additionalTime }}</td>
-      </tr>
-    </tbody>
-  </table>    
-  <div class="d-flex align-items-start">
-      <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      (pageChange)="onTableDataChange($event)">
-    </pagination-controls>
-    </div>
-   
+  </tbody>
+</table>    
+<div class="d-flex align-items-start">
+    <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    (pageChange)="onTableDataChange($event)">
+  </pagination-controls>
+  </div>
+  <div class="create-paths-center">
+    <button type="button" class="btn btn-light" routerLink="/create-paths">Create a path
+    </button>
+  </div>
 </div>
-

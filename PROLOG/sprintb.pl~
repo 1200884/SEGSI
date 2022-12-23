@@ -31,16 +31,16 @@ path_creator(Request):-
 p_json(Request) :-
         http_read_json(Request, JSON),
         json_to_prolog(JSON, JSON_TEXT),
-%        format('Content-type: text/plain~n~n'),
-%        format('~w~n', JSON_TEXT),
-        split(JSON_TEXT,TRUCK,DATE),
+        format('Content-type: text/plain~n~n'),
+        format('~w~n', JSON_TEXT),
+%        split(JSON_TEXT,TRUCK,DATE),
 %        format('~w ~n~w', [TRUCK, DATE]),
-        voltamaiscedo(TRUCK,DATE,T,L),
+%        voltamaiscedo(TRUCK,DATE,T,L),
 %        format('~2f ~n~w', [T, L]).
-        D = data(T,L),
+%        D = data(T,L),
 %        format('~w', [D]),
-        prolog_to_json(D, X),
-        reply_json(X).
+%        prolog_to_json(D, X),
+%        reply_json(X).
 
 split(json([truckId=X,date=Y]),X,Y).
 
@@ -50,8 +50,8 @@ entrega(4439, 20221205, 200, 1, 8, 10).
 entrega(4438, 20221205, 150, 9, 7, 9).
 entrega(4445, 20221205, 100, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
-%entrega(4449, 20221205, 300, 11, 15, 20).
-%entrega(4398, 20221205, 310, 17, 16, 20).
+entrega(4449, 20221205, 300, 11, 15, 20).
+entrega(4398, 20221205, 320, 17, 16, 20).
 %entrega(4432, 20221205, 270, 14, 14, 18).
 %entrega(4437, 20221205, 180, 12, 9, 11).
 %entrega(4451, 20221205, 220, 6, 9, 12).

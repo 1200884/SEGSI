@@ -6,6 +6,7 @@ import { Planning } from '../_models/Planning';
 import { Packaging } from '../_models/Packaging';
 
 const API_URL = 'http://vsgate-s1.dei.isep.ipp.pt:10136/api';
+const API_URL_LOCAL = 'http://localhost:2223/api';
 const PATHS_URL = '/paths';
 const PLANNING_URL = '/planning';
 const PACKAGING_URL = '/packaging';
@@ -18,9 +19,9 @@ export class LogisticsService {
   constructor(private http: HttpClient) { }
 
   getPaths(): Observable<Path[]> {
-    return this.http.get<Path[]>(API_URL + PATHS_URL, { responseType: 'json' });
+    return this.http.get<Path[]>(API_URL_LOCAL + PATHS_URL, { responseType: 'json' });
   }
-  public getSpecificPath(id: string): Observable<any> {
+  private getSpecificPath(id: string): Observable<any> {
     return this.http.get(API_URL + PATHS_URL + '/' + id, { responseType: 'text'});
   }
 

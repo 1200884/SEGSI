@@ -18,7 +18,6 @@ export class GetPathsComponent implements OnInit {
   tablesize:number=10;
   tablesizes:any =[5,10,15,20];
 
-
   paths: Path[] = [];
   content ?: string;
   constructor(private logisticsservice: LogisticsService) { }
@@ -37,8 +36,6 @@ export class GetPathsComponent implements OnInit {
       }
     )
   }
-
-
 
 
   onTableDataChange(event:any){

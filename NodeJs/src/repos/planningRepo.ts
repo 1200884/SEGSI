@@ -48,7 +48,7 @@ export default class PlanningRepo implements IPlanningRepo {
         })
       });
     }
-
+ 
     planning = getPromise(options);
     return planning;
   }
