@@ -3,18 +3,20 @@ import { Warehouse } from 'src/app/_models/Warehouse';
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { WarehousesComponent } from './get-warehouses.component';
 import { of } from 'rxjs';
+import { Location } from '@angular/common';
+
 
 describe('WarehousesComponent', () => {
-  let WAREHOUSES: Warehouse[];
-  let NOWAREHOUSES: Warehouse[];
+  let warehouses: Warehouse[];
   let mockWarehouseService: any;
   let component: WarehousesComponent;
   let fixture: ComponentFixture<WarehousesComponent>;
+  let location: Location;
 
   beforeEach(async () => {
-    WAREHOUSES =[
+    warehouses =[
       {
-        id: 123,
+        id: "123",
         description: "Arouca",
         street: "Rua de Arouca",
         city: "Porto",
@@ -24,7 +26,7 @@ describe('WarehousesComponent', () => {
         altitude: 250.0
       },
       {
-        id: 124,
+        id: "124",
         description: "PORTO",
         street: "Rua de porto",
         city: "Lisboa",
@@ -33,7 +35,6 @@ describe('WarehousesComponent', () => {
         longitude: 7.2451,
         altitude: 450.0
       }];
-      NOWAREHOUSES =[];
       
     TestBed.configureTestingModule({
       declarations: [ WarehousesComponent ],
@@ -48,16 +49,55 @@ describe('WarehousesComponent', () => {
     component = fixture.componentInstance;
   });
 
-  mockWarehouseService = jasmine.createSpyObj(['getWarehouses']);
+  mockWarehouseService = jasmine.createSpyObj(['getWarehouses','getEnabledWarehouses','getDisabledWarehouses']);
 
-  it('should set warehouses from the service directly', () => {
-    mockWarehouseService.getWarehouses.and.returnValue(of(WAREHOUSES));
-    fixture.detectChanges();
-    expect(component.warehouses.length).toBe(2);
+  describe('ngOnInit', () => {
+
+    it('should set check1 to true and call DisplayAll', () => {
+      spyOn(component, 'DisplayAll');
+  
+      component.ngOnInit();
+  
+      expect(component.check1).toBeTrue();
+      expect(component.DisplayAll).toHaveBeenCalled();
+    });
   });
-  it('should set warehouses from the service directly', () => {
-    mockWarehouseService.getWarehouses.and.returnValue(of(NOWAREHOUSES));
-    fixture.detectChanges();
-    expect(component.warehouses.length).toBe(0);
-  })
+
+  describe('DisplayAll', () => {
+  
+    it('should retrieve and store the list of warehouses', () => {
+  
+      mockWarehouseService.getWarehouses.and.returnValue(of(warehouses));
+  
+      component.DisplayAll();
+  
+      expect(component.warehouses).toEqual(warehouses);
+    });
+  });
+
+  describe('DisplayEnabled', () => {
+  
+    it('should retrieve and store the list of enabled warehouses', () => {
+  
+      mockWarehouseService.getEnabledWarehouses.and.returnValue(of(warehouses));
+  
+      component.DisplayEnabled();
+  
+      expect(component.warehouses).toEqual(warehouses);
+    });
+  });
+
+  describe('DisplayDisabled', () => {
+  
+    it('should retrieve and store the list of enabled warehouses', () => {
+  
+      mockWarehouseService.getDisabledWarehouses.and.returnValue(of(warehouses));
+  
+      component.DisplayDisabled();
+  
+      expect(component.warehouses).toEqual(warehouses);
+    });
+  });
+  
+
 });

@@ -16,7 +16,7 @@ describe('CreateWarehouseComponent', () => {
   beforeEach(async () => {
     WAREHOUSE =
     {
-        id: 123,
+        id: "123",
         description: "Arouca",
         street: "Rua de Arouca",
         city: "Porto",

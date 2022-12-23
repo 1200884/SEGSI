@@ -18,6 +18,7 @@ pipelines:
             script:
               - cd MasterDataWarehouseManagement/MasterDataWM
               - dotnet build
+              - dotnet test
         - step:
             name: Build and Test 
             image: node:16.18.0

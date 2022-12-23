@@ -419,8 +419,9 @@ voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-get_time(Ti),findall(C,entrega(_,DIA
         pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),
         trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),
         itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,
-        trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA));(closest_path(DIA,LFINAL,TEMPOFINAL))),get_time(Tf),
-        TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
+        trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA));(closest_path(DIA,LFINAL,TEMPOFINAL))).
+%        ,get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução =
+%        '),write(TSol).
 
 
 % itera ï¿½ o metodo que trata de todos os caminhos possï¿½veis, e envia
