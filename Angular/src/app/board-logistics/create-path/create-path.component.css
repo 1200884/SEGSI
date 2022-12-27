@@ -8,13 +8,13 @@ label {
   }
   button {
     margin-top: 20px;
-    background-color: rgb(47, 72, 212);
+    background-color: rgb(249, 11, 11);
     padding: 1rem;
     border-radius: 4px;
     font-size: 1rem;
   }
   button:hover {
-    background-color: #2dfd29;
+    background-color: #4709fe;
   }
   button:disabled {
     background-color: #d42d2d;
