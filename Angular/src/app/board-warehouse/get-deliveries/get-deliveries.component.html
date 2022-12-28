@@ -1,9 +1,52 @@
 ﻿<h2>My Deliveries</h2>
 <ul class="deliveries">
-  <li *ngFor="let delivery of deliveries">
-    <a routerLink="/deliveries/{{delivery.id}}">
-      <span class="badge">{{delivery.id}}</span> {{delivery.destinationWarehouseId}}
-    </a>
-  </li>
-  <button type="button" (click)="goBack()">GoBack</button>
+
+  <table class="table table-striped table-dark">
+    <thead><tr>
+      <th>Delivery ID</th>
+      <th>Warehouse Destination ID</th>
+      <th>Delivery Date</th>
+    </tr></thead>
+    <tbody>
+      <tr *ngFor=" let delivery of deliveries | paginate: { 
+        itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
+
+        <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.id }}</a></td>
+        <td>{{ delivery.destinationWarehouseId }}</td>
+        <td>{{ delivery.date }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <small>Deliveries per Page </small>
+      <select (change)="onTableSizeChange($event)">
+      <option *ngFor="let size of tablesizes">
+        {{size}}
+      </option>
+    </select>
+  </div>
+  <div class="d-flex align-items-start">
+    <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    (pageChange)="onTableDataChange($event)">
+  </pagination-controls>
+  </div>
+  <button type="button" (click)="goBack()">GoBack</button> 
 </ul>
+
+<!--
+<table matSort (matSortChange)="sortData($event)">
+  <tr>
+    <th mat-sort-header="id">Delivery ID</th>
+    <th mat-sort-header="destinationWarehouseId">Warehouse Destination ID</th>
+    <th mat-sort-header="date">Date</th>
+  </tr>
+
+  <tr *ngFor="let delivery of sortedData">
+    <td><a routerLink ="/deliveries/{{delivery.id}}">{{delivery.id}}</a></td>
+    <td>{{delivery.destinationWarehouseId}}</td>
+    <td>{{delivery.date}}</td>
+  </tr>
+</table> -->
