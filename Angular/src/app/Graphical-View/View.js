@@ -8,8 +8,8 @@ import Bola_Teste from "./Bola_Teste.js";
 
 export default class View {
     constructor() {
-      
-        
+   
+       
         function OnLoad(view) {
           
             let txt = readFile();
@@ -30,12 +30,14 @@ export default class View {
                 armazem1.children[0].userData.description="Id:"+i+"<br>Name:"+coordinates[i][3];
                 view.object.add(armazem1);
                 armazens[i] = armazem1;
-                console.log(armazens)
+                console.log(armazens);
                 warehouseModel3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
                 truckModel3D(coordinates[i][0],coordinates[i][1],coordinates[i][2], view);
+              
             }
-            
-
+          
+        // ...
+      
             view.base = new Base();
             createBridge(view, armazens[1], armazens[16]);
             createBridge(view, armazens[16], armazens[3]);
@@ -63,7 +65,57 @@ export default class View {
             createBridge(view, armazens[4], armazens[11]);
             createBridge(view, armazens[16], armazens[12]);
             bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
+            let directionside = 0;
+            let directionfront=0;
+            let speed=1;
+            let updates=false;
+            window.addEventListener("keydown", event => {
+                if (event.code === "KeyW") {
+                directionside = -1;
+                updates=true;
+                } else if (event.code === "KeyS") {
+                directionside = 1;
+                updates=true;
+               } else if(event.code === "KeyA"){
+                directionfront=1;
+                updates=true;
+               }else if(event.code === "KeyD"){
+                directionfront=-1;
+                updates=true;
+
+            
+            }});
+            
+
+
+        function updatePosition() {
+               
+            console.log('?????');
+            console.log(bola.position.x);
+            console.log(bola.position.y);
+            console.log(bola.position.z);
+            console.log('?????');
+            if(updates){
+             //bola.position.y =bola.position.y+1;
+            
+             if(directionside<0){console.log("?");bola.position.x =bola.position.x+speed;updates=false;directionside=0;}
+             if(directionside>0){bola.position.x =bola.position.x-speed;updates=false;directionside=0}
+             //if(directionfront>{Math.atan2(bola, dy) * 180 / Math.PI})
+             if(directionfront>0){bola.rotateY(Math.PI/8);updates=false;directionfront=0;}   
+             if(directionfront<0){bola.rotateY(-Math.PI/8);updates=false;directionfront=0;}   
+             console.log(bola.position.x)
+             //bola.position.z =bola.position.z-1;
+             
+            }
+            requestAnimationFrame(draw);
+            }
+
+            function draw() {updatePosition();}  
+
+            requestAnimationFrame(draw);
+        
         }
+        
 
         function readFile() {
             var txt = '';
@@ -211,94 +263,6 @@ export default class View {
         
     }
     
-    update() {
-            
-            if (this.maze.loaded && this.player.loaded) { 
-                // If all resources have been loaded
-                // Add the maze, the player and the lights to the scene
-                this.scene3D.add(this.maze.object);
-                /* To-do #11 - Add the player to the scene
-                    - player: this.player.object*/
-                this.scene3D.add(this.player.object); 
-                this.scene3D.add(this.lights.object);
-
-                // Create the clock
-                this.clock = new THREE.Clock();
-
-                // Create model animations (states, emotes and expressions)
-                this.animations = new Animations(this.player.object, this.player.animations);
-
-                // Set the player's position and direction
-                this.bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
-                this.Bola_Teste.direction = this.maze.initialDirection;
-
-        }
-        else {
-            // Update the model animations
-            const deltaT = this.clock.getDelta();
-            this.animations.update(deltaT);
-
-                
-                    /* To-do #12 - Compute the distance covered by the player
-                        - start by assuming that the player is walking:
-                            covered distance = walking speed * elapsed time
-                        - walking speed: this.player.walkingSpeed
-                        - elapsed time: deltaT*/
-                    let coveredDistance = this.player.walkingSpeed*deltaT; 
-                    /* To-do #13 - Compute the player's direction increment
-                        - assume that the player is turning left or right while walking:
-                            direction increment = turning speed * elapsed time
-                        - turning speed: this.player.turningSpeed
-                        - elapsed time: deltaT*/
-                    let directionIncrement = this.player.turningSpeed*deltaT; 
-                    if (this.player.keyStates.run) {
-                        /* To-do #14 - Adjust the distance covered by the player
-                            - now assume that the player is running:
-                            - multiply the covered distance by this.player.runningFactor*/
-
-                        coveredDistance*=this.player.runningFactor; 
-                        /* To-do #15 - Adjust the player's direction increment
-                            - now assume that the player is running:
-                            - multiply the direction increment by this.player.runningFactor*/
-                        directionIncrement*=this.player.runningFactor;
-                    }
-                    /* To-do #16 - Check if the player is turning left or right and update the player direction accordingly by adding or subtracting the direction increment
-                        - left key state: this.player.keyStates.left
-                        - right key state: this.player.keyStates.right
-                        - current direction: this.player.direction
-                        - direction increment: directionIncrement
-*/
-                    if (this.player.keyStates.left) { // The player is turning left
-                        this.player.direction+=directionIncrement;
-                    }
-                    else if (this.player.keyStates.right) { // The player is turning right
-                        this.player.direction-=directionIncrement;
-                    } 
-                    const direction = THREE.MathUtils.degToRad(this.player.direction);
-                    /* To-do #17 - Check if the player is moving backward or forward and update the player position accordingly
-                        - backward key state: this.player.keyStates.backward
-                        - forward key state: this.player.keyStates.forward
-                        - current position: this.player.position
-                        - covered distance: coveredDistance
-                        - current direction: direction (expressed in radians)
-
-                        - use the parametric form of the circle equation to compute the player's new position:
-                            x = r * sin(t) + x0
-                            y = y0;
-                            z = r * cos(t) + z0
-
-                            where:
-                            - (x, y, z) are the player's new coordinates
-                            - (x0, y0, z0) are the player's current coordinates
-                            - r is the distance covered by the player
-                            - t is the player direction (expressed in radians)*/
-                            
-                    if (this.Bola_Teste.keyStates.backward) { // The truck is moving backward
-                         const newPosition = new THREE.Vector3(-coveredDistance*Math.sin(direction), 0, -coveredDistance*Math.cos(direction)).add(this.Bola_Teste.position);
-                    }
-                   else if (this.Bola_Teste.keyStates.forward) { // The truck is moving forward
-                        const newPosition = new THREE.Vector3(coveredDistance*Math.sin(direction),0,coveredDistance*Math.cos(direction)).add(this.Bola_Teste.position);
-                   }
-        }
-    }           
+    
+       
 }

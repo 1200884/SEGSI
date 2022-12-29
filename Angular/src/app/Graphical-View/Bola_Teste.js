@@ -5,11 +5,11 @@ export default class Bola_Teste extends THREE.Mesh{
         super();
         this.object = new THREE.Group();
         let geometry= new THREE.CircleGeometry(0.8,16);
-        let material = new THREE.MeshBasicMaterial({color: 0xFFB6C1});
+        let material = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
         let circulo = new THREE.Mesh(geometry, material);
         circulo.position.set(0,0.1,0);
         this.object.add(circulo);
-        this.object.keyStates={  backward: false, forward: false };
+      
        
         this.initialize();
     }
