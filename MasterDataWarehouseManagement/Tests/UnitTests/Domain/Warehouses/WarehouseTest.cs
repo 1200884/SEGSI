@@ -5,20 +5,7 @@ using Xunit;
 
 namespace Tests.UnitTests.Domain.Warehouses{
 
-<<<<<<< HEAD
-public class WarehouseTest
-{
-    private readonly MDWM.Domain.Warehouses.Warehouse _warehouse = 
-    new MDWM.Domain.Warehouses.Warehouse("idtest", "descripitiontest","streettest","citytest","countrytest",1,2,3);
-
-    private readonly WarehouseService _warService = new WarehouseService( null ,null);
-
-
-    [Fact(DisplayName = "Sucess")]
-    public void WarehouseCreatedSuccessfully()
-=======
     public class WarehouseTest
->>>>>>> 7c0413743252fe7dc451e08c72ea153169551139
     {
 
         [Fact(DisplayName = "Warehouse Created successfully")]
@@ -132,19 +119,4 @@ public class WarehouseTest
                 new Warehouse("idtest", "descripitiontest","streettest","citytest","countrytest",1,182,3));
         } */
     }
-<<<<<<< HEAD
-
-    [Theory]
-    [InlineData("-1")]
-    [InlineData("0")]
-    [InlineData("123")]
-    public void IsPrime_ValuesLessThan2_ReturnFalse(string value){
-        var result = _warService.DeleteAsync(new WarehouseId(value));
-
-        Assert.Null(result);
-    }
-    
-}
-=======
->>>>>>> 7c0413743252fe7dc451e08c72ea153169551139
 }
