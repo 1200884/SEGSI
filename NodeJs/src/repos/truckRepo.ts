@@ -14,37 +14,36 @@ export default class TruckRepo implements ITruckRepo {
   private models: any;
 
   constructor(
-    @Inject('truckSchema') private truckSchema : Model<ITruckPersistence & Document>,
-  ) {}
+    @Inject('truckSchema') private truckSchema: Model<ITruckPersistence & Document>,
+  ) { }
 
-  private createBaseQuery (): any {
+  private createBaseQuery(): any {
     return {
       where: {},
     }
   }
 
   public async exists(truck: Truck): Promise<boolean> {
-    
+
     const idX = truck.id instanceof TruckId ? (<TruckId>truck.id).toValue() : truck.id;
 
-    const query = { domainId: idX}; 
-    const truckDocument = await this.truckSchema.findOne( query as FilterQuery<ITruckPersistence & Document>);
+    const query = { domainId: idX };
+    const truckDocument = await this.truckSchema.findOne(query as FilterQuery<ITruckPersistence & Document>);
 
     return !!truckDocument === true;
   }
 
-  public async save (truck: Truck): Promise<Truck> {
-    const query = { domainId: truck.id.toString()}; 
+  public async save(truck: Truck): Promise<Truck> {
+    const query = { domainId: truck.id.toString() };
 
-    const truckDocument = await this.truckSchema.findOne( query );
+    const truckDocument = await this.truckSchema.findOne(query);
 
     try {
-      if (truckDocument === null ) {
+      if (truckDocument === null) {
         const rawTruck: any = TruckMap.toPersistence(truck);
 
         console.log(rawTruck);
         const truckCreated = await this.truckSchema.create(rawTruck);
-        console.log(truckCreated);
 
         return TruckMap.toDomain(truckCreated);
       } else {
@@ -53,6 +52,7 @@ export default class TruckRepo implements ITruckRepo {
         truckDocument.batteryCapacity = truck.batteryCapacity;
         truckDocument.truckAutonomy = truck.truckAutonomy;
         truckDocument.chargeTime = truck.chargeTime;
+        truckDocument.active = truck.active;
         await truckDocument.save();
 
         return truck;
@@ -62,12 +62,23 @@ export default class TruckRepo implements ITruckRepo {
     }
   }
 
-  public async findByDomainId (truckId: TruckId | string): Promise<Truck> {
-    const query = { domainId: truckId};
-    const truckRecord = await this.truckSchema.findOne( query as FilterQuery<ITruckPersistence & Document> );
+  public async findByDomainId(truckId: TruckId | string): Promise<Truck> {
+    const query = { domainId: truckId };
+    const truckRecord = await this.truckSchema.findOne(query as FilterQuery<ITruckPersistence & Document>);
 
-    if( truckRecord != null) {
+    if (truckRecord != null) {
       return TruckMap.toDomain(truckRecord);
+    }
+    else
+      return null;
+  }
+
+  public async removeByTruckId(truckId: string | TruckId): Promise<Truck> {
+    const query = { domainId: truckId };
+    const deletedTruckRecord = await this.truckSchema.deleteOne(query as FilterQuery<ITruckPersistence & Document>);
+
+    if (deletedTruckRecord != null) {
+      return TruckMap.toDomain(deletedTruckRecord);
     }
     else
       return null;
@@ -76,7 +87,22 @@ export default class TruckRepo implements ITruckRepo {
   public async findAll(): Promise<Truck[]> {
     const truckRecord = await this.truckSchema.find();
 
-    if( truckRecord != null) {
+    if (truckRecord != null) {
+      var trucksArray: Array<Truck> = [];
+      for (var i = 0; i < truckRecord.length; i++) {
+        trucksArray.push(TruckMap.toDomain(truckRecord[i]));
+      }
+      return trucksArray;
+    }
+    else
+      return null;
+  }
+
+  public async findAllActivity(active: boolean): Promise<Truck[]> {
+    const query = { active: active };
+    const truckRecord = await this.truckSchema.find(query as FilterQuery<ITruckPersistence & Document>);
+
+    if (truckRecord != null) {
       var trucksArray: Array<Truck> = [];
       for (var i = 0; i < truckRecord.length; i++) {
         trucksArray.push(TruckMap.toDomain(truckRecord[i]));
