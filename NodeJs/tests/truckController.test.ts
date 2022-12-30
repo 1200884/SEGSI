@@ -35,7 +35,7 @@ describe('truck controller', function () {
 		Container.set("TruckService", truckServiceInstance);
 
 		truckServiceInstance = Container.get("TruckService");
-		sinon.stub(truckServiceInstance, "createTruck").returns( Result.ok<ITruckDTO>( {"id":"123", "tare":req.body.tare,"maxWeight":req.body.maxWeight,"batteryCapacity":req.body.batteryCapacity,"truckAutonomy":req.body.truckAutonomy,"chargeTime":req.body.chargeTime} ));
+		sinon.stub(truckServiceInstance, "createTruck").returns( Result.ok<ITruckDTO>( {"id":"123", "plate":"AA-BB-00", "tare":req.body.tare,"maxWeight":req.body.maxWeight,"batteryCapacity":req.body.batteryCapacity,"truckAutonomy":req.body.truckAutonomy,"chargeTime":req.body.chargeTime,"active":true} ));
 
 		const ctrl = new TruckController(truckServiceInstance as ITruckService);
 
