@@ -8,6 +8,8 @@ export default class Arco extends THREE.Mesh{
         let material = new THREE.MeshBasicMaterial({color: 0x808080});
         let cube = new THREE.Mesh(geometry,material);
         cube.position.set(0,-0.28,0);
+        var ud = cube.userData;
+        ud.name="Arco";
         this.object.add(cube);
         this.initialize();
 

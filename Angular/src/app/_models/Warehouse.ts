@@ -1,5 +1,5 @@
 export interface Warehouse {
-    id: number;
+    id: string;
     description: string;
     latitude: number;         
     longitude: number;

@@ -12,6 +12,9 @@ export default class Armazem extends THREE.Mesh{
         let face = new THREE.Mesh(geometry, material);
         face.position.set(0,0.1,0);
         face.rotation.x = -Math.PI/2;
+        var ud = face.userData;
+        ud.name="Armazem";
+        ud.description="";
         this.object.add(face);
         this.initialize();
     }

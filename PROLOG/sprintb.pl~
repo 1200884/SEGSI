@@ -33,16 +33,16 @@ path_creator(Request):-
 p_json(Request) :-
         http_read_json(Request, JSON),
         json_to_prolog(JSON, JSON_TEXT),
-%        format('Content-type: text/plain~n~n'),
-%        format('~w~n', JSON_TEXT),
-        split(JSON_TEXT,TRUCK,DATE),
+        format('Content-type: text/plain~n~n'),
+        format('~w~n', JSON_TEXT),
+%        split(JSON_TEXT,TRUCK,DATE),
 %        format('~w ~n~w', [TRUCK, DATE]),
-        voltamaiscedo(TRUCK,DATE,T,L),
+%        voltamaiscedo(TRUCK,DATE,T,L),
 %        format('~2f ~n~w', [T, L]).
-        D = data(T,L),
+%        D = data(T,L),
 %        format('~w', [D]),
-        prolog_to_json(D, X),
-        reply_json(X).
+%        prolog_to_json(D, X),
+%        reply_json(X).
 
 get_travels(Request) :-
         http_read_json(Request, JSON),
@@ -64,7 +64,7 @@ entrega(4438, 20221205, 150, 9, 7, 9).
 entrega(4445, 20221205, 100, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
 entrega(4449, 20221205, 300, 11, 15, 20).
-%entrega(4398, 20221205, 310, 17, 16, 20).
+entrega(4398, 20221205, 310, 17, 16, 20).
 %entrega(4432, 20221205, 270, 14, 14, 18).
 %entrega(4437, 20221205, 180, 12, 9, 11).
 %entrega(4451, 20221205, 220, 6, 9, 12).
@@ -389,14 +389,14 @@ iterar_listas([C|LISTA_CAMIOES], [E|LISTA_ENTREGAS], PESO_TOTAL, LISTA_CAMIOES_N
         entrega(E, _, MASSA, _, _, _),
         PESO_FINAL is PESO_TOTAL + MASSA,
         (LISTA_ENTREGAS = [],
-         fim_iterar_listas(C,LISTA_CAMIOES_NECESSARIOS)
+         fim_iterar_listas(C,LISTA_CAMIOES_NECESSARIOS,ENTREGAS_PROV,ENTREGAS_FINAL)
         ;
         (PESO_FINAL < CAPACIDADE,
          iterar_listas([C|LISTA_CAMIOES], LISTA_ENTREGAS, PESO_FINAL, LISTA_CAMIOES_NECESSARIOS, [E|ENTREGAS_PROV], ENTREGAS_FINAL)
         ;
         iterar_listas(LISTA_CAMIOES, LISTA_ENTREGAS, 0, [C|LISTA_CAMIOES_NECESSARIOS], [], [ENTREGAS_PROV|ENTREGAS_FINAL]))).
 
-fim_iterar_listas(C,[C,_]).
+fim_iterar_listas(C,[C,_],E,[E|_]).
 
 %iterar_listas([C|_],[],_,[C|_],E,[E|_]).
 % iterar_listas([C|LISTA_CAMIOES],[E|LISTA_ENTREGAS],PESO_TOTAL,LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL):-

@@ -1,13 +1,26 @@
 <h2>My Warehouses</h2>
 <ul class="warehouses">
+
+  <label class="container"> 
+    <input type="checkbox" name="groupA" [(ngModel)]="check1" (change)="DisplayAll()" >  All 
+    <span class="checkmark"></span> 
+  </label> 
+
+  <label class="container"> 
+    <input type="checkbox" name="groupA" [(ngModel)]="check2" (change)="DisplayEnabled()" >  Enabled  
+    <span class="checkmark"></span>
+  </label>
+
+  <label class="container"> 
+    <input type="checkbox" name="groupA" [(ngModel)]="check3" (change)="DisplayDisabled()" >  Disabled  
+    <span class="checkmark"></span>
+  </label>
+
   <br>
   <li *ngFor="let warehouse of warehouses">
-    <a routerLink="/warehouses/{{warehouse.id}}">
+    <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">
     <span class="badge">{{warehouse.id}}</span> {{warehouse.description}}
     </a>
-    <!--<a routerLink="/detail/{{truck.id}}">
-      <span class="badge">{{truck.id}}</span> {{truck.latitude}}
-    </a>-->
   </li>
   <br>
   <button type="button" (click)="goBack()">GoBack</button>

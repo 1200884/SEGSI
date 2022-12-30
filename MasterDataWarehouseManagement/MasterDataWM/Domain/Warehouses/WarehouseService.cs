@@ -17,10 +17,39 @@ namespace MDWM.Domain.Warehouses
             this._repo = repo;
         }
 
-         public async Task<List<WarehouseDto>> GetAllAsync()
+         public async Task<List<WarehouseDto>> GetEnabledAsync()
+        {
+            var list2 = await this._repo.GetAllAsync();
+            List<Warehouse> list = new List<Warehouse>();
+            foreach(Warehouse war in list2){
+                if(war.Active){
+                    Console.WriteLine(war.Id);
+                    list.Add(war);
+                }
+            }
+            List<WarehouseDto> listDto = list.ConvertAll<WarehouseDto>(war => new WarehouseDto{Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude, Altitude=war.coordinates.Altitude});
+
+            return listDto;
+        }
+
+        public async Task<List<WarehouseDto>> GetDisabledAsync()
+        {
+            var list2 = await this._repo.GetAllAsync();
+            List<Warehouse> list = new List<Warehouse>();
+            foreach(Warehouse war in list2){
+                if(!war.Active){
+                    Console.WriteLine(war.Id);
+                    list.Add(war);
+                }
+            }
+            List<WarehouseDto> listDto = list.ConvertAll<WarehouseDto>(war => new WarehouseDto{Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude, Altitude=war.coordinates.Altitude});
+
+            return listDto;
+        }
+
+        public async Task<List<WarehouseDto>> GetAllAsync()
         {
             var list = await this._repo.GetAllAsync();
-            
             List<WarehouseDto> listDto = list.ConvertAll<WarehouseDto>(war => new WarehouseDto{Id = war.Id.AsString(), Description = war.Description, Street = war.address.Street , City= war.address.City, Country=war.address.Country, Latitude=war.coordinates.Latitude, Longitude=war.coordinates.Longitude, Altitude=war.coordinates.Altitude});
 
             return listDto;
@@ -47,6 +76,19 @@ namespace MDWM.Domain.Warehouses
             return WarehouseMapper.ToDTO(war);        
         }
 
+        public async Task<WarehouseDto> EnableAsync(WarehouseId id)
+        {
+            var war = await this._repo.GetByIdAsync(id);
+
+            if(war == null)
+                return null;
+            
+            war.MarkAsAtive();
+
+            await this._unitOfWork.CommitAsync();
+
+            return WarehouseMapper.ToDTO(war);
+        }
         public async Task<WarehouseDto> UpdateAsync(WarehouseDto dto)
         {
             var war = await this._repo.GetByIdAsync(new WarehouseId(dto.Id)); 

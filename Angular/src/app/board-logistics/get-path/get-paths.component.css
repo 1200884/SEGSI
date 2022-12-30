@@ -6,3 +6,18 @@
   -ms-transform: translateY(0%);
   transform: translateY(-50%);
 }
+button {
+  margin-top: 20px;
+  background-color: rgb(47, 72, 212);
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+button:hover {
+  background-color: #2dfd29;
+}
+button:disabled {
+  background-color: #d42d2d;
+  color: #ccc;
+  cursor: auto;
+}

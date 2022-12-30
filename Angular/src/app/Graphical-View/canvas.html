@@ -25,17 +25,40 @@
             lapr5 = new LAPR5();
         }
 
-        function animate() {
+        function animate(time) {
             requestAnimationFrame(animate);
             // Update the game
-            lapr5.update();
+            lapr5.update(time);
         }
 
         initialize();
         animate();
     </script>
+    <style>
+        #details {
+          display: none;
+          background-color: lightblue;
+          text-align: center;
+          z-index:100;
+          position: absolute;
+          top: 5px;
+          left: 16px;
+          width: 300px;
+          height: 100px;
+        }
+        #myCanvas {
+            position: absolute;
+            bottom: 10;
+            border: 0px;
+            z-index:1;
+        }
+        </style>
 </head>
 <body>
-	
+	<canvas id="myCanvas"></canvas>
+    <div id="details">
+        Details:
+        {{description}}
+      </div>
 </body>
 </html>

@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'logistics', component: BoardLogisticsComponent },
   { path: 'warehouses', component: WarehousesComponent },
   { path: 'deliveries', component: DeliveriesComponent },
-  { path: 'warehouses/:id', component: UpdateWarehouseComponent },
+  { path: 'warehouses/:id/:check3', component: UpdateWarehouseComponent },
   { path: 'deliveries/:id', component: UpdateDeliveryComponent },
   { path: 'trucks/:id', component: PutTruckComponent},
   { path: 'Create warehouses', component: CreateWarehouseComponent },
