@@ -65,10 +65,13 @@ export default class View {
             createBridge(view, armazens[4], armazens[11]);
             createBridge(view, armazens[16], armazens[12]);
             bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
+            let angle=0;
             let directionside = 0;
             let directionfront=0;
             let speed=1;
+            let rotationIndex=Math.PI/12;
             let updates=false;
+          
             window.addEventListener("keydown", event => {
                 if (event.code === "KeyW") {
                 directionside = -1;
@@ -85,25 +88,31 @@ export default class View {
 
             
             }});
-            
+
+            function calculateposition(currentX,currentY,currentZ,angle){
+                let finalX;
+                let finalY;
+                let finalZ;
+                    Math.pow(1/Math.cos(angle),2)-solve(1,-2*currentX,Math.pow(currentX));
+            }
+            function solve(a, b, c) {
+                var result = (-1 * b + Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+                var result2 = (-1 * b - Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+                return result;
+            }
 
 
         function updatePosition() {
                
-            console.log('?????');
-            console.log(bola.position.x);
-            console.log(bola.position.y);
-            console.log(bola.position.z);
-            console.log('?????');
             if(updates){
+            console.log("ANGULO É"+angle);
              //bola.position.y =bola.position.y+1;
-            
-             if(directionside<0){console.log("?");bola.position.x =bola.position.x+speed;updates=false;directionside=0;}
-             if(directionside>0){bola.position.x =bola.position.x-speed;updates=false;directionside=0}
+             if(directionside<0){bola.position.x =bola.position.x+speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0;}
+             if(directionside>0){bola.position.x =bola.position.x-speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0}
              //if(directionfront>{Math.atan2(bola, dy) * 180 / Math.PI})
-             if(directionfront>0){bola.rotateY(Math.PI/8);updates=false;directionfront=0;}   
-             if(directionfront<0){bola.rotateY(-Math.PI/8);updates=false;directionfront=0;}   
-             console.log(bola.position.x)
+             if(directionfront>0){bola.rotateY(rotationIndex);updates=false;directionfront=0;angle=angle+rotationIndex;if(angle>6.28){angle=0;}}   
+             if(directionfront<0){bola.rotateY(-rotationIndex);updates=false;directionfront=0;angle=angle-rotationIndex;if(angle<-6.28){angle=0;}}   
+             //console.log(bola.position.x)
              //bola.position.z =bola.position.z-1;
              
             }
