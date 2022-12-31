@@ -5,6 +5,7 @@ import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import Bola_Teste from "./Bola_Teste.js";
+import Camiao from "./Camiao.js";
 
 export default class View {
     constructor() {
@@ -12,7 +13,7 @@ export default class View {
        
         function OnLoad(view) {
           
-            let txt = readFile();
+            let txt = getWarehouses();
             view.object = new THREE.Group();
             let size = 200;
             view.ground = new Ground(size);
@@ -21,7 +22,7 @@ export default class View {
             let bola= view.bola.object;
             view.object.add(bola);
             
-            let coordinates = handleJSON(txt, view);
+            let coordinates = handleJSON_warehouses(txt, view);
             let armazens = [];
             for (var i = 1; i < coordinates.length; i++) {
                 view.armazem = new Armazem();
@@ -32,9 +33,26 @@ export default class View {
                 armazens[i] = armazem1;
                 console.log(armazens);
                 warehouseModel3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
-                truckModel3D(coordinates[i][0],coordinates[i][1],coordinates[i][2], view);
-              
             }
+            let jsonTrucks = getTrucks();
+            let trucksInfo = handleJSON_trucks(jsonTrucks,view);
+            let camioes = [];
+            for (var i = 1; i < trucksInfo.length; i++){
+                view.camiao = new Camiao();
+                let camiao1 = view.camiao.object;
+                camiao1.position.set(armazens[i].position.x,armazens[i].position.y,armazens[i].position.z);
+                view.object.add(camiao1);
+                camioes[i] = camiao1;
+                console.log(camioes);
+                // get do caminho para saber o path e atraves do path o armazem partida e chegada e atraves dos armazens as coordenadas para a posiçao
+                // usei o armazem igual ao numero de camioes existentes (1=1, etc)
+                truckModel3D(armazens[i].position.x,armazens[i].position.y,armazens[i].position.z, view);
+            }
+            console.log(trucksInfo);
+
+            
+            //view.object.add(camiao);
+            
           
         // ...
       
@@ -126,7 +144,7 @@ export default class View {
         }
         
 
-        function readFile() {
+        function getWarehouses() {
             var txt = '';
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
@@ -135,6 +153,21 @@ export default class View {
                 }
             };
             xmlhttp.open("GET", "https://localhost:5001/api/Warehouses", false);
+            xmlhttp.send();
+            var txt2 = JSON.parse(txt);
+            console.log(txt2);
+            return txt2;
+        }
+
+        function getTrucks() {
+            var txt = '';
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+                    txt = xmlhttp.responseText;
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:2223/api/Trucks", false);
             xmlhttp.send();
             var txt2 = JSON.parse(txt);
             console.log(txt2);
@@ -228,7 +261,7 @@ export default class View {
         function altToy(alt) {
             return (50 / 800 * alt) / 10;
         }
-        function handleJSON(txt) {
+        function handleJSON_warehouses(txt) {
             let coordinates = new Array(txt.length + 1);
             for (var i = 0; i < txt.length; i++) {
                 var id = (txt[i].id);
@@ -243,6 +276,20 @@ export default class View {
                 coordinates[id][3] = description;
             }
             return coordinates;
+        }
+        function handleJSON_trucks(txt) {
+            let trucksInfo = new Array(txt.length + 1);
+            for (var i = 0; i < txt.length; i++) {
+                var id = (txt[i].id);
+                trucksInfo[id] = new Array(6);
+                trucksInfo[id][0] = txt[i].plate;  
+                trucksInfo[id][1] = txt[i].tare;
+                trucksInfo[id][2] = txt[i].maxWeight;
+                trucksInfo[id][3] = txt[i].batteryCapacity; 
+                trucksInfo[id][4] = txt[i].truckAutonomy; 
+                trucksInfo[id][5] = txt[i].chargeTime; 
+            }
+            return trucksInfo;
         }
         function warehouseModel3D(x, y, z, view) {
 
