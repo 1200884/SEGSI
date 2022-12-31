@@ -16,7 +16,6 @@ export default class LAPR5 {
         document.body.appendChild(this.renderer.domElement);
         const canvas = this.renderer.domElement;
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.maxZoom=1;
         class PickHelper {
             constructor() {
                 this.raycaster = new THREE.Raycaster();
