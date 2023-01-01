@@ -93,7 +93,12 @@ export class Truck extends AggregateRoot<TruckProps> {
     const truckAutonomy = truckDTO.truckAutonomy;
     const chargeTime = truckDTO.chargeTime;
 
-    if (tare < 0 || maxWeight < 0 || batteryCapacity < 0 || truckAutonomy < 0 || chargeTime < 0) {
+    plate.split("-");
+    if (plate.length !== 8) {
+      return Result.fail<Truck>('The plate size is not correct')
+    } else if(!/^[A-Z0-9]{2}$/.test(plate.substring(0, 2)) || !/^[A-Z0-9]{2}$/.test(plate.substring(3, 5)) || !/^[A-Z0-9]{2}$/.test(plate.substring(6, 8)) ) {
+      return Result.fail<Truck>('The plate does not follow the format XX-XX-XX where X represents a number or a letter')
+    } else if (tare < 0 || maxWeight < 0 || batteryCapacity < 0 || truckAutonomy < 0 || chargeTime < 0) {
       return Result.fail<Truck>('Must provide positive data')
     } else {
       const truck = new Truck({ plate: plate, tare: tare, maxWeight: maxWeight, batteryCapacity: batteryCapacity, truckAutonomy: truckAutonomy, chargeTime: chargeTime, active: true }, id);

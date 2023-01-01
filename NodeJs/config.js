@@ -61,6 +61,10 @@ export default {
     planning: {
       name: "PlanningController",
       path: "../controllers/planningController"
+    },
+    travels: {
+      name: "TravelsController",
+      path: "../controllers/travelsController"
     }
   },
 
@@ -92,6 +96,10 @@ export default {
     delivery: {
       name: "DeliveryRepo",
       path: "../repos/deliveryRepo"
+    },
+    travels: {
+      name: "TravelsRepo",
+      path: "../repos/travelsRepo"
     }
   },
 
@@ -115,6 +123,10 @@ export default {
     planning: {
       name: "PlanningService",
       path: "../services/planningService"
+    },
+    travels: {
+      name: "TravelsService",
+      path: "../services/travelsService"
     }
   },
 };
