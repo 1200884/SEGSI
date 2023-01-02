@@ -18,10 +18,13 @@ export default class View {
             let size = 200;
             view.ground = new Ground(size);
             view.object.add(view.ground.object);
-            view.bola= new Bola_Teste();
-            let bola= view.bola.object;
-            view.object.add(bola);
+        
             
+
+
+
+
+
             let coordinates = handleJSON_warehouses(txt, view);
             let armazens = [];
             for (var i = 1; i < coordinates.length; i++) {
@@ -37,20 +40,27 @@ export default class View {
             let jsonTrucks = getTrucks();
             let trucksInfo = handleJSON_trucks(jsonTrucks,view);
             let camioes = [];
-            for (var i = 1; i < trucksInfo.length; i++){
+            let movingtruck;
+            /*for (var i = 1; i < trucksInfo.length; i++){
                 view.camiao = new Camiao();
                 let camiao1 = view.camiao.object;
                 camiao1.position.set(armazens[i].position.x,armazens[i].position.y,armazens[i].position.z);
                 view.object.add(camiao1);
                 camioes[i] = camiao1;
-                console.log(camioes);
+                console.log("----------------------------"+camioes+" i= "+i);
+                if(i=2){movingtruck=camiao1;}
                 // get do caminho para saber o path e atraves do path o armazem partida e chegada e atraves dos armazens as coordenadas para a posiçao
                 // usei o armazem igual ao numero de camioes existentes (1=1, etc)
                 truckModel3D(armazens[i].position.x,armazens[i].position.y,armazens[i].position.z, view);
-            }
-            console.log(trucksInfo);
+            }*/
 
-            
+            view.bola = new Camiao();
+            let bola = view.bola.object;
+            bola.position.set(armazens[5].position.x+0.7,armazens[5].position.y+0.2,armazens[5].position.z);
+            view.object.add(bola);
+
+            console.log(trucksInfo);
+          
             //view.object.add(camiao);
             
           
@@ -83,11 +93,12 @@ export default class View {
             createBridge(view, armazens[4], armazens[11]);
             createBridge(view, armazens[16], armazens[12]);
             bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
+            bola.rotateY(Math.PI/2);
             let angle=0;
             let directionside = 0;
             let directionfront=0;
             let speed=1;
-            let rotationIndex=Math.PI/12;
+            let rotationIndex=Math.PI/8;
             let updates=false;
           
             window.addEventListener("keydown", event => {
@@ -107,29 +118,44 @@ export default class View {
             
             }});
 
-            function calculateposition(currentX,currentY,currentZ,angle){
-                let finalX;
-                let finalY;
-                let finalZ;
-                    Math.pow(1/Math.cos(angle),2)-solve(1,-2*currentX,Math.pow(currentX));
-            }
-            function solve(a, b, c) {
-                var result = (-1 * b + Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
-                var result2 = (-1 * b - Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
-                return result;
-            }
-
+            
 
         function updatePosition() {
-               
+             
             if(updates){
             console.log("ANGULO É"+angle);
              //bola.position.y =bola.position.y+1;
-             if(directionside<0){bola.position.x =bola.position.x+speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0;}
+             if(directionside<0){
+                    if(0<=angle<Math.PI/2){
+                        bola.position.x=bola.position.x+speed-angle/Math.PI/2;
+                        bola.position.z=bola.position.z+speed+angle/Math.PI/2;
+                        updates=false;
+                        directionside=0;}
+                    if(Math.PI/2<=angle<Math.PI){
+                        bola.position.x=bola.position.x-speed+(angle-Math.PI/2)/Math.PI/2;
+                        bola.position.z=bola.position.z+speed-(Math.PI-angle)/Math.PI/2;
+                        updates=false;
+                        directionside<0;}
+                    if(Math.PI<=angle<Math.PI*1.5){
+                        bola.position.x=bola.position.x-speed+(Math.PI*1.5-angle)/Math.PI/2;
+                        bola.position.z=bola.position.z-speed+(angle-Math.PI)/Math.PI/2;
+                        updates=false;
+                        directionside<0;}
+
+                    if(Math.PI*1.5<=angle<Math.PI*2){
+                        bola.position.x=bola.position.x+speed-(Math.PI*2-angle)/Math.PI/2;
+                        bola.position.z=bola.position.z-speed+(angle-Math.PI*1.5)/Math.PI/2;
+                        updates=false;
+                        directionside<0;
+                    }
+                
+                }
+             
+             
              if(directionside>0){bola.position.x =bola.position.x-speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0}
              //if(directionfront>{Math.atan2(bola, dy) * 180 / Math.PI})
              if(directionfront>0){bola.rotateY(rotationIndex);updates=false;directionfront=0;angle=angle+rotationIndex;if(angle>6.28){angle=0;}}   
-             if(directionfront<0){bola.rotateY(-rotationIndex);updates=false;directionfront=0;angle=angle-rotationIndex;if(angle<-6.28){angle=0;}}   
+             if(directionfront<0){bola.rotateY(-rotationIndex);updates=false;directionfront=0;angle=angle-rotationIndex;if(angle<0){angle=6.28-rotationIndex;}}   
              //console.log(bola.position.x)
              //bola.position.z =bola.position.z-1;
              
@@ -316,7 +342,19 @@ export default class View {
             })
         }
         OnLoad(this);
-        
+        //nao sei
+        function calculateposition(currentX,currentY,currentZ,angle){
+            let finalX;
+            let finalY;
+            let finalZ;
+                Math.pow(1/Math.cos(angle),2)-solve(1,-2*currentX,Math.pow(currentX));
+        }
+        function solve(a, b, c) {
+            var result = (-1 * b + Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+            var result2 = (-1 * b - Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+            return result;
+        }
+
     }
     
     
