@@ -9,10 +9,12 @@
 :- use_module(library(http/json)).
 
 :- json_object data(time:number, places:list).
+:- json_object lists(trucks:list, entregas:list).
 
 % Rela��o entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
 :- http_handler('/planning', p_json, []).
+:- http_handler('/travels', get_travels, []).
 
 % Cria��o de servidor HTTP no porto 'Port'
 server() :-
@@ -42,7 +44,18 @@ p_json(Request) :-
         prolog_to_json(D, X),
         reply_json(X).
 
+get_travels(Request) :-
+        http_read_json(Request, JSON),
+        json_to_prolog(JSON, JSON_TEXT),
+        split_date(JSON_TEXT,DATE),
+%em caso de erro, pode estar no split_date pois n sei o formato se esta certo
+        atribuicao_lote(DATE,LC,LE),
+        D = lists(LC,LE),
+        prolog_to_json(D, X),
+        reply_json(X).
+
 split(json([truckId=X,date=Y]),X,Y).
+split_date(json([date=Y]),Y).
 
 
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
@@ -51,7 +64,7 @@ entrega(4438, 20221205, 150, 9, 7, 9).
 entrega(4445, 20221205, 100, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
 entrega(4449, 20221205, 300, 11, 15, 20).
-%entrega(4398, 20221205, 310, 17, 16, 20).
+entrega(4398, 20221205, 310, 17, 16, 20).
 %entrega(4432, 20221205, 270, 14, 14, 18).
 %entrega(4437, 20221205, 180, 12, 9, 11).
 %entrega(4451, 20221205, 220, 6, 9, 12).
@@ -65,6 +78,8 @@ entrega(4449, 20221205, 300, 11, 15, 20).
 %entrega(4456, 20221205, 330, 16, 17, 21).
 %carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
 carateristicasCam(eTruck01,7500,4300,80,100,60).
+carateristicasCam(eTruck02,7500,4300,80,100,60).
+carateristicasCam(eTruck03,7500,4300,80,100,60).
 
 %dadosCam_t_e_ta(<nome_camiao>,<cidade_origem>,<cidade_destino>,<tempo>,<energia>,<tempo_adicional>).
 dadosCam_t_e_ta(eTruck01,1,2,122,42,0).
@@ -360,6 +375,42 @@ cidade_inicial(5).
 % come�ar no armazem origem e verificar dos armaz�ns da lista o que est�
 % mais proximo.Depois, retirar esse armaz�m da lista e fazer o mesmo a
 % come�ar neste armaz�m.
+
+incializar_listas([],[]).
+
+atribuicao_lote(DATE,LISTA_CAMIOES_NECESSARIOS,LISTA_ENTREGAS_FINAL):-
+        lista_entregas(LISTA_ENTREGAS,DATE),
+        lista_camioes(LISTA_CAMIOES),
+        incializar_listas(LISTA_CAMIOES_NECESSARIOS, LISTA_ENTREGAS_FINAL),
+        iterar_listas(LISTA_CAMIOES,LISTA_ENTREGAS,0,LISTA_CAMIOES_NECESSARIOS,[],LISTA_ENTREGAS_FINAL).
+
+iterar_listas([C|LISTA_CAMIOES], [E|LISTA_ENTREGAS], PESO_TOTAL, LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL) :-
+        carateristicasCam(C, _, CAPACIDADE, _, _, _),
+        entrega(E, _, MASSA, _, _, _),
+        PESO_FINAL is PESO_TOTAL + MASSA,
+        (LISTA_ENTREGAS = [],
+         fim_iterar_listas(C,LISTA_CAMIOES_NECESSARIOS,ENTREGAS_PROV,ENTREGAS_FINAL)
+        ;
+        (PESO_FINAL < CAPACIDADE,
+         iterar_listas([C|LISTA_CAMIOES], LISTA_ENTREGAS, PESO_FINAL, LISTA_CAMIOES_NECESSARIOS, [E|ENTREGAS_PROV], ENTREGAS_FINAL)
+        ;
+        iterar_listas(LISTA_CAMIOES, LISTA_ENTREGAS, 0, [C|LISTA_CAMIOES_NECESSARIOS], [], [ENTREGAS_PROV|ENTREGAS_FINAL]))).
+
+fim_iterar_listas(C,[C,_],E,[E|_]).
+
+%iterar_listas([C|_],[],_,[C|_],E,[E|_]).
+% iterar_listas([C|LISTA_CAMIOES],[E|LISTA_ENTREGAS],PESO_TOTAL,LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL):-
+%        carateristicasCam(C,_,CAPACIDADE,_,_,_),
+%        entrega(E,_,MASSA,_,_,_),
+%        PESO_FINAL is PESO_TOTAL + MASSA,
+%        (PESO_FINAL < CAPACIDADE,
+%        iterar_listas([C|LISTA_CAMIOES],LISTA_ENTREGAS,PESO_FINAL,LISTA_CAMIOES_NECESSARIOS,[E|ENTREGAS_PROV],ENTREGAS_FINAL);
+%
+%        iterar_listas(LISTA_CAMIOES,LISTA_ENTREGAS,0,[C|LISTA_CAMIOES_NECESSARIOS],[],[ENTREGAS_PROV|ENTREGAS_FINAL])).
+%
+
+lista_camioes(L):-findall(A,carateristicasCam(A,_,_,_,_,_),L).
+lista_entregas(L, DATE):-findall(A,entrega(A,DATE,_,_,_,_),L).
 
 combinacao_heuristicas(DATE,[A|LF],F):-get_time(Ti),findall([M,C],entrega(_,DATE,M,C,_,_),LCM),findall(C,entrega(_,DATE,_,C,_,_),LC1),
         cidade_inicial(A),createList(LC1,A,LC),combinar(LC1,LC,LCM,LF2),append(LF2,[A],LF),carateristicasCam(eTruck01,T,CM,_,_,_),

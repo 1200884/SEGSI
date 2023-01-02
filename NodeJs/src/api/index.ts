@@ -6,10 +6,11 @@ import truckRoute from './routes/truckRoute';
 import pathRoute from './routes/pathRoute';
 import packagingRoute from './routes/packagingRoute';
 import planningRoute from './routes/planningRoute';
+import travelsRoute from './routes/travelsRoute';
 
 
 export default () => {
-	
+
 	const app = Router();
 	auth(app);
 	user(app);
@@ -18,6 +19,7 @@ export default () => {
 	pathRoute(app);
 	packagingRoute(app);
 	planningRoute(app);
-	
+	travelsRoute(app);
+
 	return app
 }

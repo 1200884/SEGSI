@@ -15,7 +15,7 @@ export default class LAPR5 {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.renderer.domElement);
         const canvas = this.renderer.domElement;
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         class PickHelper {
             constructor() {
                 this.raycaster = new THREE.Raycaster();
@@ -99,7 +99,10 @@ export default class LAPR5 {
             this.pickHelper.pick(this.pickPosition2, this.scene, this.camera, time);
             this.renderer.render(this.scene, this.camera);
             this.renderer.clearDepth();
-            if (this.camera.position.y <= 1) {
+            this.controls.minDistance=5;
+            this.controls.maxDistance=100;
+            if (this.camera.position.y <= 1){
+                console.log("y min reached");
                 this.camera.position.y = 1;
             }
         }

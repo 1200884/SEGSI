@@ -1,9 +1,22 @@
-<h2>List of trucks</h2>
-<div class="container">
-  <div class="output">
-    <li *ngFor="let truck of trucks">
-      <span class="badge">Truck ID: {{truck.id}}</span>
-      <p>Tare:{{truck.tare}}, Max Weight:{{truck.maxWeight}}, Battery Capacity:{{truck.batteryCapacity}}, Truck Autonomy:{{truck.truckAutonomy}}, Charge Time:{{truck.chargeTime}}</p>
-    </li>
-  </div>
-</div>
+<h2>List of Trucks</h2>
+<ul class="trucks">
+  <br>
+  <form>
+    <label for="checkbox1">All</label>
+    <input type="checkbox" [(ngModel)]="checkbox1" [ngModelOptions]="{standalone: true}" (change)="updateList()" (click)="uncheckOthers(1)" checked>
+  
+    <label for="checkbox2">Enabled</label>
+    <input type="checkbox" [(ngModel)]="checkbox2" [ngModelOptions]="{standalone: true}" (change)="updateList()" (click)="uncheckOthers(2)">
+  
+    <label for="checkbox3">Disabled</label>
+    <input type="checkbox" [(ngModel)]="checkbox3" [ngModelOptions]="{standalone: true}" (change)="updateList()" (click)="uncheckOthers(3)">
+  </form>
+  <br>
+  <li *ngFor="let truck of trucks">
+    <a routerLink="/trucks/{{truck.id}}">
+    <span class="badge">{{truck.plate}}</span>
+    </a>
+  </li>
+  <br>
+  <button type="button" (click)="goBack()">Go Back</button>
+</ul>

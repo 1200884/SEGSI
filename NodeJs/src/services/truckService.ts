@@ -29,6 +29,29 @@ export default class TruckService implements ITruckService {
     }
   }
 
+  public async deleteTruck(truckId: string): Promise<Result<ITruckDTO>> {
+    try {
+      const truck = await this.truckRepo.findByDomainId(truckId);
+
+      if (truck === null) {
+        return Result.fail<ITruckDTO>("Truck does not exist");
+      }
+      else {
+        const deletedTruck = await this.truckRepo.removeByTruckId(truckId);
+
+        if (deletedTruck === null) {
+          return Result.fail<ITruckDTO>("Truck could not be deleted");
+        }
+        else {
+          const deletedTruckDTOResult = TruckMap.toDTO(truck) as ITruckDTO;
+          return Result.ok<ITruckDTO>(deletedTruckDTOResult);
+        }
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async getTrucks(): Promise<Result<ITruckDTO[]>> {
     try {
       const trucks = await this.truckRepo.findAll();
@@ -44,6 +67,26 @@ export default class TruckService implements ITruckService {
         return Result.ok<ITruckDTO[]>(finalTrucks)
       }
     } catch (e) {
+      throw e;
+    }
+  }
+
+  public async getTrucksActivity(activity: boolean): Promise<Result<ITruckDTO[]>> {
+    try {
+      const trucks = await this.truckRepo.findAllActivity(activity);
+      var finalTrucks: Array<ITruckDTO> = [];
+
+      if (trucks == null) {
+        return Result.fail<ITruckDTO[]>("There was a problem assembling the trucks");
+      }
+      else {
+        for (var i = 0; i < trucks.length; i++) {
+          finalTrucks.push(TruckMap.toDTO(trucks[i]) as ITruckDTO);
+        }
+        return Result.ok<ITruckDTO[]>(finalTrucks);
+      }
+    }
+    catch (e) {
       throw e;
     }
   }
@@ -81,7 +124,8 @@ export default class TruckService implements ITruckService {
         truck.maxWeight = truckDTO.maxWeight;
         truck.batteryCapacity = truckDTO.batteryCapacity;
         truck.truckAutonomy = truckDTO.truckAutonomy;
-        truck.chargeTime = truckDTO.chargeTime
+        truck.chargeTime = truckDTO.chargeTime;
+        truck.active = truckDTO.active;
         await this.truckRepo.save(truck);
 
         const truckDTOResult = TruckMap.toDTO(truck) as ITruckDTO;
@@ -92,65 +136,39 @@ export default class TruckService implements ITruckService {
     }
   }
 
-  public async patchTruck(truckInfo: string): Promise<Result<ITruckDTO>> {
-    //"{"id":"adwdawd","tare":2,"max":5}"
+  public async patchTruck(truckDTO: ITruckDTO): Promise<Result<ITruckDTO>> {
     try {
-      const info = truckInfo.split('"');
-      let vars = [info[1]];
-      let vals = [info[3]];
-      let cont = true;
-      let v1 = 5;
-      let v2 = 6;
-      do {
-        if (info[v1] === undefined || info[v2] === undefined) {
-          cont = false;
-        } else {
-          vars.push(info[v1]);
-          vals.push(info[v2]);
-        }
-        v1 += 2;
-        v2 += 2;
-      } while (cont);
-      const truck = await this.truckRepo.findByDomainId(vals[0]);
-      let string;
+      const truck = await this.truckRepo.findByDomainId(truckDTO.id);
+
       if (truck === null) {
         return Result.fail<ITruckDTO>("Truck not found");
       }
       else {
-        if (vars.includes("tare")) {
-          //string = this.metodo(vals[vars.indexOf("tare")]);
-          truck.tare = parseInt(await this.parse(vals[vars.indexOf("tare")]));
+        if (truckDTO.tare != undefined) {
+          truck.tare = truckDTO.tare;
         }
-        if (vars.includes("maxWeight")) {
-          //string = this.metodo(vals[vars.indexOf("maxWeight")]);
-          truck.maxWeight = parseInt(await this.parse(vals[vars.indexOf("maxWeight")]));
+        if (truckDTO.maxWeight != undefined) {
+          truck.maxWeight = truckDTO.maxWeight;
         }
-        if (vars.includes("batteryCapacity")) {
-          //string = this.metodo(vals[vars.indexOf("batteryCapacity")])
-          truck.batteryCapacity = parseInt(await this.parse(vals[vars.indexOf("batteryCapacity")]));
+        if (truckDTO.batteryCapacity != undefined) {
+          truck.batteryCapacity = truckDTO.batteryCapacity;
         }
-        if (vars.includes("truckAutonomy")) {
-          //string = this.metodo(vals[vars.indexOf("truckAutonomy")]);
-          truck.truckAutonomy = parseInt(await this.parse(vals[vars.indexOf("truckAutonomy")]));
+        if (truckDTO.truckAutonomy != undefined) {
+          truck.truckAutonomy = truckDTO.truckAutonomy;
         }
-        if (vars.includes("chargeTime")) {
-          //string = this.metodo(vals[vars.indexOf("chargeTime")]);
-          truck.chargeTime = parseInt(await this.parse(vals[vars.indexOf("chargeTime")]));
+        if (truckDTO.chargeTime != undefined) {
+          truck.chargeTime = truckDTO.chargeTime;
+        }
+        if (truckDTO.active != undefined) {
+          truck.active = truckDTO.active;
         }
         await this.truckRepo.save(truck);
 
         const truckDTOResult = TruckMap.toDTO(truck) as ITruckDTO;
-        return Result.ok<ITruckDTO>(truckDTOResult)
+        return Result.ok<ITruckDTO>(truckDTOResult);
       }
     } catch (e) {
       throw e;
     }
-  }
-
-  public async parse(string: string): Promise<string> {
-    string = string.replace(',', '');
-    string = string.replace(':', '');
-    string = string.replace('}', '');
-    return string;
   }
 }

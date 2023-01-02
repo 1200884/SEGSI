@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Truck } from 'src/app/_models/Truck';
 import { FleetService } from 'src/app/_services/fleet.service';
 
@@ -9,32 +10,27 @@ import { FleetService } from 'src/app/_services/fleet.service';
 })
 export class CreateTruckComponent implements OnInit {
 
-  content?: string;
-  truck: Truck = {
-    id: 'Teste',
-    tare: 0,
-    maxWeight: 0,
-    batteryCapacity: 0,
-    truckAutonomy: 0,
-    chargeTime: 0
-  };
-  error = false;
+  message: string | undefined;
 
-  constructor(private fleetService: FleetService) { }
+  constructor(
+    private fleetService: FleetService,
+    private location: Location
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   postTruck(truck: Truck): void {
     this.fleetService.postTruck(truck).subscribe(
       data => {
-        this.error = false;
-        this.content = '';
-        this.truck = data;
+        this.message = "Truck Created";
       },
       err => {
-        this.error = true;
-        this.content = JSON.parse(err.error).message;
+        this.message = "Error creating truck";
       }
     )
   }

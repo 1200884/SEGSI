@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Truck } from 'src/app/_models/Truck';
 import { FleetService } from 'src/app/_services/fleet.service';
@@ -8,14 +9,23 @@ import { FleetService } from 'src/app/_services/fleet.service';
   styleUrls: ['./get-trucks.component.css']
 })
 export class GetTrucksComponent implements OnInit {
-
+  checkbox1 = true;
+  checkbox2 = false;
+  checkbox3 = false;
   trucks: Truck[] = [];
   content ?: string;
 
-  constructor(private fleetService: FleetService) { }
+  constructor(
+    private fleetService: FleetService,
+    private location: Location
+    ) { }
 
   ngOnInit(): void {
     this.getTrucks();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   getTrucks(): void {
@@ -29,4 +39,49 @@ export class GetTrucksComponent implements OnInit {
     )
   }
 
+  getActiveTrucks(): void {
+    this.fleetService.getActiveTrucks().subscribe(
+      data=> {
+        this.trucks = data;
+      },
+      err => {
+        this.content = JSON.parse(err.error).message;
+      }
+    )
+  }
+
+  getInactiveTrucks(): void {
+    this.fleetService.getInactiveTrucks().subscribe(
+      data => {
+        this.trucks = data;
+      },
+      err => {
+        this.content = JSON.parse(err.error).message;
+      }
+    )
+  }
+
+  uncheckOthers(selected: number): void {
+    if (selected !== 1) {
+      this.checkbox1 = false;
+    }
+    if (selected !== 2) {
+      this.checkbox2 = false;
+    }
+    if (selected !== 3) {
+      this.checkbox3 = false;
+    }
+  }
+
+  updateList(): void {
+    if(this.checkbox1) {
+      this.getTrucks();
+    }
+    else if(this.checkbox2) {
+      this.getActiveTrucks();
+    }
+    else if(this.checkbox3) {
+      this.getInactiveTrucks();
+    }
+  }
 }

@@ -1,35 +1,32 @@
-<div class="container">
-    <div class="output">
-        <li *ngIf="!error">
-            <span class="badge">{{truck.id}}</span>
-            {{truck.tare}},{{truck.maxWeight}},{{truck.batteryCapacity}},{{truck.truckAutonomy}},{{truck.chargeTime}}
-        </li>
-        <li *ngIf="error">
-            <p>{{ content }}</p>
-        </li>
+<div *ngIf="truck">
+    <!--<h2>{{truck.description | uppercase}} Truck Details</h2>-->
+    <div><span>id: </span>{{truck.id}}</div>
+    <div>
+      <label for="truck-plate">plate: </label>
+      <input id="truck-plate" [(ngModel)]="truck.plate" placeholder="truck plate"/>
+      <br>
+      <br>
+      <label for="truck-tare">tare: </label>
+      <input id="truck-tare" [(ngModel)]="truck.tare" placeholder="truck tare"/>
+      <br>
+      <br>
+      <label for="truck-maxWeight">max weight: </label>
+      <input id="truck-maxWeight" [(ngModel)]="truck.maxWeight" placeholder="truck max weight"/>
+      <br>
+      <br>
+      <label for="truck-batteryCapacity">battery capacity: </label>
+      <input id="truck-batteryCapacity" [(ngModel)]="truck.batteryCapacity" placeholder="truck battery capacity"/>
+      <br>
+      <br>
+      <label for="truck-truckAutonomy">truck autonomy: </label>
+      <input id="truck-truckAutonomy" [(ngModel)]="truck.truckAutonomy" placeholder="truck autonomy"/>
+      <br>
+      <br>
+      <label for="truck-chargeTime">charge time: </label>
+      <input id="truck-chargeTime" [(ngModel)]="truck.chargeTime" placeholder="truck charge time"/>
     </div>
-
-    <div class="input-box">
-        <form #truckForm="ngForm" (ngSubmit)="putTruck(truckForm.value)">
-          <label>Id: </label>
-          <input type="text" name="id" ngModel>
-
-          <label>Tare: </label>
-          <input type="text" name="tare" ngModel>
+    <button type="button" (click)="goBack()">Go back</button>
+    <button type="button" (click)="save()">Save</button>
     
-          <label>Max Weight: </label>
-          <input type="text" name="maxWeight" ngModel>
-    
-          <label>Battery Capacity: </label>
-          <input type="text" name="batteryCapacity" ngModel>
-    
-          <label>Truck Autonomy: </label>
-          <input type="text" name="truckAutonomy" ngModel>
-    
-          <label>Charge Time: </label>
-          <input type="text" name="chargeTime" ngModel>
-          <h1></h1>
-          <input type="submit" value="Update Truck">
-        </form>
-    </div>
-</div>
+    <button #myButton [innerHTML]="buttonText" (click)="updateTruck()">Disable</button>
+  </div>

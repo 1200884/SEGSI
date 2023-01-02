@@ -27,6 +27,7 @@ export class GetTruckComponent implements OnInit {
         this.truck = data;
         this.header = "ID: " + this.truck.id;
         this.body =
+          " Plate: " + this.truck.plate +
           " Tare: " + this.truck.tare +
           " Max Weight: " + this.truck.maxWeight +
           " Battery Capacity: " + this.truck.batteryCapacity +
