@@ -6,3 +6,26 @@
     -ms-transform: translateY(0%);
     transform: translateY(-50%);
 }
+label {
+    color: #e53fff;
+    font-weight: bold;
+  }
+  input {
+    font-size: 1em;
+    padding: .9rem;
+  }
+  button {
+    margin-top: 20px;
+    background-color: rgb(249, 11, 11);
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  button:hover {
+    background-color: #4709fe;
+  }
+  button:disabled {
+    background-color: #d42d2d;
+    color: #ccc;
+    cursor: auto;
+  }

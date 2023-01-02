@@ -62,6 +62,22 @@ export default class TruckController implements ITruckController /* TODO: extend
     }
   }
 
+  public async getTrucksActivity(activity: boolean, req: Request, res: Response, next: NextFunction) {
+    try {
+      let truckOrError = await this.truckServiceInstance.getTrucksActivity(activity) as Result<ITruckDTO[]>;
+
+      if (truckOrError.isFailure) {
+        return res.status(404).send();
+      }
+
+      const truckDTO = truckOrError.getValue();
+      return res.status(200).json( truckDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  }
+
   public async getTruck(id: string, req: Request, res: Response, next: NextFunction) {
     try {
       let truckOrError = await this.truckServiceInstance.getTruck(id) as Result<ITruckDTO>;
@@ -78,11 +94,25 @@ export default class TruckController implements ITruckController /* TODO: extend
     }
   };
 
+  public async deleteTruck(id: string, req: Request, res: Response, next: NextFunction) {
+    try {
+      let truckOrError = await this.truckServiceInstance.deleteTruck(id) as Result<ITruckDTO>;
+
+      if (truckOrError.isFailure) {
+        return res.status(404).send();
+      }
+
+      const truckDTO = truckOrError.getValue();
+      return res.status(200).json( truckDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  };
+
   public async patchTruck(req: Request, res: Response, next: NextFunction) {
     try {
-      let info = JSON.stringify(req.body);
-      
-      let truckOrError = await this.truckServiceInstance.patchTruck(info) as Result<ITruckDTO>;
+      let truckOrError = await this.truckServiceInstance.patchTruck(req.body as ITruckDTO) as Result<ITruckDTO>;
 
       if (truckOrError.isFailure) {
         return res.status(404).send();

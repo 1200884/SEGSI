@@ -5,17 +5,24 @@ import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import Bola_Teste from "./Bola_Teste.js";
+import Camiao from "./Camiao.js";
 
 export default class View {
     constructor() {
-
+   
+       
         function OnLoad(view) {
-            let txt = readFile();
+          
+            let txt = getWarehouses();
             view.object = new THREE.Group();
             let size = 200;
             view.ground = new Ground(size);
             view.object.add(view.ground.object);
-            let coordinates = handleJSON(txt, view);
+            view.bola= new Bola_Teste();
+            let bola= view.bola.object;
+            view.object.add(bola);
+            
+            let coordinates = handleJSON_warehouses(txt, view);
             let armazens = [];
             for (var i = 1; i < coordinates.length; i++) {
                 view.armazem = new Armazem();
@@ -24,10 +31,31 @@ export default class View {
                 armazem1.children[0].userData.description="Id:"+i+"<br>Name:"+coordinates[i][3];
                 view.object.add(armazem1);
                 armazens[i] = armazem1;
-                console.log(armazens)
-                model3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
+                console.log(armazens);
+                warehouseModel3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
             }
+            let jsonTrucks = getTrucks();
+            let trucksInfo = handleJSON_trucks(jsonTrucks,view);
+            let camioes = [];
+            for (var i = 1; i < trucksInfo.length; i++){
+                view.camiao = new Camiao();
+                let camiao1 = view.camiao.object;
+                camiao1.position.set(armazens[i].position.x,armazens[i].position.y,armazens[i].position.z);
+                view.object.add(camiao1);
+                camioes[i] = camiao1;
+                console.log(camioes);
+                // get do caminho para saber o path e atraves do path o armazem partida e chegada e atraves dos armazens as coordenadas para a posiçao
+                // usei o armazem igual ao numero de camioes existentes (1=1, etc)
+                truckModel3D(armazens[i].position.x,armazens[i].position.y,armazens[i].position.z, view);
+            }
+            console.log(trucksInfo);
 
+            
+            //view.object.add(camiao);
+            
+          
+        // ...
+      
             view.base = new Base();
             createBridge(view, armazens[1], armazens[16]);
             createBridge(view, armazens[16], armazens[3]);
@@ -54,9 +82,69 @@ export default class View {
             createBridge(view, armazens[13], armazens[10]);
             createBridge(view, armazens[4], armazens[11]);
             createBridge(view, armazens[16], armazens[12]);
-        }
+            bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
+            let angle=0;
+            let directionside = 0;
+            let directionfront=0;
+            let speed=1;
+            let rotationIndex=Math.PI/12;
+            let updates=false;
+          
+            window.addEventListener("keydown", event => {
+                if (event.code === "KeyW") {
+                directionside = -1;
+                updates=true;
+                } else if (event.code === "KeyS") {
+                directionside = 1;
+                updates=true;
+               } else if(event.code === "KeyA"){
+                directionfront=1;
+                updates=true;
+               }else if(event.code === "KeyD"){
+                directionfront=-1;
+                updates=true;
 
-        function readFile() {
+            
+            }});
+
+            function calculateposition(currentX,currentY,currentZ,angle){
+                let finalX;
+                let finalY;
+                let finalZ;
+                    Math.pow(1/Math.cos(angle),2)-solve(1,-2*currentX,Math.pow(currentX));
+            }
+            function solve(a, b, c) {
+                var result = (-1 * b + Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+                var result2 = (-1 * b - Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
+                return result;
+            }
+
+
+        function updatePosition() {
+               
+            if(updates){
+            console.log("ANGULO É"+angle);
+             //bola.position.y =bola.position.y+1;
+             if(directionside<0){bola.position.x =bola.position.x+speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0;}
+             if(directionside>0){bola.position.x =bola.position.x-speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0}
+             //if(directionfront>{Math.atan2(bola, dy) * 180 / Math.PI})
+             if(directionfront>0){bola.rotateY(rotationIndex);updates=false;directionfront=0;angle=angle+rotationIndex;if(angle>6.28){angle=0;}}   
+             if(directionfront<0){bola.rotateY(-rotationIndex);updates=false;directionfront=0;angle=angle-rotationIndex;if(angle<-6.28){angle=0;}}   
+             //console.log(bola.position.x)
+             //bola.position.z =bola.position.z-1;
+             
+            }
+            requestAnimationFrame(draw);
+            }
+
+            function draw() {updatePosition();}  
+
+            requestAnimationFrame(draw);
+        
+        }
+        
+
+        function getWarehouses() {
             var txt = '';
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
@@ -65,6 +153,21 @@ export default class View {
                 }
             };
             xmlhttp.open("GET", "https://localhost:5001/api/Warehouses", false);
+            xmlhttp.send();
+            var txt2 = JSON.parse(txt);
+            console.log(txt2);
+            return txt2;
+        }
+
+        function getTrucks() {
+            var txt = '';
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+                    txt = xmlhttp.responseText;
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:2223/api/Trucks", false);
             xmlhttp.send();
             var txt2 = JSON.parse(txt);
             console.log(txt2);
@@ -158,7 +261,7 @@ export default class View {
         function altToy(alt) {
             return (50 / 800 * alt) / 10;
         }
-        function handleJSON(txt) {
+        function handleJSON_warehouses(txt) {
             let coordinates = new Array(txt.length + 1);
             for (var i = 0; i < txt.length; i++) {
                 var id = (txt[i].id);
@@ -174,7 +277,21 @@ export default class View {
             }
             return coordinates;
         }
-        function model3D(x, y, z, view) {
+        function handleJSON_trucks(txt) {
+            let trucksInfo = new Array(txt.length + 1);
+            for (var i = 0; i < txt.length; i++) {
+                var id = (txt[i].id);
+                trucksInfo[id] = new Array(6);
+                trucksInfo[id][0] = txt[i].plate;  
+                trucksInfo[id][1] = txt[i].tare;
+                trucksInfo[id][2] = txt[i].maxWeight;
+                trucksInfo[id][3] = txt[i].batteryCapacity; 
+                trucksInfo[id][4] = txt[i].truckAutonomy; 
+                trucksInfo[id][5] = txt[i].chargeTime; 
+            }
+            return trucksInfo;
+        }
+        function warehouseModel3D(x, y, z, view) {
 
             const loader = new GLTFLoader();
             loader.load('assets/warehouse.glb', (gltf) => {
@@ -186,6 +303,22 @@ export default class View {
                 view.object.add(root);
             });
         }
+        function truckModel3D(x, y, z, view) {
+
+            const loader = new GLTFLoader();
+            loader.load('assets/truck.glb', (gltf) => {
+                const root = gltf.scene;
+                gltf.scene.scale.set(0.07, 0.07, 0.07);
+                root.position.setX(x + 0.65);
+                root.position.setY(y + 0.25);
+                root.position.setZ(z);
+                view.object.add(root);
+            })
+        }
         OnLoad(this);
+        
     }
+    
+    
+       
 }

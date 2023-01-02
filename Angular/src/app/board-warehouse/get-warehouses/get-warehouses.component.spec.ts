@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Warehouse } from 'src/app/_models/Warehouse';
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { WarehousesComponent } from './get-warehouses.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 describe('WarehousesComponent', () => {
@@ -36,15 +37,18 @@ describe('WarehousesComponent', () => {
         altitude: 450.0
       }];
       
-    TestBed.configureTestingModule({
-      declarations: [ WarehousesComponent ],
-      providers: [
-        {
-        provide: WarehouseService,
-        useValue: mockWarehouseService,
-        },
-      ]
-    })
+      TestBed.configureTestingModule({
+        declarations: [ WarehousesComponent],
+        imports: [
+          NgxPaginationModule,
+        ],
+        providers: [
+          {
+          provide: WarehouseService,
+          useValue: mockWarehouseService,
+          },
+        ]
+      })
     fixture = TestBed.createComponent(WarehousesComponent);
     component = fixture.componentInstance;
   });
@@ -99,5 +103,11 @@ describe('WarehousesComponent', () => {
     });
   });
   
+  describe('DisplayDisabled', () => {
+    it('should throw an error if there is a problem retrieving the disabled warehouses', () => {
+      mockWarehouseService.getDisabledWarehouses.and.returnValue(throwError(new Error('error')));
+      expect(component.DisplayDisabled).toThrowError();
+    });
+  });
 
 });

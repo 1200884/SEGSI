@@ -41,6 +41,7 @@ const routes: Routes = [
   { path: 'deliveries', component: DeliveriesComponent },
   { path: 'warehouses/:id/:check3', component: UpdateWarehouseComponent },
   { path: 'deliveries/:id', component: UpdateDeliveryComponent },
+  { path: 'trucks/:id', component: PutTruckComponent},
   { path: 'Create warehouses', component: CreateWarehouseComponent },
   { path: 'Create deliveries', component: CreateDeliveryComponent },
   { path: 'get-trucks', component: GetTrucksComponent },

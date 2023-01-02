@@ -13,16 +13,18 @@ export class TruckMap extends Mapper<Truck> {
   public static toDTO( truck: Truck): ITruckDTO {
     return {
       id: truck.id.toString(),
+      plate: truck.plate,
       tare: truck.tare,
       maxWeight: truck.maxWeight,
       batteryCapacity: truck.batteryCapacity,
       truckAutonomy: truck.truckAutonomy,
       chargeTime: truck.chargeTime,
+      active: truck.active
     } as ITruckDTO;
   }
 
   public static toDomain (truck: any | Model<ITruckPersistence & Document> ): Truck {
-    const truckOrError = Truck.create(
+    const truckOrError = Truck.createFromBD(
       truck,
       new UniqueEntityID(truck.domainId)
     );
@@ -35,11 +37,13 @@ export class TruckMap extends Mapper<Truck> {
   public static toPersistence (truck: Truck): any {
     return {
       domainId: truck.id.toString(),
+      plate: truck.plate,
       tare: truck.tare,
       maxWeight: truck.maxWeight,
       batteryCapacity: truck.batteryCapacity,
       truckAutonomy: truck.truckAutonomy,
-      chargeTime: truck.chargeTime
+      chargeTime: truck.chargeTime,
+      active: truck.active
     }
   }
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Truck } from 'src/app/_models/Truck';
 import { FleetService } from 'src/app/_services/fleet.service';
 
@@ -8,34 +10,73 @@ import { FleetService } from 'src/app/_services/fleet.service';
   styleUrls: ['./put-truck.component.css']
 })
 export class PutTruckComponent implements OnInit {
+  @ViewChild('myButton', { static: true }) button: any;
+  buttonText = 'Disable';
+  truck: Truck | undefined;
 
-  content?: string;
-  truck: Truck = {
-    id: 'Teste',
-    tare: 0,
-    maxWeight: 0,
-    batteryCapacity: 0,
-    truckAutonomy: 0,
-    chargeTime: 0
-  };
-  error = false;
-
-  constructor(private fleetService: FleetService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private fleetService: FleetService,
+    private location: Location
+  ) { }
 
   ngOnInit(): void {
+    this.getTruck();
   }
 
-  putTruck(truck: Truck): void {
-    this.fleetService.putTruck(truck).subscribe(
-      data => {
-        this.error = false;
-        this.content = '';
-        this.truck = data;
-      },
-      err => {
-        this.error = true;
-        this.content = JSON.parse(err.error).message;
+  getTruck(): void {
+    const id = String(this.route.snapshot.paramMap.get('id'));
+    this.fleetService.getTruck(id).subscribe(
+      truck => {
+        this.truck = truck;
+        this.changeButton();
+      });
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  save(): void {
+    if (this.truck) {
+      this.fleetService.putTruck(this.truck).subscribe(
+        () => this.goBack()
+      );
+    }
+  }
+
+  updateTruck(): void {
+    console.log("update");
+    if (this.truck) {
+      let newTruck: Truck;
+      newTruck = {
+        id: this.truck.id,
+        plate: this.truck.plate,
+        active: false
       }
-    )
+      if (this.buttonText == 'Disable') {
+        console.log("entrou no disable");
+        this.fleetService.patchTruck(newTruck);
+      }
+      else if (this.buttonText == 'Enable') {
+        console.log("entrou no enable");
+        newTruck.active = true;
+        this.fleetService.patchTruck(newTruck);
+        console.log(this.truck);
+      }
+      console.log("saiu");
+      this.changeButton();
+    }
+  }
+
+  changeButton(): void {
+    if (this.truck) {
+      if (this.truck.active) {
+        this.buttonText = 'Disable';
+      }
+      else {
+        this.buttonText = 'Enable'
+      }
+    }
   }
 }

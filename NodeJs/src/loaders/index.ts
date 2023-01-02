@@ -39,6 +39,11 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/packagingSchema',
   };
 
+  const travelsSchema = {
+    name: 'travelsSchema',
+    schema: '../persistence/schemas/travelsSchema',
+  };
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -64,6 +69,11 @@ export default async ({ expressApp }) => {
     path: config.controllers.planning.path
   }
 
+  const travelsController = {
+    name: config.controllers.travels.name,
+    path: config.controllers.travels.path
+  }
+
   const roleRepo = {
     name: config.repos.role.name,
     path: config.repos.role.path
@@ -78,7 +88,7 @@ export default async ({ expressApp }) => {
     name: config.repos.truck.name,
     path: config.repos.truck.path
   }
- 
+
   const pathRepo = {
     name: config.repos.path.name,
     path: config.repos.path.path
@@ -96,7 +106,12 @@ export default async ({ expressApp }) => {
     name: config.repos.delivery.name,
     path: config.repos.delivery.path
   }
- 
+
+  const travelsRepo = {
+    name: config.repos.travels.name,
+    path: config.repos.travels.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -116,14 +131,19 @@ export default async ({ expressApp }) => {
     name: config.services.packaging.name,
     path: config.services.packaging.path
   }
-  
 
-const planningService = {
+
+  const planningService = {
     name: config.services.planning.name,
     path: config.services.planning.path
   }
 
-  
+  const travelsService = {
+    name: config.services.travels.name,
+    path: config.services.travels.path
+  }
+
+
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -133,14 +153,15 @@ const planningService = {
       truckSchema,
       pathSchema,
       packagingSchema,
-      //planningSchema
+      travelsSchema
     ],
     controllers: [
       roleController,
       truckController,
       pathController,
       packagingController,
-      planningController
+      planningController,
+      travelsController
     ],
     repos: [
       roleRepo,
@@ -149,15 +170,18 @@ const planningService = {
       pathRepo,
       packagingRepo,
       planningRepo,
-      deliveryRepo
+      deliveryRepo,
+      travelsRepo
     ],
     services: [
       roleService,
       truckService,
       pathService,
       packagingService,
-      planningService
-    ]  });
+      planningService,
+      travelsService
+    ]
+  });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
 
   await expressLoader({ app: expressApp });
