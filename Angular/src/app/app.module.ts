@@ -68,14 +68,13 @@ import { CreatePackagingComponent } from './board-logistics/create-packaging/cre
     GetPackagingsComponent,
     PutPackagingComponent,
     CreatePackagingComponent
-    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
