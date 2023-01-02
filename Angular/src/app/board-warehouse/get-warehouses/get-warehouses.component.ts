@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import {Warehouse} from '../../_models/Warehouse';
 
 @Component({
   selector: 'app-warehouses',
   templateUrl: './get-warehouses.component.html',
-  styleUrls: ['./get-warehouses.component.css']
+  styleUrls: ['./get-warehouses.component.css'],
 })
 export class WarehousesComponent implements OnInit {
   warehouses: Warehouse[] = [];
@@ -15,6 +14,9 @@ export class WarehousesComponent implements OnInit {
   check1 = false;
   check2 = false;
   check3 = false;
+  page: number=1;
+  count:number =0;
+  tablesize:number=10;
   constructor(private warehouseService: WarehouseService,
               private location: Location) { }
 
@@ -64,6 +66,14 @@ export class WarehousesComponent implements OnInit {
       this.content = JSON.parse(err.error).message;
       }
     )
+  }
+
+  onTableDataChange(event:any){
+    this.page=event;
+  }
+  onTableSizeChange(event:any):void{
+    this.tablesize=event.target.value;
+    this.page=1;
   }
 
 }
