@@ -111,6 +111,7 @@ export default class TruckController implements ITruckController /* TODO: extend
   };
 
   public async patchTruck(req: Request, res: Response, next: NextFunction) {
+    console.log("entrou no patch?");
     try {
       let truckOrError = await this.truckServiceInstance.patchTruck(req.body as ITruckDTO) as Result<ITruckDTO>;
 
@@ -119,6 +120,7 @@ export default class TruckController implements ITruckController /* TODO: extend
       }
 
       const truckDTO = truckOrError.getValue();
+      console.log(truckDTO);
       return res.status(201).json( truckDTO );
     }
     catch (e) {
