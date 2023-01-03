@@ -17,11 +17,58 @@
   </label>
 
   <br>
-  <li *ngFor="let warehouse of warehouses">
+  <!--<li *ngFor="let warehouse of warehouses">
     <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">
     <span class="badge">{{warehouse.id}}</span> {{warehouse.description}}
     </a>
-  </li>
+  </li>-->
+  <table class="table table-striped table-dark table-hover">
+    <thead><tr>
+      <th>
+      Id
+      </th>
+      <th>
+      Description
+      </th>
+      <th>
+      Latitude
+      </th>
+      <th>
+      Longitude
+      </th>
+      <th>
+      Altitude
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let warehouse of warehouses | paginate: { 
+        itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
+     <th scope="row">
+      <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">{{ warehouse.id }}</a>
+     </th>
+        <td>
+          <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">{{ warehouse.description }}</a>
+        </td>
+        <td>
+          <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">{{ warehouse.latitude }}</a>
+        </td>
+        <td>
+          <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">{{ warehouse.longitude }}</a>
+        </td>
+        <td>
+          <a routerLink="/warehouses/{{warehouse.id}}/{{check3}}">{{ warehouse.altitude }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>    
+  <div class="d-flex align-items-start">
+      <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+    </div>
   <br>
   <button type="button" (click)="goBack()">GoBack</button>
 </ul>

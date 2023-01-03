@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { WarehouseService } from './warehouse.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('WarehouseService', () => {
   let service: WarehouseService;
@@ -38,7 +38,7 @@ describe('WarehouseService', () => {
       altitude: 450.0
     }];
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get','post']);
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get','post','put']);
     service = new WarehouseService(httpClientSpy);
   });
 
@@ -54,5 +54,44 @@ describe('WarehouseService', () => {
       });
       expect(httpClientSpy.get).toHaveBeenCalledTimes(1);
     })
-  })
+  });
+  describe('getWarehouses()', () => {
+    it('should throw an error when getWarehouse is called and the HTTP request fails', (done: DoneFn)=>{
+      httpClientSpy.get.and.returnValue(throwError(new Error('HTTP request failed')));
+      service.getWarehouses().subscribe({
+        next: () => {},
+        error: (error) => {
+          expect(error).toEqual(new Error('HTTP request failed'));
+          done();
+        },
+      });
+      expect(httpClientSpy.get).toHaveBeenCalledTimes(1);
+    })
+  });
+  describe('addWarehouse()', () => {
+    it('should return expected warehouse when addWarehouse is called', (done: DoneFn)=>{
+      httpClientSpy.post.and.returnValue(of(WAREHOUSE));
+      service.addWarehouse(WAREHOUSE).subscribe({
+        next: (warehouse) => {
+          expect(warehouse).toEqual(WAREHOUSE);
+          done();
+        },
+        error: () => {},
+      });
+      expect(httpClientSpy.post).toHaveBeenCalledTimes(1);
+    })
+  });
+  describe('addWarehouse()', () => {
+    it('should throw an error when getWarehouse is called and the HTTP request fails', (done: DoneFn)=>{
+      httpClientSpy.get.and.returnValue(throwError(new Error('HTTP request failed')));
+      service.getWarehouses().subscribe({
+        next: () => {},
+        error: (error) => {
+          expect(error).toEqual(new Error('HTTP request failed'));
+          done();
+        },
+      });
+      expect(httpClientSpy.get).toHaveBeenCalledTimes(1);
+    })
+  });
 });

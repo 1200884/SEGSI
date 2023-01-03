@@ -1,35 +1,17 @@
-.warehouses a {
-    color: #333;
-    text-decoration: none;
-    background-color: #EEE;
-    margin: .5em;
-    padding: .3em 0;
-    height: 1.8em;
-    border-radius: 4px;
-    display: block;
-    width: 100%;
+a { 
+  display: block; 
+  color: #eee;
+  text-decoration: none;
 }
 
+
+/*.warehouses a {
+  background-color: rgb(238, 12, 12);
+  position: absolute;
+}
 .warehouses a:hover {
   background-color: #ccc;
-}
-.warehouses .badge {
-    display: inline-block;
-    font-size: small;
-    color: white;
-    padding: 0.8em 0.7em 0 0.7em;
-    background-color: #405061;
-    line-height: 1em;
-    position: relative;
-    left: -1px;
-    top: -4px;
-    height: 2.15em;
-    min-width: 16px;
-    text-align: right;
-    margin-right: .8em;
-    border-radius: 4px 0 0 4px;
-  }
-
+}*/
   button {
     margin-top: 20px;
     background-color: #eee;
