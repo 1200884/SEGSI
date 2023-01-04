@@ -16,8 +16,8 @@ export class TravelsMap extends Mapper<Travels> {
     public static toDTO(travels: Travels): ITravelsDTO {
         return {
             id: travels.id.toString(),
-            trucks: travels.trucks,
-            deliveries: travels.deliveries
+            date: travels.date,
+            travels: travels.travels
         } as ITravelsDTO;
     }
 
@@ -35,8 +35,8 @@ export class TravelsMap extends Mapper<Travels> {
     public static toPersistence(travels: Travels): any {
         return {
             id: travels.id.toString(),
-            trucks: travels.trucks,
-            deliveries: travels.deliveries
+            date: travels.date,
+            travels: travels.travels
         }
     }
 }

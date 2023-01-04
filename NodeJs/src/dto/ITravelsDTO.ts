@@ -1,7 +1,6 @@
 
 export default interface ITravelsDTO {
-    id: string;
-    trucks: [string];
-    deliveries: [[number]];
-  }
-    
+  id: string;
+  date: number;
+  travels: [[string]];
+}
