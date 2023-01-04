@@ -9,8 +9,8 @@ import Camiao from "./Camiao.js";
 
 export default class View {
     constructor() {
-   
-       
+        let estradas=[]; 
+        let isValidPosition=false;
         function OnLoad(view) {
           
             let txt = getWarehouses();
@@ -18,7 +18,7 @@ export default class View {
             let size = 200;
             view.ground = new Ground(size);
             view.object.add(view.ground.object);
-        
+           
             
 
 
@@ -39,8 +39,7 @@ export default class View {
             }
             let jsonTrucks = getTrucks();
             let trucksInfo = handleJSON_trucks(jsonTrucks,view);
-            let camioes = [];
-            let movingtruck;
+          
             /*for (var i = 1; i < trucksInfo.length; i++){
                 view.camiao = new Camiao();
                 let camiao1 = view.camiao.object;
@@ -65,42 +64,44 @@ export default class View {
             
           
         // ...
-      
+            let bridges=[];
+          
             view.base = new Base();
-            createBridge(view, armazens[1], armazens[16]);
-            createBridge(view, armazens[16], armazens[3]);
-            createBridge(view, armazens[2], armazens[9]);
-            createBridge(view, armazens[2], armazens[15]);
-            createBridge(view, armazens[3], armazens[10]);
-            createBridge(view, armazens[3], armazens[5]);
-            createBridge(view, armazens[4], armazens[6]);
-            createBridge(view, armazens[4], armazens[9]);
-            createBridge(view, armazens[16], armazens[14]);
-            createBridge(view, armazens[8], armazens[13]);
-            createBridge(view, armazens[7], armazens[5]);
-            createBridge(view, armazens[17], armazens[13]);
-            createBridge(view, armazens[12], armazens[1]);
-            createBridge(view, armazens[8], armazens[5]);
-            createBridge(view, armazens[10], armazens[11]);
-            createBridge(view, armazens[14], armazens[7]);
-            createBridge(view, armazens[15], armazens[8]);
-            createBridge(view, armazens[6], armazens[11]);
-            createBridge(view, armazens[9], armazens[6]);
-            createBridge(view, armazens[12], armazens[7]);
-            createBridge(view, armazens[5], armazens[17]);
-            createBridge(view, armazens[15], armazens[1]);
-            createBridge(view, armazens[13], armazens[10]);
-            createBridge(view, armazens[4], armazens[11]);
-            createBridge(view, armazens[16], armazens[12]);
+            bridges.push(createBridge(view, armazens[1], armazens[16]));
+            bridges.push(createBridge(view, armazens[16], armazens[3]));
+            bridges.push(createBridge(view, armazens[2], armazens[9]));
+            bridges.push(createBridge(view, armazens[2], armazens[15]));
+            bridges.push(createBridge(view, armazens[3], armazens[10]));
+            bridges.push(createBridge(view, armazens[3], armazens[5]));
+            bridges.push(createBridge(view, armazens[4], armazens[6]));
+            bridges.push(createBridge(view, armazens[4], armazens[9]));
+            bridges.push(createBridge(view, armazens[16], armazens[14]));
+            bridges.push(createBridge(view, armazens[8], armazens[13]));
+            bridges.push(createBridge(view, armazens[7], armazens[5]));
+            bridges.push(createBridge(view, armazens[17], armazens[13]));
+            bridges.push(createBridge(view, armazens[12], armazens[1]));
+            bridges.push(createBridge(view, armazens[8], armazens[5]));
+            bridges.push(createBridge(view, armazens[10], armazens[11]));
+            bridges.push(createBridge(view, armazens[14], armazens[7]));
+            bridges.push(createBridge(view, armazens[15], armazens[8]));
+            bridges.push(createBridge(view, armazens[6], armazens[11]));
+            bridges.push(createBridge(view, armazens[9], armazens[6]));
+            bridges.push(createBridge(view, armazens[12], armazens[7]));
+            bridges.push(createBridge(view, armazens[5], armazens[17]));
+            bridges.push(createBridge(view, armazens[15], armazens[1]));
+            bridges.push(createBridge(view, armazens[13], armazens[10]));
+            bridges.push(createBridge(view, armazens[4], armazens[11]));
+            bridges.push(createBridge(view, armazens[16], armazens[12]));
+            estradas.push(1,16,16,3,2,9,2,15,3,10,3,5,4,6,4,9,16,14,8,13,7,5,17,13,12,1,8,5,10,11,14,7,15,8,6,11,9,6,12,7,5,17,15,1,13,10,4,11,16,12);
             bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
-            bola.rotateY(Math.PI/2);
+            bola.rotateY(Math.PI/4);
             let angle=0;
             let directionside = 0;
             let directionfront=0;
-            let speed=1;
+            let speed=0.5;
             let rotationIndex=Math.PI/8;
             let updates=false;
-          
+
             window.addEventListener("keydown", event => {
                 if (event.code === "KeyW") {
                 directionside = -1;
@@ -113,19 +114,16 @@ export default class View {
                 updates=true;
                }else if(event.code === "KeyD"){
                 directionfront=-1;
-                updates=true;
-
-            
-            }});
-
-            
+                updates=true;}});
 
         function updatePosition() {
-             
+            console.log(estradas);
+
+           
+
             if(updates){
             console.log("ANGULO É"+angle);
-             //bola.position.y =bola.position.y+1;
-             if(directionside<0){
+                if(directionside<0){
                     if(0<=angle<Math.PI/2){
                         bola.position.x=bola.position.x+speed-angle/Math.PI/2;
                         bola.position.z=bola.position.z+speed+angle/Math.PI/2;
@@ -135,27 +133,25 @@ export default class View {
                         bola.position.x=bola.position.x-speed+(angle-Math.PI/2)/Math.PI/2;
                         bola.position.z=bola.position.z+speed-(Math.PI-angle)/Math.PI/2;
                         updates=false;
-                        directionside<0;}
+                        directionside=0;}
                     if(Math.PI<=angle<Math.PI*1.5){
                         bola.position.x=bola.position.x-speed+(Math.PI*1.5-angle)/Math.PI/2;
                         bola.position.z=bola.position.z-speed+(angle-Math.PI)/Math.PI/2;
                         updates=false;
-                        directionside<0;}
+                        directionside=0;}
 
                     if(Math.PI*1.5<=angle<Math.PI*2){
                         bola.position.x=bola.position.x+speed-(Math.PI*2-angle)/Math.PI/2;
                         bola.position.z=bola.position.z-speed+(angle-Math.PI*1.5)/Math.PI/2;
                         updates=false;
-                        directionside<0;
+                        directionside=0;
                     }
-                
                 }
              
-             
-             if(directionside>0){bola.position.x =bola.position.x-speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0}
+           //  if(directionside>0){bola.position.x =bola.position.x-speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0}
              //if(directionfront>{Math.atan2(bola, dy) * 180 / Math.PI})
-             if(directionfront>0){bola.rotateY(rotationIndex);updates=false;directionfront=0;angle=angle+rotationIndex;if(angle>6.28){angle=0;}}   
-             if(directionfront<0){bola.rotateY(-rotationIndex);updates=false;directionfront=0;angle=angle-rotationIndex;if(angle<0){angle=6.28-rotationIndex;}}   
+             if(directionfront>0){bola.rotateY(rotationIndex);updates=false;directionfront=0;angle=angle+rotationIndex;if(angle>Math.PI*2){angle=0;}}   
+             if(directionfront<0){bola.rotateY(-rotationIndex);updates=false;directionfront=0;angle=angle-rotationIndex;if(angle<0){angle=Math.PI*2-rotationIndex;}}   
              //console.log(bola.position.x)
              //bola.position.z =bola.position.z-1;
              
@@ -247,6 +243,7 @@ export default class View {
             arco1.rotateY(angles[0]);
             arco1.position.set((extreme1[0] + extreme2[0]) / 2, (extreme1[1] + extreme2[1] - 0.05) / 2, (extreme1[2] + extreme2[2]) / 2);
             arco1.rotateZ(-Math.atan(desnivel / (p)));
+           return arco1;
         }
 
         function pointEachOther(armazem, armazem1, base1, base2) {
@@ -257,14 +254,18 @@ export default class View {
                 let numbers = [];
                 numbers.push(degrees + Math.PI / 2);
                 numbers.push(-(Math.PI / 2 - degrees))
+               
                 return numbers;
             } else {
                 let degrees = Math.atan2(armazem.position.x - armazem1.position.x, armazem.position.z - armazem1.position.z);
                 base2.rotateY(degrees - Math.PI / 2);
                 base1.rotateY((Math.PI / 2 + degrees));
+                
                 let numbers = [];
                 numbers.push((Math.PI / 2 + degrees));
-                numbers.push(degrees - Math.PI / 2)
+                numbers.push(degrees - Math.PI / 2);
+               
+               
                 return numbers;
             }
         }
