@@ -9,7 +9,7 @@
 :- use_module(library(http/json)).
 
 :- json_object data(time:number, places:list).
-:- json_object lists(trucks:list, entregas:list).
+:- json_object list(viagens:list).
 
 % Rela��o entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
@@ -49,8 +49,8 @@ get_travels(Request) :-
         json_to_prolog(JSON, JSON_TEXT),
         split_date(JSON_TEXT,DATE),
 %em caso de erro, pode estar no split_date pois n sei o formato se esta certo
-        atribuicao_lote(DATE,LC,LE),
-        D = lists(LC,LE),
+        atribuicao_lote(DATE,L),
+        D = list(L),
         prolog_to_json(D, X),
         reply_json(X).
 
@@ -400,12 +400,13 @@ organize_pairs(Pairs, Organized_pairs) :-
 
 organize_pairs([], Acc, Acc).
 organize_pairs([(Cam, Delivery)|T], Acc, Organized_pairs) :-
-    (   member((Cam, Delivery_list), Acc)
-    ->  append(Delivery_list, [Delivery], New_delivery_list),
-        select((Cam, _), Acc, New_acc),
-        New_acc2 = [(Cam, New_delivery_list)|New_acc]
-    ;   New_acc2 = [(Cam, [Delivery])|Acc]
-    ),
+    (member((Cam, Delivery_list), Acc),
+     !,
+     append(Delivery_list, [Delivery], New_delivery_list),
+     select((Cam, _), Acc, New_acc),
+     New_acc2 = [(Cam, New_delivery_list)|New_acc]
+    ;
+     New_acc2 = [(Cam, [Delivery])|Acc]),
     organize_pairs(T, New_acc2, Organized_pairs).
 
 flatten_pairs(Organized_pairs, Flattened_pairs) :-

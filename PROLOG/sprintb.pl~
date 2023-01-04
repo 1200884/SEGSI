@@ -9,7 +9,7 @@
 :- use_module(library(http/json)).
 
 :- json_object data(time:number, places:list).
-:- json_object lists(trucks:list, entregas:list).
+:- json_object list(viagens:list).
 
 % Rela��o entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
@@ -49,8 +49,8 @@ get_travels(Request) :-
         json_to_prolog(JSON, JSON_TEXT),
         split_date(JSON_TEXT,DATE),
 %em caso de erro, pode estar no split_date pois n sei o formato se esta certo
-        atribuicao_lote(DATE,LC,LE),
-        D = lists(LC,LE),
+        atribuicao_lote(DATE,L),
+        D = list(L),
         prolog_to_json(D, X),
         reply_json(X).
 
@@ -376,66 +376,18 @@ cidade_inicial(5).
 % mais proximo.Depois, retirar esse armaz�m da lista e fazer o mesmo a
 % come�ar neste armaz�m.
 
-incializar_listas([],[]).
-
-atribuicao_lote(DATE,LISTA_CAMIOES_NECESSARIOS,LISTA_ENTREGAS_FINAL):-
+atribuicao_lote(DATE,LISTA_FINAL):-
         lista_entregas(LISTA_ENTREGAS,DATE),
         lista_camioes(LISTA_CAMIOES),
-        incializar_listas(LISTA_CAMIOES_NECESSARIOS, LISTA_ENTREGAS_FINAL),
-        intermedio(LISTA_CAMIOES, LISTA_ENTREGAS,LISTA_CAMIOES_NECESSARIOS,LISTA_ENTREGAS_FINAL),
-        iterar_listas(LISTA_CAMIOES,LISTA_ENTREGAS,0,LISTA_CAMIOES_NECESSARIOS,[],LISTA_ENTREGAS_FINAL).
-
-intermedio([C|LISTA_CAMIOES],[E|LISTA_ENTREGAS], LISTA_CAMIOES_NECESSARIOS, LISTA_ENTREGAS_FINAL):-
-        iterar_listas(LISTA_CAMIOES, C, LISTA_ENTREGAS, E, 0, LISTA_CAMIOES_NECESSARIOS, [], LISTA_ENTREGAS_FINAL).
-
-iterar_listas([C2|LISTA_CAMIOES], C, [E2|LISTA_ENTREGAS], E, PESO_TOTAL, LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL) :-
-        carateristicasCam(C, _, CAPACIDADE, _, _, _),
-        entrega(E, _, MASSA, _, _, _),
-        PESO_FINAL is PESO_TOTAL + MASSA,
-        (PESO_FINAL < CAPACIDADE,
-         iterar_listas(LISTA_CAMIOES, C, LISTA_ENTREGAS, E2, PESO_FINAL, LISTA_CAMIOES_NECESSARIOS, [E|ENTREGAS_PROV], ENTREGAS_FINAL)
-        ;
-         iterar_listas(LISTA_CAMIOES, C2, LISTA_ENTREGAS, E, 0, [C|LISTA_CAMIOES_NECESSARIOS], [], [ENTREGAS_PROV|ENTREGAS_FINAL])).
-
-%iterar_listas([C|_],[],_,[C|_],E,[E|_]).
-% iterar_listas([C|LISTA_CAMIOES],[E|LISTA_ENTREGAS],PESO_TOTAL,LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL):-
-%        carateristicasCam(C,_,CAPACIDADE,_,_,_),
-%        entrega(E,_,MASSA,_,_,_),
-%        PESO_FINAL is PESO_TOTAL + MASSA,
-%        (PESO_FINAL < CAPACIDADE,
-%        iterar_listas([C|LISTA_CAMIOES],LISTA_ENTREGAS,PESO_FINAL,LISTA_CAMIOES_NECESSARIOS,[E|ENTREGAS_PROV],ENTREGAS_FINAL);
-%
-%        iterar_listas(LISTA_CAMIOES,LISTA_ENTREGAS,0,[C|LISTA_CAMIOES_NECESSARIOS],[],[ENTREGAS_PROV|ENTREGAS_FINAL])).
-%
+        associate_delivery_with_cam(LISTA_CAMIOES, LISTA_ENTREGAS,LISTA_FINAL).
 
 lista_camioes(L):-findall(A,carateristicasCam(A,_,_,_,_,_),L).
 lista_entregas(L, DATE):-findall(A,entrega(A,DATE,_,_,_,_),L).
 
-dividir_camioes(DATE, LISTA_CAMIOES_FINAL, LISTA_ENTREGAS_FINAL):-
-        lista_entregas(LISTA_ENTREGAS, DATE),
-        lista_camioes(LISTA_CAMIOES),
-        soma_entregas(DATE, PESO),
-        length(LISTA_CAMIOES, QUANTIDADE_CAMIOES),
-        RATIO is PESO / QUANTIDADE_CAMIOES,
-        caracteristicasCam(_,_,CAPACIDADE,_,_,_),
-        (RATIO > CAPACIDADE * 0.8
-        ;
-        dividir_por_camioes(LISTA_CAMIOES,LISTA_ENTREGAS,LISTA_CAMIOES_FINAL,LISTA_ENTREGAS_FINAL)).
-
-
-soma_entregas(DATE, PESO):-
-        findall(X, entrega(_,DATE,X,_,_,_),NUMEROS),
-        sum_array(NUMEROS, PESO).
-
-sum_array([],0).
-sum_array([X|XS], SUM):-
-        sum_array(XS, TAIL_SUM),
-        SUM is X + TAIL_SUM.
-
-associate_delivery_with_cam(Cams, Deliveries, Perfect):-
-        findall((Cam,Delivery),associate_delivery_with_cam(Cams,Deliveries,Cam,Delivery),Pairs),
-        organize_pairs(Pairs,Organized_pairs),
-        flatten_pairs(Organized_pairs,Perfect).
+associate_delivery_with_cam(Camioes, Entregas, Pares_finais):-
+        findall((Camiao,Delivery),associate_delivery_with_cam(Camioes,Entregas,Camiao,Delivery),Pares),
+        organize_pairs(Pares,Pares_distribuidos),
+        flatten_pairs(Pares_distribuidos,Pares_finais).
 
 associate_delivery_with_cam(Cams, Deliveries, Cam, Delivery) :-
     length(Cams, NumCams),
@@ -448,12 +400,12 @@ organize_pairs(Pairs, Organized_pairs) :-
 
 organize_pairs([], Acc, Acc).
 organize_pairs([(Cam, Delivery)|T], Acc, Organized_pairs) :-
-    (   member((Cam, Delivery_list), Acc)
-    ->  append(Delivery_list, [Delivery], New_delivery_list),
-        select((Cam, _), Acc, New_acc),
-        New_acc2 = [(Cam, New_delivery_list)|New_acc]
-    ;   New_acc2 = [(Cam, [Delivery])|Acc]
-    ),
+    (member((Cam, Delivery_list), Acc),
+     append(Delivery_list, [Delivery], New_delivery_list),
+     select((Cam, _), Acc, New_acc),
+     New_acc2 = [(Cam, New_delivery_list)|New_acc]
+    ;
+     New_acc2 = [(Cam, [Delivery])|Acc]),
     organize_pairs(T, New_acc2, Organized_pairs).
 
 flatten_pairs(Organized_pairs, Flattened_pairs) :-
