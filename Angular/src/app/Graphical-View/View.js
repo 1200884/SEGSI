@@ -81,7 +81,7 @@ export default class View {
             console.log("x 17 is"+armazens[17].position.x);
             console.log("Y 5 is"+armazens[5].position.z);
             console.log("Y 17 is"+armazens[17].position.z);
-            console.log("Marilio Cardoso "+percentagem(1,2,1,2,1.5,2));
+            console.log("Marilio Cardoso "+percentagem(1,2,1,2,1,2,1.5,1.5));
             bola.rotateY(Math.PI);
             let angle=0;
             let directionside = 0;
@@ -121,10 +121,15 @@ export default class View {
                 function b(declive,x1,y1){
                     return y1-declive*x1;
                 }
-                function percentagem(armazem1x,armazem2x,armazem1y,armazem2y,/*armazem1z,armazem2z,*/newX,newY,/*newZ*/){
+                function percentagem(armazem1x,armazem2x,armazem1y,armazem2y,armazem1z,armazem2z,newX,newY){
                     let armazem3x,armazem3y,armazem4y,armazem4x,zmaior,zmaispiqui,ymaior,ymaispiqui;
-                    let ladox,ladoy,ladoxpequeno,ladoypequeno, distanciaEntreArmazens,distanciaEntreArmazemEPontoAtual;
-                    
+                    let ladox,ladoy,ladoxpequeno,ladoypequeno,ladoz, distanciaEntreArmazens,distanciaEntreArmazemEPontoAtual;
+                    if(armazem1x==bola.position.x&&armazem1y==bola.position.z){
+                        bola.position.y=armazem1z;
+                    }
+                    if(armazem2x==bola.position.x&&armazem2y==bola.position.z){
+                        bola.position.y=armazem2z;
+                    }
                     if(armazem1x>=armazem2x){
                         armazem3x=armazem1x;
                         armazem3y=armazem1y;
@@ -134,12 +139,13 @@ export default class View {
                     else{armazem3x=armazem2x;armazem4x=armazem1x; armazem3y=armazem2y;armazem4y=armazem1y;}
                     if(armazem1y>=armazem2y){ymaior=armazem1y;ymaispiqui=armazem2y;}
                     if(armazem1y<armazem2y){ymaior=armazem2y;ymaispiqui=armazem1y;}
-                   /* if(armazem1z<=armazem2z){zmaior=armazem2z;zmaispiqui=armazem1z;}
-                    if(armazem1z>armazem2z){zmaior=armazem1z;zmaispiqui=armazem2z;}*/
-
+                    if(armazem1z<=armazem2z){zmaior=armazem2z;zmaispiqui=armazem1z;}
+                    if(armazem1z>armazem2z){zmaior=armazem1z;zmaispiqui=armazem2z;}
+                 
                     //armazem 3 xmaior, armazem 4 xmais pequeno
                     ladox=armazem3x-armazem4x;
                     ladoy=armazem3y-armazem4y;
+                    ladoz=zmaior-zmaispiqui;
                     //distanciaEntreArmazens=Math.sqrt(Math.pow(ladox,2)+Math.pow(ladoy,2));
                     ladoxpequeno=newX-armazem4x;
                     ladoypequeno=newY-armazem4y;
@@ -148,10 +154,18 @@ export default class View {
 
                     //distanciaEntreArmazemEPontoAtual=Math.sqrt(Math.pow(ladoxpequeno,2)+Math.pow(ladoypequeno,2));
                     //if(armazem4x*distanciaEntreArmazemEPontoAtual-newX<=0.1&&armazem4y*distanciaEntreArmazemEPontoAtual-newY<=0.1){
-                        if(Math.abs(distanciaEntreArmazens-distanciaEntreArmazens2)<=0.05   && newX<armazem3x&&newX>armazem4x&&newY<ymaior&&newY>ymaispiqui){
+                        console.log(bola.position.y);
+                        console.log(ladoz*distanciaEntreArmazens+zmaispiqui);
+                        console.log("ze alfredo"+Math.abs(bola.position.y-(ladoz*distanciaEntreArmazens+zmaispiqui)))
+                        console.log("ze miguel"+Math.abs(bola.position.y-(ladoz*distanciaEntreArmazens+zmaispiqui)))
+                        if(Math.abs(distanciaEntreArmazens-distanciaEntreArmazens2)<=0.05   && newX<=armazem3x&&newX>=armazem4x&&newY<=ymaior&&newY>=ymaispiqui&&Math.abs(bola.position.y-(ladoz*distanciaEntreArmazens+zmaispiqui))<1){
                         console.log("Maria Amélia!")
                         console.log("y1="+armazem3y+"x1"+armazem3x)
                         console.log("y2="+armazem4y+"x2"+armazem4x)
+                        
+                        
+                        bola.position.y=ladoz*distanciaEntreArmazens+zmaispiqui;
+                        console.log("z novo é "+bola.position.y);
                         return true;
                     }
                     console.log("adérito");
@@ -173,9 +187,9 @@ export default class View {
                       //  console.log("maiorz2, newZ= "+newZ)
                     }
                    if(newY-decliveEstrada*newX-OrdOrigem<=0.1){
-                       console.log("debug 1");
+                    //   console.log("debug 1");
                         if(maiorx1&&newX>=armazem2.position.x&&newX<=armazem1.position.x){
-                         console.log("debug 2");
+                   //      console.log("debug 2");
                           if(maiory1&&newY>=armazem2.position.z&&newY<=armazem1.position.z){
                                 return true;
                             }
@@ -224,7 +238,7 @@ export default class View {
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];
                            
-                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                              /*console.log("1=  "+i);
                              console.log("parabens es lindo");*/
                              bola.position.x=newpositionx;
@@ -241,7 +255,7 @@ export default class View {
                         for(i=0;i<estradas.length;i=i+2){
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];     
-                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                         
                               bola.position.x=newpositionx;
                               bola.position.z=newpositiony;
@@ -257,7 +271,7 @@ export default class View {
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];
                          
-                           if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                           if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                               
                               bola.position.x=newpositionx;
                               bola.position.z=newpositiony;
@@ -272,7 +286,7 @@ export default class View {
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];
                          
-                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                             
                               bola.position.x=newpositionx;
                               bola.position.z=newpositiony;
@@ -292,7 +306,7 @@ export default class View {
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];
             
-                        if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                        if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                         
                             bola.position.x=newpositionx;
                             bola.position.z=newpositiony;
@@ -310,7 +324,7 @@ export default class View {
                         for(i=0;i<estradas.length;i=i+2){
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];     
-                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                                // console.log("2=  "+i);
                               //  console.log("parabens es lindo parte 3");
                               bola.position.x=newpositionx;
@@ -327,7 +341,7 @@ export default class View {
                         for(i=0;i<estradas.length;i=i+2){
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];
-                           if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                           if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                                 //console.log("3=  "+i);
                                 //console.log("parabens es lindo");
                               bola.position.x=newpositionx;
@@ -343,7 +357,7 @@ export default class View {
                         for(i=0;i<estradas.length;i=i+2){
                             let armazem1=armazens[estradas[i]];
                             let armazem2=armazens[estradas[i+1]];
-                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,newpositionx,newpositiony)){
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20&&percentagem(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z,armazem1.position.y,armazem2.position.y,newpositionx,newpositiony)){
                              //   console.log("4=  "+i);
                             //    console.log("parabens es lindo parte 2");
                               bola.position.x=newpositionx;
