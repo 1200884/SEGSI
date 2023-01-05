@@ -25,7 +25,7 @@ export default class TravelsRepo implements ITravelsRepo {
     var request = require('request');
     var options = {
       'method': 'POST',
-      'url': 'http://vs136.dei.isep.ipp.pt:5000/travels',
+      'url': 'http://localhost:5000/travels',
       'headers': {
         'Content-Type': 'application/json'
       },
@@ -36,22 +36,22 @@ export default class TravelsRepo implements ITravelsRepo {
     };
     let travels = null;
 
-    function getPromise(options) {
+    function getPromise(data, options) {
       return new Promise((resolve, reject) => {
         request(options, function (error, response) {
           if (error) {
             reject(error);
           } else {
-            console.log(response.body);
+            var viagens = JSON.parse(response.body).viagens;
 
-            travels = TravelsMap.toDomain(JSON.parse(response.body));
+            travels = TravelsMap.toDomainFromPlanning(data, viagens);
             resolve(travels);
           }
         })
       });
     }
 
-    travels = getPromise(options);
+    travels = getPromise(data, options);
     return travels;
   }
 

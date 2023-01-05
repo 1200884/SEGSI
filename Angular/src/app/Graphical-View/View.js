@@ -196,6 +196,21 @@ export default class View {
             return txt2;
         }
 
+        function getDeliveries() {
+            var txt = '';
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+                    txt = xmlhttp.responseText;
+                }
+            };
+            xmlhttp.open("GET", "http://localhost:2223/api/travels", false);
+            xmlhttp.send();
+            var txt2 = JSON.parse(txt);
+            console.log(txt2);
+            return txt2;
+        }
+
         function createBridge(view, armazem1, armazem2) {
             let base1 = view.base.object.clone();
             view.object.add(base1);

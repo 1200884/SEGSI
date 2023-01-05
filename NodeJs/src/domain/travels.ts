@@ -44,6 +44,11 @@ export class Travels extends AggregateRoot<TravelsProps> {
         const travels = travelsDTO.travels;
 
         const travelsObject = new Travels({ date: date, travels: travels }, id);
-        return Result.ok<Travels>(travelsObject)
+        return Result.ok<Travels>(travelsObject);
+    }
+
+    public static createNew(date: number, travels: [[string]], id?: UniqueEntityID) {
+        const travelsObject = new Travels({ date: date, travels: travels }, id);
+        return Result.ok<Travels>(travelsObject);
     }
 }
