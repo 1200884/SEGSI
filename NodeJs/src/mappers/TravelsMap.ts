@@ -32,6 +32,18 @@ export class TravelsMap extends Mapper<Travels> {
         return travelsOrError.isSuccess ? travelsOrError.getValue() : null;
     }
 
+    public static toDomainFromPlanning(date: number, travels: [[string]]): Travels {
+        const travelsOrError = Travels.createNew(
+            date,
+            travels,
+            new UniqueEntityID()
+        );
+
+        travelsOrError.isFailure ? console.log(travelsOrError.error) : '';
+
+        return travelsOrError.isSuccess ? travelsOrError.getValue() : null;
+    }
+
     public static toPersistence(travels: Travels): any {
         return {
             id: travels.id.toString(),

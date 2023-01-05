@@ -9,7 +9,7 @@
 :- use_module(library(http/json)).
 
 :- json_object data(time:number, places:list).
-:- json_object list(viagens:list).
+:- json_object list(viagens:list(list)).
 
 % Rela��o entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
@@ -50,6 +50,8 @@ get_travels(Request) :-
         split_date(JSON_TEXT,DATE),
 %em caso de erro, pode estar no split_date pois n sei o formato se esta certo
         atribuicao_lote(DATE,L),
+%        format('Content-type: text/plain~n~n'),
+%        format('~w', DATE),
         D = list(L),
         prolog_to_json(D, X),
         reply_json(X).
