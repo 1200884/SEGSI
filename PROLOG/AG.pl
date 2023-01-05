@@ -1,5 +1,7 @@
 %%% SPRINT C
 
+/* :-dynamic date/1.
+:-dynamic camiao/1. */
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
@@ -7,24 +9,44 @@
 
 
 % tarefa(Id,TempoProcessamento,TempConc,PesoPenalizacao).
-entrega(t1,2,5,1).
-entrega(t2,4,7,6).
-entrega(t3,1,11,2).
-entrega(t4,3,9,3).
-entrega(t5,3,8,2).
-
-%passar do pop pro pop av com as heuristicas
-
+tarefa(t1,2,5,1).
+tarefa(t2,4,7,6).
+tarefa(t3,1,11,2).
+tarefa(t4,3,9,3).
+tarefa(t5,3,8,2).
 % tarefas(NTarefas).
-entregas(5).
+tarefas(5).
+
+
+% testes entrega
+entrega(1,2,3,4,5,6).
+entrega(7,8,9,10,11,12).
+entrega(13,14,15,16,17,18).
+
+% viagens (output do simoes)
+viagem([eTruck01,1,2,3,4,5]).
+viagens(5).
+
+%entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
+
+%passar do pop pro pop av com o calculo do 
+
+
+
 
 % parameteriza��o
-inicializa:-write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			(retract(geracoes(_));true), asserta(geracoes(NG)),
+inicializa:-
+	/*write('Data das entregas: '),read(DATE), 			
+	(retract(date(_));true), asserta(date(DATE)),
+	write('Id do camiao: '),read(IDCAMIAO),
+	(retract(camiao(_));true), asserta(camiao(IDCAMIAO)),*/
+	write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			
+	(retract(geracoes(_));true), asserta(geracoes(NG)),
 	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
 	(retract(populacao(_));true), asserta(populacao(DP)),
 	write('Probabilidade de Cruzamento (%):'), read(P1),
 	PC is P1/100, 
-	(retract(prob_cruzamento(_));true), 	asserta(prob_cruzamento(PC)),
+	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
 	write('Probabilidade de Mutacao (%):'), read(P2),
 	PM is P2/100, 
 	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
@@ -40,7 +62,23 @@ gera:-
 	geracoes(NG),
 	gera_geracao(0,NG,PopOrd).
 
-gera_viagensPermutadas()
+/* data e idtruck sao sao os inputs pro método do simoes
+Cooeçamos por chamar o método do simoes
+O output será uma lista onde o 1º elemento é o camiao
+e os elementos seguintes são ids de entregas. 
+ Temos que retirar o primeiro elemento dessa lista antes de chamar */
+
+ /* mudar geras
+ adicioanr o armazem inicial e final
+ chamar o metodo tempo para substituir o avalia
+ condiçao terminio (?)
+ */
+
+remove_first_element(InputList, OutputList) :-
+	InputList = [_|OutputList].
+	
+get_lista_ids_armazens(IdList, ArmazemList) :-
+    findall(Armazem, (member(Id, IdList), entrega(Id, _, _, Armazem, _, _)), ArmazemList).
 
 gera_populacao(Pop):-
 	populacao(TamPop),
@@ -60,12 +98,12 @@ gera_populacao(TamPop,ListaTarefas,NumT,L):-
 
 gera_individuo([G],1,[G]):-!.
 
-gera_individuo(ListaTarefas,NumT,[G|Resto]):-
+gera_individuo(ListaArmazens,NumT,[G|Resto]):-
 	NumTemp is NumT + 1, % To use with random
 	random(1,NumTemp,N),
-	retira(N,ListaTarefas,G,NovaLista),
+	retira(N,ListaArmazens,G,NovaLista),
 	NumT1 is NumT-1,
-	gera_individuo(NovaLista,NumT1,Resto).
+	gera_individuo(NovaLista,NumT1,Resto). 
 
 retira(1,[G|Resto],G,Resto).
 retira(N,[G1|Resto],G,[G1|Resto1]):-

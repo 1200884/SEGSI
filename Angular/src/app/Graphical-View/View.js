@@ -11,6 +11,7 @@ export default class View {
     constructor() {
         let estradas=[]; 
         let isValidPosition=false;
+        let armazens = [];
         function OnLoad(view) {
           
             let txt = getWarehouses();
@@ -19,14 +20,8 @@ export default class View {
             view.ground = new Ground(size);
             view.object.add(view.ground.object);
            
-            
-
-
-
-
-
             let coordinates = handleJSON_warehouses(txt, view);
-            let armazens = [];
+           
             for (var i = 1; i < coordinates.length; i++) {
                 view.armazem = new Armazem();
                 let armazem1 = view.armazem.object;
@@ -36,6 +31,7 @@ export default class View {
                 armazens[i] = armazem1;
                 console.log(armazens);
                 warehouseModel3D(coordinates[i][0], coordinates[i][1], coordinates[i][2], view);
+                console.log(armazens[i].position.x);
             }
             let jsonTrucks = getTrucks();
             let trucksInfo = handleJSON_trucks(jsonTrucks,view);
@@ -92,14 +88,19 @@ export default class View {
             bridges.push(createBridge(view, armazens[13], armazens[10]));
             bridges.push(createBridge(view, armazens[4], armazens[11]));
             bridges.push(createBridge(view, armazens[16], armazens[12]));
-            estradas.push(1,16,16,3,2,9,2,15,3,10,3,5,4,6,4,9,16,14,8,13,7,5,17,13,12,1,8,5,10,11,14,7,15,8,6,11,9,6,12,7,5,17,15,1,13,10,4,11,16,12);
+            estradas.push(5,17,1,16,16,3,2,9,2,15,3,10,3,5,4,6,4,9,16,14,8,13,17,13,12,1,8,5,10,11,14,7,15,8,6,11,9,6,12,7,5,17,15,1,13,10,4,11,16,12);
             bola.position.set(armazens[5].position.x,armazens[5].position.y,armazens[5].position.z);
-            bola.rotateY(Math.PI/4);
+            console.log("x 5 is"+armazens[5].position.x);
+            console.log("x 17 is"+armazens[17].position.x);
+            console.log("Y 5 is"+armazens[5].position.z);
+            console.log("Y 17 is"+armazens[17].position.z);
+           // checkisOnRoad(5,armazens[5],armazens[17]);
+            bola.rotateY(Math.PI);
             let angle=0;
             let directionside = 0;
             let directionfront=0;
-            let speed=0.5;
-            let rotationIndex=Math.PI/8;
+            let speed=0.1;
+            let rotationIndex=Math.PI/32;
             let updates=false;
 
             window.addEventListener("keydown", event => {
@@ -116,36 +117,262 @@ export default class View {
                 directionfront=-1;
                 updates=true;}});
 
-        function updatePosition() {
-            console.log(estradas);
+                function declive(x1,x2,y1,y2){
+                    let x3=x2-x1;
+                    let y3=y2-y1;
+                    return y3/x3;
+                }
+                function b(declive,x1,y1){
+                    return y1-declive*x1;
+                }
+                function checkisOnRoad(newX,newY,armazem1,armazem2){
+                    let maiorx1=false,maiorx2=false,maiory1=false,maiory2=false,maiorz1=false,maiorz2=false;
+                    let decliveEstrada=declive(armazem1.position.x,armazem2.position.x,armazem1.position.z,armazem2.position.z);
+                    let OrdOrigem=b(decliveEstrada,armazem1.position.x,armazem2.position.z);
+                    if(armazem1.position.x>armazem2.position.x){maiorx1=true;}
+                    if(armazem2.position.x>armazem1.position.x){maiorx2=true;}
+                    if(armazem1.position.z>armazem2.position.z){maiory1=true;}
+                    if(armazem2.position.z>armazem1.position.z){maiory2=true;}
 
+                   if(newY-decliveEstrada*newX-OrdOrigem<=0.7){
+                       console.log("debug 1");
+                        if(maiorx1&&newX>=armazem2.position.x&&newX<=armazem1.position.x){
+                            console.log("debug 2");
+                            console.log("posiçao newy"+ newY);
+                            console.log("posiçao newx"+ newX);
+                            if(maiory1&&newY>=armazem2.position.z&&newY<=armazem1.position.z){
+                                console.log("debug 11");
+                                console.log("armazem1x is"+armazem1.position.x);
+                                console.log("armazem2x is"+armazem2.position.x);
+                                console.log("armazem1y is"+armazem1.position.z);
+                                console.log("armazem2y is"+armazem2.position.z);
+                                return true;
+                            }
+                            if(maiory2&&newY>=armazem1.position.z&&newY<=armazem2.position.z){
+                                console.log("armazem1x is"+armazem1.position.x);
+                                console.log("armazem2x is"+armazem2.position.x);
+                                console.log("armazem1y is"+armazem1.position.z);
+                                console.log("armazem2y is"+armazem2.position.z);
+                                console.log("debug 22");
+
+                                return true;
+                            }
+                        }
+                        if(maiorx2&&newX>=armazem1.position.x&&newX<=armazem2.position.x){
+                            //console.log("debug 4");
+                            console.log("posiçao newy"+ newY);
+                            console.log("posiçao newx"+ newX);
+                            if(maiory1&&newY>=armazem2.position.z&&newY<=armazem1.position.z){
+                                console.log("armazem1x is"+armazem1.position.x);
+                                console.log("armazem2x is"+armazem2.position.x);
+                                console.log("armazem1y is"+armazem1.position.z);
+                                console.log("armazem2y is"+armazem2.position.z);
+                                console.log("debug 3");
+
+                                return true;
+                            }
+                            if(maiory2&&newY>=armazem1.position.z&&newY<=armazem2.position.z){
+                                console.log("armazem1x is"+armazem1.position.x);
+                                console.log("armazem2x is"+armazem2.position.x);
+                                console.log("armazem1y is"+armazem1.position.z);
+                                console.log("armazem2y is"+armazem2.position.z);
+                                console.log("debug 4");
+
+                                return true;
+                            }
+                        }
+                    //return true
+                    } 
+                    //console.log("falso");
+                     return false;   
+                    }
+        function updatePosition() {
+            //console.log(estradas);
+            let i=0;
            
 
             if(updates){
-            console.log("ANGULO É"+angle);
+           // console.log("ANGULO É"+angle);
                 if(directionside<0){
-                    if(0<=angle<Math.PI/2){
-                        bola.position.x=bola.position.x+speed-angle/Math.PI/2;
-                        bola.position.z=bola.position.z+speed+angle/Math.PI/2;
-                        updates=false;
-                        directionside=0;}
-                    if(Math.PI/2<=angle<Math.PI){
-                        bola.position.x=bola.position.x-speed+(angle-Math.PI/2)/Math.PI/2;
-                        bola.position.z=bola.position.z+speed-(Math.PI-angle)/Math.PI/2;
-                        updates=false;
-                        directionside=0;}
-                    if(Math.PI<=angle<Math.PI*1.5){
-                        bola.position.x=bola.position.x-speed+(Math.PI*1.5-angle)/Math.PI/2;
-                        bola.position.z=bola.position.z-speed+(angle-Math.PI)/Math.PI/2;
-                        updates=false;
-                        directionside=0;}
+                    if(0<=angle&&angle<Math.PI/2){
+                        //let newpositionx=bola.position.x+speed-angle/Math.PI/2;
+                        let newpositionx=bola.position.x+speed*-Math.sin(angle);
+                        console.log("newpositionx= "+newpositionx);
+                        //let newpositiony=bola.position.z+speed+angle/Math.PI/2;
+                        let newpositiony=bola.position.z+speed*-Math.cos(angle);
+                        console.log("newpositiony= "+newpositiony);
+                        //console.log("ze bernardo"+angle*360/2/3.14);
+            
+                        for(i=0;i<estradas.length;i=i+2){
+                           // console.log(i);
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];
+                            console.log(armazem1.children[0].userData.description);
+                            console.log(armazem2.children[0].userData.description);
 
-                    if(Math.PI*1.5<=angle<Math.PI*2){
-                        bola.position.x=bola.position.x+speed-(Math.PI*2-angle)/Math.PI/2;
-                        bola.position.z=bola.position.z-speed+(angle-Math.PI*1.5)/Math.PI/2;
-                        updates=false;
-                        directionside=0;
-                    }
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                             /*console.log("1=  "+i);
+                             console.log("parabens es lindo");*/
+                             bola.position.x=newpositionx;
+                             bola.position.z=newpositiony;
+                             updates=false;
+                             directionside=0;
+                             break;}
+                            
+                        }
+                       }
+                    if(Math.PI/2<=angle&&angle<Math.PI){
+                       // let newpositionx=bola.position.x-speed+(angle-Math.PI/2)/Math.PI/2;
+                        //let newpositiony=bola.position.z+speed-(Math.PI-angle)/Math.PI/2;
+                       /*isto ta +- bem let newpositionx=bola.position.x-speed*Math.sin(angle);
+                        let newpositiony=bola.position.z+speed*Math.cos(angle);*/
+                        let newpositionx=bola.position.x-speed*Math.sin(angle);
+                        let newpositiony=bola.position.z+speed*-Math.cos(angle);
+                        //console.log("ze nando"+angle*360/2/3.14);
+                        for(i=0;i<estradas.length;i=i+2){
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];     
+                            console.log(armazem1.children[0].userData.description);
+                            console.log(armazem2.children[0].userData.description);
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                               /* console.log("2=  "+i);
+                                console.log("parabens es lindo parte 3");*/
+                              bola.position.x=newpositionx;
+                              bola.position.z=newpositiony;
+                              updates=false;
+                              directionside=0;
+                              break;}
+                            }
+                        }
+                    if(Math.PI<=angle&&angle<Math.PI*1.5){
+                       // console.log("ze antonio"+angle*360/2/3.14);
+                        //let newpositionx=bola.position.x-speed+(Math.PI*1.5-angle)/Math.PI/2;
+                        //let newpositiony=bola.position.z-speed+(angle-Math.PI)/Math.PI/2;
+                        let newpositionx=bola.position.x-speed*Math.sin(angle);
+                        let newpositiony=bola.position.z-speed*Math.cos(angle);
+                        for(i=0;i<estradas.length;i=i+2){
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];
+                            console.log(armazem1.children[0].userData.description);
+                            console.log(armazem2.children[0].userData.description);
+                           if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                                console.log("3=  "+i);
+                                console.log("parabens es lindo");
+                              bola.position.x=newpositionx;
+                              bola.position.z=newpositiony;
+                              updates=false;
+                              directionside=0;
+                              break;}
+                            }}
+                    if(Math.PI*1.5<=angle&&angle<Math.PI*2){
+                        //console.log("ze acacio"+angle*360/2/3.14);
+                    
+                       let newpositionx=bola.position.x+speed*-Math.sin(angle);
+                       let newpositiony=bola.position.z-speed*Math.cos(angle);
+                        for(i=0;i<estradas.length;i=i+2){
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];
+                            console.log(armazem1.children[0].userData.description);
+                            console.log(armazem2.children[0].userData.description);
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                                console.log("4=  "+i);
+                                console.log("parabens es lindo parte 2");
+                              bola.position.x=newpositionx;
+                              bola.position.z=newpositiony;
+                              updates=false;
+                              directionside=0;
+                              break;}
+                            } 
+                        }
+                }
+                if(directionside>0){
+                    if(Math.PI<=angle&&angle<Math.PI*1.5){
+                        //let newpositionx=bola.position.x+speed-angle/Math.PI/2;
+                        let newpositionx=bola.position.x+speed*-Math.sin(angle);
+                        console.log("newpositionx= "+newpositionx);
+                        //let newpositiony=bola.position.z+speed+angle/Math.PI/2;
+                        let newpositiony=bola.position.z+speed*-Math.cos(angle);
+                        console.log("newpositiony= "+newpositiony);
+                        console.log("ze bernardo"+angle*360/2/3.14);
+            
+                        for(i=0;i<estradas.length;i=i+2){
+                            console.log(i);
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];
+                            console.log("armazem1 posicao x ="+armazem1.position.x);
+                            console.log("armazem2 posicao x ="+armazem2.position.x);
+                            console.log("armazem1 posicao y ="+armazem1.position.z);
+                            console.log("armazem2 posicao y ="+armazem2.position.z);
+                        
+                        if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                            console.log("1=  "+i);
+                            console.log("parabens es lindo");
+                            bola.position.x=newpositionx;
+                            bola.position.z=newpositiony;
+                            updates=false;
+                            directionside=0;
+                            break;}
+                        }
+                           
+                       }
+                    if(Math.PI*1.5<=angle&&angle<Math.PI*2){
+                       // let newpositionx=bola.position.x-speed+(angle-Math.PI/2)/Math.PI/2;
+                        //let newpositiony=bola.position.z+speed-(Math.PI-angle)/Math.PI/2;
+                       /*isto ta +- bem let newpositionx=bola.position.x-speed*Math.sin(angle);
+                        let newpositiony=bola.position.z+speed*Math.cos(angle);*/
+                        let newpositionx=bola.position.x-speed*Math.sin(angle);
+                        let newpositiony=bola.position.z+speed*-Math.cos(angle);
+                        console.log("ze nando"+angle*360/2/3.14);
+                        for(i=0;i<estradas.length;i=i+2){
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];     
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                                console.log("2=  "+i);
+                                console.log("parabens es lindo parte 3");
+                              bola.position.x=newpositionx;
+                              bola.position.z=newpositiony;
+                              updates=false;
+                              directionside=0;
+                              break;}
+                            }
+                        }
+                    if(0<=angle&&angle<Math.PI/2){
+                        console.log("ze antonio"+angle*360/2/3.14);
+                        //let newpositionx=bola.position.x-speed+(Math.PI*1.5-angle)/Math.PI/2;
+                        //let newpositiony=bola.position.z-speed+(angle-Math.PI)/Math.PI/2;
+                        let newpositionx=bola.position.x-speed*Math.sin(angle);
+                        let newpositiony=bola.position.z-speed*Math.cos(angle);
+                        for(i=0;i<estradas.length;i=i+2){
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];
+                           if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                                console.log("3=  "+i);
+                                console.log("parabens es lindo");
+                              bola.position.x=newpositionx;
+                              bola.position.z=newpositiony;
+                              updates=false;
+                              directionside=0;
+                              break;}
+                            }}
+                    if(Math.PI/2<=angle&&angle<Math.PI){
+                        console.log("ze acacio"+angle*360/2/3.14);
+                       // let newpositionx=bola.position.x+speed-(Math.PI*2-angle)/Math.PI/2;
+                       // let newpositiony=bola.position.z-speed+(angle-Math.PI*1.5)/Math.PI/2;
+                       let newpositionx=bola.position.x+speed*-Math.sin(angle);
+                       let newpositiony=bola.position.z-speed*Math.cos(angle);
+                        for(i=0;i<estradas.length;i=i+2){
+                            let armazem1=armazens[estradas[i]];
+                            let armazem2=armazens[estradas[i+1]];
+                            if(checkisOnRoad(newpositionx,newpositiony,armazem1,armazem2)&&newpositionx<20&&newpositiony<20&&newpositionx>-20&&newpositiony>-20){
+                                console.log("4=  "+i);
+                                console.log("parabens es lindo parte 2");
+                              bola.position.x=newpositionx;
+                              bola.position.z=newpositiony;
+                              updates=false;
+                              directionside=0;
+                              break;}
+                            } 
+                        }
                 }
              
            //  if(directionside>0){bola.position.x =bola.position.x-speed-angle/6;bola.position.z=bola.position.z+speed+angle/6;updates=false;directionside=0}
@@ -371,6 +598,7 @@ export default class View {
             return result;
         }
 
+  
     }
     
     
