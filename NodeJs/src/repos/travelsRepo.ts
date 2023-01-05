@@ -9,7 +9,7 @@ import { Travels } from '../domain/travels';
 import ITravelsRepo from '../services/IRepos/ITravelsRepo';
 import { TravelsMap } from '../mappers/TravelsMap';
 import { ITravelsPersistence } from '../dataschema/ITravelsPersistence';
-import { Document, Model } from 'mongoose';
+import { Document, FilterQuery, Model } from 'mongoose';
 
 @Service()
 export default class TravelsRepo implements ITravelsRepo {
@@ -43,16 +43,28 @@ export default class TravelsRepo implements ITravelsRepo {
             reject(error);
           } else {
             console.log(response.body);
-            
+
             travels = TravelsMap.toDomain(JSON.parse(response.body));
             resolve(travels);
           }
         })
       });
     }
- 
+
     travels = getPromise(options);
     return travels;
+  }
+
+  public async getTravelsByDate(date: string): Promise<Travels> {
+    const query = { date: date };
+
+    const travelsRecord = await this.travelsSchema.findOne(query as FilterQuery<ITravelsPersistence & Document>);
+
+    if (travelsRecord != null) {
+      return TravelsMap.toDomain(travelsRecord);
+    }
+    else
+      return null;
   }
 
   public async save(travels: Travels): Promise<Travels> {
@@ -69,8 +81,8 @@ export default class TravelsRepo implements ITravelsRepo {
 
         return TravelsMap.toDomain(travelsCreated);
       } else {
-        travelsDocument.trucks = travels.trucks;
-        travelsDocument.deliveries = travels.deliveries;
+        travelsDocument.date = travels.date;
+        travelsDocument.travels = travels.travels;
         await travelsDocument.save();
 
         return travels;

@@ -401,7 +401,6 @@ organize_pairs(Pairs, Organized_pairs) :-
 organize_pairs([], Acc, Acc).
 organize_pairs([(Cam, Delivery)|T], Acc, Organized_pairs) :-
     (member((Cam, Delivery_list), Acc),
-     !,
      append(Delivery_list, [Delivery], New_delivery_list),
      select((Cam, _), Acc, New_acc),
      New_acc2 = [(Cam, New_delivery_list)|New_acc]
