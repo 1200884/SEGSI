@@ -22,7 +22,7 @@ export default class PlanningRepo implements IPlanningRepo {
     var request = require('request');
     var options = {
       'method': 'POST',
-      'url': 'http://vs136.dei.isep.ipp.pt:5000/planning',
+      'url': 'http://localhost:5000/planning',
       'headers': {
         'Content-Type': 'application/json'
       },

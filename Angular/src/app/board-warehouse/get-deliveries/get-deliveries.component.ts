@@ -1,6 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { DeliveryService } from 'src/app/_services/delivery.service';
 import { Delivery } from '../../_models/Delivery';
 
@@ -9,13 +8,14 @@ import { Delivery } from '../../_models/Delivery';
   templateUrl: './get-deliveries.component.html',
   styleUrls: ['./get-deliveries.component.css']
 })
-export class DeliveriesComponent implements OnInit {
+export class DeliveriesComponent implements OnInit  {
 
   page: number=1;
   count:number =0;
   tablesize:number=5;
   tablesizes:any =[5,10,15,20];
 
+  sortOrder = 'asc';
   deliveries: Delivery[] = [];
   content ?: string;
 
@@ -49,7 +49,53 @@ export class DeliveriesComponent implements OnInit {
 
   onTableSizeChange(event:any):void{
     this.tablesize=event.target.value;
-    this.page=1;
+    this.page=1;0
     this.getDeliveries();
   }
+
+  sortData(sortBy: any) {
+    // Retrieve current value of sortOrder
+    const sortOrder = this.sortOrder;
+
+    // Sort the deliveries array by the id property in ascending or descending order
+    this.deliveries.sort((a, b) => {
+      switch(sortBy) {
+        case 'id':
+          if (sortOrder === 'asc') {
+            return compare(a.id,b.id,true);
+          } else {
+            return compare(a.id,b.id,false);
+          }
+        case 'date':
+          if (sortOrder === 'asc') {
+            return compare(a.date,b.date,true);
+          } else {
+            return compare(a.date,b.date,false);
+          }
+        case 'destinationWarehouseId':
+          if (sortOrder === 'asc') {
+            return compare(a.destinationWarehouseId,b.destinationWarehouseId,true);
+          } else {
+            return compare(a.destinationWarehouseId,b.destinationWarehouseId,false);
+          }
+          default: return 0; 
+        }
+      
+    });
+
+    // Toggle the value of sortOrder between 'asc' and 'desc'
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+  }
+
+
+
+} 
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+
+/* if (sortOrder === 'asc') {
+  return compare(a.id,b.id,true);
+} else {
+  return compare(a.id,b.id,false);
+} */

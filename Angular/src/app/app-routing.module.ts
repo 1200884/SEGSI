@@ -20,6 +20,7 @@ import { CreateDeliveryComponent } from "./board-warehouse/create-delivery/creat
 import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/update-delivery.component";
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
+import { OktaCallbackComponent } from '@okta/okta-angular';
 
 import { GetPackagingComponent } from './board-logistics/get-packaging/get-packaging.component';
 import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
@@ -56,7 +57,8 @@ const routes: Routes = [
   { path: 'get-packaging', component: GetPackagingComponent },
   { path: 'create-packaging', component: CreatePackagingComponent },
   { path: 'put-packaging', component: PutPackagingComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  //{ path: 'login/callback', component: OktaCallbackComponent },
 ];
 
 @NgModule({

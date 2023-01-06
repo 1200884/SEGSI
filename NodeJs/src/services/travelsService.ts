@@ -15,17 +15,29 @@ export default class TravelsService implements ITravelsService {
   public async getTravels(date: string): Promise<Result<ITravelsDTO>> {
     try {
 
-      const travels = await this.travelsRepo.generateTravels(date);
+      const travels = await this.travelsRepo.getTravelsByDate(date);
 
       if (travels === null) {
-        return Result.fail<ITravelsDTO>("There are no travels");
+        console.log("1o if");
+        const createdTavels = await this.travelsRepo.generateTravels(date);
+
+        if (createdTavels === null) {
+          console.log("2o if");
+          return Result.fail<ITravelsDTO>("There are no travels");
+        }
+        else {
+          console.log("1o else");
+          console.log(createdTavels);
+          await this.travelsRepo.save(createdTavels);
+
+          const travelsDTOResult = TravelsMap.toDTO(createdTavels) as ITravelsDTO;
+          return Result.ok<ITravelsDTO>(travelsDTOResult);
+        }
       }
       else {
-        await this.travelsRepo.save(travels);
-
+        console.log("2o else");
         const travelsDTOResult = TravelsMap.toDTO(travels) as ITravelsDTO;
-        return Result.ok<ITravelsDTO>(travelsDTOResult)
-
+        return Result.ok<ITravelsDTO>(travelsDTOResult);
       }
     } catch (e) {
       throw e;

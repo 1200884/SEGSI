@@ -6,6 +6,8 @@
 # three folder
 three.js-master/
 
+settings.json
+
 # Node artifact files
 node_modules/
 dist/

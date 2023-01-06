@@ -1,6 +1,6 @@
 
 export interface ITravelsPersistence {
   domainId: string;
-  trucks: [string];
-  deliveries: [[number]];
+  date: number;
+  travels: [[string]];
 }

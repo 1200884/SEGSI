@@ -9,7 +9,7 @@ import { Travels } from '../domain/travels';
 import ITravelsRepo from '../services/IRepos/ITravelsRepo';
 import { TravelsMap } from '../mappers/TravelsMap';
 import { ITravelsPersistence } from '../dataschema/ITravelsPersistence';
-import { Document, Model } from 'mongoose';
+import { Document, FilterQuery, Model } from 'mongoose';
 
 @Service()
 export default class TravelsRepo implements ITravelsRepo {
@@ -25,7 +25,7 @@ export default class TravelsRepo implements ITravelsRepo {
     var request = require('request');
     var options = {
       'method': 'POST',
-      'url': 'http://vs136.dei.isep.ipp.pt:5000/travels',
+      'url': 'http://localhost:5000/travels',
       'headers': {
         'Content-Type': 'application/json'
       },
@@ -36,23 +36,35 @@ export default class TravelsRepo implements ITravelsRepo {
     };
     let travels = null;
 
-    function getPromise(options) {
+    function getPromise(data, options) {
       return new Promise((resolve, reject) => {
         request(options, function (error, response) {
           if (error) {
             reject(error);
           } else {
-            console.log(response.body);
-            
-            travels = TravelsMap.toDomain(JSON.parse(response.body));
+            var viagens = JSON.parse(response.body).viagens;
+
+            travels = TravelsMap.toDomainFromPlanning(data, viagens);
             resolve(travels);
           }
         })
       });
     }
- 
-    travels = getPromise(options);
+
+    travels = getPromise(data, options);
     return travels;
+  }
+
+  public async getTravelsByDate(date: string): Promise<Travels> {
+    const query = { date: date };
+
+    const travelsRecord = await this.travelsSchema.findOne(query as FilterQuery<ITravelsPersistence & Document>);
+
+    if (travelsRecord != null) {
+      return TravelsMap.toDomain(travelsRecord);
+    }
+    else
+      return null;
   }
 
   public async save(travels: Travels): Promise<Travels> {
@@ -69,8 +81,8 @@ export default class TravelsRepo implements ITravelsRepo {
 
         return TravelsMap.toDomain(travelsCreated);
       } else {
-        travelsDocument.trucks = travels.trucks;
-        travelsDocument.deliveries = travels.deliveries;
+        travelsDocument.date = travels.date;
+        travelsDocument.travels = travels.travels;
         await travelsDocument.save();
 
         return travels;

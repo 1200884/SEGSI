@@ -1,9 +1,44 @@
-<h2>List of packagings</h2>
+<!-- <h2>List of packagings</h2>
 <div class="container">
   <div class="output">
-    <li *ngFor="let packaging of packagings">
+    <li ">
       <span class="badge">Packaging ID: {{packaging.id}}</span>
       <p>boxId:{{packaging.boxId}}, Position X:{{packaging.positionX}}, Position Y:{{packaging.positionY}}, Position Z:{{packaging.positionZ}}</p>
     </li>
   </div>
+</div> -->
+
+<h2>My Packagings</h2>
+<ul class="Packagings">
+
+  <table class="table table-striped table-dark">
+    <thead><tr>
+      <th><button type="button" (click)="sortData('id')">Packaging Id</button></th>
+      <th><button type="button" (click)="sortData('boxId')">Box Id</button></th>
+      <th><button type="button" (click)="sortData('positionX')">PositionX</button></th>
+      <th><button type="button" (click)="sortData('positionY')">PositionY</button></th>
+      <th><button type="button" (click)="sortData('positionZ')">PositionZ</button></th>
+    </tr></thead>
+    <tbody>
+      <tr *ngFor="let packaging of packagings | paginate: { 
+        itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
+
+        <td scope="row"><a routerLink ="/packagings{{packaging.id}}">{{ packaging.id }}</a></td>
+        <td>{{ packaging.boxId }}</td>
+        <td>{{ packaging.positionX }}</td>
+        <td>{{ packaging.positionY }}</td>
+        <td>{{ packaging.positionZ }}</td>
+      </tr>
+    </tbody>
+  </table> 
+
+<div>
+  <small>Deliveries per Page </small>
+    <select (change)="onTableSizeChange($event)">
+    <option *ngFor="let size of tablesizes">
+      {{size}}
+    </option>
+  </select>
 </div>
+<button type="button" (click)="goBack()">GoBack</button> 
+</ul>

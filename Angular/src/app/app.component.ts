@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
-
+import { filter, map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import {SocialAuthService,GoogleLoginProvider,SocialUser} from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Angular12JwtAuth';
   private roles: string[] = [];
   isLoggedIn = false;
@@ -15,10 +17,18 @@ export class AppComponent {
   showWarehouseBoard = false;
   showLogisticsBoard = false;
   username?: string;
-
-  constructor(private tokenStorageService: TokenStorageService) { }
+  user: SocialUser | undefined;
+  loggedIn: boolean | undefined;
+  constructor(private tokenStorageService: TokenStorageService,public socialAuthService: SocialAuthService,private router: Router/*, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth*/) {
+  }
 
   ngOnInit(): void {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+    });
+
+
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
@@ -37,5 +47,10 @@ export class AppComponent {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  loginWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then(() => this.router.navigate(['mainpage']));
   }
 }

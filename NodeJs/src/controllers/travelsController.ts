@@ -10,19 +10,19 @@ import ITravelsService from '../services/IServices/ITravelsService';
 @Service()
 export default class TravelsController implements ITravelsController /* TODO: extends ../core/infra/BaseController */ {
   constructor(
-      @Inject(config.services.travels.name) private travelsServiceInstance : ITravelsService
-  ) {}
+    @Inject(config.services.travels.name) private travelsServiceInstance: ITravelsService
+  ) { }
 
   public async getTravels(date: string, req: Request, res: Response, next: NextFunction) {
     try {
       let travelsOrError = await this.travelsServiceInstance.getTravels(date) as Result<ITravelsDTO>;
-      
+
       if (travelsOrError.isFailure) {
         return res.status(404).send();
       }
 
       const travelsDTO = travelsOrError.getValue();
-      return res.status(201).json( travelsDTO );
+      return res.status(201).json(travelsDTO);
     }
     catch (e) {
       return next(e);

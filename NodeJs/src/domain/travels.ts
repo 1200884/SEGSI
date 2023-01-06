@@ -6,8 +6,8 @@ import ITravelsDTO from "../dto/ITravelsDTO";
 import { TravelsId } from "./travelsId";
 
 interface TravelsProps {
-    trucks: [string];
-    deliveries: [[number]];
+    date: number;
+    travels: [[string]];
 }
 
 export class Travels extends AggregateRoot<TravelsProps> {
@@ -19,20 +19,20 @@ export class Travels extends AggregateRoot<TravelsProps> {
         return new TravelsId(this.travelsId.toValue());
     }
 
-    get trucks(): [string] {
-        return this.props.trucks;
+    get date(): number {
+        return this.props.date;
     }
 
-    set trucks(value: [string]) {
-        this.props.trucks = value;
+    set date(value: number) {
+        this.props.date = value;
     }
 
-    get deliveries(): [[number]] {
-        return this.props.deliveries;
+    get travels(): [[string]] {
+        return this.props.travels;
     }
 
-    set deliveries(value: [[number]]) {
-        this.props.deliveries = value;
+    set travels(value: [[string]]) {
+        this.props.travels = value;
     }
 
     private constructor(props: TravelsProps, id?: UniqueEntityID) {
@@ -40,10 +40,15 @@ export class Travels extends AggregateRoot<TravelsProps> {
     }
 
     public static create(travelsDTO: ITravelsDTO, id?: UniqueEntityID): Result<Travels> {
-        const trucks = travelsDTO.trucks;
-        const deliveries = travelsDTO.deliveries;
+        const date = travelsDTO.date;
+        const travels = travelsDTO.travels;
 
-        const travels = new Travels({ trucks: trucks, deliveries: deliveries }, id);
-        return Result.ok<Travels>(travels)
+        const travelsObject = new Travels({ date: date, travels: travels }, id);
+        return Result.ok<Travels>(travelsObject);
+    }
+
+    public static createNew(date: number, travels: [[string]], id?: UniqueEntityID) {
+        const travelsObject = new Travels({ date: date, travels: travels }, id);
+        return Result.ok<Travels>(travelsObject);
     }
 }

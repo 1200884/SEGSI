@@ -13,55 +13,55 @@
       novalidate
     >
     <div class="form-group">
-      <label for="name">Name</label>
+      <label for="name">First Name</label>
       <input
         type="text"
         class="form-control"
         name="name"
-        [(ngModel)]="form.name"
+        [(ngModel)]="form.fname"
         required
         minlength="3"
         maxlength="20"
         #name="ngModel"
       />
-      <div class="alert-danger" *ngIf="form.name.errors && f.submitted">
-        <div *ngIf="form.name.errors.required">Name is required</div>
-        <div *ngIf="form.name.errors.minlength">
+      <div class="alert-danger" *ngIf="form.fname.errors && f.submitted">
+        <div *ngIf="form.fname.errors.required">Name is required</div>
+        <div *ngIf="form.fname.errors.minlength">
           Name must be at least 3 characters
         </div>
-        <div *ngIf="form.name.errors.maxlength">
+        <div *ngIf="form.fname.errors.maxlength">
           Name must be at most 50 characters
         </div> 
       </div> 
     </div> 
     <div class="form-group">
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username">Last Name</label>
         <input
           type="text"
           class="form-control"
           name="username"
-          [(ngModel)]="form.username"
+          [(ngModel)]="form.lname"
           required
           minlength="3"
           maxlength="20"
           #username="ngModel"
         />
-        <div class="alert-danger" *ngIf="username.errors && f.submitted">
-          <div *ngIf="username.errors.required">Username is required</div>
-          <div *ngIf="username.errors.minlength">
+        <div class="alert-danger" *ngIf="form.lname.errors && f.submitted">
+          <div *ngIf="form.lname.errors.required">Username is required</div>
+          <div *ngIf="form.lname.errors.minlength">
             Username must be at least 3 characters
           </div>
-          <div *ngIf="username.errors.maxlength">
+          <div *ngIf="form.lname.errors.maxlength">
             Username must be at most 20 characters
           </div>
         </div>
       </div>
-      <label for="email">PhoneNumber</label>
+      <label for="phoneNumber">PhoneNumber</label>
       <input
-        type="email"
+        type="phoneNumber"
         class="form-control"
-        name="email"
+        name="phoneNumber"
         [(ngModel)]="form.phoneNumber"
         required
         phoneNumber
@@ -71,14 +71,28 @@
       /> 
       <div class="alert-danger" *ngIf="phoneNumber.errors && f.submitted">
         <div *ngIf="phoneNumber.errors.required">Phone Number is required</div>
-        <div *ngIf="form.name.errors.minlength">
+        <div *ngIf="form.phoneNumber.errors.minlength">
           Phone Number must be 9 characters
         </div>
-        <div *ngIf="form.name.errors.maxlength">
+        <div *ngIf="form.phoneNumber.errors.maxlength">
           Phone Number must be 9 characters
         </div> 
       </div> 
     </div> 
+    
+    <label for="email">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        [(ngModel)]="form.email"
+        required
+        email
+        #phoneNumber="ngModel"
+      /> 
+      <div class="alert-danger" *ngIf="form.email.errors && f.submitted">
+        <div *ngIf="form.email.errors.required">Phone Number is required</div>
+      </div> 
 
       <div class="form-group">
         <label for="role">Role</label>
