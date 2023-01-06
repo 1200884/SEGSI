@@ -27,13 +27,14 @@ const User = new mongoose.Schema(
       index: true,
     },
 
-    password: String,
-
-    salt: String,
-
     role: {
       type: String,
       default: 'user',
+    },
+
+    phoneNumber: {
+      type: String,
+      unique: true,
     },
   },
   { timestamps: true },

@@ -6,7 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './board-admin/register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
@@ -38,7 +38,10 @@ import { CreatePackagingComponent } from './board-logistics/create-packaging/cre
 import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import {SocialLoginModule,SocialAuthServiceConfig} from '@abacritt/angularx-social-login';
 import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
+<<<<<<< HEAD
 
+=======
+>>>>>>> a7fcf5f4e7554c72eeced1d2c1e612ec11909903
 @NgModule({
   declarations: [
     AppComponent,

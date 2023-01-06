@@ -65,6 +65,10 @@ export default {
     travels: {
       name: "TravelsController",
       path: "../controllers/travelsController"
+    },
+    user: {
+      name: "UserController",
+      path: "../controllers/userController"
     }
   },
 
@@ -100,6 +104,10 @@ export default {
     travels: {
       name: "TravelsRepo",
       path: "../repos/travelsRepo"
+    },
+    user: {
+      name: "UserRepo",
+      path: "../repos/userRepo"
     }
   },
 
@@ -127,6 +135,10 @@ export default {
     travels: {
       name: "TravelsService",
       path: "../services/travelsService"
+    },
+    user: {
+      name: "UserService",
+      path: "../services/userService"
     }
   },
 };
