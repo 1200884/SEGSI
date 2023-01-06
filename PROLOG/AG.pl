@@ -361,7 +361,7 @@ get_armazem_list_by_travel(DeliveryIdList, ArmazemList) :-
     findall(Armazem, (member(Id, DeliveryIdList), entrega(Id, _, _, Armazem, _, _)), ArmazemList).
 
 %tempo_byid([13,8,14,1],20221205,eTruck01,T).
-tempo_byid(LC,DATE,IDTRUCK,FORMATED):- 
+tempo_byid(LC,DATE,IDTRUCK,FORMATED):-
 	carateristicasCam(IDTRUCK,TARA,_,CMAX,_,_),
 	tempo(LC,DATE,TARA,CMAX,RESULT),
 	round(RESULT,FORMATED,2).
@@ -371,7 +371,7 @@ round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 1
 tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
     trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
 
-somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.	
+somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.
 
 trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-
 	dadosCam_t_e_ta(_,A,B,T,E,_),
@@ -407,6 +407,28 @@ temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMA
 bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
 bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
 amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
+%set_prolog_flag(answer_write_options,[max_depth(0)]).
+%
+%
+% Bibliotecas
+:- use_module(library(http/thread_httpd)).
+:- use_module(library(http/http_dispatch)).
+:- use_module(library(http/http_parameters)).
+% Bibliotecas JSON
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/json)).
+
+:- http_handler('/geneticplanning',genetic_planning,[]).
+server() :-
+        http_server(http_dispatch, [port(5000)]).
+
+genetic_planning(Request):-
+        http_parameters(Request,
+                        [date(DATE, [between(20220101,20221231)]),ProbCruzamento,ProbMutacao,NrGeracoes,TamanhoPop]),
+        gera(DATE,NrGeracoes,TamanhoPop,ProbMutacao,ProbCruzamento).
+
+        .
 
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
@@ -416,20 +438,20 @@ amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRU
 
 % parameteriza��o
 inicializa:-
-	write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			
+	write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
 	(retract(geracoes(_));true), asserta(geracoes(NG)),
 	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
 	(retract(populacao(_));true), asserta(populacao(DP)),
 	write('Probabilidade de Cruzamento (%):'), read(P1),
-	PC is P1/100, 
+	PC is P1/100,
 	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
 	write('Probabilidade de Mutacao (%):'), read(P2),
-	PM is P2/100, 
+	PM is P2/100,
 	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
 
 gera:-
-	write('Data das entregas: '),read(DATE), 	
-	(retract(date(_));true), asserta(date(DATE)),		
+	write('Data das entregas: '),read(DATE),
+	(retract(date(_));true), asserta(date(DATE)),
 	write('Id do camiao: '),read(IDCAMIAO),
 	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
 	inicializa,
@@ -449,7 +471,7 @@ gera_populacao(Pop,ListaArmazens):-
 	populacao(TamPop),
 	length(ListaArmazens,NumArmazens),
 	(retract(armazens(_));true), asserta(armazens(NumArmazens)),
-	write('NumArmazens_permutar='),write(NumArmazens),nl,	
+	write('NumArmazens_permutar='),write(NumArmazens),nl,
 	write('Lista_gera_pop='),write(ListaArmazens),nl,
 	gera_populacao(TamPop,ListaArmazens,NumArmazens,Pop).
 
@@ -471,7 +493,7 @@ gera_individuo(ListaArmazens,NumArmazens,[G|Resto]):-
 	random(1,NumTemp,N),
 	retira(N,ListaArmazens,G,NovaLista),
 	NumT1 is NumArmazens-1,
-	gera_individuo(NovaLista,NumT1,Resto). 
+	gera_individuo(NovaLista,NumT1,Resto).
 
 retira(1,[G|Resto],G,Resto).
 retira(N,[G1|Resto],G,[G1|Resto1]):-
@@ -479,7 +501,7 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	retira(N1,Resto,G,Resto1).
 
 add_cidade_inicial_final(List,Result):-
-	cidade_inicial(City), 
+	cidade_inicial(City),
 	append([City], List, TempList),
     append(TempList, [City], Result).
 

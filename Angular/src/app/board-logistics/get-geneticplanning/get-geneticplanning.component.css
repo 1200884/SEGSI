@@ -10,9 +10,10 @@ label {
     color: #e53fff;
     font-weight: bold;
   }
-  input {
+  input-box {
     font-size: 1em;
     padding: .9rem;
+    align-items: flex-end;
   }
   button {
     margin-top: 20px;
