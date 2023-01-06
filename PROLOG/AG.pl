@@ -1,12 +1,363 @@
+%% SPRINT C
+dadosCam_t_e_ta(eTruck01,1,2,122,42,0).
+dadosCam_t_e_ta(eTruck01,1,3,122,46,0).
+dadosCam_t_e_ta(eTruck01,1,4,151,54,25).
+dadosCam_t_e_ta(eTruck01,1,5,147,52,25).
+dadosCam_t_e_ta(eTruck01,1,6,74,24,0).
+dadosCam_t_e_ta(eTruck01,1,7,116,35,0).
+dadosCam_t_e_ta(eTruck01,1,8,141,46,0).
+dadosCam_t_e_ta(eTruck01,1,9,185,74,53).
+dadosCam_t_e_ta(eTruck01,1,10,97,30,0).
+dadosCam_t_e_ta(eTruck01,1,11,164,64,40).
+dadosCam_t_e_ta(eTruck01,1,12,76,23,0).
+dadosCam_t_e_ta(eTruck01,1,13,174,66,45).
+dadosCam_t_e_ta(eTruck01,1,14,59,18,0).
+dadosCam_t_e_ta(eTruck01,1,15,132,51,24).
+dadosCam_t_e_ta(eTruck01,1,16,181,68,45).
+dadosCam_t_e_ta(eTruck01,1,17,128,45,0).
+
+dadosCam_t_e_ta(eTruck01,2,1,116,42,0).
+dadosCam_t_e_ta(eTruck01,2,3,55,22,0).
+dadosCam_t_e_ta(eTruck01,2,4,74,25,0).
+dadosCam_t_e_ta(eTruck01,2,5,65,22,0).
+dadosCam_t_e_ta(eTruck01,2,6,69,27,0).
+dadosCam_t_e_ta(eTruck01,2,7,74,38,0).
+dadosCam_t_e_ta(eTruck01,2,8,61,18,0).
+dadosCam_t_e_ta(eTruck01,2,9,103,44,0).
+dadosCam_t_e_ta(eTruck01,2,10,36,14,0).
+dadosCam_t_e_ta(eTruck01,2,11,88,41,0).
+dadosCam_t_e_ta(eTruck01,2,12,61,19,0).
+dadosCam_t_e_ta(eTruck01,2,13,95,42,0).
+dadosCam_t_e_ta(eTruck01,2,14,78,34,0).
+dadosCam_t_e_ta(eTruck01,2,15,69,30,0).
+dadosCam_t_e_ta(eTruck01,2,16,99,38,0).
+dadosCam_t_e_ta(eTruck01,2,17,46,14,0).
+
+dadosCam_t_e_ta(eTruck01,3,1,120,45,0).
+dadosCam_t_e_ta(eTruck01,3,2,50,22,0).
+dadosCam_t_e_ta(eTruck01,3,4,46,15,0).
+dadosCam_t_e_ta(eTruck01,3,5,46,14,0).
+dadosCam_t_e_ta(eTruck01,3,6,74,37,0).
+dadosCam_t_e_ta(eTruck01,3,7,63,23,0).
+dadosCam_t_e_ta(eTruck01,3,8,38,8,0).
+dadosCam_t_e_ta(eTruck01,3,9,84,36,0).
+dadosCam_t_e_ta(eTruck01,3,10,59,28,0).
+dadosCam_t_e_ta(eTruck01,3,11,61,27,0).
+dadosCam_t_e_ta(eTruck01,3,12,67,32,0).
+dadosCam_t_e_ta(eTruck01,3,13,67,29,0).
+dadosCam_t_e_ta(eTruck01,3,14,82,38,0).
+dadosCam_t_e_ta(eTruck01,3,15,34,8,0).
+dadosCam_t_e_ta(eTruck01,3,16,80,30,0).
+dadosCam_t_e_ta(eTruck01,3,17,36,10,0).
+
+dadosCam_t_e_ta(eTruck01,4,1,149,54,25).
+dadosCam_t_e_ta(eTruck01,4,2,65,24,0).
+dadosCam_t_e_ta(eTruck01,4,3,46,16,0).
+dadosCam_t_e_ta(eTruck01,4,5,27,10,0).
+dadosCam_t_e_ta(eTruck01,4,6,103,47,0).
+dadosCam_t_e_ta(eTruck01,4,7,55,27,0).
+dadosCam_t_e_ta(eTruck01,4,8,36,10,0).
+dadosCam_t_e_ta(eTruck01,4,9,50,26,0).
+dadosCam_t_e_ta(eTruck01,4,10,78,34,0).
+dadosCam_t_e_ta(eTruck01,4,11,42,19,0).
+dadosCam_t_e_ta(eTruck01,4,12,97,42,0).
+dadosCam_t_e_ta(eTruck01,4,13,44,11,0).
+dadosCam_t_e_ta(eTruck01,4,14,111,48,0).
+dadosCam_t_e_ta(eTruck01,4,15,32,13,0).
+dadosCam_t_e_ta(eTruck01,4,16,53,14,0).
+dadosCam_t_e_ta(eTruck01,4,17,38,11,0).
+
+dadosCam_t_e_ta(eTruck01,5,1,141,51,24).
+dadosCam_t_e_ta(eTruck01,5,2,55,20,0).
+dadosCam_t_e_ta(eTruck01,5,3,48,14,0).
+dadosCam_t_e_ta(eTruck01,5,4,25,9,0).
+dadosCam_t_e_ta(eTruck01,5,6,97,44,0).
+dadosCam_t_e_ta(eTruck01,5,7,55,28,0).
+dadosCam_t_e_ta(eTruck01,5,8,29,7,0).
+dadosCam_t_e_ta(eTruck01,5,9,48,24,0).
+dadosCam_t_e_ta(eTruck01,5,10,69,30,0).
+dadosCam_t_e_ta(eTruck01,5,11,53,26,0).
+dadosCam_t_e_ta(eTruck01,5,12,95,36,0).
+dadosCam_t_e_ta(eTruck01,5,13,63,20,0).
+dadosCam_t_e_ta(eTruck01,5,14,105,45,0).
+dadosCam_t_e_ta(eTruck01,5,15,34,14,0).
+dadosCam_t_e_ta(eTruck01,5,16,46,18,0).
+dadosCam_t_e_ta(eTruck01,5,17,27,7,0).
+
+dadosCam_t_e_ta(eTruck01,6,1,69,23,0).
+dadosCam_t_e_ta(eTruck01,6,2,71,27,0).
+dadosCam_t_e_ta(eTruck01,6,3,74,38,0).
+dadosCam_t_e_ta(eTruck01,6,4,103,46,0).
+dadosCam_t_e_ta(eTruck01,6,5,99,44,0).
+dadosCam_t_e_ta(eTruck01,6,7,88,48,0).
+dadosCam_t_e_ta(eTruck01,6,8,92,38,0).
+dadosCam_t_e_ta(eTruck01,6,9,134,66,45).
+dadosCam_t_e_ta(eTruck01,6,10,42,14,0).
+dadosCam_t_e_ta(eTruck01,6,11,116,56,30).
+dadosCam_t_e_ta(eTruck01,6,12,23,9,0).
+dadosCam_t_e_ta(eTruck01,6,13,126,58,33).
+dadosCam_t_e_ta(eTruck01,6,14,25,9,0).
+dadosCam_t_e_ta(eTruck01,6,15,84,44,0).
+dadosCam_t_e_ta(eTruck01,6,16,132,60,35).
+dadosCam_t_e_ta(eTruck01,6,17,80,38,0).
+
+dadosCam_t_e_ta(eTruck01,7,1,116,36,0).
+dadosCam_t_e_ta(eTruck01,7,2,71,38,0).
+dadosCam_t_e_ta(eTruck01,7,3,61,22,0).
+dadosCam_t_e_ta(eTruck01,7,4,53,26,0).
+dadosCam_t_e_ta(eTruck01,7,5,53,28,0).
+dadosCam_t_e_ta(eTruck01,7,6,88,48,0).
+dadosCam_t_e_ta(eTruck01,7,8,59,26,0).
+dadosCam_t_e_ta(eTruck01,7,9,88,48,0).
+dadosCam_t_e_ta(eTruck01,7,10,84,44,0).
+dadosCam_t_e_ta(eTruck01,7,11,74,22,0).
+dadosCam_t_e_ta(eTruck01,7,12,82,42,0).
+dadosCam_t_e_ta(eTruck01,7,13,76,31,0).
+dadosCam_t_e_ta(eTruck01,7,14,97,49,21).
+dadosCam_t_e_ta(eTruck01,7,15,29,16,0).
+dadosCam_t_e_ta(eTruck01,7,16,84,42,0).
+dadosCam_t_e_ta(eTruck01,7,17,69,30,0).
+
+dadosCam_t_e_ta(eTruck01,8,1,134,46,0).
+dadosCam_t_e_ta(eTruck01,8,2,59,18,0).
+dadosCam_t_e_ta(eTruck01,8,3,32,6,0).
+dadosCam_t_e_ta(eTruck01,8,4,34,10,0).
+dadosCam_t_e_ta(eTruck01,8,5,32,7,0).
+dadosCam_t_e_ta(eTruck01,8,6,88,38,0).
+dadosCam_t_e_ta(eTruck01,8,7,57,26,0).
+dadosCam_t_e_ta(eTruck01,8,9,69,30,0).
+dadosCam_t_e_ta(eTruck01,8,10,65,26,0).
+dadosCam_t_e_ta(eTruck01,8,11,53,22,0).
+dadosCam_t_e_ta(eTruck01,8,12,82,34,0).
+dadosCam_t_e_ta(eTruck01,8,13,61,24,0).
+dadosCam_t_e_ta(eTruck01,8,14,97,40,0).
+dadosCam_t_e_ta(eTruck01,8,15,36,12,0).
+dadosCam_t_e_ta(eTruck01,8,16,65,23,0).
+dadosCam_t_e_ta(eTruck01,8,17,32,6,0).
+
+dadosCam_t_e_ta(eTruck01,9,1,181,72,50).
+dadosCam_t_e_ta(eTruck01,9,2,95,41,0).
+dadosCam_t_e_ta(eTruck01,9,3,86,35,0).
+dadosCam_t_e_ta(eTruck01,9,4,55,24,0).
+dadosCam_t_e_ta(eTruck01,9,5,48,23,0).
+dadosCam_t_e_ta(eTruck01,9,6,134,65,42).
+dadosCam_t_e_ta(eTruck01,9,7,95,47,0).
+dadosCam_t_e_ta(eTruck01,9,8,69,28,0).
+dadosCam_t_e_ta(eTruck01,9,10,109,51,24).
+dadosCam_t_e_ta(eTruck01,9,11,61,29,0).
+dadosCam_t_e_ta(eTruck01,9,12,132,57,31).
+dadosCam_t_e_ta(eTruck01,9,13,67,19,0).
+dadosCam_t_e_ta(eTruck01,9,14,143,66,45).
+dadosCam_t_e_ta(eTruck01,9,15,71,34,0).
+dadosCam_t_e_ta(eTruck01,9,16,15,3,0).
+dadosCam_t_e_ta(eTruck01,9,17,67,28,0).
+
+dadosCam_t_e_ta(eTruck01,10,1,97,30,0).
+dadosCam_t_e_ta(eTruck01,10,2,34,14,0).
+dadosCam_t_e_ta(eTruck01,10,3,59,27,0).
+dadosCam_t_e_ta(eTruck01,10,4,78,33,0).
+dadosCam_t_e_ta(eTruck01,10,5,71,30,0).
+dadosCam_t_e_ta(eTruck01,10,6,40,14,0).
+dadosCam_t_e_ta(eTruck01,10,7,82,42,0).
+dadosCam_t_e_ta(eTruck01,10,8,65,24,0).
+dadosCam_t_e_ta(eTruck01,10,9,109,52,25).
+dadosCam_t_e_ta(eTruck01,10,11,92,46,0).
+dadosCam_t_e_ta(eTruck01,10,12,32,6,0).
+dadosCam_t_e_ta(eTruck01,10,13,99,46,0).
+dadosCam_t_e_ta(eTruck01,10,14,63,17,0).
+dadosCam_t_e_ta(eTruck01,10,15,74,34,0).
+dadosCam_t_e_ta(eTruck01,10,16,105,46,0).
+dadosCam_t_e_ta(eTruck01,10,17,53,23,0).
+
+dadosCam_t_e_ta(eTruck01,11,1,164,65,42).
+dadosCam_t_e_ta(eTruck01,11,2,88,41,0).
+dadosCam_t_e_ta(eTruck01,11,3,65,28,0).
+dadosCam_t_e_ta(eTruck01,11,4,42,18,0).
+dadosCam_t_e_ta(eTruck01,11,5,55,25,0).
+dadosCam_t_e_ta(eTruck01,11,6,118,57,31).
+dadosCam_t_e_ta(eTruck01,11,7,74,23,0).
+dadosCam_t_e_ta(eTruck01,11,8,59,23,0).
+dadosCam_t_e_ta(eTruck01,11,9,63,28,0).
+dadosCam_t_e_ta(eTruck01,11,10,97,46,0).
+dadosCam_t_e_ta(eTruck01,11,12,111,52,25).
+dadosCam_t_e_ta(eTruck01,11,13,25,7,0).
+dadosCam_t_e_ta(eTruck01,11,14,126,58,33).
+dadosCam_t_e_ta(eTruck01,11,15,53,25,0).
+dadosCam_t_e_ta(eTruck01,11,16,59,27,0).
+dadosCam_t_e_ta(eTruck01,11,17,67,27,0).
+
+dadosCam_t_e_ta(eTruck01,12,1,76,23,0).
+dadosCam_t_e_ta(eTruck01,12,2,61,19,0).
+dadosCam_t_e_ta(eTruck01,12,3,67,32,0).
+dadosCam_t_e_ta(eTruck01,12,4,97,41,0).
+dadosCam_t_e_ta(eTruck01,12,5,92,38,0).
+dadosCam_t_e_ta(eTruck01,12,6,19,8,0).
+dadosCam_t_e_ta(eTruck01,12,7,82,42,0).
+dadosCam_t_e_ta(eTruck01,12,8,86,33,0).
+dadosCam_t_e_ta(eTruck01,12,9,128,61,37).
+dadosCam_t_e_ta(eTruck01,12,10,32,6,0).
+dadosCam_t_e_ta(eTruck01,12,11,109,50,23).
+dadosCam_t_e_ta(eTruck01,12,13,120,53,26).
+dadosCam_t_e_ta(eTruck01,12,14,40,10,0).
+dadosCam_t_e_ta(eTruck01,12,15,78,38,0).
+dadosCam_t_e_ta(eTruck01,12,16,126,54,28).
+dadosCam_t_e_ta(eTruck01,12,17,74,32,0).
+
+dadosCam_t_e_ta(eTruck01,13,1,174,65,42).
+dadosCam_t_e_ta(eTruck01,13,2,107,35,0).
+dadosCam_t_e_ta(eTruck01,13,3,74,29,0).
+dadosCam_t_e_ta(eTruck01,13,4,46,11,0).
+dadosCam_t_e_ta(eTruck01,13,5,67,20,0).
+dadosCam_t_e_ta(eTruck01,13,6,128,57,31).
+dadosCam_t_e_ta(eTruck01,13,7,80,30,0).
+dadosCam_t_e_ta(eTruck01,13,8,76,20,0).
+dadosCam_t_e_ta(eTruck01,13,9,67,20,0).
+dadosCam_t_e_ta(eTruck01,13,10,105,47,0).
+dadosCam_t_e_ta(eTruck01,13,11,27,7,0).
+dadosCam_t_e_ta(eTruck01,13,12,122,52,25).
+dadosCam_t_e_ta(eTruck01,13,14,137,58,33).
+dadosCam_t_e_ta(eTruck01,13,15,67,17,0).
+dadosCam_t_e_ta(eTruck01,13,16,59,15,0).
+dadosCam_t_e_ta(eTruck01,13,17,78,22,0).
+
+dadosCam_t_e_ta(eTruck01,14,1,59,18,0).
+dadosCam_t_e_ta(eTruck01,14,2,80,35,0).
+dadosCam_t_e_ta(eTruck01,14,3,80,38,0).
+dadosCam_t_e_ta(eTruck01,14,4,109,46,0).
+dadosCam_t_e_ta(eTruck01,14,5,105,45,0).
+dadosCam_t_e_ta(eTruck01,14,6,27,9,0).
+dadosCam_t_e_ta(eTruck01,14,7,97,48,0).
+dadosCam_t_e_ta(eTruck01,14,8,99,38,0).
+dadosCam_t_e_ta(eTruck01,14,9,143,66,45).
+dadosCam_t_e_ta(eTruck01,14,10,61,17,0).
+dadosCam_t_e_ta(eTruck01,14,11,122,57,31).
+dadosCam_t_e_ta(eTruck01,14,12,42,10,0).
+dadosCam_t_e_ta(eTruck01,14,13,132,58,35).
+dadosCam_t_e_ta(eTruck01,14,15,90,44,0).
+dadosCam_t_e_ta(eTruck01,14,16,139,61,37).
+dadosCam_t_e_ta(eTruck01,14,17,86,38,0).
+
+dadosCam_t_e_ta(eTruck01,15,1,132,51,24).
+dadosCam_t_e_ta(eTruck01,15,2,74,30,0).
+dadosCam_t_e_ta(eTruck01,15,3,34,8,0).
+dadosCam_t_e_ta(eTruck01,15,4,36,12,0).
+dadosCam_t_e_ta(eTruck01,15,5,36,14,0).
+dadosCam_t_e_ta(eTruck01,15,6,86,44,0).
+dadosCam_t_e_ta(eTruck01,15,7,34,16,0).
+dadosCam_t_e_ta(eTruck01,15,8,42,13,0).
+dadosCam_t_e_ta(eTruck01,15,9,71,35,0).
+dadosCam_t_e_ta(eTruck01,15,10,82,36,0).
+dadosCam_t_e_ta(eTruck01,15,11,53,25,0).
+dadosCam_t_e_ta(eTruck01,15,12,80,38,0).
+dadosCam_t_e_ta(eTruck01,15,13,69,18,0).
+dadosCam_t_e_ta(eTruck01,15,14,95,45,0).
+dadosCam_t_e_ta(eTruck01,15,16,69,29,0).
+dadosCam_t_e_ta(eTruck01,15,17,53,17,0).
+
+dadosCam_t_e_ta(eTruck01,16,1,179,68,45).
+dadosCam_t_e_ta(eTruck01,16,2,92,37,0).
+dadosCam_t_e_ta(eTruck01,16,3,84,31,0).
+dadosCam_t_e_ta(eTruck01,16,4,57,16,0).
+dadosCam_t_e_ta(eTruck01,16,5,46,18,0).
+dadosCam_t_e_ta(eTruck01,16,6,132,60,35).
+dadosCam_t_e_ta(eTruck01,16,7,92,42,0).
+dadosCam_t_e_ta(eTruck01,16,8,67,23,0).
+dadosCam_t_e_ta(eTruck01,16,9,15,3,0).
+dadosCam_t_e_ta(eTruck01,16,10,105,46,0).
+dadosCam_t_e_ta(eTruck01,16,11,57,28,0).
+dadosCam_t_e_ta(eTruck01,16,12,130,52,25).
+dadosCam_t_e_ta(eTruck01,16,13,61,15,0).
+dadosCam_t_e_ta(eTruck01,16,14,141,61,37).
+dadosCam_t_e_ta(eTruck01,16,15,69,29,0).
+dadosCam_t_e_ta(eTruck01,16,17,65,24,0).
+
+dadosCam_t_e_ta(eTruck01,17,1,128,46,0).
+dadosCam_t_e_ta(eTruck01,17,2,42,14,0).
+dadosCam_t_e_ta(eTruck01,17,3,40,11,0).
+dadosCam_t_e_ta(eTruck01,17,4,42,13,0).
+dadosCam_t_e_ta(eTruck01,17,5,34,10,0).
+dadosCam_t_e_ta(eTruck01,17,6,82,38,0).
+dadosCam_t_e_ta(eTruck01,17,7,74,30,0).
+dadosCam_t_e_ta(eTruck01,17,8,29,6,0).
+dadosCam_t_e_ta(eTruck01,17,9,69,31,0).
+dadosCam_t_e_ta(eTruck01,17,10,55,24,0).
+dadosCam_t_e_ta(eTruck01,17,11,69,29,0).
+dadosCam_t_e_ta(eTruck01,17,12,80,30,0).
+dadosCam_t_e_ta(eTruck01,17,13,82,23,0).
+dadosCam_t_e_ta(eTruck01,17,14,90,38,0).
+dadosCam_t_e_ta(eTruck01,17,15,53,18,0).
+dadosCam_t_e_ta(eTruck01,17,16,67,25,0).
+
+cidade_inicial(5).
+
 %%% SPRINT C
 
-/* :-dynamic date/1.
-:-dynamic camiao/1. */
-:-dynamic geracoes/1.
-:-dynamic populacao/1.
-:-dynamic prob_cruzamento/1.
-:-dynamic prob_mutacao/1.
 
+% testes entrega
+entrega(1,2,3,4,5,6).
+entrega(7,8,9,10,11,12).
+entrega(13,14,15,16,17,18).
+%entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
+entrega(4439, 20221205, 200, 1, 8, 10).
+entrega(4438, 20221205, 150, 9, 7, 9).
+entrega(4445, 20221205, 100, 3, 5, 7).
+entrega(4443, 20221205, 120, 8, 6, 8).
+entrega(4449, 20221205, 300, 11, 15, 20).
+entrega(4398, 20221205, 310, 17, 16, 20).
+entrega(4432, 20221205, 270, 14, 14, 18).
+entrega(4437, 20221205, 180, 12, 9, 11).
+entrega(4451, 20221205, 220, 6, 9, 12).
+entrega(4452, 20221205, 390, 13, 21, 26).
+entrega(4444, 20221205, 380, 2, 20, 25).
+
+carateristicasCam(eTruck01,7500,4300,80,100,60).
+carateristicasCam(eTruck02,7500,4300,80,100,60).
+carateristicasCam(eTruck03,7500,4300,80,100,60).
+
+
+atribuicao_lote(DATE,LISTA_FINAL):-
+        lista_entregas(LISTA_ENTREGAS,DATE),
+        lista_camioes(LISTA_CAMIOES),
+        associate_delivery_with_cam(LISTA_CAMIOES, LISTA_ENTREGAS,LISTA_FINAL).
+
+lista_camioes(L):-findall(A,carateristicasCam(A,_,_,_,_,_),L).
+lista_entregas(L, DATE):-findall(A,entrega(A,DATE,_,_,_,_),L).
+
+associate_delivery_with_cam(Camioes, Entregas, Pares_finais):-
+        findall((Camiao,Delivery),associate_delivery_with_cam(Camioes,Entregas,Camiao,Delivery),Pares),
+        organize_pairs(Pares,Pares_distribuidos),
+        flatten_pairs(Pares_distribuidos,Pares_finais).
+
+associate_delivery_with_cam(Cams, Deliveries, Cam, Delivery) :-
+    length(Cams, NumCams),
+    nth0(Index, Deliveries, Delivery),
+    nth0(CamsIndex, Cams, Cam),
+    CamsIndex is Index mod NumCams.
+
+organize_pairs(Pairs, Organized_pairs) :-
+    organize_pairs(Pairs, [], Organized_pairs).
+
+organize_pairs([], Acc, Acc).
+organize_pairs([(Cam, Delivery)|T], Acc, Organized_pairs) :-
+    (member((Cam, Delivery_list), Acc),
+     !,
+     append(Delivery_list, [Delivery], New_delivery_list),
+     select((Cam, _), Acc, New_acc),
+     New_acc2 = [(Cam, New_delivery_list)|New_acc]
+    ;
+     New_acc2 = [(Cam, [Delivery])|Acc]),
+    organize_pairs(T, New_acc2, Organized_pairs).
+
+flatten_pairs(Organized_pairs, Flattened_pairs) :-
+    maplist(flatten_pair, Organized_pairs, Flattened_pairs).
+
+flatten_pair((Cam, Delivery_list), Flattened_pair) :-
+    Flattened_pair = [Cam|Delivery_list].
+
+
+% viagens (output do simoes)
+viagem([eTruck01,1,2,3,4,5]).
+armazens(4).
 
 % tarefa(Id,TempoProcessamento,TempConc,PesoPenalizacao).
 tarefa(t1,2,5,1).
@@ -14,87 +365,139 @@ tarefa(t2,4,7,6).
 tarefa(t3,1,11,2).
 tarefa(t4,3,9,3).
 tarefa(t5,3,8,2).
+tarefa(1,3,8,2).
+tarefa(8,3,1,2).
 % tarefas(NTarefas).
-tarefas(5).
-
-
-% testes entrega
-entrega(1,2,3,4,5,6).
-entrega(7,8,9,10,11,12).
-entrega(13,14,15,16,17,18).
-
-% viagens (output do simoes)
-viagem([eTruck01,1,2,3,4,5]).
-viagens(5).
-
-%entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
-
-%passar do pop pro pop av com o calculo do 
+tarefas(7).
 
 
 
+get_armazem_list_by_truck_date(ID, Date, ArmazemList) :-
+	atribuicao_lote(Date, Lists),
+	get_travel_by_truck_id(Lists, ID, TravelList),
+	write('Travel id: '),write(TravelList),nl,
+	get_armazem_list_by_travel(TravelList, ArmazemList),!.
+
+get_travel_by_truck_id(Lists, ID, Result) :-
+	member([ID|Result], Lists).
+
+get_armazem_list_by_travel(DeliveryIdList, ArmazemList) :-
+    findall(Armazem, (member(Id, DeliveryIdList), entrega(Id, _, _, Armazem, _, _)), ArmazemList).
+
+add_cidade_inicial_final(List,Result):-
+	cidade_inicial(City), 
+	append([City], List, TempList),
+    append(TempList, [City], Result).
+
+tempo_byid(LC,DATE,IDTRUCK,F):- 
+	%write('Entrou no tempobyid'),nl,
+	carateristicasCam(IDTRUCK,TARA,_,CMAX,_,_),tempo(LC,DATE,TARA,CMAX,F).
+
+tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
+    trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
+
+somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.	
+
+trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-dadosCam_t_e_ta(_,A,B,T,E,_),
+(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
+PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
+BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
+(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
+(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
+tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
+trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
+tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
+trata_lista([_],0,_,_,_,_,_,_,_).
+
+pesomaximo(TRUCK,PESOMAXIMO):-carateristicasCam(TRUCK,A,B,_,_,_),PESOMAXIMO is A+B.
+
+pesototal(TRUCK,PESOTOTAL):-findall(A,entrega(_,_,A,_,_,_),E),sumlist(E,P), carateristicasCam(TRUCK,O,_,_,_,_),PESOTOTAL is P+O.
+
+tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,TOE,TOEUTIL):-TOEUTIL is TOE*PESOCAMIAO/PESOMAXIMO.
+
+tempoaconsiderar(TEMPOCARREGARCAMIAO,TEMPODESCARGAENCOMENDAS,TEMPOACONSIDERAR):-TEMPOCARREGARCAMIAO>TEMPODESCARGAENCOMENDAS,!,TEMPOACONSIDERAR is TEMPOCARREGARCAMIAO;TEMPOACONSIDERAR is TEMPODESCARGAENCOMENDAS.
+
+
+temporecarregamentototal(TRUCK,TEMPO):-carateristicasCam(TRUCK,_,_,_,_,TEMPO),!.
+% Se o pen�ltimo argumento for 5, significa que o tempo de
+% recarregamento necessita apenas de ser o estritamente necess�rio para
+% completar a viagem at� ao armaz�m seguinte (ou seja, chegar a este com
+% a bateria a 16%
+temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,5,BATUTNEC):-bateriaminima(TRUCK,BATMIN),B is BATATUAL-BATUTNEC, A is BATMIN-B,amplitudemaxima(TRUCK,AMPLITUDEMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO), TEMPO is TEMPOMAXIMO*A/AMPLITUDEMAX.
+temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO),amplitudemaxima(TRUCK,AMPLITUDEMAX),AMPLITUDEATUAL is BATMAX-BATATUAL, TEMPO is AMPLITUDEATUAL*TEMPOMAXIMO/AMPLITUDEMAX.
+
+%para um dado camiao, calcula a bateria maxima e minima (80%,20%).
+bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
+bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
+amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
+
+mteste:-
+	write('Data das entregas: '),read(DATE), 			
+	write('Id do camiao: '),read(IDCAMIAO),
+	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
+	write('ListArmazens='),write(ListArmazens),nl.
+
+
+:-dynamic date/1.
+:-dynamic camiao/1. 
+:-dynamic geracoes/1.
+:-dynamic populacao/1.
+:-dynamic prob_cruzamento/1.
+:-dynamic prob_mutacao/1.
 
 % parameteriza��o
 inicializa:-
-	/*write('Data das entregas: '),read(DATE), 			
-	(retract(date(_));true), asserta(date(DATE)),
-	write('Id do camiao: '),read(IDCAMIAO),
-	(retract(camiao(_));true), asserta(camiao(IDCAMIAO)),*/
-	write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			
-	(retract(geracoes(_));true), asserta(geracoes(NG)),
-	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
-	(retract(populacao(_));true), asserta(populacao(DP)),
-	write('Probabilidade de Cruzamento (%):'), read(P1),
-	PC is P1/100, 
+	%write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			
+	(retract(geracoes(_));true), asserta(geracoes(3)),
+	%write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
+	(retract(populacao(_));true), asserta(populacao(4)),
+	%write('Probabilidade de Cruzamento (%):'), read(P1),
+	PC is 50/100, 
 	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
-	write('Probabilidade de Mutacao (%):'), read(P2),
-	PM is P2/100, 
+	%write('Probabilidade de Mutacao (%):'), read(P2),
+	PM is 50/100, 
 	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
 
-
-gera:-
+gera():-
+	write('Data das entregas: '),read(DATE), 			
+	write('Id do camiao: '),read(IDCAMIAO),
+	%DATE is 20221205, IDCAMIAO is 'eTruck01'
 	inicializa,
-	gera_populacao(Pop),
+	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
+	write('ListArmazens='),write(ListArmazens),nl,
+	gera_populacao(Pop,ListArmazens),
+	write('Passou do geraPop'),nl,
 	write('Pop='),write(Pop),nl,
-	avalia_populacao(Pop,PopAv),
+	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
 	write('PopAv='),write(PopAv),nl,
 	ordena_populacao(PopAv,PopOrd),
 	geracoes(NG),
 	gera_geracao(0,NG,PopOrd).
 
-/* data e idtruck sao sao os inputs pro método do simoes
-Cooeçamos por chamar o método do simoes
-O output será uma lista onde o 1º elemento é o camiao
-e os elementos seguintes são ids de entregas. 
- Temos que retirar o primeiro elemento dessa lista antes de chamar */
-
  /* mudar geras
- adicioanr o armazem inicial e final
  chamar o metodo tempo para substituir o avalia
  condiçao terminio (?)
  */
 
-remove_first_element(InputList, OutputList) :-
-	InputList = [_|OutputList].
-	
-get_lista_ids_armazens(IdList, ArmazemList) :-
-    findall(Armazem, (member(Id, IdList), entrega(Id, _, _, Armazem, _, _)), ArmazemList).
-
-gera_populacao(Pop):-
+gera_populacao(Pop,ListaArmazens):-
 	populacao(TamPop),
-	tarefas(NumT),
-	findall(Tarefa,tarefa(Tarefa,_,_,_),ListaTarefas),
-	gera_populacao(TamPop,ListaTarefas,NumT,Pop).
+	length(ListaArmazens,NumArmazens),
+	%tarefas(NumT),
+	armazens(NumArmazens),
+	%findall(Tarefa,tarefa(Tarefa,_,_,_),ListaTarefas), %criacao da lista de armazens
+	write('Lista_gera_pop='),write(ListaArmazens),nl,
+	gera_populacao(TamPop,ListaArmazens,NumArmazens,Pop).
 
 gera_populacao(0,_,_,[]):-!.
 
-gera_populacao(TamPop,ListaTarefas,NumT,[Ind|Resto]):-
+gera_populacao(TamPop,ListaArmazens,NumT,[Ind|Resto]):-
 	TamPop1 is TamPop-1,
-	gera_populacao(TamPop1,ListaTarefas,NumT,Resto),
-	gera_individuo(ListaTarefas,NumT,Ind),
+	gera_populacao(TamPop1,ListaArmazens,NumT,Resto),
+	gera_individuo(ListaArmazens,NumT,Ind),
 	not(member(Ind,Resto)).
-gera_populacao(TamPop,ListaTarefas,NumT,L):-
-	gera_populacao(TamPop,ListaTarefas,NumT,L).
+
+gera_populacao(TamPop,ListaArmazens,NumT,L):-
+	gera_populacao(TamPop,ListaArmazens,NumT,L).
 
 gera_individuo([G],1,[G]):-!.
 
@@ -111,10 +514,10 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	retira(N1,Resto,G,Resto1).
 
 avalia_populacao([],[]).
-avalia_populacao([Ind|Resto],[Ind*V|Resto1]):-
-	avalia(Ind,V),
-	avalia_populacao(Resto,Resto1).
-
+avalia_populacao([Ind|Resto],[Ind*V|Resto1],Date,IdTruck):-	
+	tempo_byid(Ind,Date,IdTruck,V),
+	avalia_populacao(Resto,Resto1,Date,IdTruck).
+/* 
 avalia(Seq,V):-
 	avalia(Seq,0,V).
 
@@ -128,7 +531,7 @@ avalia([T|Resto],Inst,V):-
   ;
 		(VT is (InstFim-Prazo)*Pen)
 	),
-	V is VT+VResto.
+	V is VT+VResto. */
 
 ordena_populacao(PopAv,PopAvOrd):-
 	bsort(PopAv,PopAvOrd).
@@ -152,7 +555,7 @@ gera_geracao(G,G,Pop):-!,
 	write('Gera��o '), write(G), write(':'), nl, write(Pop), nl.
 
 gera_geracao(N,G,Pop):-
-	write('Gera��o '), write(N), write(':'), nl, write(Pop), nl,
+	write('Gera��o '), write(N), write(':'), nl, write(Pop), nl,s
 	cruzamento(Pop,NPop1),
 	mutacao(NPop1,NPop),
 	avalia_populacao(NPop,NPopAv),
@@ -164,7 +567,7 @@ gerar_pontos_cruzamento(P1,P2):-
 	gerar_pontos_cruzamento1(P1,P2).
 
 gerar_pontos_cruzamento1(P1,P2):-
-	tarefas(N),
+	armazens(N),
 	NTemp is N+1,
 	random(1,NTemp,P11),
 	random(1,NTemp,P21),
@@ -212,7 +615,7 @@ sublista1([_|R1],N1,N2,[h|R2]):-
 	sublista1(R1,N3,N4,R2).
 
 rotate_right(L,K,L1):-
-	tarefas(N),
+	armazens(N),
 	T is N - K,
 	rr(T,L,L1).
 
@@ -235,7 +638,7 @@ elimina([_|R1],L,R2):-
 
 insere([],L,_,L):-!.
 insere([X|R],L,N,L2):-
-	tarefas(T),
+	armazens(T),
 	((N>T,!,N1 is N mod T);N1 = N),
 	insere1(X,N1,L,L1),
 	N2 is N + 1,
@@ -249,7 +652,7 @@ insere1(X,N,[Y|L],[Y|L1]):-
 
 cruzar(Ind1,Ind2,P1,P2,NInd11):-
 	sublista(Ind1,P1,P2,Sub1),
-	tarefas(NumT),
+	armazens(NumT),
 	R is NumT-P2,
 	rotate_right(Ind2,R,Ind21),
 	elimina(Ind21,Sub1,Sub2),
