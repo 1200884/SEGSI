@@ -7,6 +7,7 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./board-admin.component.css']
 })
 export class BoardAdminComponent implements OnInit {
+  title = 'Admin Board';
   content?: string;
 
   constructor(private userService: UserService) { }
