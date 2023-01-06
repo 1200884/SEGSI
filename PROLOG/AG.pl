@@ -434,8 +434,8 @@ gera:-
 	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
 	inicializa,
 	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
-	add_cidade_inicial_final(ListArmazens,Final),
-	write('ListArmazens='),write(Final),nl,
+	%add_cidade_inicial_final(ListArmazens,Final),
+	write('ListArmazens='),write(ListArmazens),nl,
 	gera_populacao(Pop,ListArmazens),
 	%write('Passou do geraPop'),nl,
 	write('Pop='),write(Pop),nl,
@@ -444,11 +444,6 @@ gera:-
 	ordena_populacao(PopAv,PopOrd),
 	geracoes(NG),
 	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO).
-
- /* mudar geras
- chamar o metodo tempo para substituir o avalia
- condiçao terminio (?)
- */
 
 gera_populacao(Pop,ListaArmazens):-
 	populacao(TamPop),
@@ -490,8 +485,8 @@ add_cidade_inicial_final(List,Result):-
 
 avalia_populacao([],[],_,_).
 avalia_populacao([Ind|Resto],[Ind*V|Resto1],Date,IdTruck):-
-	add_cidade_inicial_final(Ind,Final),
-	tempo_byid(Final,Date,IdTruck,V),
+	%add_cidade_inicial_final(Ind,Final),
+	tempo_byid(Ind,Date,IdTruck,V),
 	avalia_populacao(Resto,Resto1,Date,IdTruck).
 
 ordena_populacao(PopAv,PopAvOrd):-
