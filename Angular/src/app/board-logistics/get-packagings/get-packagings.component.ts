@@ -86,7 +86,7 @@ export class GetPackagingsComponent implements OnInit {
           } else {
             return compare(a.positionY,b.positionY,false);
           }
-        case 'PositionZ':
+        case 'positionZ':
           if (sortOrder === 'asc') {
             return compare(a.positionZ,b.positionZ,true);
           } else {
