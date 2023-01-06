@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { Warehouse } from '../_models/Warehouse';
 
-//link joao gaspar -> http://127.0.0.1:64477/src/app/Graphical-View/canvas.html
+//link joao gaspar -> http://127.0.0.1:5555/src/app/Graphical-View/canvas.html
 
 @Component({
   selector: 'app-board-warehouse',
@@ -18,6 +18,6 @@ export class BoardWarehouseComponent implements OnInit {
   ngOnInit(): void {
   }
   redirect(){
-    window.location.href = "http://127.0.0.1:64477/src/app/Graphical-View/canvas.html";
+    window.location.href = "http://127.0.0.1:5555/src/app/Graphical-View/canvas.html";
   }
 }

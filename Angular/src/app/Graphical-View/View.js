@@ -18,12 +18,6 @@ export default class View {
             let size = 200;
             view.ground = new Ground(size);
             view.object.add(view.ground.object);
-        
-            
-
-
-
-
 
             let coordinates = handleJSON_warehouses(txt, view);
             let armazens = [];

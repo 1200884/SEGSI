@@ -9,10 +9,13 @@ export default class Ground {
         texture.magFilter = THREE.LinearFilter;
         texture.minFilter = THREE.LinearMipmapLinearFilter;
         const geometry = new THREE.PlaneGeometry( size, size );
-        const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: texture });
+        const material = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture });
         this.object = new THREE.Mesh( geometry, material );
+        this.object.receiveShadow = true;
+        this.object.castShadow = false;
         var ud = this.object.userData;
         ud.name="Ground";
         this.object.rotation.x=-Math.PI/2;
+        
     }
 }
