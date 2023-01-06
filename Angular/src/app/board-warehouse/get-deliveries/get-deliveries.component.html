@@ -1,9 +1,8 @@
 ﻿<h2>My Deliveries</h2>
 <ul class="deliveries">
-
   <table class="table table-striped table-dark">
     <thead><tr>
-      <th><button type="button" (click)="sortData('id')">Warehouse Id</button></th>
+      <th><button class="a"type="button" (click)="sortData('id')">Warehouse Id</button></th>
       <th><button type="button" (click)="sortData('destinationWarehouseId')">Destination Warehouse Id</button></th>
       <th><button type="button" (click)="sortData('date')">Date</button></th>
     </tr></thead>
@@ -12,8 +11,8 @@
         itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
 
         <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.id }}</a></td>
-        <td>{{ delivery.destinationWarehouseId }}</td>
-        <td>{{ delivery.date }}</td>
+        <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.destinationWarehouseId }}</a></td>
+        <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.date }}</a></td>
       </tr>
     </tbody>
   </table> 
