@@ -14,6 +14,11 @@ export class GetPackagingsComponent implements OnInit {
   count:number =0;
   tablesize:number=5;
   tablesizes:any =[5,10,15,20];
+  filterText1 = '';
+  filterText2 = '';
+  filterText3 = '';
+  filterText4 = '';
+  filterText5 = '';
 
   sortOrder = 'asc';
   packagings: Packaging[] = [];
@@ -43,6 +48,45 @@ export class GetPackagingsComponent implements OnInit {
     )
   }
 
+  filterPackagingsById() {
+    if (this.filterText1) {
+      this.packagings = this.packagings.filter(packaging => packaging.id.includes(this.filterText1));
+    } else {
+      this.getPackagings();
+    }
+  }
+  filterPackagingsByBoxId() {
+    if (this.filterText2) {
+      this.packagings = this.packagings.filter(packaging =>  packaging.boxId.toString().includes(this.filterText2));
+    } else {
+      this.getPackagings();
+    }
+  }
+  
+  filterPackagingsByPositionX() {
+    if (this.filterText3) {
+      this.packagings = this.packagings.filter(packaging => packaging.positionX.toString().includes(this.filterText3));
+    } else {
+      this.getPackagings();
+    }
+  }
+  
+  filterPackagingsByPositionY() {
+    if (this.filterText4) {
+      this.packagings = this.packagings.filter(packaging => packaging.positionY.toString().includes(this.filterText4));
+    } else {
+      this.getPackagings();
+    }
+  }
+  
+  filterPackagingsByPositionZ() {
+    if (this.filterText5) {
+      this.packagings = this.packagings.filter(packaging => packaging.positionZ.toString().includes(this.filterText5));
+    } else {
+      this.getPackagings();
+    }
+  }
+  
   
   onTableDataChange(event:any){
     this.page=event;
