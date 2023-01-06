@@ -9,7 +9,7 @@
 :- use_module(library(http/json)).
 
 :- json_object data(time:number, places:list).
-:- json_object lists(trucks:list, entregas:list).
+:- json_object list(viagens:list(list)).
 
 % Rela��o entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
@@ -33,24 +33,27 @@ path_creator(Request):-
 p_json(Request) :-
         http_read_json(Request, JSON),
         json_to_prolog(JSON, JSON_TEXT),
-        format('Content-type: text/plain~n~n'),
-        format('~w~n', JSON_TEXT),
-%        split(JSON_TEXT,TRUCK,DATE),
+%        format('Content-type: text/plain~n~n'),
+%        format('~w~n', JSON_TEXT),
+        split(JSON_TEXT,TRUCK,DATE),
 %        format('~w ~n~w', [TRUCK, DATE]),
-%        voltamaiscedo(TRUCK,DATE,T,L),
+        voltamaiscedo(TRUCK,DATE,T,L),
 %        format('~2f ~n~w', [T, L]).
-%        D = data(T,L),
+        D = data(T,L),
 %        format('~w', [D]),
-%        prolog_to_json(D, X),
-%        reply_json(X).
+        prolog_to_json(D, X),
+        reply_json(X).
 
 get_travels(Request) :-
         http_read_json(Request, JSON),
         json_to_prolog(JSON, JSON_TEXT),
         split_date(JSON_TEXT,DATE),
 %em caso de erro, pode estar no split_date pois n sei o formato se esta certo
-        atribuicao_lote(DATE,LC,LE),
-        D = lists(LC,LE),
+        atribuicao_lote(DATE,L),
+        format('Content-type: text/plain~n~n'),
+        format('~w', DATE),
+        format('~w', "ayo"),
+        D = list(L),
         prolog_to_json(D, X),
         reply_json(X).
 
@@ -376,41 +379,45 @@ cidade_inicial(5).
 % mais proximo.Depois, retirar esse armaz�m da lista e fazer o mesmo a
 % come�ar neste armaz�m.
 
-incializar_listas([],[]).
-
-atribuicao_lote(DATE,LISTA_CAMIOES_NECESSARIOS,LISTA_ENTREGAS_FINAL):-
+atribuicao_lote(DATE,LISTA_FINAL):-
         lista_entregas(LISTA_ENTREGAS,DATE),
         lista_camioes(LISTA_CAMIOES),
-        incializar_listas(LISTA_CAMIOES_NECESSARIOS, LISTA_ENTREGAS_FINAL),
-        iterar_listas(LISTA_CAMIOES,LISTA_ENTREGAS,0,LISTA_CAMIOES_NECESSARIOS,[],LISTA_ENTREGAS_FINAL).
-
-iterar_listas([C|LISTA_CAMIOES], [E|LISTA_ENTREGAS], PESO_TOTAL, LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL) :-
-        carateristicasCam(C, _, CAPACIDADE, _, _, _),
-        entrega(E, _, MASSA, _, _, _),
-        PESO_FINAL is PESO_TOTAL + MASSA,
-        (LISTA_ENTREGAS = [],
-         fim_iterar_listas(C,LISTA_CAMIOES_NECESSARIOS,ENTREGAS_PROV,ENTREGAS_FINAL)
-        ;
-        (PESO_FINAL < CAPACIDADE,
-         iterar_listas([C|LISTA_CAMIOES], LISTA_ENTREGAS, PESO_FINAL, LISTA_CAMIOES_NECESSARIOS, [E|ENTREGAS_PROV], ENTREGAS_FINAL)
-        ;
-        iterar_listas(LISTA_CAMIOES, LISTA_ENTREGAS, 0, [C|LISTA_CAMIOES_NECESSARIOS], [], [ENTREGAS_PROV|ENTREGAS_FINAL]))).
-
-fim_iterar_listas(C,[C,_],E,[E|_]).
-
-%iterar_listas([C|_],[],_,[C|_],E,[E|_]).
-% iterar_listas([C|LISTA_CAMIOES],[E|LISTA_ENTREGAS],PESO_TOTAL,LISTA_CAMIOES_NECESSARIOS, ENTREGAS_PROV, ENTREGAS_FINAL):-
-%        carateristicasCam(C,_,CAPACIDADE,_,_,_),
-%        entrega(E,_,MASSA,_,_,_),
-%        PESO_FINAL is PESO_TOTAL + MASSA,
-%        (PESO_FINAL < CAPACIDADE,
-%        iterar_listas([C|LISTA_CAMIOES],LISTA_ENTREGAS,PESO_FINAL,LISTA_CAMIOES_NECESSARIOS,[E|ENTREGAS_PROV],ENTREGAS_FINAL);
-%
-%        iterar_listas(LISTA_CAMIOES,LISTA_ENTREGAS,0,[C|LISTA_CAMIOES_NECESSARIOS],[],[ENTREGAS_PROV|ENTREGAS_FINAL])).
-%
+        associate_delivery_with_cam(LISTA_CAMIOES, LISTA_ENTREGAS,LISTA_FINAL).
 
 lista_camioes(L):-findall(A,carateristicasCam(A,_,_,_,_,_),L).
 lista_entregas(L, DATE):-findall(A,entrega(A,DATE,_,_,_,_),L).
+
+associate_delivery_with_cam(Camioes, Entregas, Pares_finais):-
+        findall((Camiao,Delivery),associate_delivery_with_cam(Camioes,Entregas,Camiao,Delivery),Pares),
+        organize_pairs(Pares,Pares_distribuidos),
+        flatten_pairs(Pares_distribuidos,Pares_finais).
+
+associate_delivery_with_cam(Cams, Deliveries, Cam, Delivery) :-
+    length(Cams, NumCams),
+    nth0(Index, Deliveries, Delivery),
+    nth0(CamsIndex, Cams, Cam),
+    CamsIndex is Index mod NumCams.
+
+organize_pairs(Pairs, Organized_pairs) :-
+    organize_pairs(Pairs, [], Organized_pairs).
+
+organize_pairs([], Acc, Acc).
+organize_pairs([(Cam, Delivery)|T], Acc, Organized_pairs) :-
+    (member((Cam, Delivery_list), Acc),
+     !,
+     append(Delivery_list, [Delivery], New_delivery_list),
+     select((Cam, _), Acc, New_acc),
+     New_acc2 = [(Cam, New_delivery_list)|New_acc]
+    ;
+     New_acc2 = [(Cam, [Delivery])|Acc]),
+    organize_pairs(T, New_acc2, Organized_pairs).
+
+flatten_pairs(Organized_pairs, Flattened_pairs) :-
+    maplist(flatten_pair, Organized_pairs, Flattened_pairs).
+
+flatten_pair((Cam, Delivery_list), Flattened_pair) :-
+    Flattened_pair = [Cam|Delivery_list].
+
 
 combinacao_heuristicas(DATE,[A|LF],F):-get_time(Ti),findall([M,C],entrega(_,DATE,M,C,_,_),LCM),findall(C,entrega(_,DATE,_,C,_,_),LC1),
         cidade_inicial(A),createList(LC1,A,LC),combinar(LC1,LC,LCM,LF2),append(LF2,[A],LF),carateristicasCam(eTruck01,T,CM,_,_,_),

@@ -33,6 +33,15 @@ export class PutTruckComponent implements OnInit {
       });
   }
 
+  patchTruck(givenTruck: Truck): void {
+    this.fleetService.patchTruck(givenTruck).subscribe(
+      truck => {
+        this.truck = truck;
+        this.changeButton();
+      }
+    )
+  }
+
   goBack(): void {
     this.location.back();
   }
@@ -46,7 +55,6 @@ export class PutTruckComponent implements OnInit {
   }
 
   updateTruck(): void {
-    console.log("update");
     if (this.truck) {
       let newTruck: Truck;
       newTruck = {
@@ -55,17 +63,12 @@ export class PutTruckComponent implements OnInit {
         active: false
       }
       if (this.buttonText == 'Disable') {
-        console.log("entrou no disable");
-        this.fleetService.patchTruck(newTruck);
+        this.patchTruck(newTruck);
       }
       else if (this.buttonText == 'Enable') {
-        console.log("entrou no enable");
         newTruck.active = true;
-        this.fleetService.patchTruck(newTruck);
-        console.log(this.truck);
+        this.patchTruck(newTruck);
       }
-      console.log("saiu");
-      this.changeButton();
     }
   }
 

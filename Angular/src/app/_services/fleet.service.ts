@@ -16,7 +16,7 @@ export class FleetService {
   constructor(private http: HttpClient) { }
 
   getTrucks(): Observable<Truck[]> {
-    return this.http.get<Truck[]>(environment.LOGISTICS_URL + environment.TRUCKS_URL, { responseType: 'json' });
+    return this.http.get<Truck[]>(environment.LOGISTICS_URL_LOCAL + environment.TRUCKS_URL, { responseType: 'json' });
   }
 
   getActiveTrucks(): Observable<Truck[]> {
@@ -40,7 +40,6 @@ export class FleetService {
   }
 
   patchTruck(info: any): Observable<Truck> {
-    console.log(info);
     return this.http.patch<Truck>(environment.LOGISTICS_URL_LOCAL + environment.TRUCKS_URL, info, { responseType: 'json' });
   }
 
