@@ -10,7 +10,6 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
-
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { UsersComponent } from './users/users.component';
 import { BoardLogisticsComponent } from './board-logistics/board-logistics.component';
@@ -36,8 +35,13 @@ import { GetPackagingComponent } from './board-logistics/get-packaging/get-packa
 import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
 import { PutPackagingComponent } from './board-logistics/put-packaging/put-packaging.component';
 import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
+<<<<<<< HEAD
 import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
 
+=======
+import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import {SocialLoginModule,SocialAuthServiceConfig} from '@abacritt/angularx-social-login';
+>>>>>>> 45736b95675ada610e57d75980f46bc92ccefebe
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,8 +81,20 @@ import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanni
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    SocialLoginModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,{
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: true, //keeps the user signed in
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider('122519574160-f45pa7mcbvr2ofbpn7sb2t1addjks9uu.apps.googleusercontent.com') // your client id
+        }
+      ]
+    } as SocialAuthServiceConfig,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

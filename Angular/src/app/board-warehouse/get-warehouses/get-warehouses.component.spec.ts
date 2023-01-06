@@ -103,7 +103,7 @@ describe('WarehousesComponent', () => {
     });
   });
   
-  describe('DisplayDisabled', () => {
+  describe('DisplayDisabledError', () => {
     it('should throw an error if there is a problem retrieving the disabled warehouses', () => {
       mockWarehouseService.getDisabledWarehouses.and.returnValue(throwError(new Error('error')));
       expect(component.DisplayDisabled).toThrowError();

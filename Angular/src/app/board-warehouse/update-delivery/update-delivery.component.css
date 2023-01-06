@@ -1,6 +1,12 @@
 ﻿/* HeroDetailComponent's private CSS styles */
+.deliveries {
+  background-color: #405061;
+}
+.deliveries small {
+  color:white;
+}
 label {
-  color: #435960;
+  color: #ffffff;
   font-weight: bold;
 }
 input {

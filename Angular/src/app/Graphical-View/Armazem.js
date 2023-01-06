@@ -8,7 +8,7 @@ export default class Armazem extends THREE.Mesh{
         texture.magFilter = THREE.LinearFilter;
         texture.minFilter = THREE.LinearMipmapLinearFilter;
         let geometry= new THREE.CircleGeometry(0.8,16);
-        let material = new THREE.MeshBasicMaterial({color: 0x808080, map: texture});
+        let material = new THREE.MeshStandardMaterial({color: 0x808080, map: texture});
         let face = new THREE.Mesh(geometry, material);
         face.position.set(0,0.1,0);
         face.rotation.x = -Math.PI/2;

@@ -1,6 +1,7 @@
 ﻿<div *ngIf="delivery">
   <h2>Delivery {{delivery.id | uppercase}} Details</h2>
-  <div><span>id: </span>{{delivery.id}}</div>
+  <ul class="deliveries">
+  <div><label class="labelbig">id: {{delivery.id}}</label></div>
   <div>
     <label for="delivery-date">date: </label>
     <input id="delivery-date" [(ngModel)]="delivery.date" placeholder="delivery date"/>
@@ -23,4 +24,5 @@
   </div>
   <button type="button" (click)="goBack()">go back</button>
   <button type="button" (click)="Save()">Save</button>
+</ul>
 </div>

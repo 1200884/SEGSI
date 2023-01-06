@@ -1,6 +1,7 @@
 <div id="app">
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a href="#" class="navbar-brand">EletricGo</a>
+    <asl-google-signin-button type='icon' size='medium'></asl-google-signin-button>
     <ul class="navbar-nav mr-auto" routerLinkActive="active">
       <li class="nav-item">
         <a href="/home" class="btn btn-secondary" routerLink="home">Home </a>
@@ -42,3 +43,9 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+<div *ngIf="socialAuthService.authState | async as socialUser">
+  <p>Hello, {{socialUser.name}}!</p>
+  <p>Your email: {{socialUser.email}}</p>
+  <button mat-raised-button (click)="logout()">Logout</button>
+</div>
+

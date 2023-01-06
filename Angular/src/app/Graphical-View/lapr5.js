@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import View from "./View.js";
 import { OrbitControls } from './three.js-master/examples/jsm/controls/OrbitControls.js';
+import Ground from "./Ground.js";
 export default class LAPR5 {
     constructor() {
         this.gameRunning = false;
@@ -11,11 +12,50 @@ export default class LAPR5 {
         this.camera.position.z = 14;
         this.camera.position.y = 16;
         this.camera.position.x = -7;
+        
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.renderer.domElement);
         const canvas = this.renderer.domElement;
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        let light = new THREE.DirectionalLight (0xFFE87C);//0xFFE87C
+        light.position.set (100, 100, 100); light.target.position.set(0, 0, 0);
+        light.castShadow = true;
+        light.shadow.bias = -0.01;
+        light.shadow.mapSize.width = 2048;
+        light.shadow.mapSize.height = 2048;
+        light.shadow.camera.near = 1.0;
+        light.shadow.camera.far = 500;
+        light.shadow.camera.left = 200;
+        light.shadow.camera.right = -200;
+        light.shadow.camera.top = 200;
+        light.shadow.camera.bottom = -200;
+        this.scene.add (light);
+        const helper = new THREE.DirectionalLightHelper (light);
+        this.scene.add (helper);  
+
+        light = new THREE.AmbientLight (0x000000 );//0x444444
+        this.scene.add (light);
+
+        light.castShadow = true;
+        
+        const skybox = new THREE.CubeTextureLoader();
+        const texture6 = skybox.load([
+            './assets/posx.jpg',// :)
+            './assets/negx.jpg',//
+            './assets/posy.jpg',// ceu
+            './assets/negy.jpg',// chao
+            './assets/posz.jpg',// :)
+
+
+            './assets/negz.jpg',// :)
+        ]);
+        this.scene.background= texture6;
+
         class PickHelper {
             constructor() {
                 this.raycaster = new THREE.Raycaster();
