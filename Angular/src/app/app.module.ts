@@ -37,6 +37,7 @@ import { PutPackagingComponent } from './board-logistics/put-packaging/put-packa
 import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
 import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import {SocialLoginModule,SocialAuthServiceConfig} from '@abacritt/angularx-social-login';
+import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +68,8 @@ import {SocialLoginModule,SocialAuthServiceConfig} from '@abacritt/angularx-soci
     GetPackagingComponent,
     GetPackagingsComponent,
     PutPackagingComponent,
-    CreatePackagingComponent
+    CreatePackagingComponent,
+    GetGeneticplanningComponent
   ],
   imports: [
     BrowserModule,

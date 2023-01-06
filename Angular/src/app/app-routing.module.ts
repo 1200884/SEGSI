@@ -28,6 +28,7 @@ import { PutPackagingComponent } from './board-logistics/put-packaging/put-packa
 import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
 import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
+import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -53,6 +54,7 @@ const routes: Routes = [
   { path: 'create-paths', component: CreatePathComponent },
   { path: 'get-paths', component: GetPathsComponent },
   { path: 'get-planning', component: GetPlanningComponent },
+  {path: 'get-geneticplanning', component:GetGeneticplanningComponent},
   { path: 'get-packagings', component: GetPackagingsComponent },
   { path: 'get-packaging', component: GetPackagingComponent },
   { path: 'create-packaging', component: CreatePackagingComponent },
