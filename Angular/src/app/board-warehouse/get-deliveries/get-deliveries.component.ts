@@ -6,7 +6,7 @@ import { Delivery } from '../../_models/Delivery';
 @Component({
   selector: 'app-deliveries',
   templateUrl: './get-deliveries.component.html',
-  styleUrls: ['./get-deliveries.component.css']
+  styleUrls: ['./get-deliveries.component.css'],
 })
 export class DeliveriesComponent implements OnInit  {
 
@@ -14,6 +14,9 @@ export class DeliveriesComponent implements OnInit  {
   count:number =0;
   tablesize:number=5;
   tablesizes:any =[5,10,15,20];
+  filterText1 = '';
+  filterText2 = '';
+  filterText3 = '';
 
   sortOrder = 'asc';
   deliveries: Delivery[] = [];
@@ -34,12 +37,34 @@ export class DeliveriesComponent implements OnInit  {
 
   getDeliveries(): void {
     this.deliveryService.getDeliveries().subscribe(data => {
-        this.deliveries = data;
+      this.deliveries = data;
       },
       err => {
         this.content = JSON.parse(err.error).message;
       }
     )
+  }
+
+  filterDeliveriesById() {
+    if (this.filterText1) {
+      this.deliveries = this.deliveries.filter(delivery => delivery.id.includes(this.filterText1));
+    } else {
+      this.getDeliveries();
+    }
+  }
+  filterDeliveriesByDestinationWarehouseId() {
+    if (this.filterText2) {
+      this.deliveries = this.deliveries.filter(delivery => delivery.destinationWarehouseId.includes(this.filterText2));
+    } else {
+      this.getDeliveries();
+    }
+  }
+  filterDeliveriesByDate() {
+    if (this.filterText3) {
+      this.deliveries = this.deliveries.filter(delivery => delivery.date.includes(this.filterText3));
+    } else {
+      this.getDeliveries();
+    }
   }
 
   onTableDataChange(event:any){
@@ -82,20 +107,9 @@ export class DeliveriesComponent implements OnInit  {
         }
       
     });
-
-    // Toggle the value of sortOrder between 'asc' and 'desc'
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
   }
-
-
-
 } 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
-
-/* if (sortOrder === 'asc') {
-  return compare(a.id,b.id,true);
-} else {
-  return compare(a.id,b.id,false);
-} */
