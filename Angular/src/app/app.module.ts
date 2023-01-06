@@ -36,6 +36,7 @@ import { GetPackagingComponent } from './board-logistics/get-packaging/get-packa
 import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
 import { PutPackagingComponent } from './board-logistics/put-packaging/put-packaging.component';
 import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
+import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { CreatePackagingComponent } from './board-logistics/create-packaging/cre
     GetPackagingComponent,
     GetPackagingsComponent,
     PutPackagingComponent,
-    CreatePackagingComponent
+    CreatePackagingComponent,
+    GetGeneticplanningComponent
   ],
   imports: [
     BrowserModule,
