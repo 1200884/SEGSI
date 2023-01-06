@@ -15,7 +15,6 @@ export default class UserRepo implements IUserRepo {
 
   constructor(
     @Inject('userSchema') private userSchema : Model<IUserPersistence & Document>,
-    @Inject('logger') private logger
   ) { }
 
   private createBaseQuery (): any {
@@ -49,6 +48,9 @@ export default class UserRepo implements IUserRepo {
       } else {
         userDocument.firstName = user.firstName;
         userDocument.lastName = user.lastName;
+        userDocument.email = user.email;
+        userDocument.phoneNumber = user.phoneNumber;
+        userDocument.role = user.role;
         await userDocument.save();
 
         return user;

@@ -4,6 +4,7 @@ import mongooseLoader from './mongoose';
 import Logger from './logger';
 
 import config from '../../config';
+import UserController from '../controllers/userController';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -62,6 +63,11 @@ export default async ({ expressApp }) => {
   const packagingController = {
     name: config.controllers.packaging.name,
     path: config.controllers.packaging.path
+  }
+
+  const userController = {
+    name: config.controllers.user.name,
+    path: config.controllers.user.path
   }
 
   const planningController = {
@@ -143,6 +149,11 @@ export default async ({ expressApp }) => {
     path: config.services.travels.path
   }
 
+  const userService = {
+    name: config.services.user.name,
+    path: config.services.user.path
+  }
+
 
 
   await dependencyInjectorLoader({
@@ -161,7 +172,8 @@ export default async ({ expressApp }) => {
       pathController,
       packagingController,
       planningController,
-      travelsController
+      travelsController,
+      userController
     ],
     repos: [
       roleRepo,
@@ -179,7 +191,8 @@ export default async ({ expressApp }) => {
       pathService,
       packagingService,
       planningService,
-      travelsService
+      travelsService,
+      userService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
