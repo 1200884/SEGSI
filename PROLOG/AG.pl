@@ -290,13 +290,6 @@ dadosCam_t_e_ta(eTruck01,17,16,67,25,0).
 
 cidade_inicial(5).
 
-%%% SPRINT C
-
-
-% testes entrega
-entrega(1,2,3,4,5,6).
-entrega(7,8,9,10,11,12).
-entrega(13,14,15,16,17,18).
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
 entrega(4439, 20221205, 200, 1, 8, 10).
 entrega(4438, 20221205, 150, 9, 7, 9).
@@ -309,11 +302,12 @@ entrega(4437, 20221205, 180, 12, 9, 11).
 entrega(4451, 20221205, 220, 6, 9, 12).
 entrega(4452, 20221205, 390, 13, 21, 26).
 entrega(4444, 20221205, 380, 2, 20, 25).
-
+%carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
 carateristicasCam(eTruck01,7500,4300,80,100,60).
 carateristicasCam(eTruck02,7500,4300,80,100,60).
 carateristicasCam(eTruck03,7500,4300,80,100,60).
 
+%%% SPRINT C
 
 atribuicao_lote(DATE,LISTA_FINAL):-
         lista_entregas(LISTA_ENTREGAS,DATE),
@@ -354,28 +348,10 @@ flatten_pairs(Organized_pairs, Flattened_pairs) :-
 flatten_pair((Cam, Delivery_list), Flattened_pair) :-
     Flattened_pair = [Cam|Delivery_list].
 
-
-% viagens (output do simoes)
-viagem([eTruck01,1,2,3,4,5]).
-armazens(4).
-
-% tarefa(Id,TempoProcessamento,TempConc,PesoPenalizacao).
-tarefa(t1,2,5,1).
-tarefa(t2,4,7,6).
-tarefa(t3,1,11,2).
-tarefa(t4,3,9,3).
-tarefa(t5,3,8,2).
-tarefa(1,3,8,2).
-tarefa(8,3,1,2).
-% tarefas(NTarefas).
-tarefas(7).
-
-
-
 get_armazem_list_by_truck_date(ID, Date, ArmazemList) :-
 	atribuicao_lote(Date, Lists),
 	get_travel_by_truck_id(Lists, ID, TravelList),
-	write('Travel id: '),write(TravelList),nl,
+	write('ListTravel: '),write(TravelList),nl,
 	get_armazem_list_by_travel(TravelList, ArmazemList),!.
 
 get_travel_by_truck_id(Lists, ID, Result) :-
@@ -384,29 +360,30 @@ get_travel_by_truck_id(Lists, ID, Result) :-
 get_armazem_list_by_travel(DeliveryIdList, ArmazemList) :-
     findall(Armazem, (member(Id, DeliveryIdList), entrega(Id, _, _, Armazem, _, _)), ArmazemList).
 
-add_cidade_inicial_final(List,Result):-
-	cidade_inicial(City), 
-	append([City], List, TempList),
-    append(TempList, [City], Result).
+%tempo_byid([13,8,14,1],20221205,eTruck01,T).
+tempo_byid(LC,DATE,IDTRUCK,FORMATED):- 
+	carateristicasCam(IDTRUCK,TARA,_,CMAX,_,_),
+	tempo(LC,DATE,TARA,CMAX,RESULT),
+	round(RESULT,FORMATED,2).
 
-tempo_byid(LC,DATE,IDTRUCK,F):- 
-	%write('Entrou no tempobyid'),nl,
-	carateristicasCam(IDTRUCK,TARA,_,CMAX,_,_),tempo(LC,DATE,TARA,CMAX,F).
+round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 10^D.
 
 tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
     trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
 
 somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.	
 
-trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-dadosCam_t_e_ta(_,A,B,T,E,_),
-(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
-PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
-BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
-(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
-(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
-tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
-trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
-tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
+trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-
+	dadosCam_t_e_ta(_,A,B,T,E,_),
+	(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
+	PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
+	BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
+	(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
+	(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
+	tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
+	trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
+	tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
+
 trata_lista([_],0,_,_,_,_,_,_,_).
 
 pesomaximo(TRUCK,PESOMAXIMO):-carateristicasCam(TRUCK,A,B,_,_,_),PESOMAXIMO is A+B.
@@ -431,48 +408,42 @@ bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
 bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
 amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
 
-mteste:-
-	write('Data das entregas: '),read(DATE), 			
-	write('Id do camiao: '),read(IDCAMIAO),
-	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
-	write('ListArmazens='),write(ListArmazens),nl.
-
-
-:-dynamic date/1.
-:-dynamic camiao/1. 
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
 :-dynamic prob_mutacao/1.
+%:-dynamic armazens/1.
 
 % parameteriza��o
 inicializa:-
-	%write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			
-	(retract(geracoes(_));true), asserta(geracoes(3)),
-	%write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
-	(retract(populacao(_));true), asserta(populacao(4)),
-	%write('Probabilidade de Cruzamento (%):'), read(P1),
-	PC is 50/100, 
+	write('Numero de novas Geracoes(numero de melhorias): '),read(NG), 			
+	(retract(geracoes(_));true), asserta(geracoes(NG)),
+	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
+	(retract(populacao(_));true), asserta(populacao(DP)),
+	write('Probabilidade de Cruzamento (%):'), read(P1),
+	PC is P1/100, 
 	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
-	%write('Probabilidade de Mutacao (%):'), read(P2),
-	PM is 50/100, 
+	write('Probabilidade de Mutacao (%):'), read(P2),
+	PM is P2/100, 
 	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
 
-gera():-
-	write('Data das entregas: '),read(DATE), 			
+gera:-
+	write('Data das entregas: '),read(DATE), 	
+	(retract(date(_));true), asserta(date(DATE)),		
 	write('Id do camiao: '),read(IDCAMIAO),
-	%DATE is 20221205, IDCAMIAO is 'eTruck01'
+	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
 	inicializa,
 	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
-	write('ListArmazens='),write(ListArmazens),nl,
+	add_cidade_inicial_final(ListArmazens,Final),
+	write('ListArmazens='),write(Final),nl,
 	gera_populacao(Pop,ListArmazens),
-	write('Passou do geraPop'),nl,
+	%write('Passou do geraPop'),nl,
 	write('Pop='),write(Pop),nl,
 	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
 	write('PopAv='),write(PopAv),nl,
 	ordena_populacao(PopAv,PopOrd),
 	geracoes(NG),
-	gera_geracao(0,NG,PopOrd).
+	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO).
 
  /* mudar geras
  chamar o metodo tempo para substituir o avalia
@@ -482,30 +453,29 @@ gera():-
 gera_populacao(Pop,ListaArmazens):-
 	populacao(TamPop),
 	length(ListaArmazens,NumArmazens),
-	%tarefas(NumT),
-	armazens(NumArmazens),
-	%findall(Tarefa,tarefa(Tarefa,_,_,_),ListaTarefas), %criacao da lista de armazens
+	(retract(armazens(_));true), asserta(armazens(NumArmazens)),
+	write('NumArmazens_permutar='),write(NumArmazens),nl,	
 	write('Lista_gera_pop='),write(ListaArmazens),nl,
 	gera_populacao(TamPop,ListaArmazens,NumArmazens,Pop).
 
 gera_populacao(0,_,_,[]):-!.
 
-gera_populacao(TamPop,ListaArmazens,NumT,[Ind|Resto]):-
+gera_populacao(TamPop,ListaArmazens,NumArmazens,[Ind|Resto]):-
 	TamPop1 is TamPop-1,
-	gera_populacao(TamPop1,ListaArmazens,NumT,Resto),
-	gera_individuo(ListaArmazens,NumT,Ind),
+	gera_populacao(TamPop1,ListaArmazens,NumArmazens,Resto),
+	gera_individuo(ListaArmazens,NumArmazens,Ind),
 	not(member(Ind,Resto)).
 
-gera_populacao(TamPop,ListaArmazens,NumT,L):-
-	gera_populacao(TamPop,ListaArmazens,NumT,L).
+gera_populacao(TamPop,ListaArmazens,NumArmazens,L):-
+	gera_populacao(TamPop,ListaArmazens,NumArmazens,L).
 
 gera_individuo([G],1,[G]):-!.
 
-gera_individuo(ListaArmazens,NumT,[G|Resto]):-
-	NumTemp is NumT + 1, % To use with random
+gera_individuo(ListaArmazens,NumArmazens,[G|Resto]):-
+	NumTemp is NumArmazens + 1, % To use with random
 	random(1,NumTemp,N),
 	retira(N,ListaArmazens,G,NovaLista),
-	NumT1 is NumT-1,
+	NumT1 is NumArmazens-1,
 	gera_individuo(NovaLista,NumT1,Resto). 
 
 retira(1,[G|Resto],G,Resto).
@@ -513,25 +483,16 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	N1 is N-1,
 	retira(N1,Resto,G,Resto1).
 
-avalia_populacao([],[]).
-avalia_populacao([Ind|Resto],[Ind*V|Resto1],Date,IdTruck):-	
-	tempo_byid(Ind,Date,IdTruck,V),
-	avalia_populacao(Resto,Resto1,Date,IdTruck).
-/* 
-avalia(Seq,V):-
-	avalia(Seq,0,V).
+add_cidade_inicial_final(List,Result):-
+	cidade_inicial(City), 
+	append([City], List, TempList),
+    append(TempList, [City], Result).
 
-avalia([],_,0).
-avalia([T|Resto],Inst,V):-
-	tarefa(T,Dur,Prazo,Pen),
-	InstFim is Inst+Dur,
-	avalia(Resto,InstFim,VResto),
-	(
-		(InstFim =< Prazo,!, VT is 0)
-  ;
-		(VT is (InstFim-Prazo)*Pen)
-	),
-	V is VT+VResto. */
+avalia_populacao([],[],_,_).
+avalia_populacao([Ind|Resto],[Ind*V|Resto1],Date,IdTruck):-
+	add_cidade_inicial_final(Ind,Final),
+	tempo_byid(Final,Date,IdTruck,V),
+	avalia_populacao(Resto,Resto1,Date,IdTruck).
 
 ordena_populacao(PopAv,PopAvOrd):-
 	bsort(PopAv,PopAvOrd).
@@ -551,17 +512,17 @@ btroca([X*VX,Y*VY|L1],[Y*VY|L2]):-
 btroca([X|L1],[X|L2]):-btroca(L1,L2).
 
 
-gera_geracao(G,G,Pop):-!,
+gera_geracao(G,G,Pop,_,_):-!,
 	write('Gera��o '), write(G), write(':'), nl, write(Pop), nl.
 
-gera_geracao(N,G,Pop):-
-	write('Gera��o '), write(N), write(':'), nl, write(Pop), nl,s
+gera_geracao(N,G,Pop,DATE,IDCAMIAO):-
+	write('Gera��o '), write(N), write(':'), nl, write(Pop), nl,
 	cruzamento(Pop,NPop1),
 	mutacao(NPop1,NPop),
-	avalia_populacao(NPop,NPopAv),
+	avalia_populacao(NPop,NPopAv,DATE,IDCAMIAO),
 	ordena_populacao(NPopAv,NPopOrd),
 	N1 is N+1,
-	gera_geracao(N1,G,NPopOrd).
+	gera_geracao(N1,G,NPopOrd,_,_).
 
 gerar_pontos_cruzamento(P1,P2):-
 	gerar_pontos_cruzamento1(P1,P2).
