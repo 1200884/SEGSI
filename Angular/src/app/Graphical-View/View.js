@@ -4,8 +4,8 @@ import Armazem from "./Armazem.js";
 import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
-import Bola_Teste from "./Bola_Teste.js";
 import Camiao from "./Camiao.js";
+import CamiaoAutomatico from "./CamiaoAutomatico.js";
 
 export default class View {
     constructor() {
@@ -83,15 +83,111 @@ export default class View {
             console.log("x 17 is" + armazens[17].position.x);
             console.log("Y 5 is" + armazens[5].position.z);
             console.log("Y 17 is" + armazens[17].position.z);
+            // checkisOnRoad(5,armazens[5],armazens[17]);
             //console.log("Marilio Cardoso "+percentagem(1,2,1,2,1,2,1.5,1.5));
             bola.rotateY(Math.PI);
             let angle = 0;
             let directionside = 0;
             let directionfront = 0;
-            let directionupdown = 0;
+<<<<<<< HEAD
             let speed = 0.1;
-            let rotationIndex = Math.PI / 64;
+            let rotationIndex = Math.PI / 32;
             let updates = false;
+
+            // Create the button element
+            var button = document.createElement('button');
+            button.innerHTML = 'Create automatic trucks';
+
+            // Add the button to the container
+            var container = document.getElementById('button-container');
+            container.appendChild(button);
+
+            // Add an event listener to the button
+            button.addEventListener('click', function () {
+
+                /*let date;
+                let travels;
+                // Make a GET request to the specified URL
+                fetch('http://localhost:2223/api/travels/20221205')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        date = data.date;
+                        console.log(date);
+                        travels = data.travels;
+                        console.log(travels);
+                    });*/
+
+                //let deliveries = getDeliveries();
+                /*et deliveries = [
+                    {
+                        "id": 4439,
+                        "date": 20221205,
+                        "weight": 1.0,
+                        "destinationWarehouseId": 2,
+                        "loadTime": 1,
+                        "unloadTime": 1
+                    },
+                    {
+                        "id": 4438,
+                        "date": 20221205,
+                        "weight": 1.0,
+                        "destinationWarehouseId": 1,
+                        "loadTime": 1,
+                        "unloadTime": 1
+                    },
+                    {
+                        "id": 4445,
+                        "date": 20221205,
+                        "weight": 10.0,
+                        "destinationWarehouseId": 7,
+                        "loadTime": 5,
+                        "unloadTime": 7
+                    },
+                    {
+                        "id": 4443,
+                        "date": 20221205,
+                        "weight": 10.0,
+                        "destinationWarehouseId": 10,
+                        "loadTime": 5,
+                        "unloadTime": 7
+                    },
+                    {
+                        "id": 4449,
+                        "date": 20221205,
+                        "weight": 1.0,
+                        "destinationWarehouseId": 8,
+                        "loadTime": 1,
+                        "unloadTime": 1
+                    },
+                    {
+                        "id": 4398,
+                        "date": 20221205,
+                        "weight": 10.0,
+                        "destinationWarehouseId": 12,
+                        "loadTime": 1,
+                        "unloadTime": 1
+                    }];*/
+                //for (var i = 0; i < travels.length(); i++) {
+                    /*const filteredObjectList = deliveries.filter(object => travels[i].includes(object.id));
+
+                    const destWarehouseNumList = filteredObjectList.map(object => object.destinationWarehouseId);
+
+                    const destWarehouseList = destWarehouseNumList.map(index => armazens[index]);
+
+                    var specificBridges;
+                    for (var j = 0; j < bridges.length(); j++) {
+                        specificBridges.push((bridges[j].armazemOrigem, bridges[j].armazemDestino));
+                    }
+
+                    combineLists(destWarehouseList, specificBridges);*/
+
+                    let destWarehouseList = [armazens[7], bridges[10], armazens[5], bridges[20], armazens[17], bridges[11], armazens[13]];
+                    view.bola = new CamiaoAutomatico(destWarehouseList);
+                    let camiaoAutomatico = view.bola.object;
+                    view.object.add(camiaoAutomatico);
+                //}
+            });
 
             window.addEventListener("keydown", event => {
                 if (event.code === "KeyW") {
@@ -142,6 +238,7 @@ export default class View {
                 ladox = armazem3x - armazem4x;
                 ladoy = armazem3y - armazem4y;
                 ladoz = zmaior - zmaispiqui;
+               
                 //distanciaEntreArmazens=Math.sqrt(Math.pow(ladox,2)+Math.pow(ladoy,2));
                 ladoxpequeno = newX - armazem4x;
                 ladoypequeno = newY - armazem4y;
@@ -159,8 +256,8 @@ export default class View {
                     //console.log("y1 = "+armazem3y+" x1 = "+armazem3x)
                     //console.log("y2 = "+armazem4y+" x2 = "+armazem4x)
 
-
-                    bola.position.y = ladoz * distanciaEntreArmazens + zmaispiqui;
+                    console.log(ladoz);
+                    bola.position.y = 1-(ladoz * distanciaEntreArmazens) + zmaispiqui;
                     //console.log("z novo é "+bola.position.y);
                     return true;
                 }

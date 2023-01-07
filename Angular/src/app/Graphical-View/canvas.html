@@ -64,22 +64,7 @@
         {{description}}
     </div>
     <div id="button-container" style="position: absolute; top: 10px; right: 10px;"></div>
-    <script>
-        window.onload = function () {
-            // Create the button element
-            var button = document.createElement('button');
-            button.innerHTML = 'Click me';
-
-            // Add the button to the container
-            var container = document.getElementById('button-container');
-            container.appendChild(button);
-
-            // Add an event listener to the button
-            button.addEventListener('click', function () {
-                console.log('Button was clicked');
-            });
-        };
-    </script>
+    <script src="View.js"></script>
 </body>
 
 </html>
