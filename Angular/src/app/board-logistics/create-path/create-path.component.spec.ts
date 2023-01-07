@@ -4,7 +4,6 @@ import { CreatePathComponent } from './create-path.component';
 import { Path } from 'src/app/_models/Path';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { expect } from '@jest/globals';
 
 
 describe('CreatePathComponent', () => {

@@ -43,7 +43,7 @@ export class LogisticsService {
     console.log("numero geracoes"+nrgeracoes);
     console.log("tamanho populacao"+tamanhopop);
     
-    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL + environment.GENETICPLANNING_URL + '/' + date+ '/' +probcruzamento+ '/'+probmutacao+'/'+nrgeracoes+'/'+tamanhopop, { responseType: 'json' });
+    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL_LOCAL + environment.GENETICPLANNING_URL + '/' + date+ '/' +probcruzamento+ '/'+probmutacao+'/'+nrgeracoes+'/'+tamanhopop, { responseType: 'json' });
   }
   //Packaging packaging
   getPackagings(): Observable<Packaging[]> {

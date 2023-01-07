@@ -429,7 +429,7 @@ tempo_byid(LC,DATE,IDTRUCK,FORMATED):-
 round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 10^D.
 
 
-:-dynamic date/1.
+%:-dynamic date/1.
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.

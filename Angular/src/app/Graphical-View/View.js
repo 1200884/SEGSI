@@ -142,6 +142,7 @@ export default class View {
                 ladox = armazem3x - armazem4x;
                 ladoy = armazem3y - armazem4y;
                 ladoz = zmaior - zmaispiqui;
+               
                 //distanciaEntreArmazens=Math.sqrt(Math.pow(ladox,2)+Math.pow(ladoy,2));
                 ladoxpequeno = newX - armazem4x;
                 ladoypequeno = newY - armazem4y;
@@ -159,8 +160,8 @@ export default class View {
                     //console.log("y1 = "+armazem3y+" x1 = "+armazem3x)
                     //console.log("y2 = "+armazem4y+" x2 = "+armazem4x)
 
-
-                    bola.position.y = ladoz * distanciaEntreArmazens + zmaispiqui;
+                    console.log(ladoz);
+                    bola.position.y = 1-(ladoz * distanciaEntreArmazens) + zmaispiqui;
                     //console.log("z novo é "+bola.position.y);
                     return true;
                 }

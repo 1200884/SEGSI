@@ -5,7 +5,6 @@ import { WarehousesComponent } from './get-warehouses.component';
 import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { expect } from '@jest/globals';
 
 
 describe('WarehousesComponent', () => {

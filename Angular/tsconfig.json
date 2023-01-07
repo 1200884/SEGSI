@@ -27,8 +27,5 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src//*.ts",
-  "src//.tsx",
-  "src/**/.jsx",
-  "src/*/.js"]
+
 }
