@@ -19,7 +19,7 @@ export class GetGeneticplanningComponent implements OnInit {
   ngOnInit(): void {}
 
   getGeneticPlanning(info:any):void{
-    this.logisticsService.getGeneticPlanning(info.id,info.date,info.probcruzamento,info.probmutacao,info.nrgeracoes,info.tamanhopop).subscribe(
+    this.logisticsService.getGeneticPlanning(info.date,info.probcruzamento,info.probmutacao,info.nrgeracoes,info.tamanhopop).subscribe(
       data => {
         this.error = false;
         this.content = '';

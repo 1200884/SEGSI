@@ -1,89 +1,4 @@
-%set_prolog_flag(answer_write_options,[max_depth(0)]).
-% Bibliotecas
-:- use_module(library(http/thread_httpd)).
-:- use_module(library(http/http_dispatch)).
-:- use_module(library(http/http_parameters)).
-% Bibliotecas JSON
-:- use_module(library(http/json_convert)).
-:- use_module(library(http/http_json)).
-:- use_module(library(http/json)).
-
-:- json_object data(time:number, places:list).
-:- json_object list(viagens:list(list)).
-
-% Relaï¿½ï¿½o entre pedidos HTTP e predicados que os processam
-:- http_handler('/create_path',path_creator, []).
-:- http_handler('/planning', p_json, []).
-:- http_handler('/travels', get_travels, []).
-
-% Criaï¿½ï¿½o de servidor HTTP no porto 'Port'
-server() :-
-        http_server(http_dispatch, [port(5000)]).
-
-path_creator(Request):-
-  http_parameters(Request,
-                    [ truck(TRUCK, []),
-                      date(DATE, [between(20220101,20221231)])
-                    ]),
-  voltamaiscedo(TRUCK,DATE,T,L),
-  %json_write(STREAM,point{T,L}),
-  format('Content-type: text/plain~n~n'),
-  format('time: ~2f~nplances: ~w',[T,L]).
-
-p_json(Request) :-
-        http_read_json(Request, JSON),
-        json_to_prolog(JSON, JSON_TEXT),
-%        format('Content-type: text/plain~n~n'),
-%        format('~w~n', JSON_TEXT),
-        split(JSON_TEXT,TRUCK,DATE),
-%        format('~w ~n~w', [TRUCK, DATE]),
-        voltamaiscedo(TRUCK,DATE,T,L),
-%        format('~2f ~n~w', [T, L]).
-        D = data(T,L),
-%        format('~w', [D]),
-        prolog_to_json(D, X),
-        reply_json(X).
-
-get_travels(Request) :-
-        http_read_json(Request, JSON),
-        json_to_prolog(JSON, JSON_TEXT),
-        split_date(JSON_TEXT,DATE),
-%em caso de erro, pode estar no split_date pois n sei o formato se esta certo
-        atribuicao_lote(DATE,L),
-%        format('Content-type: text/plain~n~n'),
-%        format('~w', DATE),
-        D = list(L),
-        prolog_to_json(D, X),
-        reply_json(X).
-
-split(json([truckId=X,date=Y]),X,Y).
-split_date(json([date=Y]),Y).
-
-
-%entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
-entrega(4439, 20221205, 200, 1, 8, 10).
-entrega(4438, 20221205, 150, 9, 7, 9).
-entrega(4445, 20221205, 100, 3, 5, 7).
-entrega(4443, 20221205, 120, 8, 6, 8).
-entrega(4449, 20221205, 300, 11, 15, 20).
-entrega(4398, 20221205, 310, 17, 16, 20).
-%entrega(4432, 20221205, 270, 14, 14, 18).
-%entrega(4437, 20221205, 180, 12, 9, 11).
-%entrega(4451, 20221205, 220, 6, 9, 12).
-%entrega(4452, 20221205, 390, 13, 21, 26).
-%entrega(4444, 20221205, 380, 2, 20, 25).
-
-%entrega(4455, 20221205, 280, 7, 14, 19).
-%entrega(4399, 20221205, 260, 15, 13, 18).
-%entrega(4454, 20221205, 350, 10, 18, 22).
-%entrega(4446, 20221205, 260, 4, 14, 17).
-%entrega(4456, 20221205, 330, 16, 17, 21).
-%carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
-carateristicasCam(eTruck01,7500,4300,80,100,60).
-carateristicasCam(eTruck02,7500,4300,80,100,60).
-carateristicasCam(eTruck03,7500,4300,80,100,60).
-
-%dadosCam_t_e_ta(<nome_camiao>,<cidade_origem>,<cidade_destino>,<tempo>,<energia>,<tempo_adicional>).
+%% SPRINT C
 dadosCam_t_e_ta(eTruck01,1,2,122,42,0).
 dadosCam_t_e_ta(eTruck01,1,3,122,46,0).
 dadosCam_t_e_ta(eTruck01,1,4,151,54,25).
@@ -374,9 +289,25 @@ dadosCam_t_e_ta(eTruck01,17,15,53,18,0).
 dadosCam_t_e_ta(eTruck01,17,16,67,25,0).
 
 cidade_inicial(5).
-% comeï¿½ar no armazem origem e verificar dos armazï¿½ns da lista o que estï¿½
-% mais proximo.Depois, retirar esse armazï¿½m da lista e fazer o mesmo a
-% comeï¿½ar neste armazï¿½m.
+
+%entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
+entrega(4439, 20221205, 200, 1, 8, 10).
+entrega(4438, 20221205, 150, 9, 7, 9).
+entrega(4445, 20221205, 100, 3, 5, 7).
+entrega(4443, 20221205, 120, 8, 6, 8).
+entrega(4449, 20221205, 300, 11, 15, 20).
+entrega(4398, 20221205, 310, 17, 16, 20).
+entrega(4432, 20221205, 270, 14, 14, 18).
+entrega(4437, 20221205, 180, 12, 9, 11).
+entrega(4451, 20221205, 220, 6, 9, 12).
+entrega(4452, 20221205, 390, 13, 21, 26).
+entrega(4444, 20221205, 380, 2, 20, 25).
+%carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
+carateristicasCam(eTruck01,7500,4300,80,100,60).
+carateristicasCam(eTruck02,7500,4300,80,100,60).
+carateristicasCam(eTruck03,7500,4300,80,100,60).
+
+%%% SPRINT C
 
 atribuicao_lote(DATE,LISTA_FINAL):-
         lista_entregas(LISTA_ENTREGAS,DATE),
@@ -417,89 +348,42 @@ flatten_pairs(Organized_pairs, Flattened_pairs) :-
 flatten_pair((Cam, Delivery_list), Flattened_pair) :-
     Flattened_pair = [Cam|Delivery_list].
 
+get_armazem_list_by_truck_date(ID, Date, ArmazemList) :-
+	atribuicao_lote(Date, Lists),
+	get_travel_by_truck_id(Lists, ID, TravelList),
+	write('ListTravel: '),write(TravelList),nl,
+	get_armazem_list_by_travel(TravelList, ArmazemList),!.
 
-combinacao_heuristicas(DATE,[A|LF],F):-get_time(Ti),findall([M,C],entrega(_,DATE,M,C,_,_),LCM),findall(C,entrega(_,DATE,_,C,_,_),LC1),
-        cidade_inicial(A),createList(LC1,A,LC),combinar(LC1,LC,LCM,LF2),append(LF2,[A],LF),carateristicasCam(eTruck01,T,CM,_,_,_),
-        tempo([A|LF],DATE,T,CM,F),get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
+get_travel_by_truck_id(Lists, ID, Result) :-
+	member([ID|Result], Lists).
 
-combinar([],[],[],[]):-!.
-combinar(LC1,LC,LCM,[CF|LF]):- best_city(LC,LCM,CF),delete(LCM,[_,CF],LF2),delete(LC1,CF,LC2),createList(LC2,CF,LC3),combinar(LC2,LC3,LF2,LF).
-best_city([[T1,C1],[T2,C2]|L1],[[M1,C1],[M2,C2]|L2],L):-F1 is T1*M1,F2 is M2*T2,F1<F2,best_city([[T1,C1]|L1],[[M1,C1]|L2],L);
-        best_city([[T2,C2]|L1],[[M2,C2]|L2],L).
-best_city([[_,A]],[[_,A]],A).
+get_armazem_list_by_travel(DeliveryIdList, ArmazemList) :-
+    findall(Armazem, (member(Id, DeliveryIdList), entrega(Id, _, _, Armazem, _, _)), ArmazemList).
 
+%tempo_byid([13,8,14,1],20221205,eTruck01,T).
+tempo_byid(LC,DATE,IDTRUCK,FORMATED):-
+	carateristicasCam(IDTRUCK,TARA,_,CMAX,_,_),
+	tempo(LC,DATE,TARA,CMAX,RESULT),
+	round(RESULT,FORMATED,2).
 
-
-closest_path(DATE,[A|LF],F):-get_time(Ti),findall(C,entrega(_,DATE,_,C,_,_),LC),cidade_inicial(A),closest(LC,A,LF2),append(LF2,[A],LF),
-        carateristicasCam(eTruck01,T,CM,_,_,_),tempo([A|LF],DATE,T,CM,F),get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
-
-closest([],_,[]):-!.
-closest(LC,CI,[CF|LF]):-close_city(LC,CI,CF),delete(LC,CF,LF2),closest(LF2,CF,LF).
-close_city(LC,CI,CF):-createList(LC,CI,LF),minlista(LF,CF).
-createList([C|LC],CI,[[CF,C]|LF]):-dadosCam_t_e_ta(_,CI,C,CF,_,_),createList(LC,CI,LF).
-createList([],_,[]).
-minlista([[_,A]],A).
-minlista([[A,C1],[B,_]|C],L):- A<B,minlista([[A,C1]|C],L).
-minlista([[_,_],[B,C1]|C],L):-minlista([[B,C1]|C],L).
-maxlista([[_,A]],A).
-maxlista([[A,C1],[B,_]|C],L):- A>B,maxlista([[A,C1]|C],L).
-maxlista([[_,_],[B,C1]|C],L):-maxlista([[B,C1]|C],L).
-
-biggest_weight(DATE,[A|LF],F):-get_time(Ti),findall([M,C],entrega(_,DATE,M,C,_,_),LCM),cidade_inicial(A),heaviest(LCM,LF2),append(LF2,[A],LF),
-        carateristicasCam(eTruck01,T,CM,_,_,_),tempo([A|LF],DATE,T,CM,F),get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução = '),write(TSol).
-
-heaviest([],[]):-!.
-heaviest(LCM,[CF|LF]):-maxlista(LCM,CF),delete(LCM,[_,CF],LF2),heaviest(LF2,LF).
+round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 10^D.
 
 tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
     trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
+
 somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.
 
-listaentregas(E,DIA):-findall(A,entrega(_,DIA,_,A,_,_),E).
+trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-
+	dadosCam_t_e_ta(_,A,B,T,E,_),
+	(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
+	PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
+	BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
+	(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
+	(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
+	tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
+	trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
+	tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
 
-metodo([],_,[]).
-metodo([H|T],M,[H2|F]):-append([M|H], [M], H2), metodo(T,M,F).
-
-calcula_trajetoria(LT,DIA):-partida_chegada(PC),listaentregas(LA,DIA), findall(LAC, permutation(LA, LAC), LT2), metodo(LT2, PC, LT).
-
-partida_chegada(5).
-
-% agrega os predicados, recebendo todas as
-% trajetorias possiveis para os caminhos dados, devolve o caminho mais
-% rapido e o respetivo tempo
-
-% voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-get_time(Ti),carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),get_time(Tf),TSol
-% is Tf-Ti,write('Tempo de ExecuÃ§Ã£o = '),write(TSol).
-
-voltamaiscedo(TRUCK,DIA,TEMPOFINAL,LFINAL):-
-        %get_time(Ti),
-        findall(C,entrega(_,DIA,_,C,_,_),LC),length(LC,LENGTH),
-        (LENGTH<9 ->(carateristicasCam(TRUCK,_,_,BATINICIAL,_,_),bateriamaxima(TRUCK,BATMAX),bateriaminima(TRUCK,BATMIN),pesomaximo(TRUCK,PESOMAXIMO),
-        pesototal(TRUCK,PESOTOTAL),calcula_trajetoria([A|LT],DIA),
-        trata_lista(A,TEMPO,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA),
-        itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,LT,TEMPO,A,LFINAL),!,
-        trata_lista(LFINAL,TEMPOFINAL,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA));(closest_path(DIA,LFINAL,TEMPOFINAL))).
-%        ,get_time(Tf),TSol is Tf-Ti,write('Tempo de Execução =
-%        '),write(TSol).
-
-
-% itera ï¿½ o metodo que trata de todos os caminhos possï¿½veis, e envia
-% cada caminho ao trata_lista que lhe retorna o tempo de cada caminho,
-% sendo o itera responsavel por devolver o caminho que demora menos
-% tempo
-
-itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO, PESOTOTAL,[A|B], TMP, CAMINHO,AS):-is_list(A), trata_lista(A,TEMPOA,PESOMAXIMO,PESOTOTAL,BATMAX,BATMIN,BATINICIAL,TRUCK,DIA), (TMP>TEMPOA,itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,B,TEMPOA,A,AS));itera(DIA,TRUCK,BATINICIAL,BATMAX,BATMIN,PESOMAXIMO,PESOTOTAL,B,TMP,CAMINHO,AS).
-itera(_,_,_,_,_,_,_,[],_,T,T).
-
-trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-dadosCam_t_e_ta(_,A,B,T,E,_),
-(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
-PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
-BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
-(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
-(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
-tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
-trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
-tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
 trata_lista([_],0,_,_,_,_,_,_,_).
 
 pesomaximo(TRUCK,PESOMAXIMO):-carateristicasCam(TRUCK,A,B,_,_,_),PESOMAXIMO is A+B.
@@ -523,75 +407,262 @@ temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMA
 bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
 bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
 amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
+%set_prolog_flag(answer_write_options,[max_depth(0)]).
+%
+%
+% Bibliotecas
+:- use_module(library(http/thread_httpd)).
+:- use_module(library(http/http_dispatch)).
+:- use_module(library(http/http_parameters)).
+% Bibliotecas JSON
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/json)).
 
-% dia = soma dia=LC[p,b,g] dia+LC=LLC[[p,2,3],[b,1,7],[g,5,4]] LLC
-somafinal(DIA,MAJ1_MIN2, S):-
-    listaCidades(DIA,LLC),
-    fatiaDeLLC(DIA,MAJ1_MIN2, LLC,LLTRsC),
-    (MAJ1_MIN2 is 2 ->listaMin(LLTRsC, LM); listaMaj(LLTRsC, LM)),
-     list_sum(LM,S).
-%([20,30],[10,70],[50,40])--->([20,10,40])
-listaMin([],[]).
-listaMin([B|C], [M|LM]):- list_min(B,M), listaMin(C,LM).
-list_min([L|Ls], Min) :- list_min(Ls, L, Min).
-list_min([], Min, Min).
-list_min([L|Ls], Min0, Min) :-Min1 is min(L, Min0), list_min(Ls, Min1, Min).
+:- http_handler('/geneticplanning',genetic_planning,[]).
+server() :-
+        http_server(http_dispatch, [port(5000)]).
 
-listaMaj([],[]).
-listaMaj([B|C], [M|LM]):- list_max(B,M), listaMaj(C,LM).
-list_max([P|T], O) :- list_max(T, P, O).
-list_max([], P, P).
-list_max([H|T], P, O):-( H>P -> list_max(T, H, O);list_max(T, P, O)).
+genetic_planning(Request):-
+        http_parameters(Request,
+                        [date(DATE, [between(20220101,20221231)]),ProbCruzamento,ProbMutacao,NrGeracoes,TamanhoPop]).
 
-list_sum([],0).
-list_sum([Head | Tail], TotalSum) :- list_sum(Tail, Sum1),TotalSum is Head+Sum1.
-%dia=LC[p,b,g], todas as cidades para 1 dia
-%(20221205)--->([p,b,g])
-listaCidades(DIA, LLC):- findall(CD,entrega(_,DIA,_,CD,_,_),LC),length(LC, TAMANHO), metodoLCpLLC(LC, TAMANHO,LLC).
-%metodoLCpLLC(_,0,[]).
-% metodoLCpLLC([H|T], S, [LLC|LLC2]):- append([LLC], [T|H], LLC2), S1 is
-% (S-1), metodoLCpLLC([T|H], S1, LLC2).
-metodoLCpLLC(_,0,[]):-!.
-metodoLCpLLC([A|B],TAMANHO,[[A|B],LISTADECAMINHOS]):-TAMANHO1 is TAMANHO-1,last(B,C),delete(B,C,D) ,metodoLCpLLC([C,A|D],TAMANHO1,LISTADECAMINHOS).
+:-dynamic geracoes/1.
+:-dynamic populacao/1.
+:-dynamic prob_cruzamento/1.
+:-dynamic prob_mutacao/1.
+%:-dynamic armazens/1.
 
-%[b,c,a],[c,a,b],[a,b,c].
-fatiaDeLLC(_,_,[],_).
-fatiaDeLLC(DIA,MAJ1_MIN2,[LC|LLC], LLTRsC):- listaCompleta(DIA,MAJ1_MIN2, LC,LTRsC), fatiaDeLLC(DIA,MAJ1_MIN2,LLC, [LLTRsC|LTRsC]).
+% parameterizaï¿½ï¿½o
+inicializa:-
+	write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
+	(retract(geracoes(_));true), asserta(geracoes(NG)),
+	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
+	(retract(populacao(_));true), asserta(populacao(DP)),
+	write('Probabilidade de Cruzamento (%):'), read(P1),
+	PC is P1/100,
+	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
+	write('Probabilidade de Mutacao (%):'), read(P2),
+	PM is P2/100,
+	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
 
-% dia+LC[p,b,g]= definimos LTGoGo[2,3]. transformamos GoGo em Real.
-% Acrescentamos a lista de tempos reais a LLTsC (Lista de listas de
-% tempos sem cidades).
-% (20221205, [p,b,g])--->([20,30],[10,70],[50,40])
-listaCompleta(_,_,[],[]).
-listaCompleta(DIA,MAJ1_MIN2, [C|LC],[LLTRsC|LTReal]):-
-    findall(T,dadosCam_t_e_ta(_,_,C,T,_,_), LTGoGo),
-    listaTempos(C,DIA,10,MAJ1_MIN2 ,LTGoGo,  LTReal),
-    listaCompleta(DIA,MAJ1_MIN2, LC,LLTRsC).
-% recebemos cidade, dia e LTGoGo. Transformamos cada elemento da LTGoGo
-% em Tempos reais sabendo o dia e a cidade. Metodo recursivo.
-% (p, 20221205, [2,3])--->([20,30])
-listaTempos(_,_,_,_,[],[]).
-listaTempos(C,DIA,TA,MAJ1_MIN2, [X|Y], [Z|LTR]):-
-    contas(MAJ1_MIN2, TA, C, DIA, X, Z),
-    listaTempos(C, DIA,TA,MAJ1_MIN2, Y,LTR) .
-% recebemos cidade, dia e X(tempo de trajeto). acedemos Ã  massa(M) e ao
-% tempo de descarga(T) de mercadoria. calculamos o Z (tempo real).
-% (p, 20221205, 2)--->(20)
-contas(MAJ1_MIN2,TA,C,DIA,X,Z):-
+gera:-
+	write('Data das entregas: '),read(DATE),
+	(retract(date(_));true), asserta(date(DATE)),
+	write('Id do camiao: '),read(IDCAMIAO),
+	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
+	inicializa,
+	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
+	%add_cidade_inicial_final(ListArmazens,Final),
+	write('ListArmazens='),write(ListArmazens),nl,
+	gera_populacao(Pop,ListArmazens),
+	%write('Passou do geraPop'),nl,
+	write('Pop='),write(Pop),nl,
+	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
+	write('PopAv='),write(PopAv),nl,
+	ordena_populacao(PopAv,PopOrd),
+	geracoes(NG),
+	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO).
 
-    (MAJ1_MIN2 is 2 ->
-    (findall(M,entrega(_,DIA,M,C,_,_),ME),
-    findall(T,entrega(_,DIA,_,C,_,T),TR),
-     (length(ME,TM),TM=0,M is 0,A is 0;M is ME,A is TR),
-    Z is (A+((X*(7500+M))/11800))
+gera_populacao(Pop,ListaArmazens):-
+	populacao(TamPop),
+	length(ListaArmazens,NumArmazens),
+	(retract(armazens(_));true), asserta(armazens(NumArmazens)),
+	write('NumArmazens_permutar='),write(NumArmazens),nl,
+	write('Lista_gera_pop='),write(ListaArmazens),nl,
+	gera_populacao(TamPop,ListaArmazens,NumArmazens,Pop).
 
-    );
+gera_populacao(0,_,_,[]):-!.
 
-    %MAJ1_MIN2 is 1, para o majorante
-    (   findall(M,entrega(_,DIA,M,C,_,_),ME),
-    findall(T,entrega(_,DIA,_,C,_,T),TR),
-        (length(ME,TM),TM=0,M is 0,A is 0;M is ME,A is TR),
-%!
-    Z is (A+((X*(7500+(4300-M)))/11800)+TA)
-    )
-    ).
+gera_populacao(TamPop,ListaArmazens,NumArmazens,[Ind|Resto]):-
+	TamPop1 is TamPop-1,
+	gera_populacao(TamPop1,ListaArmazens,NumArmazens,Resto),
+	gera_individuo(ListaArmazens,NumArmazens,Ind),
+	not(member(Ind,Resto)).
+
+gera_populacao(TamPop,ListaArmazens,NumArmazens,L):-
+	gera_populacao(TamPop,ListaArmazens,NumArmazens,L).
+
+gera_individuo([G],1,[G]):-!.
+
+gera_individuo(ListaArmazens,NumArmazens,[G|Resto]):-
+	NumTemp is NumArmazens + 1, % To use with random
+	random(1,NumTemp,N),
+	retira(N,ListaArmazens,G,NovaLista),
+	NumT1 is NumArmazens-1,
+	gera_individuo(NovaLista,NumT1,Resto).
+
+retira(1,[G|Resto],G,Resto).
+retira(N,[G1|Resto],G,[G1|Resto1]):-
+	N1 is N-1,
+	retira(N1,Resto,G,Resto1).
+
+add_cidade_inicial_final(List,Result):-
+	cidade_inicial(City),
+	append([City], List, TempList),
+    append(TempList, [City], Result).
+
+avalia_populacao([],[],_,_).
+avalia_populacao([Ind|Resto],[Ind*V|Resto1],Date,IdTruck):-
+	%add_cidade_inicial_final(Ind,Final),
+	tempo_byid(Ind,Date,IdTruck,V),
+	avalia_populacao(Resto,Resto1,Date,IdTruck).
+
+ordena_populacao(PopAv,PopAvOrd):-
+	bsort(PopAv,PopAvOrd).
+
+bsort([X],[X]):-!.
+bsort([X|Xs],Ys):-
+	bsort(Xs,Zs),
+	btroca([X|Zs],Ys).
+
+
+btroca([X],[X]):-!.
+
+btroca([X*VX,Y*VY|L1],[Y*VY|L2]):-
+	VX>VY,!,
+	btroca([X*VX|L1],L2).
+
+btroca([X|L1],[X|L2]):-btroca(L1,L2).
+
+
+gera_geracao(G,G,Pop,_,_):-!,
+	write('Geraï¿½ï¿½o '), write(G), write(':'), nl, write(Pop), nl.
+
+gera_geracao(N,G,Pop,DATE,IDCAMIAO):-
+	write('Geraï¿½ï¿½o '), write(N), write(':'), nl, write(Pop), nl,
+	cruzamento(Pop,NPop1),
+	mutacao(NPop1,NPop),
+	avalia_populacao(NPop,NPopAv,DATE,IDCAMIAO),
+	ordena_populacao(NPopAv,NPopOrd),
+	N1 is N+1,
+	gera_geracao(N1,G,NPopOrd,_,_).
+
+gerar_pontos_cruzamento(P1,P2):-
+	gerar_pontos_cruzamento1(P1,P2).
+
+gerar_pontos_cruzamento1(P1,P2):-
+	armazens(N),
+	NTemp is N+1,
+	random(1,NTemp,P11),
+	random(1,NTemp,P21),
+	P11\==P21,!,
+	((P11<P21,!,P1=P11,P2=P21);(P1=P21,P2=P11)).
+gerar_pontos_cruzamento1(P1,P2):-
+	gerar_pontos_cruzamento1(P1,P2).
+
+
+cruzamento([],[]).
+cruzamento([Ind*_],[Ind]).
+cruzamento([Ind1*_,Ind2*_|Resto],[NInd1,NInd2|Resto1]):-
+	gerar_pontos_cruzamento(P1,P2),
+	prob_cruzamento(Pcruz),random(0.0,1.0,Pc),
+	((Pc =< Pcruz,!,
+        cruzar(Ind1,Ind2,P1,P2,NInd1),
+	  cruzar(Ind2,Ind1,P1,P2,NInd2))
+	;
+	(NInd1=Ind1,NInd2=Ind2)),
+	cruzamento(Resto,Resto1).
+
+preencheh([],[]).
+
+preencheh([_|R1],[h|R2]):-
+	preencheh(R1,R2).
+
+
+sublista(L1,I1,I2,L):-
+	I1 < I2,!,
+	sublista1(L1,I1,I2,L).
+
+sublista(L1,I1,I2,L):-
+	sublista1(L1,I2,I1,L).
+
+sublista1([X|R1],1,1,[X|H]):-!,
+	preencheh(R1,H).
+
+sublista1([X|R1],1,N2,[X|R2]):-!,
+	N3 is N2 - 1,
+	sublista1(R1,1,N3,R2).
+
+sublista1([_|R1],N1,N2,[h|R2]):-
+	N3 is N1 - 1,
+	N4 is N2 - 1,
+	sublista1(R1,N3,N4,R2).
+
+rotate_right(L,K,L1):-
+	armazens(N),
+	T is N - K,
+	rr(T,L,L1).
+
+rr(0,L,L):-!.
+
+rr(N,[X|R],R2):-
+	N1 is N - 1,
+	append(R,[X],R1),
+	rr(N1,R1,R2).
+
+
+elimina([],_,[]):-!.
+
+elimina([X|R1],L,[X|R2]):-
+	not(member(X,L)),!,
+	elimina(R1,L,R2).
+
+elimina([_|R1],L,R2):-
+	elimina(R1,L,R2).
+
+insere([],L,_,L):-!.
+insere([X|R],L,N,L2):-
+	armazens(T),
+	((N>T,!,N1 is N mod T);N1 = N),
+	insere1(X,N1,L,L1),
+	N2 is N + 1,
+	insere(R,L1,N2,L2).
+
+
+insere1(X,1,L,[X|L]):-!.
+insere1(X,N,[Y|L],[Y|L1]):-
+	N1 is N-1,
+	insere1(X,N1,L,L1).
+
+cruzar(Ind1,Ind2,P1,P2,NInd11):-
+	sublista(Ind1,P1,P2,Sub1),
+	armazens(NumT),
+	R is NumT-P2,
+	rotate_right(Ind2,R,Ind21),
+	elimina(Ind21,Sub1,Sub2),
+	P3 is P2 + 1,
+	insere(Sub2,Sub1,P3,NInd1),
+	eliminah(NInd1,NInd11).
+
+
+eliminah([],[]).
+
+eliminah([h|R1],R2):-!,
+	eliminah(R1,R2).
+
+eliminah([X|R1],[X|R2]):-
+	eliminah(R1,R2).
+
+mutacao([],[]).
+mutacao([Ind|Rest],[NInd|Rest1]):-
+	prob_mutacao(Pmut),
+	random(0.0,1.0,Pm),
+	((Pm < Pmut,!,mutacao1(Ind,NInd));NInd = Ind),
+	mutacao(Rest,Rest1).
+
+mutacao1(Ind,NInd):-
+	gerar_pontos_cruzamento(P1,P2),
+	mutacao22(Ind,P1,P2,NInd).
+
+mutacao22([G1|Ind],1,P2,[G2|NInd]):-
+	!, P21 is P2-1,
+	mutacao23(G1,P21,Ind,G2,NInd).
+mutacao22([G|Ind],P1,P2,[G|NInd]):-
+	P11 is P1-1, P21 is P2-1,
+	mutacao22(Ind,P11,P21,NInd).
+
+mutacao23(G1,1,[G2|Ind],G2,[G1|Ind]):-!.
+mutacao23(G1,P,[G|Ind],G2,[G|NInd]):-
+	P1 is P-1,
+	mutacao23(G1,P1,Ind,G2,NInd).
