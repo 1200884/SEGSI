@@ -11,29 +11,33 @@ describe('GetTrucksComponent', () => {
   let fixture: ComponentFixture<GetTrucksComponent>;
 
   beforeEach(async () => {
-    TRUCKS =[
+    TRUCKS = [
       {
         id: "8a4e943c-f40d-4ffa-938b-c38a2acbdcea",
+        plate: "AB-CD-00",
         tare: 21,
         maxWeight: 22,
         batteryCapacity: 32,
         truckAutonomy: 32,
-        chargeTime: 23
+        chargeTime: 23,
+        active: true
       },
       {
         id: "0cd0578b-1aa0-450e-abdf-3170b168f432",
+        plate: "AB-CD-01",
         tare: 1,
         maxWeight: 2,
         batteryCapacity: 5,
         truckAutonomy: 4,
-        chargeTime: 2
+        chargeTime: 2,
+        active: true
       }];
     TestBed.configureTestingModule({
-      declarations: [ GetTrucksComponent ],
+      declarations: [GetTrucksComponent],
       providers: [
         {
-        provide: FleetService,
-        useValue: mockTruckService,
+          provide: FleetService,
+          useValue: mockTruckService,
         },
       ]
     })

@@ -20,6 +20,20 @@ export default class TravelsRepo implements ITravelsRepo {
     throw new Error('Method not implemented.');
   }
 
+  public async findAll(): Promise<Travels[]> {
+    const travelsRecord = await this.travelsSchema.find();
+
+    if (travelsRecord != null) {
+      var travelsArray: Array<Travels> = [];
+      for (var i = 0; i < travelsRecord.length; i++) {
+        travelsArray.push(TravelsMap.toDomain(travelsRecord[i]));
+      }
+      return travelsArray;  
+    }
+    else
+      return null;
+  }
+
   public async generateTravels(data: string): Promise<Travels> {
 
     var request = require('request');

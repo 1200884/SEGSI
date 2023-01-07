@@ -62,9 +62,9 @@ describe('CreatePathComponent', () => {
       expect(PATH.warehouseDeparture).toBe(1);
       expect(PATH.warehouseDeparture).not.toBeLessThan(0);
       expect(PATH.warehouseDeparture).not.toBeGreaterThan(18);
-      expect(PATH.warehouseDeparture).toBe(2);
-      expect(PATH.warehouseDeparture).not.toBeLessThan(0);
-      expect(PATH.warehouseDeparture).not.toBeGreaterThan(18);
+      expect(PATH.warehouseDestination).toBe(2);
+      expect(PATH.warehouseDestination).not.toBeLessThan(0);
+      expect(PATH.warehouseDestination).not.toBeGreaterThan(18);
       expect(PATH.distance).not.toBeLessThan(0);
       expect(PATH.distance).toBe(3);
       expect(PATH.travelTime).not.toBeLessThan(0);

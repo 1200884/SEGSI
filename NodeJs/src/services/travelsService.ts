@@ -12,22 +12,37 @@ export default class TravelsService implements ITravelsService {
     @Inject(config.repos.travels.name) private travelsRepo: ITravelsRepo,
   ) { }
 
+  public async getAllTravels(): Promise<Result<ITravelsDTO[]>> {
+    try {
+      const travels = await this.travelsRepo.findAll();
+      var finalTravels: Array<ITravelsDTO> = [];
+
+      if (travels == null) {
+        return Result.fail<ITravelsDTO[]>("There was a problem assembling the travels");
+      }
+      else {
+        for (var i = 0; i < travels.length; i++) {
+          finalTravels.push(TravelsMap.toDTO(travels[i]) as ITravelsDTO);
+        }
+        return Result.ok<ITravelsDTO[]>(finalTravels)
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async getTravels(date: string): Promise<Result<ITravelsDTO>> {
     try {
 
       const travels = await this.travelsRepo.getTravelsByDate(date);
 
       if (travels === null) {
-        console.log("1o if");
         const createdTavels = await this.travelsRepo.generateTravels(date);
 
         if (createdTavels === null) {
-          console.log("2o if");
           return Result.fail<ITravelsDTO>("There are no travels");
         }
         else {
-          console.log("1o else");
-          console.log(createdTavels);
           await this.travelsRepo.save(createdTavels);
 
           const travelsDTOResult = TravelsMap.toDTO(createdTavels) as ITravelsDTO;
@@ -35,7 +50,6 @@ export default class TravelsService implements ITravelsService {
         }
       }
       else {
-        console.log("2o else");
         const travelsDTOResult = TravelsMap.toDTO(travels) as ITravelsDTO;
         return Result.ok<ITravelsDTO>(travelsDTOResult);
       }
