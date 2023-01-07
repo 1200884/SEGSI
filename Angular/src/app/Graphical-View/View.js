@@ -89,7 +89,7 @@ export default class View {
             let angle = 0;
             let directionside = 0;
             let directionfront = 0;
-<<<<<<< HEAD
+
             let speed = 0.1;
             let rotationIndex = Math.PI / 32;
             let updates = false;
