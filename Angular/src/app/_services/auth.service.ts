@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from 'src/app/_models/User';
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,19 +15,16 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'signin', {
-      username,
-      password,
-    }, httpOptions);
+  register(user: User | undefined): Observable<User> {
+    return this.http.post<User>(environment.LOGISTICS_URL_LOCAL + environment.AUTH_URL+"/signup",user);
   }
-
-  register(name: string, phoneNumber: string, username: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'signup', {
-      name,
-      phoneNumber,
-      username,
-      password
-    }, httpOptions);
+  logIn(email: string): Observable<User> {
+    return this.http.get<User>(environment.LOGISTICS_URL_LOCAL + environment.AUTH_URL+"/"+email);
+  }
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(environment.LOGISTICS_URL_LOCAL + environment.AUTH_URL);
+  }
+  inactive(email: string): Observable<User> {
+    return this.http.delete<User>(environment.LOGISTICS_URL_LOCAL + environment.AUTH_URL+"/"+email);
   }
 }

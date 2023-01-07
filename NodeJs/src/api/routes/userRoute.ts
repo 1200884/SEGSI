@@ -24,7 +24,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createUser(req, res, next));
 
-  route.post('/:str',(req, res, next) => ctrl.signIn(req.params.str, req, res, next));
-
+  route.get('/:str',(req, res, next) => ctrl.signIn(req.params.str, req, res, next));
+  route.get('',(req, res, next) => ctrl.getUsers(req, res, next));
   route.delete('/:str',(req, res, next) => ctrl.disableUser(req.params.str, req, res, next));
 };

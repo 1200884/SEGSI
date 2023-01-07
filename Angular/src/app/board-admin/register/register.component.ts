@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
-
+import { User } from 'src/app/_models/User';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -8,9 +8,9 @@ import { AuthService } from '../../_services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   form: any = {
-    fname: null,
+    firstName: null,
     phoneNumber: null,
-    lname: null,
+    lastName: null,
     email: null,
     role: null
   };
@@ -24,9 +24,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { name, phoneNumber, username, role } = this.form;
-
-    this.authService.register(name, phoneNumber,username, role).subscribe(
+    const { firstName, phoneNumber, lastName, email, role } = this.form;
+    let user : User;
+    user = this.form;
+    this.authService.register(user).subscribe(
       data => {
         console.log(data);
         this.isSuccessful = true;
