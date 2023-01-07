@@ -32,4 +32,13 @@ export class GetUsersComponent implements OnInit {
       }
     )
   }
+  deactivate(email:string){
+    this.authService.inactive(email).subscribe(data => {
+      this.DisplayAll();
+    },
+    err => {
+      this.content = JSON.parse(err.error).message;
+      }
+    )
+  }
 }

@@ -36,6 +36,9 @@
         <td>
             {{user.role}}
         </td>
+        <td>
+          <button *ngIf="user.email!='aaa@aaa.com'" type="button" (click)="deactivate(user.email)">Deactivate</button>
+      </td>
       </tr>
     </tbody>
   </table> 
