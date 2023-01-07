@@ -7,7 +7,7 @@ export default class LAPR5 {
         this.gameRunning = false;
         this.scene = new THREE.Scene();
         this.view = new View();
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000 );//window.innerWidth / window.innerHeight, 0.1, 1000
         this.camera.rotateX(Math.PI / 4);
         this.camera.position.z = 14;
         this.camera.position.y = 16;
@@ -19,13 +19,17 @@ export default class LAPR5 {
         const canvas = this.renderer.domElement;
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
+        var ambientlight = new THREE.AmbientLight(0x000000, 0.5);//0x444444
+        this.scene.add(ambientlight);
+
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        let light = new THREE.DirectionalLight (0xFFE87C);//0xFFE87C
-        light.position.set (100, 100, 100); light.target.position.set(0, 0, 0);
+        let light = new THREE.DirectionalLight(0xFFE87C, 1.0);//0xFFE87C
+        light.position.set(10, 10, 10); 
+        //light.target.position.set(0, 0, 0);
         light.castShadow = true;
-        light.shadow.bias = -0.01;
+        light.shadow.bias = -0.0001;
         light.shadow.mapSize.width = 2048;
         light.shadow.mapSize.height = 2048;
         light.shadow.camera.near = 1.0;
@@ -34,14 +38,10 @@ export default class LAPR5 {
         light.shadow.camera.right = -200;
         light.shadow.camera.top = 200;
         light.shadow.camera.bottom = -200;
-        this.scene.add (light);
-        const helper = new THREE.DirectionalLightHelper (light);
-        this.scene.add (helper);  
+        this.scene.add(light);
 
-        light = new THREE.AmbientLight (0x000000 );//0x444444
-        this.scene.add (light);
-
-        light.castShadow = true;
+        const helper = new THREE.DirectionalLightHelper(light);
+        this.scene.add(helper);  
         
         const skybox = new THREE.CubeTextureLoader();
         const texture6 = skybox.load([
@@ -50,8 +50,6 @@ export default class LAPR5 {
             './assets/posy.jpg',// ceu
             './assets/negy.jpg',// chao
             './assets/posz.jpg',// :)
-
-
             './assets/negz.jpg',// :)
         ]);
         this.scene.background= texture6;

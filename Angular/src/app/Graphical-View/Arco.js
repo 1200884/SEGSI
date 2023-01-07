@@ -11,6 +11,7 @@ export default class Arco extends THREE.Mesh{
         var ud = cube.userData;
         ud.name="Arco";
         this.object.castShadow = true;
+        this.object.receiveShadow = true;
         this.object.add(cube);
         this.initialize();
 
