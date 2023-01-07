@@ -425,7 +425,10 @@ server() :-
 
 genetic_planning(Request):-
         http_parameters(Request,
-                        [date(DATE, [between(20220101,20221231)]),ProbCruzamento,ProbMutacao,NrGeracoes,TamanhoPop]).
+                        [date(DATE, [between(20220101,20221231)]),ProbCruzamento,ProbMutacao,NrGeracoes,TamanhoPop]),
+        gera(DATE,NrGeracoes,TamanhoPop,ProbCruzamento,ProbMutacao,Resultado),
+        format('Places: ~w',Resultado).
+
 
 :-dynamic geracoes/1.
 :-dynamic populacao/1.

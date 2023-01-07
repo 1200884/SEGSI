@@ -12,7 +12,7 @@ export default class LAPR5 {
         this.camera.position.z = 14;
         this.camera.position.y = 16;
         this.camera.position.x = -7;
-        
+
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.renderer.domElement);
@@ -22,8 +22,8 @@ export default class LAPR5 {
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        let light = new THREE.DirectionalLight (0xFFE87C);//0xFFE87C
-        light.position.set (100, 100, 100); light.target.position.set(0, 0, 0);
+        let light = new THREE.DirectionalLight(0xFFE87C);//0xFFE87C
+        light.position.set(100, 100, 100); light.target.position.set(0, 0, 0);
         light.castShadow = true;
         light.shadow.bias = -0.01;
         light.shadow.mapSize.width = 2048;
@@ -34,15 +34,15 @@ export default class LAPR5 {
         light.shadow.camera.right = -200;
         light.shadow.camera.top = 200;
         light.shadow.camera.bottom = -200;
-        this.scene.add (light);
-        const helper = new THREE.DirectionalLightHelper (light);
-        this.scene.add (helper);  
+        this.scene.add(light);
+        const helper = new THREE.DirectionalLightHelper(light);
+        this.scene.add(helper);
 
-        light = new THREE.AmbientLight (0x000000 );//0x444444
-        this.scene.add (light);
+        light = new THREE.AmbientLight(0x000000);//0x444444
+        this.scene.add(light);
 
         light.castShadow = true;
-        
+
         const skybox = new THREE.CubeTextureLoader();
         const texture6 = skybox.load([
             './assets/posx.jpg',// :)
@@ -54,7 +54,7 @@ export default class LAPR5 {
 
             './assets/negz.jpg',// :)
         ]);
-        this.scene.background= texture6;
+        this.scene.background = texture6;
 
         class PickHelper {
             constructor() {
@@ -67,7 +67,7 @@ export default class LAPR5 {
                 // restore the color if there is a picked object
                 if (this.pickedObject) {
                     this.pickedObject.material.color.setHex(
-                        this.pickedObjectSavedColor   
+                        this.pickedObjectSavedColor
                     );
                     //this.display = "block";
                     this.pickedObject = undefined;
@@ -84,15 +84,15 @@ export default class LAPR5 {
                         this.pickedObject.material.color.getHex();
                     // set its emissive color to flashing red/yellow
                     if (this.pickedObject.userData.name == "Armazem") {
-                        this.display=x.style.display;
+                        this.display = x.style.display;
                         x.style.display = "block";
-                        x.innerHTML = "Warehouse Details:<br>"+this.pickedObject.userData.description;
+                        x.innerHTML = "Warehouse Details:<br>" + this.pickedObject.userData.description;
                         console.log(this.pickedObject);
                         this.pickedObject.material.color.setHex(
                             (time * 8) % 2 > 1 ? 0xFFFF00 : 0xFF0000
                         );
-                    }else{
-                        x.style.display= "none";
+                    } else {
+                        x.style.display = "none";
                     }
                 }
             }
@@ -139,9 +139,9 @@ export default class LAPR5 {
             this.pickHelper.pick(this.pickPosition2, this.scene, this.camera, time);
             this.renderer.render(this.scene, this.camera);
             this.renderer.clearDepth();
-            this.controls.minDistance=5;
-            this.controls.maxDistance=100;
-            if (this.camera.position.y <= 1){
+            this.controls.minDistance = 5;
+            this.controls.maxDistance = 100;
+            if (this.camera.position.y <= 1) {
                 console.log("y min reached");
                 this.camera.position.y = 1;
             }

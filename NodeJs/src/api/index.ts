@@ -7,6 +7,7 @@ import packagingRoute from './routes/packagingRoute';
 import planningRoute from './routes/planningRoute';
 import travelsRoute from './routes/travelsRoute';
 import userRoute from './routes/userRoute';
+import geneticplanningRoute from './routes/geneticplanningRoute';
 
 export default () => {
 
@@ -19,6 +20,7 @@ export default () => {
 	planningRoute(app);
 	travelsRoute(app);
 	userRoute(app);
+	geneticplanningRoute(app);
 
 	return app
 }

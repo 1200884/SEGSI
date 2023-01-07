@@ -37,7 +37,13 @@ export class LogisticsService {
     return this.http.get<Planning>(environment.LOGISTICS_URL + environment.PLANNING_URL + '/' + truckId + '/' + date, { responseType: 'json' });
   }
   getGeneticPlanning(date: string,probcruzamento:string, probmutacao:string, nrgeracoes:string, tamanhopop:string):Observable<GeneticPlanning>{
-    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL + environment.PLANNING_URL + '/' + date+'/'+probcruzamento+'/'+probmutacao+'/'+nrgeracoes+'/'+tamanhopop, { responseType: 'json' });
+    console.log("date"+date);
+    console.log("probcruzamento"+probcruzamento);
+    console.log("probmutacao"+probmutacao);
+    console.log("numero geracoes"+nrgeracoes);
+    console.log("tamanho populacao"+tamanhopop);
+    
+    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL + environment.GENETICPLANNING_URL + '/' + date+ '/' +probcruzamento+ '/'+probmutacao+'/'+nrgeracoes+'/'+tamanhopop, { responseType: 'json' });
   }
   //Packaging packaging
   getPackagings(): Observable<Packaging[]> {
