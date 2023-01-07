@@ -21,7 +21,6 @@ import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/updat
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
 import { OktaCallbackComponent } from '@okta/okta-angular';
-
 import { GetPackagingComponent } from './board-logistics/get-packaging/get-packaging.component';
 import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
 import { PutPackagingComponent } from './board-logistics/put-packaging/put-packaging.component';
@@ -29,9 +28,10 @@ import { CreatePackagingComponent } from './board-logistics/create-packaging/cre
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
 import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
 import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
-
+import { GetUsersComponent } from './board-admin/get-users/get-users.component';
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'users', component: GetUsersComponent },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
@@ -59,7 +59,6 @@ const routes: Routes = [
   { path: 'get-packaging', component: GetPackagingComponent },
   { path: 'create-packaging', component: CreatePackagingComponent },
   { path: 'put-packaging', component: PutPackagingComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   //{ path: 'login/callback', component: OktaCallbackComponent },
 ];
 

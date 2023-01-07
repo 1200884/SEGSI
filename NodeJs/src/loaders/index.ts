@@ -74,6 +74,10 @@ export default async ({ expressApp }) => {
     name: config.controllers.planning.name,
     path: config.controllers.planning.path
   }
+  const geneticplanningController = {
+    name: config.controllers.geneticplanning.name,
+    path: config.controllers.geneticplanning.path
+  }
 
   const travelsController = {
     name: config.controllers.travels.name,
@@ -107,6 +111,10 @@ export default async ({ expressApp }) => {
   const planningRepo = {
     name: config.repos.planning.name,
     path: config.repos.planning.path
+  }
+  const geneticplanningRepo = {
+    name: config.repos.geneticplanning.name,
+    path: config.repos.geneticplanning.path
   }
   const deliveryRepo = {
     name: config.repos.delivery.name,
@@ -143,6 +151,10 @@ export default async ({ expressApp }) => {
     name: config.services.planning.name,
     path: config.services.planning.path
   }
+  const geneticplanningService = {
+    name: config.services.geneticplanning.name,
+    path: config.services.geneticplanning.path
+  }
 
   const travelsService = {
     name: config.services.travels.name,
@@ -173,7 +185,8 @@ export default async ({ expressApp }) => {
       packagingController,
       planningController,
       travelsController,
-      userController
+      userController,
+      geneticplanningController
     ],
     repos: [
       roleRepo,
@@ -183,7 +196,8 @@ export default async ({ expressApp }) => {
       packagingRepo,
       planningRepo,
       deliveryRepo,
-      travelsRepo
+      travelsRepo,
+      geneticplanningRepo
     ],
     services: [
       roleService,
@@ -192,7 +206,8 @@ export default async ({ expressApp }) => {
       packagingService,
       planningService,
       travelsService,
-      userService
+      userService,
+      geneticplanningService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');

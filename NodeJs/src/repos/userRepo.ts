@@ -37,7 +37,7 @@ export default class UserRepo implements IUserRepo {
     const query = { domainId: user.id.toString() }; 
 
     const userDocument = await this.userSchema.findOne( query );
-
+    console.log(userDocument);
     try {
       if (userDocument === null ) {
         const rawUser: any = UserMap.toPersistence(user);
@@ -84,4 +84,19 @@ export default class UserRepo implements IUserRepo {
     else
       return null;
   }
+
+  public async findAll(): Promise<User[]> {
+    const userRecord = await this.userSchema.find();
+
+    if (userRecord != null) {
+      var usersArray: Array<User> = [];
+      for (var i = 0; i < userRecord.length; i++) {
+        usersArray.push(UserMap.toDomain(userRecord[i]));
+      }
+      return usersArray;
+    }
+    else
+      return null;
+  }
+
 }

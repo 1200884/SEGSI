@@ -96,12 +96,7 @@ export class User extends AggregateRoot<UserProps> {
     const email = userDTO.email;
     const phoneNumber = userDTO.phoneNumber;
     const role = userDTO.role;
-
-    if (email.length==0 || firstName.length==0 || lastName.length==0 || phoneNumber.length==0 || role.length==0) {
-      return Result.fail<User>('Must provide data')
-    }else {
-      const user = new User({ firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, role: role})
+      const user = new User({ firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, role: role}, id)
       return Result.ok<User>(user)  
-    }
   }
 }

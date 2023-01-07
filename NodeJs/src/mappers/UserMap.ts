@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 import { Mapper } from "../core/infra/Mapper";
 
 import {IUserDTO} from "../dto/IUserDTO";
+import { Document, Model } from 'mongoose';
 
 import { User } from "../domain/user";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
@@ -10,12 +11,13 @@ import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 import { UserEmail } from "../domain/userEmail";
 
 import RoleRepo from "../repos/roleRepo";
+import { IUserPersistence } from '../dataschema/IUserPersistence';
 
 export class UserMap extends Mapper<User> {
 
   public static toDTO( user: User): IUserDTO {
     return {
-      //id: user.id.toString(),
+      id: user.id.toString(),
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -24,21 +26,9 @@ export class UserMap extends Mapper<User> {
     } as IUserDTO;
   }
 
-  public static async toDomain (raw: any): Promise<User> {
-    const userEmailOrError = UserEmail.create(raw.email);
-    const repo = Container.get(RoleRepo);
-    const role = await repo.findByDomainId(raw.role);
-
-    const userOrError = User.create({
-      firstName: raw.firstName,
-      lastName: raw.lastName,
-      email: raw.email,
-      phoneNumber: raw.phoneNumber,
-      role: raw.role,
-    }, new UniqueEntityID(raw.domainId))
-
+  public static toDomain (raw: any | Model<IUserPersistence & Document>): User {
+    const userOrError = User.createFromBD(raw, new UniqueEntityID(raw.domainId));
     userOrError.isFailure ? console.log(userOrError.error) : '';
-    
     return userOrError.isSuccess ? userOrError.getValue() : null;
   }
 

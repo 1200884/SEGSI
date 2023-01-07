@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@fireflysemantics/join": "^1.0.14",
+    "@jest/globals": "^29.3.1",
     "@okta/okta-angular": "6.0",
     "@okta/okta-auth-js": "7.0",
     "angular-in-memory-web-api": "^0.15.0",
@@ -38,6 +39,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~4.0.0",
     "@types/node": "^18.11.9",
+    "cypress": "^12.3.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -46,5 +48,6 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "tslib": "^2.4.1",
     "typescript": "~4.8.2"
+    
   }
 }

@@ -1,9 +1,8 @@
-<div >
-<nav class="container d-flex flex-column justify-content-around align-items-center mt-5 mb-5">
-  <a routerLink="/fleet">Fleet Manager</a> <br>
-  <a routerLink="/warehouse">Warehouse Manager</a><br>
-  <a routerLink="/logistics">Logistics Manager</a><br>  
+<div id="app">
+ <nav id="options">
+  <a *ngIf="showAdminBoard" href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+  <a *ngIf="showFleetBoard" href="/fleet" class="nav-link" routerLink="fleet">Fleet Board</a>
+  <a *ngIf="showWarehouseBoard" href="/warehouse" class="nav-link" routerLink="warehouse">Warehouse Board</a>
+  <a *ngIf="showLogisticsBoard" href="/logistics" class="nav-link" routerLink="logistics">Logistics Board</a>
 </nav>
-      
-  
 </div>
