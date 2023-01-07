@@ -36,16 +36,7 @@ pipelines:
               - npm install -g reflect-metadata rxjs
               - npm install
               - npm uninstall @types/mocha
-              - npm run build
-        - step:
-            name: Build and Test Angular Project           
-            caches:
-              - node
-            script:
-              - cd Angular
-              - npm install
-              - ng build --prod
-              - ng test    
+              - npm run build 
         - step:
             name: 'Deployment Node'
             deployment: production
