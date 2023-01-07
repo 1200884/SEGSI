@@ -3,10 +3,12 @@
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_parameters)).
+:- use_module(library(http/http_client)).
 % Bibliotecas JSON
 :- use_module(library(http/json_convert)).
 :- use_module(library(http/http_json)).
 :- use_module(library(http/json)).
+:- use_module(library(dcg/basics)).
 
 :- json_object data(time:number, places:list).
 :- json_object list(viagens:list(list)).
@@ -15,10 +17,11 @@
 :- http_handler('/create_path',path_creator, []).
 :- http_handler('/planning', p_json, []).
 :- http_handler('/travels', get_travels, []).
+:- http_handler('/deliveries', get_deliveries, []).
 
 % Cria��o de servidor HTTP no porto 'Port'
 server() :-
-        http_server(http_dispatch, [port(5000)]).
+        http_server(http_dispatch, [port(8000)]).
 
 path_creator(Request):-
   http_parameters(Request,
@@ -55,6 +58,40 @@ get_travels(Request) :-
         D = list(L),
         prolog_to_json(D, X),
         reply_json(X).
+
+get_deliveries(Response) :-
+    http_get('https://localhost:5001/api/Deliveries/', Response, []),
+    string_codes(ResponseString, Response),
+    format('Content-type: text/plain~n~n'),
+    format('~w', ResponseString),
+    phrase(json_response(Facts), ResponseString),
+    assert_delivery_facts(Facts).
+
+assert_delivery_facts([]).
+assert_delivery_facts([Fact|Facts]):-
+        assert(Fact),
+        assert_delivery_facts(Facts).
+
+json_response([]) --> [].
+json_response([Fact|Facts]) --> json_object(Fact), json_response(Facts).
+
+json_object(delivery(ID, Date, Weight, WarehouseID, Active)) -->
+    json_property(id, ID),
+    json_property(date, Date),
+    json_property(weight, Weight),
+    json_property(warehouseId, WarehouseID),
+    json_property(active, Active).
+
+json_property(Property, Value) -->
+    "\"", string(Property), "\":", white, json_value(Value), !.
+
+json_value(Value) -->
+    "\"", string(String), "\"",
+    { atom_string(Value, String) }.
+json_value(Value) -->
+    number(Number),
+    { atom_number(Value, Number) }.
+
 
 split(json([truckId=X,date=Y]),X,Y).
 split_date(json([date=Y]),Y).

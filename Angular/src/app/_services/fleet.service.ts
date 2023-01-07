@@ -32,7 +32,7 @@ export class FleetService {
   }
 
   postTruck(info: any): Observable<Truck> {
-    return this.http.post<Truck>(environment.LOGISTICS_URL + environment.TRUCKS_URL, info);
+    return this.http.post<Truck>(environment.LOGISTICS_URL_LOCAL + environment.TRUCKS_URL, info);
   }
 
   putTruck(info: any): Observable<Truck> {
