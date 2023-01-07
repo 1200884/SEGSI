@@ -38,8 +38,9 @@ pipelines:
               - npm uninstall @types/mocha
               - npm run build
         - step:
-            name: Build and Test Angular Project
-            image: mcr.microsoft.com/nodejs/angular:10.17.0
+            name: Build and Test Angular Project           
+            caches:
+              - node
             script:
               - cd Angular
               - npm install
