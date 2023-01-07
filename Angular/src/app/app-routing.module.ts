@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './board-admin/register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -20,16 +20,18 @@ import { CreateDeliveryComponent } from "./board-warehouse/create-delivery/creat
 import { UpdateDeliveryComponent } from "./board-warehouse/update-delivery/update-delivery.component";
 import { CreatePathComponent } from './board-logistics/create-path/create-path.component';
 import { GetTrucksComponent } from './board-fleet/get-trucks/get-trucks.component';
-
+import { OktaCallbackComponent } from '@okta/okta-angular';
 import { GetPackagingComponent } from './board-logistics/get-packaging/get-packaging.component';
 import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
 import { PutPackagingComponent } from './board-logistics/put-packaging/put-packaging.component';
 import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
 import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
 import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
-
+import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
+import { GetUsersComponent } from './board-admin/get-users/get-users.component';
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'users', component: GetUsersComponent },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
@@ -52,11 +54,12 @@ const routes: Routes = [
   { path: 'create-paths', component: CreatePathComponent },
   { path: 'get-paths', component: GetPathsComponent },
   { path: 'get-planning', component: GetPlanningComponent },
+  {path: 'get-geneticplanning', component:GetGeneticplanningComponent},
   { path: 'get-packagings', component: GetPackagingsComponent },
   { path: 'get-packaging', component: GetPackagingComponent },
   { path: 'create-packaging', component: CreatePackagingComponent },
   { path: 'put-packaging', component: PutPackagingComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  //{ path: 'login/callback', component: OktaCallbackComponent },
 ];
 
 @NgModule({

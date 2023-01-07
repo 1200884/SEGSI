@@ -1,41 +1,45 @@
-import { Component } from '@angular/core';
-import { TokenStorageService } from './_services/token-storage.service';
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {SocialAuthService,SocialUser} from '@abacritt/angularx-social-login';
+import { AuthService } from './_services/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Angular12JwtAuth';
   private roles: string[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
-  showFleetBoard = false;
-  showWarehouseBoard = false;
-  showLogisticsBoard = false;
   username?: string;
-
-  constructor(private tokenStorageService: TokenStorageService) { }
+  user: SocialUser | undefined;
+  loggedIn: boolean | undefined;
+  isSignInFailed = false;
+  constructor(private authService: AuthService,public socialAuthService: SocialAuthService,private router: Router/*, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth*/) {
+  }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showFleetBoard = this.roles.includes('ROLE_FLEET');
-      this.showWarehouseBoard = this.roles.includes('ROLE_WAREHOUSE');
-      this.showLogisticsBoard = this.roles.includes('ROLE_LOGISTICS');
-
-      this.username = user.username;
-    }
+    this.verifyLogin();
   }
 
   logout(): void {
-    this.tokenStorageService.signOut();
-    window.location.reload();
+    this.socialAuthService.signOut();
+  }
+  verifyLogin() {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+      if(this.loggedIn){
+        console.log(user.email);
+        this.authService.logIn(user.email).subscribe(
+          data => {
+          },
+          err => {
+            console.log("erro");
+            this.socialAuthService.signOut();
+            this.isSignInFailed = true;
+          }
+        );
+      }
+    });
   }
 }

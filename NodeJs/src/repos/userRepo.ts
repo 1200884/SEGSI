@@ -15,7 +15,6 @@ export default class UserRepo implements IUserRepo {
 
   constructor(
     @Inject('userSchema') private userSchema : Model<IUserPersistence & Document>,
-    @Inject('logger') private logger
   ) { }
 
   private createBaseQuery (): any {
@@ -38,7 +37,7 @@ export default class UserRepo implements IUserRepo {
     const query = { domainId: user.id.toString() }; 
 
     const userDocument = await this.userSchema.findOne( query );
-
+    console.log(userDocument);
     try {
       if (userDocument === null ) {
         const rawUser: any = UserMap.toPersistence(user);
@@ -49,6 +48,9 @@ export default class UserRepo implements IUserRepo {
       } else {
         userDocument.firstName = user.firstName;
         userDocument.lastName = user.lastName;
+        userDocument.email = user.email;
+        userDocument.phoneNumber = user.phoneNumber;
+        userDocument.role = user.role;
         await userDocument.save();
 
         return user;
@@ -82,4 +84,19 @@ export default class UserRepo implements IUserRepo {
     else
       return null;
   }
+
+  public async findAll(): Promise<User[]> {
+    const userRecord = await this.userSchema.find();
+
+    if (userRecord != null) {
+      var usersArray: Array<User> = [];
+      for (var i = 0; i < userRecord.length; i++) {
+        usersArray.push(UserMap.toDomain(userRecord[i]));
+      }
+      return usersArray;
+    }
+    else
+      return null;
+  }
+
 }

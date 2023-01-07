@@ -2,6 +2,8 @@ import { Result } from "../../core/logic/Result";
 import { IUserDTO } from "../../dto/IUserDTO";
 
 export default interface IUserService  {
-  SignUp(userDTO: IUserDTO): Promise<Result<{userDTO: IUserDTO, token: string}>>;
-  SignIn(email: string, password: string): Promise<Result<{ userDTO: IUserDTO, token: string }>>;
+  createUser(userDTO: IUserDTO): Promise<Result<IUserDTO>>;
+  signIn(email: string): Promise<Result<IUserDTO>>;
+  disableUser(email: string): Promise<Result<IUserDTO>>;
+  getUsers(): Promise<Result<IUserDTO[]>>;
 }

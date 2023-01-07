@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
+import { Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { AuthService } from '../_services/auth.service';
+import { User } from '../_models/User';
+import { CheckboxControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -7,18 +11,55 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  content?: string;
+  user2: SocialUser | undefined;
+  user: User | undefined;
+  showAdminBoard = false;
+  showFleetBoard = false;
+  showWarehouseBoard = false;
+  showLogisticsBoard = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private authService: AuthService, public socialAuthService: SocialAuthService, private router: Router/*, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth*/) {
+  }
 
   ngOnInit(): void {
-    this.userService.getPublicContent().subscribe(
-      data => {
-        this.content = data;
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    );
+    this.getUser();
+  }
+
+  logout(): void {
+    this.socialAuthService.signOut();
+  }
+  getUser() {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user2 = user;
+      this.authService.logIn(user.email).subscribe(
+        data => {
+          this.user = data;
+          this.checkRole();
+        },
+        err => {
+          console.log("erro");
+          this.socialAuthService.signOut();
+        }
+      );
+    });
+  }
+  checkRole() {
+    switch (this.user?.role) {
+      case 'Admin':
+        this.showAdminBoard = true;
+        this.showFleetBoard = true;
+        this.showLogisticsBoard = true;
+        this.showWarehouseBoard = true;
+        break;
+      case 'Logistics Manager':
+        this.showFleetBoard = true;
+        break;
+      case 'Fleet Manager':
+        this.showLogisticsBoard = true;
+        break;
+      case 'Warehouse Manager':
+        this.showWarehouseBoard = true;
+        break;
+    }
   }
 }

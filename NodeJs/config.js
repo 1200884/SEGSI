@@ -62,9 +62,17 @@ export default {
       name: "PlanningController",
       path: "../controllers/planningController"
     },
+    geneticplanning: {
+      name: "GeneticPlanningController",
+      path: "../controllers/geneticplanningController"
+    },
     travels: {
       name: "TravelsController",
       path: "../controllers/travelsController"
+    },
+    user: {
+      name: "UserController",
+      path: "../controllers/userController"
     }
   },
 
@@ -93,6 +101,7 @@ export default {
       name: "PlanningRepo",
       path: "../repos/planningRepo"
     },
+    
     delivery: {
       name: "DeliveryRepo",
       path: "../repos/deliveryRepo"
@@ -100,6 +109,14 @@ export default {
     travels: {
       name: "TravelsRepo",
       path: "../repos/travelsRepo"
+    },
+    geneticplanning: {
+      name: "GeneticPlanningRepo",
+      path: "../repos/geneticplanningRepo"
+    },
+    user: {
+      name: "UserRepo",
+      path: "../repos/userRepo"
     }
   },
 
@@ -124,9 +141,17 @@ export default {
       name: "PlanningService",
       path: "../services/planningService"
     },
+    geneticplanning: {
+      name: "PlanningService",
+      path: "../services/geneticplanningService"
+    },
     travels: {
       name: "TravelsService",
       path: "../services/travelsService"
+    },
+    user: {
+      name: "UserService",
+      path: "../services/userService"
     }
   },
 };

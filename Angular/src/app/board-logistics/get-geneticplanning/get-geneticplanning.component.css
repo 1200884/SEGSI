@@ -1,0 +1,32 @@
+output {
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    right: 50%;
+    -ms-transform: translateY(0%);
+    transform: translateY(-50%);
+}
+label {
+    color: #46f10d;
+    font-weight: bold;
+  }
+  input-box {
+    font-size: 1em;
+    padding: .9rem;
+    align-items: flex-end;
+  }
+  button {
+    margin-top: 20px;
+    background-color: rgb(249, 11, 11);
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  button:hover {
+    background-color: #4709fe;
+  }
+  button:disabled {
+    background-color: #d42d2d;
+    color: #ccc;
+    cursor: auto;
+  }

@@ -3,55 +3,43 @@ import { Container } from 'typedi';
 import { Mapper } from "../core/infra/Mapper";
 
 import {IUserDTO} from "../dto/IUserDTO";
+import { Document, Model } from 'mongoose';
 
 import { User } from "../domain/user";
 import { UniqueEntityID } from "../core/domain/UniqueEntityID";
 
 import { UserEmail } from "../domain/userEmail";
-import { UserPassword } from "../domain/userPassword";
 
 import RoleRepo from "../repos/roleRepo";
+import { IUserPersistence } from '../dataschema/IUserPersistence';
 
 export class UserMap extends Mapper<User> {
 
   public static toDTO( user: User): IUserDTO {
     return {
-      //id: user.id.toString(),
+      id: user.id.toString(),
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email.value,
-      password: "",
-      role: user.role.id.toString()
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role
     } as IUserDTO;
   }
 
-  public static async toDomain (raw: any): Promise<User> {
-    const userEmailOrError = UserEmail.create(raw.email);
-    const userPasswordOrError = UserPassword.create({value: raw.password, hashed: true});
-    const repo = Container.get(RoleRepo);
-    const role = await repo.findByDomainId(raw.role);
-
-    const userOrError = User.create({
-      firstName: raw.firstName,
-      lastName: raw.lastName,
-      email: userEmailOrError.getValue(),
-      password: userPasswordOrError.getValue(),
-      role: role,
-    }, new UniqueEntityID(raw.domainId))
-
+  public static toDomain (raw: any | Model<IUserPersistence & Document>): User {
+    const userOrError = User.createFromBD(raw, new UniqueEntityID(raw.domainId));
     userOrError.isFailure ? console.log(userOrError.error) : '';
-    
     return userOrError.isSuccess ? userOrError.getValue() : null;
   }
 
   public static toPersistence (user: User): any {
     const a = {
       domainId: user.id.toString(),
-      email: user.email.value,
-      password: user.password.value,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
       firstName: user.firstName,
       lastName: user.lastName,
-      role: user.role.id.toValue(),
+      role: user.role,
     }
     return a;
   }

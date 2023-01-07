@@ -22,18 +22,19 @@ const User = new mongoose.Schema(
 
     email: {
       type: String,
-      lowercase: true,  
-      unique: true,
+      lowercase: true,
+      unique: false,
       index: true,
     },
-
-    password: String,
-
-    salt: String,
 
     role: {
       type: String,
       default: 'user',
+    },
+
+    phoneNumber: {
+      type: String,
+      unique: true,
     },
   },
   { timestamps: true },

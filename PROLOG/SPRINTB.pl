@@ -19,6 +19,7 @@
 :- http_handler('/travels', get_travels, []).
 :- http_handler('/deliveries', get_deliveries, []).
 
+
 % Cria��o de servidor HTTP no porto 'Port'
 server() :-
         http_server(http_dispatch, [port(8000)]).
@@ -44,8 +45,7 @@ p_json(Request) :-
 %        format('~2f ~n~w', [T, L]).
         D = data(T,L),
 %        format('~w', [D]),
-        prolog_to_json(D, X),
-        reply_json(X).
+        prolog_to_json(D, X),   reply_json(X).
 
 get_travels(Request) :-
         http_read_json(Request, JSON),

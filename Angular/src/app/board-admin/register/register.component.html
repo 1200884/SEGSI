@@ -13,55 +13,55 @@
       novalidate
     >
     <div class="form-group">
-      <label for="name">Name</label>
+      <label for="firstName">First Name</label>
       <input
         type="text"
         class="form-control"
-        name="name"
-        [(ngModel)]="form.name"
+        name="firstName"
+        [(ngModel)]="form.firstName"
         required
         minlength="3"
         maxlength="20"
-        #name="ngModel"
+        #firstName="ngModel"
       />
-      <div class="alert-danger" *ngIf="form.name.errors && f.submitted">
-        <div *ngIf="form.name.errors.required">Name is required</div>
-        <div *ngIf="form.name.errors.minlength">
+      <div class="alert-danger" *ngIf="firstName.errors && f.submitted">
+        <div *ngIf="firstName.errors.required">Name is required</div>
+        <div *ngIf="firstName.errors.minlength">
           Name must be at least 3 characters
         </div>
-        <div *ngIf="form.name.errors.maxlength">
+        <div *ngIf="firstName.errors.maxlength">
           Name must be at most 50 characters
         </div> 
       </div> 
     </div> 
     <div class="form-group">
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="lastName">Last Name</label>
         <input
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
+          name="lastName"
+          [(ngModel)]="form.lastName"
           required
           minlength="3"
           maxlength="20"
-          #username="ngModel"
+          #lastName="ngModel"
         />
-        <div class="alert-danger" *ngIf="username.errors && f.submitted">
-          <div *ngIf="username.errors.required">Username is required</div>
-          <div *ngIf="username.errors.minlength">
+        <div class="alert-danger" *ngIf="lastName.errors && f.submitted">
+          <div *ngIf="lastName.errors.required">Username is required</div>
+          <div *ngIf="lastName.errors.minlength">
             Username must be at least 3 characters
           </div>
-          <div *ngIf="username.errors.maxlength">
+          <div *ngIf="lastName.errors.maxlength">
             Username must be at most 20 characters
           </div>
         </div>
       </div>
-      <label for="email">PhoneNumber</label>
+      <label for="phoneNumber">PhoneNumber</label>
       <input
-        type="email"
+        type="phoneNumber"
         class="form-control"
-        name="email"
+        name="phoneNumber"
         [(ngModel)]="form.phoneNumber"
         required
         phoneNumber
@@ -71,31 +71,46 @@
       /> 
       <div class="alert-danger" *ngIf="phoneNumber.errors && f.submitted">
         <div *ngIf="phoneNumber.errors.required">Phone Number is required</div>
-        <div *ngIf="form.name.errors.minlength">
+        <div *ngIf="form.phoneNumber.errors.minlength">
           Phone Number must be 9 characters
         </div>
-        <div *ngIf="form.name.errors.maxlength">
+        <div *ngIf="form.phoneNumber.errors.maxlength">
           Phone Number must be 9 characters
         </div> 
       </div> 
     </div> 
+    
+    <label for="email">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        [(ngModel)]="form.email"
+        required
+        email
+        #email="ngModel"
+      /> 
+      <div class="alert-danger" *ngIf="email.errors && f.submitted">
+        <div *ngIf="email.errors.required">Phone Number is required</div>
+      </div> 
 
       <div class="form-group">
         <label for="role">Role</label>
-        <input
+        <select
           type="role"
           class="form-control"
           name="role"
           [(ngModel)]="form.role"
           required
-          minlength="6"
           #role="ngModel"
-        />
+        >
+        <option value="Admin">Admin</option>
+        <option value="Warehouse Manager">Warehouse Manager</option>
+        <option value="Fleet Manager">Fleet Manager</option>
+        <option value="Logistics Manager">Logistics Manager</option>
+        </select>
         <div class="alert-danger" *ngIf="role.errors && f.submitted">
-          <div *ngIf="role.errors.required">role is required</div>
-          <div *ngIf="role.errors.minlength">
-            role must be at least 6 characters
-          </div>
+          <div *ngIf="role.errors.required">Role is required</div>
         </div>
       </div>
       <div class="form-group">

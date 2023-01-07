@@ -4,6 +4,7 @@ import mongooseLoader from './mongoose';
 import Logger from './logger';
 
 import config from '../../config';
+import UserController from '../controllers/userController';
 
 export default async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
@@ -64,9 +65,18 @@ export default async ({ expressApp }) => {
     path: config.controllers.packaging.path
   }
 
+  const userController = {
+    name: config.controllers.user.name,
+    path: config.controllers.user.path
+  }
+
   const planningController = {
     name: config.controllers.planning.name,
     path: config.controllers.planning.path
+  }
+  const geneticplanningController = {
+    name: config.controllers.geneticplanning.name,
+    path: config.controllers.geneticplanning.path
   }
 
   const travelsController = {
@@ -101,6 +111,10 @@ export default async ({ expressApp }) => {
   const planningRepo = {
     name: config.repos.planning.name,
     path: config.repos.planning.path
+  }
+  const geneticplanningRepo = {
+    name: config.repos.geneticplanning.name,
+    path: config.repos.geneticplanning.path
   }
   const deliveryRepo = {
     name: config.repos.delivery.name,
@@ -137,10 +151,19 @@ export default async ({ expressApp }) => {
     name: config.services.planning.name,
     path: config.services.planning.path
   }
+  const geneticplanningService = {
+    name: config.services.geneticplanning.name,
+    path: config.services.geneticplanning.path
+  }
 
   const travelsService = {
     name: config.services.travels.name,
     path: config.services.travels.path
+  }
+
+  const userService = {
+    name: config.services.user.name,
+    path: config.services.user.path
   }
 
 
@@ -161,7 +184,9 @@ export default async ({ expressApp }) => {
       pathController,
       packagingController,
       planningController,
-      travelsController
+      travelsController,
+      userController,
+      geneticplanningController
     ],
     repos: [
       roleRepo,
@@ -171,7 +196,8 @@ export default async ({ expressApp }) => {
       packagingRepo,
       planningRepo,
       deliveryRepo,
-      travelsRepo
+      travelsRepo,
+      geneticplanningRepo
     ],
     services: [
       roleService,
@@ -179,7 +205,9 @@ export default async ({ expressApp }) => {
       pathService,
       packagingService,
       planningService,
-      travelsService
+      travelsService,
+      userService,
+      geneticplanningService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');

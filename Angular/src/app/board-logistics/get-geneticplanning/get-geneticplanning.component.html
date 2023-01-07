@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="output">
+        <p>Places: {{geneticplanning.places}}</p>
+    </div>
+
+    <div class="input-box">
+        <form #geneticplanningForm="ngForm" (ngSubmit)="getGeneticPlanning(geneticplanningForm.value)">
+  
+          <label>Date: </label>
+          <input type="text" name="date" id="date" ngModel>
+          
+          <label>Probabilidade de Cruzamento: </label>
+          <input type="text" name="probcruzamento" id="probcruzamento" ngModel>
+            
+          <label>Probabilidade de Mutação: </label>
+          <input type="text" name="probmutacao" id="probmutacao" ngModel>
+    
+          <label>Numero de Gerações: </label>
+          <input type="text" name="nrgeracoes" id="nrgeracoes" ngModel>
+          
+          <label>Tamanho da população: </label>
+          <input type="text" name="tamanhopop" id="tamanhopop" ngModel>
+    
+          <input type="submit" value="Get planning">
+        </form>
+    </div>
+    <div class="d-flex align-items-right">
+        <button type="button" class="btn btn-light" routerLink="/logistics">Go Back
+        </button>
+      </div>
+</div>
+
+
+
+      
