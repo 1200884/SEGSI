@@ -38,6 +38,14 @@ pipelines:
               - npm uninstall @types/mocha
               - npm run build
         - step:
+            name: Build and Test Angular Project
+            image: mcr.microsoft.com/nodejs/angular:10.17.0
+            script:
+              - cd Angular
+              - npm install
+              - ng build --prod
+              - ng test    
+        - step:
             name: 'Deployment Node'
             deployment: production
             script:
