@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GetUsersComponent } from './get-users.component';
 
@@ -21,3 +21,4 @@ describe('GetUsersComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/

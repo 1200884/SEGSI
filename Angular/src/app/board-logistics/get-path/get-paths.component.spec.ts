@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Path } from 'src/app/_models/Path';
 import { LogisticsService } from 'src/app/_services/logistics.service';
-import { expect } from '@jest/globals';
 
 
 describe('GetPathsComponent', () => {
