@@ -19,7 +19,7 @@
     "lib": [
       "es2018",
       "dom"
-    ],
+    ]
   },
   "include": ["src/app/**/*.ts"],
   "exclude": ["src/app/**/*.test.ts"],
@@ -29,8 +29,4 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-<<<<<<< HEAD
-
-=======
->>>>>>> 152daa6433cc85b66907213603b028268082b14d
 }

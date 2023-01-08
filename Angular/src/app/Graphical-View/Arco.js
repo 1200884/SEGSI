@@ -1,6 +1,5 @@
 import * as THREE from "three";
 
-<<<<<<< HEAD
 export default class Arco extends THREE.Mesh{
     constructor(size, armazemOrigem, armazemDestino) {
         super();
