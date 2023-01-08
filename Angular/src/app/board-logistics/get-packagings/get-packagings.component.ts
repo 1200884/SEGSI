@@ -13,7 +13,7 @@ export class GetPackagingsComponent implements OnInit {
   page: number=1;
   count:number =0;
   tablesize:number=5;
-  tablesizes:any =[5,10,15,20];
+  tablesizes:any =[5,10,15];
   filterText1 = '';
   filterText2 = '';
   filterText3 = '';
