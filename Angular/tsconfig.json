@@ -21,15 +21,11 @@
     ]
   },
   "include": ["src/app/**/*.ts"],
-  "exclude": ["src/app/**/*.test.ts"],
+  "exclude": ["src/app/*/*.test.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 224bebd7d3b5036f006a1cf00b08bc921a393650
