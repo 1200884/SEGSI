@@ -354,6 +354,7 @@ amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRU
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_parameters)).
+:- json_object list(places:list(list)).
 % Bibliotecas JSON
 :- use_module(library(http/json_convert)).
 :- use_module(library(http/http_json)).
@@ -364,10 +365,19 @@ server() :-
         http_server(http_dispatch, [port(5000)]).
 
 genetic_planning(Request):-
-        http_parameters(Request,
-                        [DATE,ProbCruzamento,ProbMutacao,NrGeracoes,TamanhoPop]),
+
+	 http_read_json(Request, JSON),
+        json_to_prolog(JSON, JSON_TEXT),
+      % format('Content-type: text/plain~n~n'),
+     %  format('~w~n', JSON_TEXT),
+        split(JSON_TEXT,DATE,NrGeracoes,TamanhoPop,ProbMutacao,ProbCruzamento),
         gera(DATE,NrGeracoes,TamanhoPop,ProbMutacao,ProbCruzamento,Resultado),
-	format('places: ~w',[Resultado]).
+	D = list(Resultado),
+        prolog_to_json(D, C),
+       reply_json(C).
+%	format('places: ~w',[Resultado]).
+
+split(json([date=X,nrgeracoes=Y,tamanhopop=Z,probcruzamento=A,probmutacao=B]),X,Y,Z,A,B).
 
 atribuicao_lote(DATE,LISTA_FINAL):-
         lista_entregas(LISTA_ENTREGAS,DATE),
@@ -458,28 +468,28 @@ get_delimitadores_list([[H|T]|Tail], [[H,L]|Lengths]) :-
 
 gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens):-
     (retract(date(_));true), assert(date(Date)),
-    write('Date='),write(Date),nl,
+   % write('Date='),write(Date),nl,
     (retract(geracoes(_));true), assert(geracoes(Geracoes)),
-    write('Geracoes='),write(Geracoes),nl,
+   % write('Geracoes='),write(Geracoes),nl,
     (retract(populacao(_));true), assert(populacao(Populacao)),
-    write('Populacao='),write(Populacao),nl,
+    %write('Populacao='),write(Populacao),nl,
     PC is Cruzamento/100,
 	(retract(prob_cruzamento(_));true), assert(prob_cruzamento(PC)),
-    write('PC='),write(PC),nl,
+    %write('PC='),write(PC),nl,
     PM is Mutacao/100,
     (retract(prob_mutacao(_));true), assert(prob_mutacao(PM)),
-    write('PM='),write(PM),nl,
+    %write('PM='),write(PM),nl,
     atribuicao_lote(Date,ListaViagens),
-    write('ListaViagens='),write(ListaViagens),nl,
+    %write('ListaViagens='),write(ListaViagens),nl,
 	get_delimitadores_list(ListaViagens,ListaDelimitadores),
 	(retract(delimitadores_list(_));true), assert(delimitadores_list(ListaDelimitadores)),
-	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
+%	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
     get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
-    write('ListaEntregas='),write(ListaEntregas),nl,
+   % write('ListaEntregas='),write(ListaEntregas),nl,
 	(retract(lista_entregas(_));true), assert(lista_entregas(ListaEntregas)),
 	length(ListaEntregas,NumEntregas),
 	(retract(entregas(_));true), asserta(entregas(NumEntregas)),
-	write('NumEntregas='),write(NumEntregas),nl,
+%	write('NumEntregas='),write(NumEntregas),nl,
 	%search_entrega(ListaEntregas,ListaArmazens),
 	%write('ListaArmazens='),write(ListaArmazens),nl,
     %gera_populacao(Populacao),

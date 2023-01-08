@@ -20,21 +20,21 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
     throw new Error('Method not implemented.');
   }*/
 
-  public async findByDomainId(date: string,geracoes:number,populacao:number,cruzamento:number,mutacao:number): Promise<GeneticPlanning> {
+  public async findByDomainId(date: number,nrgeracoes:number,tamanhopop:number,probcruzamento:number,probmutacao:number): Promise<GeneticPlanning> {
 
     var request = require('request');
     var options = {
       'method': 'POST',
-      'url': 'http://localhost:5000/geneticlanning',
+      'url': 'http://localhost:5000/geneticplanning',
       'headers': {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "date": new Number(date),
-        "geracoes":geracoes,
-        "populacao":populacao,
-        "cruzamento":cruzamento,
-        "mutacao":mutacao
+        "date": date,
+        "nrgeracoes":nrgeracoes,
+        "tamanhopop":tamanhopop,
+        "probcruzamento":probcruzamento,
+        "probmutacao":probmutacao,
       })
 
     };
@@ -46,9 +46,8 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
           if (error) {
             reject(error);
           } else {
-            console.log(response.body);
-            
-            geneticplanning = GeneticPlanningMap.toDomain(JSON.parse(response.body));
+            console.log("response body is"+response.body);
+            geneticplanning =response.body;
             resolve(geneticplanning);
           }
         })

@@ -291,24 +291,93 @@ dadosCam_t_e_ta(eTruck01,17,16,67,25,0).
 cidade_inicial(5).
 
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
-entrega(4439, 20221205, 200, 1, 8, 10).
+%entrega(4439, 20221205, 200, 1, 8, 10).
 entrega(4438, 20221205, 150, 9, 7, 9).
 entrega(4445, 20221205, 100, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
 entrega(4449, 20221205, 300, 11, 15, 20).
 entrega(4398, 20221205, 310, 17, 16, 20).
 entrega(4432, 20221205, 270, 14, 14, 18).
-entrega(4437, 20221205, 180, 12, 9, 11).
+/* entrega(4437, 20221205, 180, 12, 9, 11).
 entrega(4451, 20221205, 220, 6, 9, 12).
 entrega(4452, 20221205, 390, 13, 21, 26).
-entrega(4444, 20221205, 380, 2, 20, 25).
-entrega(6455, 20221205, 560, 7, 28, 38).
+entrega(4444, 20221205, 380, 2, 20, 25). */
 %carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
 carateristicasCam(eTruck01,7500,4300,80,100,60).
 carateristicasCam(eTruck02,7500,4300,80,100,60).
 carateristicasCam(eTruck03,7500,4300,80,100,60).
 
-%%% SPRINT C
+
+tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
+    trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
+
+somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.
+
+trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-
+	dadosCam_t_e_ta(_,A,B,T,E,_),
+	(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
+	PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
+	BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
+	(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
+	(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
+	tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
+	trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
+	tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
+
+trata_lista([_],0,_,_,_,_,_,_,_).
+
+pesomaximo(TRUCK,PESOMAXIMO):-carateristicasCam(TRUCK,A,B,_,_,_),PESOMAXIMO is A+B.
+
+pesototal(TRUCK,PESOTOTAL):-findall(A,entrega(_,_,A,_,_,_),E),sumlist(E,P), carateristicasCam(TRUCK,O,_,_,_,_),PESOTOTAL is P+O.
+
+tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,TOE,TOEUTIL):-TOEUTIL is TOE*PESOCAMIAO/PESOMAXIMO.
+
+tempoaconsiderar(TEMPOCARREGARCAMIAO,TEMPODESCARGAENCOMENDAS,TEMPOACONSIDERAR):-TEMPOCARREGARCAMIAO>TEMPODESCARGAENCOMENDAS,!,TEMPOACONSIDERAR is TEMPOCARREGARCAMIAO;TEMPOACONSIDERAR is TEMPODESCARGAENCOMENDAS.
+
+
+temporecarregamentototal(TRUCK,TEMPO):-carateristicasCam(TRUCK,_,_,_,_,TEMPO),!.
+% Se o pen�ltimo argumento for 5, significa que o tempo de
+% recarregamento necessita apenas de ser o estritamente necess�rio para
+% completar a viagem at� ao armaz�m seguinte (ou seja, chegar a este com
+% a bateria a 16%
+temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,5,BATUTNEC):-bateriaminima(TRUCK,BATMIN),B is BATATUAL-BATUTNEC, A is BATMIN-B,amplitudemaxima(TRUCK,AMPLITUDEMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO), TEMPO is TEMPOMAXIMO*A/AMPLITUDEMAX.
+temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO),amplitudemaxima(TRUCK,AMPLITUDEMAX),AMPLITUDEATUAL is BATMAX-BATATUAL, TEMPO is AMPLITUDEATUAL*TEMPOMAXIMO/AMPLITUDEMAX.
+
+%para um dado camiao, calcula a bateria maxima e minima (80%,20%).
+bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
+bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
+amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
+%set_prolog_flag(answer_write_options,[max_depth(0)]).
+%
+% SPRINT C
+% Bibliotecas
+:- use_module(library(http/thread_httpd)).
+:- use_module(library(http/http_dispatch)).
+:- use_module(library(http/http_parameters)).
+:- json_object list(places:list(list)).
+% Bibliotecas JSON
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/json)).
+
+:- http_handler('/geneticplanning',genetic_planning,[]).
+server() :-
+        http_server(http_dispatch, [port(5000)]).
+
+genetic_planning(Request):-
+
+	 http_read_json(Request, JSON),
+        json_to_prolog(JSON, JSON_TEXT),
+      % format('Content-type: text/plain~n~n'),
+     %  format('~w~n', JSON_TEXT),
+        split(JSON_TEXT,DATE,NrGeracoes,TamanhoPop,ProbMutacao,ProbCruzamento),
+        gera(DATE,NrGeracoes,TamanhoPop,ProbMutacao,ProbCruzamento,Resultado),
+	D = list(Resultado),
+        prolog_to_json(D, C),
+       reply_json(C).
+%	format('places: ~w',[Resultado]).
+
+split(json([date=X,nrgeracoes=Y,tamanhopop=Z,probcruzamento=A,probmutacao=B]),X,Y,Z,A,B).
 
 atribuicao_lote(DATE,LISTA_FINAL):-
         lista_entregas(LISTA_ENTREGAS,DATE),
@@ -369,81 +438,94 @@ tempo_byid(LC,DATE,IDTRUCK,FORMATED):-
 
 round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 10^D.
 
-tempo(LC,DATE,TARA,CMAX,F):-PMAX is TARA + CMAX,somatorio(DATE,TARA,PREAL),bateriamaxima(eTruck01,BMAX),bateriaminima(eTruck01,BMIN),
-    trata_lista(LC,F,PMAX,PREAL,BMAX,BMIN,80,eTruck01,DATE).
 
-somatorio(DATE,TARA,PR):-findall(M,entrega(_,DATE,M,_,_,_),L),sumlist(L,LS),PR is LS+TARA.
-
-trata_lista([A,B|C],TEMPO,PESOMAXIMO,PESOCAMIAO,BATMAX,BATMIN,BATATUAL,TRUCK,DIA):-
-	dadosCam_t_e_ta(_,A,B,T,E,_),
-	(entrega(_,DIA,MASSAENTREGA,B,_,TEMPORET);MASSAENTREGA is 0, TEMPORET is 0),
-	PESODESCARGA is PESOCAMIAO-MASSAENTREGA,tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,E,ENERGIAUTIL),(BATATUAL-ENERGIAUTIL>BATMIN,
-	BATAPOSVIAJ is BATATUAL-ENERGIAUTIL;BATAPOSVIAJ is BATMIN),
-	(member(NEXTSTOP,C),dadosCam_t_e_ta(_,B,NEXTSTOP,_,BATNEC,TA),tempoouenergiautil(PESODESCARGA,PESOMAXIMO,BATNEC,BATUTNEC),
-	(BATAPOSVIAJ-BATMIN>BATUTNEC,TEMPOACONSIDERAR is TEMPORET,NOVABAT is BATAPOSVIAJ,TEMPOADICIONAL is 0;(BATUTNEC<BATMAX-BATMIN,TEMPOADICIONAL is 0;TEMPOADICIONAL is TA),temporecarregamentoparcial(TRUCK,BATAPOSVIAJ,TEMPORECARREGAR,NEXTSTOP,BATUTNEC),
-	tempoaconsiderar(TEMPORECARREGAR,TEMPORET,TEMPOACONSIDERAR),NOVABAT is BATMAX);TEMPOACONSIDERAR is TEMPORET,TEMPOADICIONAL is 0),
-	trata_lista([B|C],D1,PESOMAXIMO,PESODESCARGA,BATMAX,BATMIN,NOVABAT,TRUCK,DIA),!,
-	tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,T,TEMPOUTIL),TEMPO is D1+TEMPOUTIL+TEMPOACONSIDERAR+TEMPOADICIONAL.
-
-trata_lista([_],0,_,_,_,_,_,_,_).
-
-pesomaximo(TRUCK,PESOMAXIMO):-carateristicasCam(TRUCK,A,B,_,_,_),PESOMAXIMO is A+B.
-
-pesototal(TRUCK,PESOTOTAL):-findall(A,entrega(_,_,A,_,_,_),E),sumlist(E,P), carateristicasCam(TRUCK,O,_,_,_,_),PESOTOTAL is P+O.
-
-tempoouenergiautil(PESOCAMIAO,PESOMAXIMO,TOE,TOEUTIL):-TOEUTIL is TOE*PESOCAMIAO/PESOMAXIMO.
-
-tempoaconsiderar(TEMPOCARREGARCAMIAO,TEMPODESCARGAENCOMENDAS,TEMPOACONSIDERAR):-TEMPOCARREGARCAMIAO>TEMPODESCARGAENCOMENDAS,!,TEMPOACONSIDERAR is TEMPOCARREGARCAMIAO;TEMPOACONSIDERAR is TEMPODESCARGAENCOMENDAS.
-
-
-temporecarregamentototal(TRUCK,TEMPO):-carateristicasCam(TRUCK,_,_,_,_,TEMPO),!.
-% Se o pen�ltimo argumento for 5, significa que o tempo de
-% recarregamento necessita apenas de ser o estritamente necess�rio para
-% completar a viagem at� ao armaz�m seguinte (ou seja, chegar a este com
-% a bateria a 16%
-temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,5,BATUTNEC):-bateriaminima(TRUCK,BATMIN),B is BATATUAL-BATUTNEC, A is BATMIN-B,amplitudemaxima(TRUCK,AMPLITUDEMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO), TEMPO is TEMPOMAXIMO*A/AMPLITUDEMAX.
-temporecarregamentoparcial(TRUCK,BATATUAL,TEMPO,_,_):- bateriamaxima(TRUCK,BATMAX),temporecarregamentototal(TRUCK,TEMPOMAXIMO),amplitudemaxima(TRUCK,AMPLITUDEMAX),AMPLITUDEATUAL is BATMAX-BATATUAL, TEMPO is AMPLITUDEATUAL*TEMPOMAXIMO/AMPLITUDEMAX.
-
-%para um dado camiao, calcula a bateria maxima e minima (80%,20%).
-bateriamaxima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*8/10.
-bateriaminima(TRUCK,B):-carateristicasCam(TRUCK,_,_,C,_,_), B is C*2/10.
-amplitudemaxima(TRUCK,AMPLITUDEMAXIMA):-bateriamaxima(TRUCK,A),bateriaminima(TRUCK,B),AMPLITUDEMAXIMA is A-B.
-%set_prolog_flag(answer_write_options,[max_depth(0)]).
-%
-%
-% Bibliotecas
-:- use_module(library(http/thread_httpd)).
-:- use_module(library(http/http_dispatch)).
-:- use_module(library(http/http_parameters)).
-% Bibliotecas JSON
-:- use_module(library(http/json_convert)).
-:- use_module(library(http/http_json)).
-:- use_module(library(http/json)).
-
-:- http_handler('/geneticplanning',genetic_planning,[]).
-server() :-
-        http_server(http_dispatch, [port(5000)]).
-
-genetic_planning(Request):-
-        http_parameters(Request,
-                        [date(Date, [between(20220101,20221231)]),Cruzamento,Mutacao,Geracoes,Populacao,Termino]),
-        gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,Termino,Resultado),
-        format('Places: ~w',Resultado).
-
-
-
+:-dynamic date/1.
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
 :-dynamic prob_mutacao/1.
-:-dynamic date/1.
-:-dynamic lista_armazens/1.
-:-dynamic delimitadores_list/1.
-:-dynamic valor/1.
 :-dynamic armazens/1.
-:-dynamic melhor/1.
-:-dynamic peso/1.
+:-dynamic delimitadores_list/1.
+:-dynamic lista_entregas/1.
 
+get_lista_entregas_without_trucks([], []).
+get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
+    get_lista_entregas_without_trucks(Tail, TailResult),
+    append(T, TailResult, Result).
+get_lista_entregas_without_trucks([[]|Tail], Result) :-
+    get_lista_entregas_without_trucks(Tail, Result).
+
+search_entrega([], []).
+search_entrega([H|T], [Result|TailResult]) :-
+    entrega(H, _, _, Result, _, _),
+    search_entrega(T, TailResult).
+
+get_delimitadores_list([], []).
+get_delimitadores_list([[H|T]|Tail], [[H,L]|Lengths]) :-
+    length(T, L),
+    get_delimitadores_list(Tail, Lengths).
+
+
+gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens):-
+    (retract(date(_));true), assert(date(Date)),
+   % write('Date='),write(Date),nl,
+    (retract(geracoes(_));true), assert(geracoes(Geracoes)),
+   % write('Geracoes='),write(Geracoes),nl,
+    (retract(populacao(_));true), assert(populacao(Populacao)),
+    %write('Populacao='),write(Populacao),nl,
+    PC is Cruzamento/100,
+	(retract(prob_cruzamento(_));true), assert(prob_cruzamento(PC)),
+    %write('PC='),write(PC),nl,
+    PM is Mutacao/100,
+    (retract(prob_mutacao(_));true), assert(prob_mutacao(PM)),
+    %write('PM='),write(PM),nl,
+    atribuicao_lote(Date,ListaViagens),
+    %write('ListaViagens='),write(ListaViagens),nl,
+	get_delimitadores_list(ListaViagens,ListaDelimitadores),
+	(retract(delimitadores_list(_));true), assert(delimitadores_list(ListaDelimitadores)),
+	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
+    get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
+    write('ListaEntregas='),write(ListaEntregas),nl,
+	(retract(lista_entregas(_));true), assert(lista_entregas(ListaEntregas)),
+	length(ListaEntregas,NumEntregas),
+	(retract(entregas(_));true), asserta(entregas(NumEntregas)),
+	write('NumEntregas='),write(NumEntregas),nl,
+	%search_entrega(ListaEntregas,ListaArmazens),
+	%write('ListaArmazens='),write(ListaArmazens),nl,
+    %gera_populacao(Populacao),
+    !.
+
+
+% parameteriza��o
+/* inicializa:-
+	write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
+	(retract(geracoes(_));true), asserta(geracoes(NG)),
+	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
+	(retract(populacao(_));true), asserta(populacao(DP)),
+	write('Probabilidade de Cruzamento (%):'), read(P1),
+	PC is P1/100,
+	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
+	write('Probabilidade de Mutacao (%):'), read(P2),
+	PM is P2/100,
+	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
+
+gera:-
+	write('Data das entregas: '),read(DATE),
+	(retract(date(_));true), asserta(date(DATE)),
+	write('Id do camiao: '),read(IDCAMIAO),
+	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
+	inicializa,
+	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
+	%add_cidade_inicial_final(ListArmazens,Final),
+	write('ListArmazens='),write(ListArmazens),nl,
+	gera_populacao(Pop,ListArmazens),
+	%write('Passou do geraPop'),nl,
+	write('Pop='),write(Pop),nl,
+	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
+	write('PopAv='),write(PopAv),nl,
+	ordena_populacao(PopAv,PopOrd),
+	geracoes(NG),
+	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO). */
 geraentregasdinamicas(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens,PopulacaoAnterior):-
     (retract(date(_));true), assert(date(Date)),
     write('Date='),write(Date),nl,
@@ -473,135 +555,49 @@ geraentregasdinamicas(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens,Po
     gera_populacaodinamica(Populacao,PopulacaoAnterior),
     !.
 
-gera_populacaodinamica(Pop,PopAnterior):-
-	populacao(TamPop),
-    entregas(NumEntregas),
-	lista_entregas(ListaEntregas),
-	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,Pop,PopAnterior).
-
-gera_populacaodinamica(0,_,_,[PopAnterior],PopAnterior):-!.
-
-gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior):-
-	TamPop1 is TamPop-1,
-	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
-	gera_individuo(ListaEntregas,NumEntregas,Ind),
-	not(member(Ind,Resto)).
-
-gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
-	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
-
-gera_populacaodinamica(Pop,PopAnterior):-
-	populacao(TamPop),
-    entregas(NumEntregas),
-	lista_entregas(ListaEntregas),
-	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,Pop,PopAnterior).
-
-gera_populacaodinamica(0,_,_,[PopAnterior],PopAnterior):-!.
-
-gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior):-
-	TamPop1 is TamPop-1,
-	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
-	gera_individuo(ListaEntregas,NumEntregas,Ind),
-	not(member(Ind,Resto)).
-
-gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
-	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
-get_lista_entregas_without_trucks([], []).
-get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
-    get_lista_entregas_without_trucks(Tail, TailResult),
-    append(T, TailResult, Result).
-get_lista_entregas_without_trucks([[]|Tail], Result) :-
-    get_lista_entregas_without_trucks(Tail, Result).
-
-search_entrega([], []).
-search_entrega([H|T], [Result|TailResult]) :-
-    entrega(H, _, _, Result, _, _),
-    search_entrega(T, TailResult).
-
-get_delimitadores_list([], []).
-get_delimitadores_list([[H|T]|Tail], [[H,L]|Lengths]) :-
-    length(T, L),
-    get_delimitadores_list(Tail, Lengths).
-
-get_travel_by_truck_id(Lists, ID, Result) :-
-	member([ID|Result], Lists).
-
-first_element(L, X) :-
-  nth0(0, L, X).
-
-
-format_output(ListaDelimitadores, ListaArmazens, ListaViagens) :-
-    format_output(ListaDelimitadores, ListaArmazens, [], ReversedListaViagens),
-    reverse(ReversedListaViagens, ListaViagens).
-
-format_output([], _, Acc, Acc).
-format_output([[NomeCaminhao, NumeroViagens]|T], Armazens, Acc, ListaViagens) :-
-    format_output2(NomeCaminhao, NumeroViagens, Armazens, Viagens, RestoArmazens),
-    format_output(T, RestoArmazens, [[NomeCaminhao|Viagens]|Acc], ListaViagens).
-
-format_output2(NomeCaminhao, NumeroViagens, Armazens, Viagens, RestoArmazens) :-
-    length(Viagens, NumeroViagens),
-    append(Viagens, RestoArmazens, Armazens).
-
-gera(Date,Geracoes,Populacao,ProbCruzamento,ProbMutacao,Valor,Resultado):-
-	(retract(peso(_));true),(retract(melhor(_));true),
-	(retract(date(_));true), assert(date(Date)),
-	(retract(geracoes(_));true), assert(geracoes(Geracoes)),
-	(retract(populacao(_));true), assert(populacao(Populacao)),
-	PC is ProbCruzamento/100,
-	(retract(prob_cruzamento(_));true), assert(prob_cruzamento(PC)),
-	PM is ProbMutacao/100,
-	(retract(prob_mutacao(_));true), assert(prob_mutacao(PM)),
-	atribuicao_lote(Date,ListaViagens),
-	write('ListaViagens='),write(ListaViagens),nl,
-	get_delimitadores_list(ListaViagens,ListaDelimitadores),
-	(retract(delimitadores_list(_));true), assert(delimitadores_list(ListaDelimitadores)),
-	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
-	get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
-	write('ListaEntregas='),write(ListaEntregas),nl,
-	search_entrega(ListaEntregas,ListaArmazens),
-	length(ListaArmazens,NumArmazens),
-	%NumArmazens is NumArmazensA-1,
-	(retract(armazens(_));true), assert(armazens(NumArmazens)),
-	write('ListaArmazens='),write(ListaArmazens),nl,
-	(retract(lista_armazens(_));true), assert(lista_armazens(ListaArmazens)),
-	(retract(valor(_));true), assert(valor(Valor)),
-	gera_populacao(Pop),
-	write('Pop='),write(Pop),nl,
-	avalia_populacao(Pop,PopAv,Valor),
-	write('PopAv='),write(PopAv),nl,
-	ordena_populacao(PopAv,PopOrd),
-	first_element(PopOrd,ListMelhorCaminho),
-/*	write('ListMelhorCaminho='),write(ListMelhorCaminho),nl,
-	get_last_element(ListMelhorCaminho,MelhorCaminho),nl, */
-	%write('MelhorCaminho='),write(MelhorCaminho),nl,
-	geracoes(NG),
-	gera_geracao(0,NG,PopOrd,Valor,Resultado),!.
-
 gera_populacao(Pop):-
 	populacao(TamPop),
-	lista_armazens(ListaArmazens),
-	armazens(NumArmazens),
-	gera_populacao(TamPop,ListaArmazens,NumArmazens,Pop).
+    entregas(NumEntregas),
+	lista_entregas(ListaEntregas),
+	gera_populacao(TamPop,ListaEntregas,NumEntregas,Pop).
 
-gera_populacao(1,_,_,[]):-!.
+gera_populacao(0,_,_,[]):-!.
 
-gera_populacao(TamPop,ListaArmazens,NumArmazens,[Ind|Resto]):-
+gera_populacao(TamPop,ListaEntregas,NumEntregas,[Ind|Resto]):-
 	TamPop1 is TamPop-1,
-	gera_populacao(TamPop1,ListaArmazens,NumArmazens,Resto),
-	gera_individuo(ListaArmazens,NumArmazens,Ind),
+	gera_populacao(TamPop1,ListaEntregas,NumEntregas,Resto),
+	gera_individuo(ListaEntregas,NumEntregas,Ind),
 	not(member(Ind,Resto)).
 
-gera_populacao(TamPop,ListaArmazens,NumArmazens,L):-
-	gera_populacao(TamPop,ListaArmazens,NumArmazens,L).
+gera_populacao(TamPop,ListaEntregas,NumEntregas,L):-
+	gera_populacao(TamPop,ListaEntregas,NumEntregas,L).
+
+
+gera_populacaodinamica(Pop,PopAnterior):-
+	populacao(TamPop),
+    entregas(NumEntregas),
+	lista_entregas(ListaEntregas),
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,Pop,PopAnterior).
+
+gera_populacaodinamica(0,_,_,[PopAnterior],PopAnterior):-!.
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior):-
+	TamPop1 is TamPop-1,
+	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
+	gera_individuo(ListaEntregas,NumEntregas,Ind),
+	not(member(Ind,Resto)).
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
+
 
 gera_individuo([G],1,[G]):-!.
 
-gera_individuo(ListaArmazens,NumArmazens,[G|Resto]):-
-	NumTemp is NumArmazens + 1, % To use with random
+gera_individuo(ListaEntregas,NumEntregas,[G|Resto]):-
+	NumTemp is NumEntregas + 1, % To use with random
 	random(1,NumTemp,N),
-	retira(N,ListaArmazens,G,NovaLista),
-	NumT1 is NumArmazens-1,
+	retira(N,NumEntregas,G,NovaLista),
+	NumT1 is NumEntregas-1,
 	gera_individuo(NovaLista,NumT1,Resto).
 
 retira(1,[G|Resto],G,Resto).
@@ -609,15 +605,30 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	N1 is N-1,
 	retira(N1,Resto,G,Resto1).
 
-avalia_populacao([],[],_).
-avalia_populacao([Ind|Resto],[Ind*V|Resto1],Valor):-
-	date(Date),
-	tempo_byid(Ind,Date,eTruck01,V),
-	(V < Valor, assert(melhor(Ind)),assert(peso(V));true),
-	%write('V'),write(V),nl,
-	avalia_populacao(Resto,Resto1,Valor).
-avalia_populacao([_|Resto], Resto1, Valor):-
-	avalia_populacao(Resto, Resto1, Valor).
+add_cidade_inicial_final(List,Result):-
+	cidade_inicial(City),
+	append([City], List, TempList),
+    append(TempList, [City], Result).
+
+avalia_populacao([],[]).
+avalia_populacao([Ind|Resto],[Ind*V|Resto1]):-
+	avalia(Ind,V),
+	avalia_populacao(Resto,Resto1).
+
+avalia(Seq,V):-
+	avalia(Seq,0,V).
+
+avalia([],_,0).
+avalia([T|Resto],Inst,V):-
+	entrega(T,_,Dur,_,_,_),
+	InstFim is Inst+Dur,
+	avalia(Resto,InstFim,VResto),
+	(
+		(InstFim =< Prazo,!, VT is 0)
+  ;
+		(VT is InstFim-Prazo)
+	),
+	V is VT+VResto.
 
 ordena_populacao(PopAv,PopAvOrd):-
 	bsort(PopAv,PopAvOrd).
@@ -626,6 +637,7 @@ bsort([X],[X]):-!.
 bsort([X|Xs],Ys):-
 	bsort(Xs,Zs),
 	btroca([X|Zs],Ys).
+
 
 btroca([X],[X]):-!.
 
@@ -636,35 +648,17 @@ btroca([X*VX,Y*VY|L1],[Y*VY|L2]):-
 btroca([X|L1],[X|L2]):-btroca(L1,L2).
 
 
-first_element(L, X) :-
-  L = [X|_].
-
-extract_element([A|B]*_, [A|B]).
-
-find_ids(Armazems, Date, Ids) :-
-    is_list(Armazems),
-    findall(Id, (member(A, Armazems), entrega(Id, Date, _, A, _, _)), Ids).
-
-
-gera_geracao(G,G,Pop,_,Resultado):-!,
-	first_element(Pop,Ind),
-	extract_element(Ind,ListaArmazens),
-	date(Date),
-	find_ids(ListaArmazens,Date,ListaEntregas),
-	delimitadores_list(ListaDelimitadores),
-	format_output(ListaDelimitadores,ListaEntregas,Resultado),
-	nl,melhor(Melhor),peso(Peso),nl,
-	write('Melhor='),write(Melhor),write('Peso='),write(Peso),nl,
+gera_geracao(G,G,Pop):-!,
 	write('Gera��o '), write(G), write(':'), nl, write(Pop), nl.
 
-gera_geracao(N,G,Pop,Valor,Resultado):-
+gera_geracao(N,G,Pop):-
 	write('Gera��o '), write(N), write(':'), nl, write(Pop), nl,
 	cruzamento(Pop,NPop1),
 	mutacao(NPop1,NPop),
-	avalia_populacao(NPop,NPopAv,Valor),
+	avalia_populacao(NPop,NPopAv),
 	ordena_populacao(NPopAv,NPopOrd),
 	N1 is N+1,
-	gera_geracao(N1,G,NPopOrd,Valor,Resultado).
+	gera_geracao(N1,G,NPopOrd).
 
 gerar_pontos_cruzamento(P1,P2):-
 	gerar_pontos_cruzamento1(P1,P2).
@@ -679,16 +673,6 @@ gerar_pontos_cruzamento1(P1,P2):-
 gerar_pontos_cruzamento1(P1,P2):-
 	gerar_pontos_cruzamento1(P1,P2).
 
-cruzamento([Ind1*_,Ind2*_|Resto],[NInd1,NInd2,NInd3|Resto1],0):-
-	gerar_pontos_cruzamento(P1,P2),
-	prob_cruzamento(Pcruz),random(0.0,1.0,Pc),
-	((Pc =< Pcruz,!,
-        cruzar(Ind1,Ind2,P1,P2,NInd1),
-	  cruzar(Ind2,Ind1,P1,P2,NInd2))
-	;
-	(NInd1=Ind1,NInd2=Ind2)),
-	(NInd3=Ind1),
-	cruzamento(Resto,Resto1).
 
 cruzamento([],[]).
 cruzamento([Ind*_],[Ind]).
@@ -706,6 +690,7 @@ preencheh([],[]).
 
 preencheh([_|R1],[h|R2]):-
 	preencheh(R1,R2).
+
 
 sublista(L1,I1,I2,L):-
 	I1 < I2,!,
@@ -738,6 +723,7 @@ rr(N,[X|R],R2):-
 	append(R,[X],R1),
 	rr(N1,R1,R2).
 
+
 elimina([],_,[]):-!.
 
 elimina([X|R1],L,[X|R2]):-
@@ -755,6 +741,7 @@ insere([X|R],L,N,L2):-
 	N2 is N + 1,
 	insere(R,L1,N2,L2).
 
+
 insere1(X,1,L,[X|L]):-!.
 insere1(X,N,[Y|L],[Y|L1]):-
 	N1 is N-1,
@@ -769,6 +756,7 @@ cruzar(Ind1,Ind2,P1,P2,NInd11):-
 	P3 is P2 + 1,
 	insere(Sub2,Sub1,P3,NInd1),
 	eliminah(NInd1,NInd11).
+
 
 eliminah([],[]).
 

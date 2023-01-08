@@ -6,12 +6,11 @@ import IGeneticPlanningDTO from "../dto/IGeneticPlanningDTO";
 
 interface GeneticPlanningProps {
     //places: [string];
-    date:string,
-    geracoes:number,
-    populacao:number,
-    cruzamento:number,
-    mutacao:number,
-    termino:number;
+    date:number,
+    nrgeracoes:number,
+    tamanhopop:number,
+    probcruzamento:number,
+    probmutacao:number,
 }
 
 export class GeneticPlanning extends AggregateRoot<GeneticPlanningProps> {
@@ -24,42 +23,38 @@ export class GeneticPlanning extends AggregateRoot<GeneticPlanningProps> {
     this.props.places = value;
   }*/
   
-  get date():string{
+  get date():number{
     return this.props.date;
   }
-  get geracoes():number{
-    return this.props.geracoes;
+  get nrgeracoes():number{
+    return this.props.nrgeracoes;
   }
-  get populacao():number{
-    return this.props.populacao;
+  get tamanhopop():number{
+    return this.props.tamanhopop;
   }
-  get cruzamento():number{
-    return this.props.cruzamento;
+  get probcruzamento():number{
+    return this.props.probcruzamento;
   }
-  get mutacao():number{
-    return this.props.mutacao;
+  get probmutacao():number{
+    return this.props.probmutacao;
   }
-get termino():number{
-  return this.props.termino;
-}
-  set date ( value: string) {
+
+  set date ( value: number) {
     this.props.date = value;
   }
-  set geracoes ( value: number) {
-    this.props.geracoes = value;
+  set nrgeracoes ( value: number) {
+    this.props.nrgeracoes = value;
   }
-  set populacao ( value: number) {
-    this.props.populacao = value;
+  set tamanhopop ( value: number) {
+    this.props.tamanhopop = value;
   }
-  set cruzamento ( value: number) {
-    this.props.cruzamento = value;
+  set probcruzamento ( value: number) {
+    this.props.probcruzamento = value;
   }
-  set mutacao ( value:number) {
-    this.props.mutacao = value;
+  set probmutacao ( value:number) {
+    this.props.probmutacao = value;
   }
-  set termino ( value:number) {
-    this.props.termino = value;
-  }
+  
 
   private constructor (props: GeneticPlanningProps) {
     super(props);
@@ -68,12 +63,11 @@ get termino():number{
   public static create (geneticplanningDTO: IGeneticPlanningDTO): Result<GeneticPlanning> {
     
     const date = geneticplanningDTO.date;
-    const geracoes = geneticplanningDTO.geracoes;
-    const populacao = geneticplanningDTO.populacao;
-    const cruzamento = geneticplanningDTO.cruzamento;
-    const mutacao = geneticplanningDTO.mutacao;
-    const termino = geneticplanningDTO.termino;
-      const geneticplanning = new GeneticPlanning({date: date,geracoes: geracoes,populacao: populacao,cruzamento: cruzamento, mutacao: mutacao,termino:termino});
+    const geracoes = geneticplanningDTO.nrgeracoes;
+    const populacao = geneticplanningDTO.tamanhopop;
+    const cruzamento = geneticplanningDTO.probcruzamento;
+    const mutacao = geneticplanningDTO.probmutacao;
+      const geneticplanning = new GeneticPlanning({date: date,nrgeracoes: geracoes,tamanhopop: populacao,probcruzamento: cruzamento, probmutacao: mutacao});
       return Result.ok<GeneticPlanning>( geneticplanning )
     }
   }

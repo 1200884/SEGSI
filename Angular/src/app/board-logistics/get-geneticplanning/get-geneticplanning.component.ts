@@ -8,28 +8,34 @@ import {GeneticPlanning} from 'src/app/_models/GeneticPlanning'
 })
 export class GetGeneticplanningComponent implements OnInit {
 
-  content?: string;
-  geneticplanning: GeneticPlanning = {
-    places: []
-  };
+  content?: String;
   error = false;
-
+  form: any = {
+    date: null,
+    probcruzamento: null,
+    probmutacao: null,
+    nrgeracoes: null,
+    tamanhopop: null
+  };
   constructor(private logisticsService:LogisticsService){}
 
   ngOnInit(): void {}
 
   getGeneticPlanning(info:any):void{
-    this.logisticsService.getGeneticPlanning(info.date,info.probcruzamento,info.probmutacao,info.nrgeracoes,info.tamanhopop,info.termino).subscribe(
+    const { date, nrgeracoes, tamanho, probcruzamento, probmutacao } = this.form;
+    let geneticplanning : GeneticPlanning;
+    geneticplanning = this.form;
+    this.logisticsService.getGeneticPlanning(geneticplanning).subscribe(
       data => {
         console.log("date is"+info.date);
         console.log("probcruzamento is"+info.probcruzamento);
         console.log("probmutacao is"+info.probmutacao);
         console.log("nrgeracoes is"+info.nrgeracoes);
         console.log("tamanhopop is"+info.tamanhopop);
-        console.log("termino is"+info.termino)
+        //console.log("termino is"+info.termino)
         this.error = false;
-        this.content = '';
-        this.geneticplanning = data;
+        this.content = data;
+        
       },
       err => {
         this.error = true;
