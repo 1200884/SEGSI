@@ -550,7 +550,8 @@ avalia_populacao([],[],_).
 avalia_populacao([Ind|Resto],[Ind*V|Resto1],Valor):-
 	date(Date),
 	tempo_byid(Ind,Date,eTruck01,V),
-	%write('V='),write(V),nl,
+	(V =< Valor, ! ; true),
+	write('V= '),write(V),nl,
 	avalia_populacao(Resto,Resto1,Valor).
 
 ordena_populacao(PopAv,PopAvOrd):-
@@ -575,14 +576,18 @@ first_element(L, X) :-
 
 extract_element([A|B]*_, [A|B]).
 
+find_ids(Armazems, Date, Ids) :-
+    is_list(Armazems),
+    findall(Id, (member(A, Armazems), entrega(Id, Date, _, A, _, _)), Ids).
+
+
 gera_geracao(G,G,Pop,_,Resultado):-!,
 	first_element(Pop,Ind),
- 	extract_element(Ind,ListaEntregas),
-	%write('ListaEntregas='),write(ListaEntregas),nl, 
+ 	extract_element(Ind,ListaArmazens),
+	date(Date),
+	find_ids(ListaArmazens,Date,ListaEntregas),
 	delimitadores_list(ListaDelimitadores),
-	%write('list='),write(ListaDelimitadores),nl, 
 	format_output(ListaDelimitadores,ListaEntregas,Resultado),
-	%write('Resultado='),write(Resultado),nl, 
 	write('Gera��o '), write(G), write(':'), nl, write(Pop), nl.
 
 gera_geracao(N,G,Pop,Valor,Resultado):-
