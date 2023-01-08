@@ -17,6 +17,7 @@ export const environment = {
   WAREHOUSES_URL: "/warehouses",
   DELIVERIES_URL: "/deliveries",
   GENETICPLANNING_URL: "/geneticplanning",
+  TRAVEL_URL: "/travels",
   AUTH_URL: "/auth"
 };
 

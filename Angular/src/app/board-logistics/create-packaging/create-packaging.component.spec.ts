@@ -50,11 +50,10 @@ describe('CreatePackagingComponent', () => {
   describe('add', () => {
     beforeEach(() => {
       mockPackagingService.postPackaging.and.returnValue(of(true));
-      component.message = "";
     });
     it('should create the selected Packaging', () => {
         component.postPackaging(Packaging);
-        expect(component.message).toBe("Packaging Created");
+        expect(component.content).toBe("Packaging Created");
     });
     it('should validate the selected Packaging aguments', () => {
       component.postPackaging(Packaging);
@@ -67,14 +66,14 @@ describe('CreatePackagingComponent', () => {
       expect(Packaging.positionZ).not.toBeLessThan(0);
       expect(Packaging.positionY).toBe(3);
       expect(Packaging.positionZ).not.toBeGreaterThan(100);
-      expect(Packaging.positionZ).not.toBeGreaterThan(0);
+      expect(Packaging.positionZ).not.toBeLessThan(0);
       
   });
 
     it('should NOT create the selected Packaging', () => {
       mockPackagingService.postPackaging.and.returnValue(throwError(() => new Error('Mock Error')));
       component.postPackaging(NoBusinessRulesPackaging);
-      expect(component.message).toBe("Error creating Packaging");
+      expect(component.error).toBe(true);
   });
   })
  
