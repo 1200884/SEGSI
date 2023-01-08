@@ -87,11 +87,11 @@ export default class LAPR5 {
         light.shadow.mapSize.width = 2048;
         light.shadow.mapSize.height = 2048;
         light.shadow.camera.near = 1.0;
-        light.shadow.camera.far = 500;
-        light.shadow.camera.left = 200;
-        light.shadow.camera.right = -200;
-        light.shadow.camera.top = 200;
-        light.shadow.camera.bottom = -200;
+        light.shadow.camera.far = 50;
+        light.shadow.camera.left = 20;
+        light.shadow.camera.right = -20;
+        light.shadow.camera.top = 20;
+        light.shadow.camera.bottom = -20;
         this.scene.add(light);
 
         //const helper = new THREE.DirectionalLightHelper(light);
