@@ -302,6 +302,7 @@ entrega(4437, 20221205, 180, 12, 9, 11).
 entrega(4451, 20221205, 220, 6, 9, 12).
 entrega(4452, 20221205, 390, 13, 21, 26).
 entrega(4444, 20221205, 380, 2, 20, 25).
+entrega(6455, 20221205, 560, 7, 28, 38).
 %carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
 carateristicasCam(eTruck01,7500,4300,80,100,60).
 carateristicasCam(eTruck02,7500,4300,80,100,60).
@@ -430,10 +431,12 @@ genetic_planning(Request):-
         format('Places: ~w',Resultado).
 
 
+
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
 :-dynamic prob_mutacao/1.
+:-dynamic date/1.
 :-dynamic lista_armazens/1.
 :-dynamic delimitadores_list/1.
 :-dynamic valor/1.
