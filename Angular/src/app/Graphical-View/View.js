@@ -89,7 +89,6 @@ export default class View {
             let angle = 0;
             let directionside = 0;
             let directionfront = 0;
-<<<<<<< HEAD
             let speed = 0.1;
             let rotationIndex = Math.PI / 32;
             let updates = false;
@@ -169,23 +168,25 @@ export default class View {
                         "unloadTime": 1
                     }];*/
                 //for (var i = 0; i < travels.length(); i++) {
-                    /*const filteredObjectList = deliveries.filter(object => travels[i].includes(object.id));
+                /*const filteredObjectList = deliveries.filter(object => travels[i].includes(object.id));
 
-                    const destWarehouseNumList = filteredObjectList.map(object => object.destinationWarehouseId);
+                const destWarehouseNumList = filteredObjectList.map(object => object.destinationWarehouseId);
 
-                    const destWarehouseList = destWarehouseNumList.map(index => armazens[index]);
+                const destWarehouseList = destWarehouseNumList.map(index => armazens[index]);
 
-                    var specificBridges;
-                    for (var j = 0; j < bridges.length(); j++) {
-                        specificBridges.push((bridges[j].armazemOrigem, bridges[j].armazemDestino));
-                    }
+                var specificBridges;
+                for (var j = 0; j < bridges.length(); j++) {
+                    specificBridges.push((bridges[j].armazemOrigem, bridges[j].armazemDestino));
+                }
 
-                    combineLists(destWarehouseList, specificBridges);*/
+                combineLists(destWarehouseList, specificBridges);*/
 
-                    let destWarehouseList = [armazens[7], bridges[10], armazens[5], bridges[20], armazens[17], bridges[11], armazens[13]];
-                    view.bola = new CamiaoAutomatico(destWarehouseList);
-                    let camiaoAutomatico = view.bola.object;
-                    view.object.add(camiaoAutomatico);
+                let destWarehouseList = [armazens[7], bridges[10], armazens[5], bridges[20], armazens[17], bridges[11], armazens[13]];
+                console.log("aiaaaa " + destWarehouseList[1].width);
+                view.bola = new CamiaoAutomatico();
+                let camiaoAutomatico = view.bola.object;
+                view.object.add(camiaoAutomatico);
+                move(camiaoAutomatico, destWarehouseList);
                 //}
             });
 
@@ -238,7 +239,7 @@ export default class View {
                 ladox = armazem3x - armazem4x;
                 ladoy = armazem3y - armazem4y;
                 ladoz = zmaior - zmaispiqui;
-               
+
                 //distanciaEntreArmazens=Math.sqrt(Math.pow(ladox,2)+Math.pow(ladoy,2));
                 ladoxpequeno = newX - armazem4x;
                 ladoypequeno = newY - armazem4y;
@@ -257,7 +258,7 @@ export default class View {
                     //console.log("y2 = "+armazem4y+" x2 = "+armazem4x)
 
                     console.log(ladoz);
-                    bola.position.y = 1-(ladoz * distanciaEntreArmazens) + zmaispiqui;
+                    bola.position.y = 1 - (ladoz * distanciaEntreArmazens) + zmaispiqui;
                     //console.log("z novo é "+bola.position.y);
                     return true;
                 }
@@ -505,9 +506,17 @@ export default class View {
             arco1 = view.arco.object.clone();
             view.object.add(arco1);
 
-            arco1.rotateY(angles[0]);
+            const rotationHorizontal = angles[0];
+            arco1.rotateY(rotationHorizontal);
+            arco1.rotationHorizontal = rotationHorizontal;
             arco1.position.set((extreme1[0] + extreme2[0]) / 2, (extreme1[1] + extreme2[1] - 0.05) / 2, (extreme1[2] + extreme2[2]) / 2);
-            arco1.rotateZ(-Math.atan(desnivel / (p)));
+            const rotationVertical = -Math.atan(desnivel / (p));
+            arco1.rotateZ(rotationVertical);
+            arco1.rotationVertical = rotationVertical;
+            arco1.armazemOrigem = view.arco.armazemOrigem;
+            arco1.armazemDestino = view.arco.armazemDestino;
+            arco1.size = view.arco.size;
+            arco1.width = view.arco.width;
             return arco1;
         }
 
@@ -622,8 +631,198 @@ export default class View {
         }
 
 
+        function move(camiaoAutomatico, percurso) {
+            camiaoAutomatico.percurso = percurso;
+            camiaoAutomatico.clock = new THREE.Clock();
+            camiaoAutomatico.baseLength = 1; //ver se pode ser buscada a base do armazem
+            camiaoAutomatico.baseWidth = 0.25; // ver se pode ser buscada a base do armazem
+            camiaoAutomatico.rotundaDiam = 16; //this.percurso[0].diametro
+
+            camiaoAutomatico.K_BERMA = 0.1;
+            camiaoAutomatico.b = camiaoAutomatico.K_BERMA * camiaoAutomatico.percurso[1].width;
+            camiaoAutomatico.RAIO_ROTACAO = camiaoAutomatico.b * 0.75;  //ainda por ver
+
+            camiaoAutomatico.hip = (camiaoAutomatico.rotundaDiam / 2) - camiaoAutomatico.b + camiaoAutomatico.RAIO_ROTACAO;
+            camiaoAutomatico.catTrans = (camiaoAutomatico.baseWidth / 2) - camiaoAutomatico.b + camiaoAutomatico.RAIO_ROTACAO;
+            console.log("teste variaveis " + camiaoAutomatico.percurso[1].width);
+            camiaoAutomatico.teta = Math.acos(camiaoAutomatico.catTrans / camiaoAutomatico.hip);
+            camiaoAutomatico.catLong = Math.sqrt(Math.pow(camiaoAutomatico.hip, 2) - Math.pow(camiaoAutomatico.catTrans, 2));
+            camiaoAutomatico.lIJ = camiaoAutomatico.baseLength - camiaoAutomatico.catLong;
+
+            camiaoAutomatico.n = 0;
+            camiaoAutomatico.vela = 0;
+            camiaoAutomatico.velh = 0;
+            camiaoAutomatico.velv = 0;
+
+            initializeCamiaoAutomatico(camiaoAutomatico);
+            camiaoAutomatico.update = true;
+            updateCamiaoAutomatico();
+
+            function initializeCamiaoAutomatico(camiaoAutomatico) {
+                camiaoAutomatico.i = 2;
+                camiaoAutomatico.ponteIJ = camiaoAutomatico.percurso[camiaoAutomatico.i - 1];
+                camiaoAutomatico.nJ = camiaoAutomatico.percurso[camiaoAutomatico.i];
+                camiaoAutomatico.direcao = camiaoAutomatico.ponteIJ.rotationHorizontal - camiaoAutomatico.teta;
+                console.log("posicao x " + camiaoAutomatico.position.x);
+                console.log("posicao y " + camiaoAutomatico.position.y);
+                console.log("posicao z " + camiaoAutomatico.position.z);
+                console.log("teste " + camiaoAutomatico.teta);
+                camiaoAutomatico.x = camiaoAutomatico.nJ.position.x + ((camiaoAutomatico.rotundaDiam / 2) - camiaoAutomatico.b) * Math.sin(camiaoAutomatico.direcao);
+                camiaoAutomatico.y = camiaoAutomatico.nJ.position.y + 1; //este 1 = ALTURA_PERSONAGEM / 2
+                camiaoAutomatico.z = camiaoAutomatico.nJ.position.z - ((camiaoAutomatico.rotundaDiam / 2) - camiaoAutomatico.b) * Math.cos(camiaoAutomatico.direcao);
+                console.log("posicao x " + camiaoAutomatico.x);
+                console.log("posicao y " + camiaoAutomatico.y);
+                console.log("posicao z " + camiaoAutomatico.z);
+                camiaoAutomatico.position.set(camiaoAutomatico.x, camiaoAutomatico.y, camiaoAutomatico.z);
+                console.log("posicao x " + camiaoAutomatico.position.x);
+                console.log("posicao y " + camiaoAutomatico.position.y);
+                console.log("posicao z " + camiaoAutomatico.position.z);
+            }
+
+            function updateCamiaoAutomatico() {
+                while (camiaoAutomatico.update) {
+                    console.log("update");
+                    setMovimentoA();
+                    for (let i = 0; i < camiaoAutomatico.n; i++) {
+                        animacao();
+                    }
+
+                    setMovimentoB();
+                    for (let i = 0; i < camiaoAutomatico.n; i++) {
+                        animacao();
+                    }
+
+                    setMovimentoC();
+                    for (let i = 0; i < camiaoAutomatico.n; i++) {
+                        animacao();
+                    }
+
+                    camiaoAutomatico.i += 1;
+
+                    setMovimentoD();
+                    for (let i = 0; i < camiaoAutomatico.n; i++) {
+                        animacao();
+                    }
+
+                    camiaoAutomatico.i += 1;
+
+                    setMovimentoE();
+                    for (let i = 0; i < camiaoAutomatico.n; i++) {
+                        animacao();
+                    }
+
+                    setMovimentoF();
+                    for (let i = 0; i < camiaoAutomatico.n; i++) {
+                        animacao();
+                    }
+
+                    checkEnd();
+
+                    function checkEnd() {
+                        console.log("checkEnd verification: " + camiaoAutomatico.percurso.length);
+                        console.log("checkEnd verification: " + camiaoAutomatico.i);
+                        if (camiaoAutomatico.i == camiaoAutomatico.percurso.length - 1) {
+                            camiaoAutomatico.update = false;
+                        }
+                    }
+
+                    function animacao() {
+                        var delta = camiaoAutomatico.clock.getDelta();
+                        camiaoAutomatico.direcaoN = camiaoAutomatico.direcao + camiaoAutomatico.vela;
+                        camiaoAutomatico.xN = camiaoAutomatico.position.x + camiaoAutomatico.velh * Math.cos(camiaoAutomatico.direcao); //diz this.direcao no tutorial mas pessoalmente acredito q possa ser this.direcaoN
+                        camiaoAutomatico.yN = camiaoAutomatico.position.y + camiaoAutomatico.velv;
+                        camiaoAutomatico.xN = camiaoAutomatico.position.z + camiaoAutomatico.velh * Math.sin(camiaoAutomatico.direcao); //diz this.direcao no tutorial mas pessoalmente acredito q possa ser this.direcaoN
+
+                        camiaoAutomatico.position.set(camiaoAutomatico.xN * delta, camiaoAutomatico.yN * delta, camiaoAutomatico.zN * delta);
+                    }
+
+                    //this.i = rotunda onde ele vai andar
+                    function setMovimentoA() { //percorrer a rotunda
+                        camiaoAutomatico.nI = camiaoAutomatico.percurso[camiaoAutomatico.i - 2];
+                        camiaoAutomatico.ponteIJ = camiaoAutomatico.percurso[camiaoAutomatico.i - 1];
+                        camiaoAutomatico.nJ = camiaoAutomatico.percurso[camiaoAutomatico.i];
+                        camiaoAutomatico.ponteJK = camiaoAutomatico.percurso[camiaoAutomatico.i + 1];
+                        camiaoAutomatico.nK = camiaoAutomatico.percurso[camiaoAutomatico.i + 2];
+                        camiaoAutomatico.velA = 1; //ainda por ver
+                        camiaoAutomatico.phi = camiaoAutomatico.ponteIJ.rotationHorizontal - camiaoAutomatico.ponteJK.rotationHorizontal + camiaoAutomatico.teta + camiaoAutomatico.teta;
+                        //o this.ponte.rotationHorizontal convinha ser substituido pelo angulo da base associada nao da ponte
+                        while (camiaoAutomatico.phi <= 0) {
+                            camiaoAutomatico.phi += 2 * Math.PI;
+                        }
+
+                        while (camiaoAutomatico.phi >= Math.PI * 2) {
+                            camiaoAutomatico.phi -= 2 * Math.PI;
+                        }
+
+                        camiaoAutomatico.cIJ = ((camiaoAutomatico.rotundaDiam / 2) - camiaoAutomatico.b) * camiaoAutomatico.phi;
+
+                        camiaoAutomatico.n = Math.ceil(camiaoAutomatico.cIJ / camiaoAutomatico.velA);
+                        camiaoAutomatico.vela = camiaoAutomatico.teta / camiaoAutomatico.n;
+                        camiaoAutomatico.velh = 2 * ((camiaoAutomatico.rotundaDiam / 2) - camiaoAutomatico.b) * Math.sin(camiaoAutomatico.phi / camiaoAutomatico.n / 2);
+                        camiaoAutomatico.velv = 0;
+                    }
+
+                    //this.i = rotunda onde ele vai estar
+                    function setMovimentoB() { //saida na rotunda
+                        //this.nJ = this.percurso[this.i];
+                        //this.nK = this.percurso[this.i + 2];
+                        camiaoAutomatico.velB = 1; //ainda por ver
+                        camiaoAutomatico.cIJ = camiaoAutomatico.RAIO_ROTACAO * camiaoAutomatico.teta;
+                        camiaoAutomatico.n = Math.ceil(camiaoAutomatico.cIJ / camiaoAutomatico.velB);
+                        camiaoAutomatico.vela = -camiaoAutomatico.teta / camiaoAutomatico.n;
+                        camiaoAutomatico.velh = 2 * camiaoAutomatico.RAIO_ROTACAO * Math.sin(camiaoAutomatico.teta / camiaoAutomatico.n / 2);
+                        camiaoAutomatico.velv = 0;
+                    }
+
+                    //this.i = rotunda de onde ele esta a sair
+                    function setMovimentoC() { //base de saida
+                        //this.nJ = this.percurso[this.i];
+                        //this.nK = this.percurso[this.i + 2];
+                        camiaoAutomatico.velC = 1; //ainda por ver
+                        camiaoAutomatico.n = Math.ceil(camiaoAutomatico.lIJ / camiaoAutomatico.velC);
+                        camiaoAutomatico.vela = 0;
+                        camiaoAutomatico.velh = camiaoAutomatico.lIJ * camiaoAutomatico.n;
+                        camiaoAutomatico.velv = 0;
+                    }
+
+                    //this.i = rampa onde esta
+                    function setMovimentoD() { //rampa
+                        //this.nI = this.percurso[this.i - 1];
+                        //this.nJ = this.percurso[this.i + 1];
+                        camiaoAutomatico.velD = 1;  //ainda por ver
+                        camiaoAutomatico.n = Math.ceil(camiaoAutomatico.percurso[camiaoAutomatico.i].size / camiaoAutomatico.velD);
+                        camiaoAutomatico.vela = 0;
+                        let pIJ = camiaoAutomatico.percurso[camiaoAutomatico.i].size * Math.cos(camiaoAutomatico.percurso[camiaoAutomatico.i].rotationVertical);
+                        camiaoAutomatico.velh = pIJ / camiaoAutomatico.n;
+                        camiaoAutomatico.velv = camiaoAutomatico.percurso[camiaoAutomatico.i].rotationVertical / camiaoAutomatico.n;
+                    }
+
+                    //this.i = rotunda onde esta a entrar
+                    function setMovimentoE() { //base de entrada
+                        //this.nI = this.percurso[this.i - 2];
+                        //this.nJ = this.percurso[this.i];
+                        camiaoAutomatico.velE = 1;  //ainda por ver
+                        camiaoAutomatico.n = Math.ceil(camiaoAutomatico.lIJ / camiaoAutomatico.velE);
+                        camiaoAutomatico.vela = 0;
+                        camiaoAutomatico.velh = camiaoAutomatico.lIJ / camiaoAutomatico.n;
+                        camiaoAutomatico.velv = 0;
+                    }
+
+                    //this.i = rotunda onde ele esta a entrar
+                    function setMovimentoF() { //entrada na rotunda
+                        //this.nI = this.percurso[this.i - 2];
+                        //this.nJ = this.percurso[this.i];
+                        camiaoAutomatico.velF = 1; //ainda por ver
+                        camiaoAutomatico.cIJ = camiaoAutomatico.RAIO_ROTACAO * camiaoAutomatico.teta;
+                        camiaoAutomatico.n = Math.ceil(camiaoAutomatico.cIJ / camiaoAutomatico.velF);
+                        camiaoAutomatico.vela = -camiaoAutomatico.teta / camiaoAutomatico.n;
+                        camiaoAutomatico.velh = 2 * camiaoAutomatico.RAIO_ROTACAO * Math.sin(camiaoAutomatico.teta / camiaoAutomatico.n / 2);
+                        camiaoAutomatico.velv = 0;
+                    }
+                }
+            }
+
+        }
     }
-
-
 
 }
