@@ -5,10 +5,7 @@ import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import Camiao from "./Camiao.js";
-<<<<<<< HEAD
-=======
 import CamiaoAutomatico from "./CamiaoAutomatico.js"
->>>>>>> 224bebd7d3b5036f006a1cf00b08bc921a393650
 
 export default class View {
     constructor() {
@@ -650,11 +647,7 @@ export default class View {
 
             initializeCamiaoAutomatico(camiaoAutomatico);
             camiaoAutomatico.update = true;
-<<<<<<< HEAD
-            updateCamiaoAutomatico();
-=======
             //updateCamiaoAutomatico();
->>>>>>> 224bebd7d3b5036f006a1cf00b08bc921a393650
 
             function initializeCamiaoAutomatico(camiaoAutomatico) {
                 camiaoAutomatico.i = 2;
