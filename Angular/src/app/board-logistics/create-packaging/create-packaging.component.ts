@@ -18,6 +18,7 @@ export class CreatePackagingComponent implements OnInit {
     positionZ: 0
   };
   error = false;
+  message: string | undefined;
 
   constructor(private logisticsService: LogisticsService) { }
 

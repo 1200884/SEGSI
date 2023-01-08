@@ -12,6 +12,19 @@ export default (app: Router) => {
   app.use('/geneticplanning', route);
 
   const ctrl = Container.get(config.controllers.geneticplanning.name) as IGeneticPlanningController;
+  
+  route.post('/get-geneticplanning',
+  celebrate({
+    body: Joi.object({
+      date: Joi.string().required(),
+      warehouseDestination: Joi.number().required(),
+      distance: Joi.number().required(),
+      travelTime:Joi.number().required(),
+      energyNecessary: Joi.number().required(),
+      additionalTime: Joi.number().required()
+    })
+  }),
+  (req, res, next) => ctrl.getGeneticPlanning(req, res, next));
 
-  route.get('/:date/:geracoes/:populacao/:cruzamento/:mutacao/', (req, res, next) => ctrl.getGeneticPlanning(req.params.date,req.params.geracoes,req.params.populacao,req.params.cruzamento,req.params.mutacao,req, res, next));
+  
 };

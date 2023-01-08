@@ -7,7 +7,7 @@ output {
     transform: translateY(-50%);
 }
 label {
-    color: #46f10d;
+    color: #eaeaea;
     font-weight: bold;
   }
   input-box {
@@ -17,16 +17,16 @@ label {
   }
   button {
     margin-top: 20px;
-    background-color: rgb(249, 11, 11);
+    background-color: rgb(243, 243, 243);
     padding: 1rem;
     border-radius: 4px;
     font-size: 1rem;
   }
   button:hover {
-    background-color: #4709fe;
+    background-color: #94c6ff;
   }
   button:disabled {
-    background-color: #d42d2d;
-    color: #ccc;
+    background-color: #b5deff;
+    color: rgb(168, 168, 168);
     cursor: auto;
   }
