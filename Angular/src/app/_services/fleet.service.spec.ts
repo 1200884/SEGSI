@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { TestBed } from '@angular/core/testing';
 
 import { FleetService } from './fleet.service';
@@ -123,7 +123,7 @@ describe('FleetService', () => {
       expect(httpClientSpy.delete).toHaveBeenCalledTimes(1);
     });
 
-    it('should handle error when deleting a truck with empty', () => {
+    it('should handle error when deleting a truck with empty id', () => {
       const error = new Error('Error deleting truck: ID is required');
   
       httpClientSpy.delete.and.returnValue(throwError(error));
