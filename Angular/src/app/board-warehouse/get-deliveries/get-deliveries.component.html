@@ -1,42 +1,57 @@
 ﻿<h2>My Deliveries</h2>
 <ul class="deliveries">
-  
+
   <table class="table table-striped table-dark">
-    <thead><tr>
-      <th><button class="a"type="button" (click)="sortData('id')">Warehouse Id</button>
-      <input type="text" [(ngModel)]="filterText1" (ngModelChange)="filterDeliveriesById()">
-      <th><button type="button" (click)="sortData('destinationWarehouseId')">Destination Warehouse Id</button>
-      <input type="text" [(ngModel)]="filterText2" (ngModelChange)="filterDeliveriesByDestinationWarehouseId()"></th>
-      <th><button type="button" (click)="sortData('date')">Date</button>
-      <input type="text" [(ngModel)]="filterText3" (ngModelChange)="filterDeliveriesByDate()"></th>
-    </tr></thead>
+    <thead>
+      <tr>
+        <th><button class="a" type="button" (click)="sortData('id')">Id</button>
+          <input type="text" [(ngModel)]="filterText1" (ngModelChange)="filterDeliveriesById()">
+        </th>
+        <th><button type="button" (click)="sortData('destinationWarehouseId')">Destination Warehouse Id</button>
+          <input type="text" [(ngModel)]="filterText2" (ngModelChange)="filterDeliveriesByDestinationWarehouseId()">
+        </th>
+        <th><button type="button" (click)="sortData('date')">Date</button>
+          <input type="text" [(ngModel)]="filterText3" (ngModelChange)="filterDeliveriesByDate()">
+        </th>
+        <th><button class="a" type="button" (click)="sortData('weight')">Weight</button>
+          <input type="text" [(ngModel)]="filterText4" (ngModelChange)="filterDeliveriesByWeight()">
+        </th>
+        <th><button type="button" (click)="sortData('loadTime')">Load Time</button>
+          <input type="text" [(ngModel)]="filterText5" (ngModelChange)="filterDeliveriesByLoadTime()">
+        </th>
+        <th><button type="button" (click)="sortData('unloadTime')">Unload Time</button>
+          <input type="text" [(ngModel)]="filterText6" (ngModelChange)="filterDeliveriesByUnloadTime()">
+        </th>
+      </tr>
+    </thead>
     <tbody>
       <tr *ngFor=" let delivery of deliveries | paginate: { 
         itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
 
-        <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.id }}</a></td>
-        <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.destinationWarehouseId }}</a></td>
-        <td scope="row"><a routerLink ="/deliveries/{{delivery.id}}">{{ delivery.date }}</a></td>
+        <td scope="row"><a routerLink="/deliveries/{{delivery.id}}">{{ delivery.id }}</a></td>
+        <td scope="row"><a routerLink="/deliveries/{{delivery.id}}">{{ delivery.destinationWarehouseId }}</a></td>
+        <td scope="row"><a routerLink="/deliveries/{{delivery.id}}">{{ delivery.date }}</a></td>
+        <td scope="row"><a routerLink="/deliveries/{{delivery.id}}">{{ delivery.weight }}</a></td>
+        <td scope="row"><a routerLink="/deliveries/{{delivery.id}}">{{ delivery.loadTime }}</a></td>
+        <td scope="row"><a routerLink="/deliveries/{{delivery.id}}">{{ delivery.unloadTime }}</a></td>
+
       </tr>
     </tbody>
-  </table> 
+  </table>
 
-<div>
-  <small>Deliveries per Page </small>
+  <div>
+    <small>Deliveries per Page </small>
     <select (change)="onTableSizeChange($event)">
-    <option *ngFor="let size of tablesizes">
-      {{size}}
-    </option>
-  </select>
-</div>
+      <option *ngFor="let size of tablesizes">
+        {{size}}
+      </option>
+    </select>
+  </div>
 
-<div class="d-flex align-items-start">
-  <pagination-controls
-  previousLabel="Prev"
-  nextLabel="Next"
-  (pageChange)="onTableDataChange($event)">
-</pagination-controls>
-</div>
+  <div class="d-flex align-items-start">
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+  </div>
 
-<button type="button" (click)="goBack()">GoBack</button> 
+  <button type="button" (click)="goBack()">GoBack</button>
 </ul>

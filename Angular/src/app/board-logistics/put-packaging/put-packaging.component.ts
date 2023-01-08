@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Packaging } from 'src/app/_models/Packaging';
 import { LogisticsService } from 'src/app/_services/logistics.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-put-packaging',
@@ -8,33 +10,33 @@ import { LogisticsService } from 'src/app/_services/logistics.service';
   styleUrls: ['./put-packaging.component.css']
 })
 export class PutPackagingComponent implements OnInit {
-//packaging Packaging
   content?: string;
-  packaging: Packaging = {
-    id: 'Teste',
-    boxId: 0,
-    positionX: 0,
-    positionY: 0,
-    positionZ: 0
-  };
+  packaging: Packaging | undefined;
   error = false;
 
-  constructor(private logisticsService: LogisticsService) { }
+  constructor(private logisticsService: LogisticsService,
+  private route: ActivatedRoute,
+  private location: Location) { }
 
   ngOnInit(): void {
+    this.getPackaging();
   }
 
-  putPackaging(packaging: Packaging): void {
-    this.logisticsService.putPackaging(packaging).subscribe(
-      data => {
-        this.error = false;
-        this.content = '';
-        this.packaging = data;
-      },
-      err => {
-        this.error = true;
-        this.content = JSON.parse(err.error).message;
-      }
-    )
+  getPackaging(): void {
+    const id = String(this.route.snapshot.paramMap.get('id'));
+    this.logisticsService.getPackaging(id)
+      .subscribe (packaging => this.packaging = packaging);
+      console.log(this.packaging);
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  Save(): void {
+    if(this.packaging){
+      this.logisticsService.putPackaging(this.packaging).subscribe(() => this.goBack());
+    }
+  }
+
 }

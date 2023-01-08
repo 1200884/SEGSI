@@ -8,24 +8,27 @@ import { Delivery } from '../../_models/Delivery';
   templateUrl: './get-deliveries.component.html',
   styleUrls: ['./get-deliveries.component.css'],
 })
-export class DeliveriesComponent implements OnInit  {
+export class DeliveriesComponent implements OnInit {
 
-  page: number=1;
-  count:number =0;
-  tablesize:number=5;
-  tablesizes:any =[5,10,15];
+  page: number = 1;
+  count: number = 0;
+  tablesize: number = 5;
+  tablesizes: any = [5,10,15,20];
   filterText1 = '';
   filterText2 = '';
   filterText3 = '';
+  filterText4 = '';
+  filterText5 = '';
+  filterText6 = '';
 
   sortOrder = 'asc';
   deliveries: Delivery[] = [];
-  content ?: string;
+  content?: string;
 
   constructor(
     private deliveryService: DeliveryService,
     private location: Location,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getDeliveries();
@@ -38,7 +41,7 @@ export class DeliveriesComponent implements OnInit  {
   getDeliveries(): void {
     this.deliveryService.getDeliveries().subscribe(data => {
       this.deliveries = data;
-      },
+    },
       err => {
         this.content = JSON.parse(err.error).message;
       }
@@ -66,15 +69,36 @@ export class DeliveriesComponent implements OnInit  {
       this.getDeliveries();
     }
   }
+  filterDeliveriesByWeight() {
+    if (this.filterText4) {
+      this.deliveries = this.deliveries.filter(delivery => delivery.weight.toString().includes(this.filterText4));
+    } else {
+      this.getDeliveries();
+    }
+  }
+  filterDeliveriesByLoadTime() {
+    if (this.filterText5) {
+      this.deliveries = this.deliveries.filter(delivery => delivery.loadTime.toString().includes(this.filterText5));
+    } else {
+      this.getDeliveries();
+    }
+  }
+  filterDeliveriesByUnloadTime() {
+    if (this.filterText6) {
+      this.deliveries = this.deliveries.filter(delivery => delivery.unloadTime.toString().includes(this.filterText6));
+    } else {
+      this.getDeliveries();
+    }
+  }
 
-  onTableDataChange(event:any){
-    this.page=event;
+  onTableDataChange(event: any) {
+    this.page = event;
     this.getDeliveries();
   }
 
-  onTableSizeChange(event:any):void{
-    this.tablesize=event.target.value;
-    this.page=1;
+  onTableSizeChange(event: any): void {
+    this.tablesize = event.target.value;
+    this.page = 1;
     this.getDeliveries();
   }
 
@@ -84,32 +108,50 @@ export class DeliveriesComponent implements OnInit  {
 
     // Sort the deliveries array by the id property in ascending or descending order
     this.deliveries.sort((a, b) => {
-      switch(sortBy) {
+      switch (sortBy) {
         case 'id':
           if (sortOrder === 'asc') {
-            return compare(a.id,b.id,true);
+            return compare(a.id, b.id, true);
           } else {
-            return compare(a.id,b.id,false);
+            return compare(a.id, b.id, false);
           }
         case 'date':
           if (sortOrder === 'asc') {
-            return compare(a.date,b.date,true);
+            return compare(a.date, b.date, true);
           } else {
-            return compare(a.date,b.date,false);
+            return compare(a.date, b.date, false);
           }
         case 'destinationWarehouseId':
           if (sortOrder === 'asc') {
-            return compare(a.destinationWarehouseId,b.destinationWarehouseId,true);
+            return compare(a.destinationWarehouseId, b.destinationWarehouseId, true);
           } else {
-            return compare(a.destinationWarehouseId,b.destinationWarehouseId,false);
+            return compare(a.destinationWarehouseId, b.destinationWarehouseId, false);
           }
-          default: return 0; 
-        }
-      
+        case 'weight':
+          if (sortOrder === 'asc') {
+            return compare(a.weight, b.weight, true);
+          } else {
+            return compare(a.weight, b.weight, false);
+          }
+        case 'loadTime':
+          if (sortOrder === 'asc') {
+            return compare(a.loadTime, b.loadTime, true);
+          } else {
+            return compare(a.loadTime, b.loadTime, false);
+          }
+        case 'unloadTime':
+          if (sortOrder === 'asc') {
+            return compare(a.unloadTime, b.unloadTime, true);
+          } else {
+            return compare(a.unloadTime, b.unloadTime, false);
+          }
+        default: return 0;
+      }
+
     });
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
   }
-} 
+}
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
