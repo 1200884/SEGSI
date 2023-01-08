@@ -647,7 +647,7 @@ export default class View {
 
             initializeCamiaoAutomatico(camiaoAutomatico);
             camiaoAutomatico.update = true;
-            updateCamiaoAutomatico();
+            //updateCamiaoAutomatico();
 
             function initializeCamiaoAutomatico(camiaoAutomatico) {
                 camiaoAutomatico.i = 2;

@@ -8,7 +8,6 @@ import { Location } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { environment } from 'src/environments/environment';
 
-
 describe('WarehousesComponent', () => {
   let warehouses: Warehouse[];
   let mockWarehouseService: any;

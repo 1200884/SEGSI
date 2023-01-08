@@ -19,7 +19,7 @@
     "lib": [
       "es2018",
       "dom"
-    ],
+    ]
   },
   "include": ["src/app/**/*.ts"],
   "exclude": ["src/app/**/*.test.ts"],

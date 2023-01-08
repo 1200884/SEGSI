@@ -18,22 +18,31 @@
       <tr *ngFor="let packaging of packagings | paginate: { 
         itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
 
-        <td scope="row"><a routerLink ="/packagings{{packaging.id}}">{{ packaging.id }}</a></td>
-        <td>{{ packaging.boxId }}</td>
-        <td>{{ packaging.positionX }}</td>
-        <td>{{ packaging.positionY }}</td>
-        <td>{{ packaging.positionZ }}</td>
+        <td scope="row"><a routerLink ="/packagings/{{packaging.id}}">{{ packaging.id }}</a></td>
+        <td><a routerLink ="/packagings/{{packaging.id}}">{{ packaging.boxId }}</a></td>
+        <td><a routerLink ="/packagings/{{packaging.id}}">{{ packaging.positionX }}</a></td>
+        <td><a routerLink ="/packagings/{{packaging.id}}">{{ packaging.positionY }}</a></td>
+        <td><a routerLink ="/packagings/{{packaging.id}}">{{ packaging.positionZ }}</a></td>
       </tr>
     </tbody>
   </table> 
 
 <div>
-  <small>Deliveries per Page </small>
+  <small>Packagings per Page </small>
     <select (change)="onTableSizeChange($event)">
     <option *ngFor="let size of tablesizes">
       {{size}}
     </option>
   </select>
 </div>
+
+<div class="d-flex align-items-start">
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="onTableDataChange($event)">
+</pagination-controls>
+</div>
+
 <button type="button" (click)="goBack()">GoBack</button> 
 </ul>

@@ -15,8 +15,8 @@ export class GetPathsComponent implements OnInit {
   POSTS: any;
   page: number=1;
   count:number =0;
-  tablesize:number=10;
-  tablesizes:any =[5,10,15,20];
+  tablesize:number=5;
+  tablesizes:any =[5,10,15];
 
   paths: Path[] = [];
   content ?: string;

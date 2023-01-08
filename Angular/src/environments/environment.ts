@@ -13,7 +13,7 @@ export const environment = {
   TRUCKS_URL: '/trucks',
   PATHS_URL: '/paths',
   PLANNING_URL: '/planning',
-  PACKAGING_URL: '/packaging',
+  PACKAGING_URL: '/packagings',
   WAREHOUSES_URL: "/warehouses",
   DELIVERIES_URL: "/deliveries",
   GENETICPLANNING_URL: "/geneticplanning",

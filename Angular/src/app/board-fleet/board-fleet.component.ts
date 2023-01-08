@@ -9,6 +9,7 @@ import { Truck } from '../_models/Truck';
   styleUrls: ['./board-fleet.component.css']
 })
 export class BoardFleetComponent implements OnInit {
+  title = 'Fleet Board';
   content?: string;
   trucks: Truck[] = [];
   error = false;

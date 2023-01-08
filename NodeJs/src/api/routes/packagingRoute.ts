@@ -9,7 +9,7 @@ import config from "../../../config";
 const route = Router();
 
 export default (app: Router) => {
-  app.use('/packaging', route);
+  app.use('/packagings', route);
 
   const ctrl = Container.get(config.controllers.packaging.name) as IPackagingController;
 /*  

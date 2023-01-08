@@ -9,16 +9,17 @@ import { FleetService } from 'src/app/_services/fleet.service';
   styleUrls: ['./get-trucks.component.css']
 })
 export class GetTrucksComponent implements OnInit {
+  trucks: Truck[] = [];
+  content ?: string;
   checkbox1 = true;
   checkbox2 = false;
   checkbox3 = false;
-  trucks: Truck[] = [];
-  content ?: string;
-
-  constructor(
-    private fleetService: FleetService,
-    private location: Location
-    ) { }
+  page: number=1;
+  count:number =0;
+  tablesize:number=10;
+  tablesizes:any =[5,10,15];
+  constructor(private fleetService: FleetService,
+              private location: Location) { }
 
   ngOnInit(): void {
     this.getTrucks();
@@ -84,4 +85,12 @@ export class GetTrucksComponent implements OnInit {
       this.getInactiveTrucks();
     }
   }
+
+  onTableDataChange(event:any){
+    this.page=event;
+  }
+  onTableSizeChange(event:any):void{
+    this.tablesize=event.target.value;
+    this.page=1;
+  }  
 }
