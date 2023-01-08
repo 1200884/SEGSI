@@ -1,62 +1,43 @@
-.output {
-    margin: 0;
-    position: absolute;
-    top: 40%;
-    right: 75%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
+h1 {
+  margin-bottom: 0;
+  margin-left: 43%;
+}
+nav{
+  margin-left: 40%;
+}
+nav a {
+  padding: 1rem;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #e8e8e8;
+  color: #3d3d3d;
+  border-radius: 4px;
+  margin-right: 20px;
+}
 
-  .get-trucks-center {
-    margin: 0;
-    position: absolute;
-    top: 35%;
-    right: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
+nav button {
+  padding: 1rem;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #e8e8e8;
+  color: #3d3d3d;
+  border-radius: 4px;
+}
 
-  .get-truck-center {
-    margin: 0;
-    position: absolute;
-    top: 40%;
-    right: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
+nav button:hover {
+  color: white;
+  background-color: #42545C;
+}
+nav button:active {
+  background-color: black;
+}
 
-  .create-truck-center {
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    right: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  .put-truck-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  .patch-truck-center {
-    margin: 0;
-    position: absolute;
-    top: 55%;
-    right: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  .input-box {
-    margin: 0;
-    position: absolute;
-    top: 40%;
-    right: 20%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
+nav a:hover {
+  color: white;
+  background-color: #42545C;
+}
+nav a:active {
+  background-color: black;
+}

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board-logistics.component.css']
 })
 export class BoardLogisticsComponent implements OnInit {
-  title = 'Path Manager Board';
+  title = 'Logistics Board';
 
   constructor() { }
 
