@@ -20,7 +20,7 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
     throw new Error('Method not implemented.');
   }*/
 
-  public async findByDomainId(date: string,geracoes:string,populacao:string,cruzamento:string,mutacao:string): Promise<GeneticPlanning> {
+  public async findByDomainId(date: string,geracoes:number,populacao:number,cruzamento:number,mutacao:number): Promise<GeneticPlanning> {
 
     var request = require('request');
     var options = {

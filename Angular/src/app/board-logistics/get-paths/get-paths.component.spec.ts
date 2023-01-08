@@ -1,8 +1,6 @@
 ﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { GetPathsComponent } from './get-paths.component';
 import { of, throwError } from 'rxjs';
-import { Location } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Path } from 'src/app/_models/Path';
 import { LogisticsService } from 'src/app/_services/logistics.service';
@@ -82,32 +80,32 @@ describe('GetPathsComponent', () => {
     fixture.detectChanges();
     expect(component.paths.length).toBe(2);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(1);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(3);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(4);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(5);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(6);
   });
-  it('should set paths from the service directly', () => {
+  it('sshould validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(7);
@@ -116,37 +114,37 @@ describe('GetPathsComponent', () => {
 
 
   
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).toBe(3);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(1);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(2);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(4);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(5);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(6);
   });
-  it('should set paths from the service directly', () => {
+  it('should validate paths length', () => {
     mockLogisticsService.getPaths.and.returnValue(of(paths2));
     fixture.detectChanges();
     expect(component.paths.length).not.toBe(7);

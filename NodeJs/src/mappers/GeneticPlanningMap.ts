@@ -7,8 +7,12 @@ export class GeneticPlanningMap extends Mapper<GeneticPlanning> {
   
   public static toDTO( geneticplanning: GeneticPlanning): IGeneticPlanningDTO {
     return {
-      places: geneticplanning.places
-    } as IGeneticPlanningDTO;
+      date: geneticplanning.date,
+      geracoes: geneticplanning.geracoes,
+      populacao: geneticplanning.populacao,
+      cruzamento:geneticplanning.cruzamento,
+      mutacao: geneticplanning.mutacao,
+    } as IGeneticPlanningDTO
   }
 
   public static toDomain (geneticplanning: any): GeneticPlanning {
@@ -21,10 +25,10 @@ export class GeneticPlanningMap extends Mapper<GeneticPlanning> {
     return geneticplanningOrError.isSuccess ? geneticplanningOrError.getValue() : null;
   }
 
-  public static toPersistence (geneticplanning: GeneticPlanning): any {
+  /*public static toPersistence (geneticplanning: GeneticPlanning): any {
     return {
     
       places: geneticplanning.places
     }
-  }
+  }*/
 }
