@@ -16,7 +16,7 @@ export default class GeneticPlanningController implements IGeneticPlanningContro
   public async getGeneticPlanning(req: Request, res: Response, next: NextFunction) {
     try {
       let geneticplanningOrError = await this.geneticplanningServiceInstance.getGeneticPlanning(req.body as IGeneticPlanningDTO) as Result<IGeneticPlanningDTO>;
-      
+      console.log("req.body is "+req.body)
       if (geneticplanningOrError.isFailure) {
         return res.status(404).send();
       }

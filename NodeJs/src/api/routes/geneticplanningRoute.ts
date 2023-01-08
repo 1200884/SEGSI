@@ -12,7 +12,7 @@ export default (app: Router) => {
   app.use('/geneticplanning', route);
 
   const ctrl = Container.get(config.controllers.geneticplanning.name) as IGeneticPlanningController;
-
+  
   route.post('/get-geneticplanning',
   celebrate({
     body: Joi.object({

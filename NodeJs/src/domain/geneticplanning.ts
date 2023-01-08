@@ -10,7 +10,8 @@ interface GeneticPlanningProps {
     geracoes:number,
     populacao:number,
     cruzamento:number,
-    mutacao:number
+    mutacao:number,
+    termino:number;
 }
 
 export class GeneticPlanning extends AggregateRoot<GeneticPlanningProps> {
@@ -38,7 +39,9 @@ export class GeneticPlanning extends AggregateRoot<GeneticPlanningProps> {
   get mutacao():number{
     return this.props.mutacao;
   }
-
+get termino():number{
+  return this.props.termino;
+}
   set date ( value: string) {
     this.props.date = value;
   }
@@ -54,7 +57,9 @@ export class GeneticPlanning extends AggregateRoot<GeneticPlanningProps> {
   set mutacao ( value:number) {
     this.props.mutacao = value;
   }
-
+  set termino ( value:number) {
+    this.props.termino = value;
+  }
 
   private constructor (props: GeneticPlanningProps) {
     super(props);
@@ -67,7 +72,8 @@ export class GeneticPlanning extends AggregateRoot<GeneticPlanningProps> {
     const populacao = geneticplanningDTO.populacao;
     const cruzamento = geneticplanningDTO.cruzamento;
     const mutacao = geneticplanningDTO.mutacao;
-      const geneticplanning = new GeneticPlanning({date: date,geracoes: geracoes,populacao: populacao,cruzamento: cruzamento, mutacao: mutacao});
+    const termino = geneticplanningDTO.termino;
+      const geneticplanning = new GeneticPlanning({date: date,geracoes: geracoes,populacao: populacao,cruzamento: cruzamento, mutacao: mutacao,termino:termino});
       return Result.ok<GeneticPlanning>( geneticplanning )
     }
   }

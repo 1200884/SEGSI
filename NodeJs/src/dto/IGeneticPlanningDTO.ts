@@ -4,6 +4,7 @@ export default interface IGeneticPlanningDTO {
     geracoes:number,
     populacao:number,
     cruzamento:number,
-    mutacao:number;
+    mutacao:number,
+    termino:number;
   }
     
