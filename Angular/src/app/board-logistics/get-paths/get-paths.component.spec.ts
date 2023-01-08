@@ -1,8 +1,6 @@
 ﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { WarehouseService } from 'src/app/_services/warehouse.service';
 import { GetPathsComponent } from './get-paths.component';
 import { of, throwError } from 'rxjs';
-import { Location } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Path } from 'src/app/_models/Path';
 import { LogisticsService } from 'src/app/_services/logistics.service';
