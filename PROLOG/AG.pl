@@ -425,8 +425,8 @@ server() :-
 
 genetic_planning(Request):-
         http_parameters(Request,
-                        [date(Date, [between(20220101,20221231)]),Cruzamento,Mutacao,Geracoes,Populacao]),
-        gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,Resultado),
+                        [date(Date, [between(20220101,20221231)]),Cruzamento,Mutacao,Geracoes,Populacao,Termino]),
+        gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,Termino,Resultado),
         format('Places: ~w',Resultado).
 
 
@@ -441,7 +441,68 @@ genetic_planning(Request):-
 :-dynamic melhor/1.
 :-dynamic peso/1.
 
+geraentregasdinamicas(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens,PopulacaoAnterior):-
+    (retract(date(_));true), assert(date(Date)),
+    write('Date='),write(Date),nl,
+    (retract(geracoes(_));true), assert(geracoes(Geracoes)),
+    write('Geracoes='),write(Geracoes),nl,
+    (retract(populacao(_));true), assert(populacao(Populacao)),
+    write('Populacao='),write(Populacao),nl,
+    PC is Cruzamento/100,
+	(retract(prob_cruzamento(_));true), assert(prob_cruzamento(PC)),
+    write('PC='),write(PC),nl,
+    PM is Mutacao/100,
+    (retract(prob_mutacao(_));true), assert(prob_mutacao(PM)),
+    write('PM='),write(PM),nl,
+    atribuicao_lote(Date,ListaViagens),
+    write('ListaViagens='),write(ListaViagens),nl,
+	get_delimitadores_list(ListaViagens,ListaDelimitadores),
+	(retract(delimitadores_list(_));true), assert(delimitadores_list(ListaDelimitadores)),
+	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
+    get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
+    write('ListaEntregas='),write(ListaEntregas),nl,
+	(retract(lista_entregas(_));true), assert(lista_entregas(ListaEntregas)),
+	length(ListaEntregas,NumEntregas),
+	(retract(entregas(_));true), asserta(entregas(NumEntregas)),
+	write('NumEntregas='),write(NumEntregas),nl,
+	%search_entrega(ListaEntregas,ListaArmazens),
+	%write('ListaArmazens='),write(ListaArmazens),nl,
+    gera_populacaodinamica(Populacao,PopulacaoAnterior),
+    !.
 
+gera_populacaodinamica(Pop,PopAnterior):-
+	populacao(TamPop),
+    entregas(NumEntregas),
+	lista_entregas(ListaEntregas),
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,Pop,PopAnterior).
+
+gera_populacaodinamica(0,_,_,[PopAnterior],PopAnterior):-!.
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior):-
+	TamPop1 is TamPop-1,
+	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
+	gera_individuo(ListaEntregas,NumEntregas,Ind),
+	not(member(Ind,Resto)).
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
+
+gera_populacaodinamica(Pop,PopAnterior):-
+	populacao(TamPop),
+    entregas(NumEntregas),
+	lista_entregas(ListaEntregas),
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,Pop,PopAnterior).
+
+gera_populacaodinamica(0,_,_,[PopAnterior],PopAnterior):-!.
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior):-
+	TamPop1 is TamPop-1,
+	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
+	gera_individuo(ListaEntregas,NumEntregas,Ind),
+	not(member(Ind,Resto)).
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
 get_lista_entregas_without_trucks([], []).
 get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
     get_lista_entregas_without_trucks(Tail, TailResult),
@@ -464,7 +525,7 @@ get_travel_by_truck_id(Lists, ID, Result) :-
 
 first_element(L, X) :-
   nth0(0, L, X).
-  
+
 
 format_output(ListaDelimitadores, ListaArmazens, ListaViagens) :-
     format_output(ListaDelimitadores, ListaArmazens, [], ReversedListaViagens),
@@ -508,9 +569,9 @@ gera(Date,Geracoes,Populacao,ProbCruzamento,ProbMutacao,Valor,Resultado):-
 	write('PopAv='),write(PopAv),nl,
 	ordena_populacao(PopAv,PopOrd),
 	first_element(PopOrd,ListMelhorCaminho),
-/* 	write('ListMelhorCaminho='),write(ListMelhorCaminho),nl,
+/*	write('ListMelhorCaminho='),write(ListMelhorCaminho),nl,
 	get_last_element(ListMelhorCaminho,MelhorCaminho),nl, */
-	%write('MelhorCaminho='),write(MelhorCaminho),nl, 
+	%write('MelhorCaminho='),write(MelhorCaminho),nl,
 	geracoes(NG),
 	gera_geracao(0,NG,PopOrd,Valor,Resultado),!.
 
@@ -584,7 +645,7 @@ find_ids(Armazems, Date, Ids) :-
 
 gera_geracao(G,G,Pop,_,Resultado):-!,
 	first_element(Pop,Ind),
- 	extract_element(Ind,ListaArmazens),
+	extract_element(Ind,ListaArmazens),
 	date(Date),
 	find_ids(ListaArmazens,Date,ListaEntregas),
 	delimitadores_list(ListaDelimitadores),

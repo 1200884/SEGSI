@@ -30,15 +30,20 @@ export class LogisticsService {
   getPlanning(truckId: string, date: string): Observable<Planning> {
     return this.http.get<Planning>(environment.LOGISTICS_URL_LOCAL + environment.PLANNING_URL + '/' + truckId + '/' + date, { responseType: 'json' });
   }
-  getGeneticPlanning(date: string,probcruzamento:number, probmutacao:number, nrgeracoes:number, tamanhopop:number,termino:number):Observable<GeneticPlanning>{
-    console.log("date"+date);
-    console.log("probcruzamento"+probcruzamento);
-    console.log("probmutacao"+probmutacao);
-    console.log("numero geracoes"+nrgeracoes);
-    console.log("tamanho populacao"+tamanhopop);
-    console.log("termino is"+termino);
+
+
+
+
+  getGeneticPlanning(geneticplanning:GeneticPlanning):Observable<String>{
+    console.log(geneticplanning);
+    console.log("date"+geneticplanning.date);
+    console.log("numero geracoes"+geneticplanning.nrgeracoes);
+    console.log("tamanho populacao"+geneticplanning.tamanhopop);
+    console.log("probcruzamento"+geneticplanning.probcruzamento);
+    console.log("probmutacao"+geneticplanning.probmutacao);
+    //console.log("termino is"+termino);
     
-    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL_LOCAL + environment.GENETICPLANNING_URL + '/' + date+'/'+nrgeracoes+ '/'+tamanhopop+'/' +probcruzamento+ '/'+probmutacao+'/'+termino, { responseType: 'json' });
+    return this.http.post<String>(environment.LOGISTICS_URL_LOCAL + environment.GENETICPLANNING_URL , geneticplanning);
   }
   //Packaging packaging
   getPackagings(): Observable<Packaging[]> {

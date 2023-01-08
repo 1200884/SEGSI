@@ -1,3 +1,7 @@
 export interface GeneticPlanning {
-    places:[]
+    date: string,
+    nrgeracoes: number,
+    tamanhopop: number,
+    probcruzamento: number,
+    probmutacao: number,
 }
