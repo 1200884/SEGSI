@@ -115,12 +115,15 @@ export default class View {
                     directionside = -1;
                     updates = true;
                 } else if (event.code === "KeyS") {
+                    console.log("S");
                     directionside = 1;
                     updates = true;
                 } else if (event.code === "KeyA") {
+                    console.log("A");
                     directionfront = 1;
                     updates = true;
                 } else if (event.code === "KeyD") {
+                    console.log("D");
                     directionfront = -1;
                     updates = true;
                 } else if (event.code === "KeyE") {
@@ -177,8 +180,6 @@ export default class View {
             function updatePosition() {
 
                 let i = 0;
-
-
                 if (updates) {
                     if (directionside < 0) {
                         let newpositionx;
@@ -232,80 +233,54 @@ export default class View {
                     if (directionside > 0) {
                         let newpositionx;
                         let newpositiony;
+                        if (0 <= angle && angle < Math.PI / 2) {
+                            newpositionx = bola.position.x - speed * -Math.sin(angle);
+                            newpositiony = bola.position.z - speed * -Math.cos(angle);
+                        }
+                        if (Math.PI / 2 <= angle && angle < Math.PI) {
+                            newpositionx = bola.position.x + speed * Math.sin(angle);
+                            newpositiony = bola.position.z - speed * -Math.cos(angle);
+                        }
                         if (Math.PI <= angle && angle < Math.PI * 1.5) {
                             newpositionx = bola.position.x + speed * Math.sin(angle);
                             newpositiony = bola.position.z + speed * Math.cos(angle);
-
-                            for (i = 0; i < estradas.length; i = i + 2) {
-                                console.log(i);
-                                let armazem1 = armazens[estradas[i]];
-                                let armazem2 = armazens[estradas[i + 1]];
-
-                                if (percentagem(armazem1.position.x, armazem2.position.x, armazem1.position.z, armazem2.position.z, armazem1.position.y, armazem2.position.y, newpositionx, newpositiony)) {
-
-                                    bola.position.x = newpositionx;
-                                    bola.position.z = newpositiony;
-                                    updates = false;
-                                    directionside = 0;
-                                    break;
-                                }
-                            }
-
                         }
                         if (Math.PI * 1.5 <= angle && angle < Math.PI * 2) {
-
                             newpositionx = bola.position.x - speed * -Math.sin(angle);
                             newpositiony = bola.position.z + speed * Math.cos(angle);
+                        }
+                        if (armazemreal1 == null) {
                             for (i = 0; i < estradas.length; i = i + 2) {
+
                                 let armazem1 = armazens[estradas[i]];
                                 let armazem2 = armazens[estradas[i + 1]];
                                 if (percentagem(armazem1.position.x, armazem2.position.x, armazem1.position.z, armazem2.position.z, armazem1.position.y, armazem2.position.y, newpositionx, newpositiony)) {
-                                    
+                                    armazemreal1 = armazem1;
+                                    armazemreal2 = armazem2;
                                     bola.position.x = newpositionx;
                                     bola.position.z = newpositiony;
                                     updates = false;
                                     directionside = 0;
+                                    console.log("estrada nova");
                                     break;
                                 }
                             }
-                        }
-                        if (0 <= angle && angle < Math.PI / 2) {
-
-                            newpositionx = bola.position.x - speed * -Math.sin(angle);
-                            newpositiony = bola.position.z - speed * -Math.cos(angle);
-                            for (i = 0; i < estradas.length; i = i + 2) {
-                                let armazem1 = armazens[estradas[i]];
-                                let armazem2 = armazens[estradas[i + 1]];
-                                if (percentagem(armazem1.position.x, armazem2.position.x, armazem1.position.z, armazem2.position.z, armazem1.position.y, armazem2.position.y, newpositionx, newpositiony)) {
-                                    
-                                    bola.position.x = newpositionx;
-                                    bola.position.z = newpositiony;
-                                    updates = false;
-                                    directionside = 0;
-                                    break;
-                                }
+                        } else {
+                            if (percentagem(armazemreal1.position.x, armazemreal2.position.x, armazemreal1.position.z, armazemreal2.position.z, armazemreal1.position.y, armazemreal2.position.y, newpositionx, newpositiony)) {
+                                bola.position.x = newpositionx;
+                                bola.position.z = newpositiony;
+                                updates = false;
+                                directionside = 0;
                             }
-                        }
-                        if (Math.PI / 2 <= angle && angle < Math.PI) {
-
-                            newpositionx = bola.position.x + speed * Math.sin(angle);
-                            newpositiony = bola.position.z - speed * -Math.cos(angle);
-                            for (i = 0; i < estradas.length; i = i + 2) {
-                                let armazem1 = armazens[estradas[i]];
-                                let armazem2 = armazens[estradas[i + 1]];
-                                if (percentagem(armazem1.position.x, armazem2.position.x, armazem1.position.z, armazem2.position.z, armazem1.position.y, armazem2.position.y, newpositionx, newpositiony)) {
-            
-                                    bola.position.x = newpositionx;
-                                    bola.position.z = newpositiony;
-                                    updates = false;
-                                    directionside = 0;
-                                    break;
-                                }
+                            if ((Math.abs(bola.position.x - armazemreal1.position.x) <= 0.6 && Math.abs(bola.position.z - armazemreal1.position.z) <= 0.6) || (Math.abs(bola.position.x - armazemreal2.position.x) <= 0.6 && Math.abs(bola.position.z - armazemreal2.position.z) <= 0.6)) {
+                                armazemreal1 = null;
+                                armazemreal2 = null;
+                                console.log("acabou a estrada");
                             }
                         }
                     }
                 }
-                if (directionfront > 0) { bola.rotateY(rotationIndex); directionfront = 0; angle = angle + rotationIndex; if (angle >= Math.PI * 2) { angle = 0; } }
+                if (directionfront > 0) { bola.rotateY(rotationIndex); directionfront = 0; angle = angle + rotationIndex; if (angle == Math.PI * 2) { angle = 0; } }
                 if (directionfront < 0) { bola.rotateY(-rotationIndex); directionfront = 0; angle = angle - rotationIndex; if (angle < 0) { angle = Math.PI * 2 - rotationIndex; } }
                 if (directionupdown > 0) { bola.rotateZ(rotationIndex); directionupdown = 0; }
                 if (directionupdown < 0) { bola.rotateZ(-rotationIndex); directionupdown = 0; }
