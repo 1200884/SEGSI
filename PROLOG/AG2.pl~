@@ -429,7 +429,7 @@ tempo_byid(LC,DATE,IDTRUCK,FORMATED):-
 round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 10^D.
 
 
-%:-dynamic date/1.
+:-dynamic date/1.
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
@@ -516,6 +516,34 @@ gera:-
 	ordena_populacao(PopAv,PopOrd),
 	geracoes(NG),
 	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO). */
+geraentregasdinamicas(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens,PopulacaoAnterior):-
+    (retract(date(_));true), assert(date(Date)),
+    write('Date='),write(Date),nl,
+    (retract(geracoes(_));true), assert(geracoes(Geracoes)),
+    write('Geracoes='),write(Geracoes),nl,
+    (retract(populacao(_));true), assert(populacao(Populacao)),
+    write('Populacao='),write(Populacao),nl,
+    PC is Cruzamento/100,
+	(retract(prob_cruzamento(_));true), assert(prob_cruzamento(PC)),
+    write('PC='),write(PC),nl,
+    PM is Mutacao/100,
+    (retract(prob_mutacao(_));true), assert(prob_mutacao(PM)),
+    write('PM='),write(PM),nl,
+    atribuicao_lote(Date,ListaViagens),
+    write('ListaViagens='),write(ListaViagens),nl,
+	get_delimitadores_list(ListaViagens,ListaDelimitadores),
+	(retract(delimitadores_list(_));true), assert(delimitadores_list(ListaDelimitadores)),
+	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
+    get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
+    write('ListaEntregas='),write(ListaEntregas),nl,
+	(retract(lista_entregas(_));true), assert(lista_entregas(ListaEntregas)),
+	length(ListaEntregas,NumEntregas),
+	(retract(entregas(_));true), asserta(entregas(NumEntregas)),
+	write('NumEntregas='),write(NumEntregas),nl,
+	%search_entrega(ListaEntregas,ListaArmazens),
+	%write('ListaArmazens='),write(ListaArmazens),nl,
+    gera_populacaodinamica(Populacao,PopulacaoAnterior),
+    !.
 
 gera_populacao(Pop):-
 	populacao(TamPop),
@@ -533,6 +561,25 @@ gera_populacao(TamPop,ListaEntregas,NumEntregas,[Ind|Resto]):-
 
 gera_populacao(TamPop,ListaEntregas,NumEntregas,L):-
 	gera_populacao(TamPop,ListaEntregas,NumEntregas,L).
+
+
+gera_populacaodinamica(Pop,PopAnterior):-
+	populacao(TamPop),
+    entregas(NumEntregas),
+	lista_entregas(ListaEntregas),
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,Pop,PopAnterior).
+
+gera_populacaodinamica(0,_,_,[PopAnterior],PopAnterior):-!.
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior):-
+	TamPop1 is TamPop-1,
+	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
+	gera_individuo(ListaEntregas,NumEntregas,Ind),
+	not(member(Ind,Resto)).
+
+gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
+	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
+
 
 gera_individuo([G],1,[G]):-!.
 
