@@ -437,6 +437,7 @@ round(NUMBER,FORMATED,D) :- Z is NUMBER * 10^D, round(Z, ZA), FORMATED is ZA / 1
 :-dynamic armazens/1.
 :-dynamic delimitadores_list/1.
 :-dynamic lista_entregas/1.
+:-dynamic lista_armazens/1.
 
 get_lista_entregas_without_trucks([], []).
 get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
@@ -455,6 +456,10 @@ get_delimitadores_list([[H|T]|Tail], [[H,L]|Lengths]) :-
     length(T, L),
     get_delimitadores_list(Tail, Lengths).
 
+add_cidade_inicial_final(List,Result):-
+	cidade_inicial(City),
+	append([City], List, TempList),
+    append(TempList, [City], Result).
 
 gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens):-
     (retract(date(_));true), assert(date(Date)),
@@ -480,52 +485,31 @@ gera(Date,Geracoes,Populacao,Cruzamento,Mutacao,ListaViagens):-
 	length(ListaEntregas,NumEntregas),
 	(retract(entregas(_));true), asserta(entregas(NumEntregas)),
 	write('NumEntregas='),write(NumEntregas),nl,
-	%search_entrega(ListaEntregas,ListaArmazens),
-	%write('ListaArmazens='),write(ListaArmazens),nl,
-    %gera_populacao(Populacao),
-    !.
-
-
-% parameteriza��o
-/* inicializa:-
-	write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
-	(retract(geracoes(_));true), asserta(geracoes(NG)),
-	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
-	(retract(populacao(_));true), asserta(populacao(DP)),
-	write('Probabilidade de Cruzamento (%):'), read(P1),
-	PC is P1/100,
-	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
-	write('Probabilidade de Mutacao (%):'), read(P2),
-	PM is P2/100,
-	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
-
-gera:-
-	write('Data das entregas: '),read(DATE),
-	(retract(date(_));true), asserta(date(DATE)),
-	write('Id do camiao: '),read(IDCAMIAO),
-	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
-	inicializa,
-	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
-	%add_cidade_inicial_final(ListArmazens,Final),
-	write('ListArmazens='),write(ListArmazens),nl,
-	gera_populacao(Pop,ListArmazens),
-	%write('Passou do geraPop'),nl,
+	search_entrega(ListaEntregas,ListaArmazens),
+	(retract(lista_armazens(_));true), asserta(lista_armazens(ListaArmazens)),
+	write('ListaArmazens='),write(ListaArmazens),nl,
+    gera_populacao(Pop),
 	write('Pop='),write(Pop),nl,
-	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
+	avalia_populacao(Pop,PopAv),
 	write('PopAv='),write(PopAv),nl,
 	ordena_populacao(PopAv,PopOrd),
 	geracoes(NG),
-	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO). */
+	gera_geracao(0,NG,PopOrd),
+    !.
 
 gera_populacao(Pop):-
 	populacao(TamPop),
+	write(TamPop),nl,
+	lista_armazens(ListaEntregas),
+	write(ListaEntregas),nl,
     entregas(NumEntregas),
-	lista_entregas(ListaEntregas),
+	write(NumEntregas),nl,
 	gera_populacao(TamPop,ListaEntregas,NumEntregas,Pop).
 
 gera_populacao(0,_,_,[]):-!.
 
 gera_populacao(TamPop,ListaEntregas,NumEntregas,[Ind|Resto]):-
+	write('agr nsei'),nl,
 	TamPop1 is TamPop-1,
 	gera_populacao(TamPop1,ListaEntregas,NumEntregas,Resto),
 	gera_individuo(ListaEntregas,NumEntregas,Ind),
@@ -548,30 +532,11 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	N1 is N-1,
 	retira(N1,Resto,G,Resto1).
 
-add_cidade_inicial_final(List,Result):-
-	cidade_inicial(City),
-	append([City], List, TempList),
-    append(TempList, [City], Result).
-
 avalia_populacao([],[]).
 avalia_populacao([Ind|Resto],[Ind*V|Resto1]):-
-	avalia(Ind,V),
+	date(Date),
+	tempo_byid(Ind,Date,eTruck01,V),
 	avalia_populacao(Resto,Resto1).
-
-avalia(Seq,V):-
-	avalia(Seq,0,V).
-
-avalia([],_,0).
-avalia([T|Resto],Inst,V):-
-	entrega(T,_,Dur,_,_,_),
-	InstFim is Inst+Dur,
-	avalia(Resto,InstFim,VResto),
-	(
-		(InstFim =< Prazo,!, VT is 0)
-  ;
-		(VT is InstFim-Prazo)
-	),
-	V is VT+VResto.
 
 ordena_populacao(PopAv,PopAvOrd):-
 	bsort(PopAv,PopAvOrd).

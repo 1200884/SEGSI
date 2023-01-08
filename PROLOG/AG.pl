@@ -434,31 +434,49 @@ genetic_planning(Request):-
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
 :-dynamic prob_mutacao/1.
+:-dynamic lista_armazens/1.
 %:-dynamic armazens/1.
+
+get_lista_entregas_without_trucks([], []).
+get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
+    get_lista_entregas_without_trucks(Tail, TailResult),
+    append(T, TailResult, Result).
+get_lista_entregas_without_trucks([[]|Tail], Result) :-
+    get_lista_entregas_without_trucks(Tail, Result).
+
+search_entrega([], []).
+search_entrega([H|T], [Result|TailResult]) :-
+    entrega(H, _, _, Result, _, _),
+    search_entrega(T, TailResult).
 
 % parameteriza��o
 inicializa:-
-	write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
-	(retract(geracoes(_));true), asserta(geracoes(NG)),
-	write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
-	(retract(populacao(_));true), asserta(populacao(DP)),
-	write('Probabilidade de Cruzamento (%):'), read(P1),
-	PC is P1/100,
-	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(PC)),
-	write('Probabilidade de Mutacao (%):'), read(P2),
-	PM is P2/100,
-	(retract(prob_mutacao(_));true), asserta(prob_mutacao(PM)).
+	%write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
+	(retract(geracoes(_));true), asserta(geracoes(10)),
+	%write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
+	(retract(populacao(_));true), asserta(populacao(10)),
+	%write('Probabilidade de Cruzamento (%):'), read(P1),
+	%PC is P1/100,
+	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(0.1)),
+%	write('Probabilidade de Mutacao (%):'), read(P2),
+%	PM is P2/100,
+	(retract(prob_mutacao(_));true), asserta(prob_mutacao(0.1)).
 
 gera:-
 	write('Data das entregas: '),read(DATE),
 	(retract(date(_));true), asserta(date(DATE)),
-	write('Id do camiao: '),read(IDCAMIAO),
-	(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
+	%write('Id do camiao: '),read(IDCAMIAO),
+	%(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
 	inicializa,
-	get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
+	atribuicao_lote(DATE,ListaViagens),
+	write('ListaViagens='),write(ListaViagens),nl,
+	get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
+	search_entrega(ListaEntregas,ListArmazens),
+	%get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
 	%add_cidade_inicial_final(ListArmazens,Final),
 	write('ListArmazens='),write(ListArmazens),nl,
-	gera_populacao(Pop,ListArmazens),
+	(retract(lista_armazens(_));true), asserta(lista_armazens(ListArmazens)),
+	gera_populacao(Pop),
 	%write('Passou do geraPop'),nl,
 	write('Pop='),write(Pop),nl,
 	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
@@ -467,8 +485,9 @@ gera:-
 	geracoes(NG),
 	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO).
 
-gera_populacao(Pop,ListaArmazens):-
+gera_populacao(Pop):-
 	populacao(TamPop),
+	lista_armazens(ListaArmazens),
 	length(ListaArmazens,NumArmazens),
 	(retract(armazens(_));true), asserta(armazens(NumArmazens)),
 	write('NumArmazens_permutar='),write(NumArmazens),nl,
