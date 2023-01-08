@@ -29,5 +29,14 @@
     </option>
   </select>
 </div>
+
+<div class="d-flex align-items-start">
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="onTableDataChange($event)">
+</pagination-controls>
+</div>
+
 <button type="button" (click)="goBack()">GoBack</button> 
 </ul>

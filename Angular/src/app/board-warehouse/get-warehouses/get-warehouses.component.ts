@@ -16,7 +16,8 @@ export class WarehousesComponent implements OnInit {
   check3 = false;
   page: number=1;
   count:number =0;
-  tablesize:number=10;
+  tablesize:number=5;
+  tablesizes:any=[5,10,15];
   constructor(private warehouseService: WarehouseService,
               private location: Location) { }
 

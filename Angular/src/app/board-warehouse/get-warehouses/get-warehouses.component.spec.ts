@@ -6,11 +6,7 @@ import { WarehousesComponent } from './get-warehouses.component';
 import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-<<<<<<< HEAD
-=======
 import { environment } from 'src/environments/environment';
->>>>>>> 152daa6433cc85b66907213603b028268082b14d
-
 
 describe('WarehousesComponent', () => {
   let warehouses: Warehouse[];

@@ -1,29 +1,33 @@
 label {
-    color: #435960;
-    font-weight: bold;
-  }
-  input {
-    font-size: 1em;
-    padding: .5rem;
-  }
-  button {
-    margin-top: 20px;
-    background-color: #eee;
-    padding: 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  button:hover {
-    background-color: #cfd8dc;
-  }
+  color: #435960;
+  font-weight: bold;
+}
 
-  #addWarehouseButton {
-    margin-top: 20px;
-    background-color: #eee;
-    padding: 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  #addWarehouseButton:hover {
-    background-color: #cfd8dc;
-  }
+input {
+  font-size: 1em;
+  padding: .5rem;
+}
+
+button {
+  margin-top: 20px;
+  background-color: #eee;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+#addTruckButton {
+  margin-top: 20px;
+  background-color: #eee;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#addTruckButton:hover {
+  background-color: #cfd8dc;
+}

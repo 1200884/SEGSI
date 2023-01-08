@@ -1,7 +1,12 @@
 import * as THREE from "three";
 
+<<<<<<< HEAD
 export default class Arco extends THREE.Mesh {
     constructor(size) {
+=======
+export default class Arco extends THREE.Mesh{
+    constructor(size, armazemOrigem, armazemDestino) {
+>>>>>>> 224bebd7d3b5036f006a1cf00b08bc921a393650
         super();
         let geometry = new THREE.BoxGeometry(size - 1.5, 0.25, 0.25);
         this.object = new THREE.Group();

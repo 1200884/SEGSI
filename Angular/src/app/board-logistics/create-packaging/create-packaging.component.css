@@ -1,17 +1,33 @@
-.output {
-    margin: 0;
-    position: absolute;
-    top: 70%;
-    right: 75%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+label {
+  color: #435960;
+  font-weight: bold;
 }
 
-.input-box {
-    margin: 0;
-    position: absolute;
-    top: 40%;
-    right: 20%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+input {
+  font-size: 1em;
+  padding: .5rem;
+}
+
+button {
+  margin-top: 20px;
+  background-color: #eee;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+#addPackagingButton {
+  margin-top: 20px;
+  background-color: #eee;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#addPackagingButton:hover {
+  background-color: #cfd8dc;
 }
