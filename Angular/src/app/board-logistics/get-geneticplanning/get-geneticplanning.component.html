@@ -1,28 +1,27 @@
 <div class="container">
     <div class="output">
-        <p>Places: {{geneticplanning.places}}</p>
+        <p>Places: {{content}}}</p>
     </div>
 
     <div class="input-box">
         <form #geneticplanningForm="ngForm" (ngSubmit)="getGeneticPlanning(geneticplanningForm.value)">
   
           <label>Date: </label>
-          <input type="text" name="date" id="date" ngModel>
+          <input type="text" name="date" id="date" [(ngModel)]="form.date">
           
-          <label>Probabilidade de Cruzamento: </label>
-          <input type="text" name="probcruzamento" id="probcruzamento" ngModel>
-            
-          <label>Probabilidade de Mutação: </label>
-          <input type="text" name="probmutacao" id="probmutacao" ngModel>
-    
           <label>Numero de Gerações: </label>
-          <input type="text" name="nrgeracoes" id="nrgeracoes" ngModel>
+          <input type="text" name="nrgeracoes" id="nrgeracoes" [(ngModel)]="form.nrgeracoes">
           
           <label>Tamanho da população: </label>
-          <input type="text" name="tamanhopop" id="tamanhopop" ngModel>
-
-          <label>Término: </label>
-          <input type="text" name="termino" id="termino" ngModel>
+          <input type="text" name="tamanhopop" id="tamanhopop" [(ngModel)]="form.tamanhopop">
+          
+          <label>Probabilidade de Cruzamento: </label>
+          <input type="text" name="probcruzamento" id="probcruzamento" [(ngModel)]="form.probcruzamento">
+            
+          <label>Probabilidade de Mutação: </label>
+          <input type="text" name="probmutacao" id="probmutacao" [(ngModel)]="form.probmutacao">
+    
+          
     
           <input type="submit" value="Get planning">
         </form>

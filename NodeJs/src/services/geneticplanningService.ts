@@ -19,7 +19,7 @@ export default class GeneticPlanningService implements IGeneticPlanningService {
 
       //const deliveries = await this.deliveryRepo.findAll();
 
-      const geneticplanning = await this.geneticplanningRepo.findByDomainId(alggenetico.date,alggenetico.geracoes,alggenetico.populacao,alggenetico.cruzamento,alggenetico.mutacao);
+      const geneticplanning = await this.geneticplanningRepo.findByDomainId(alggenetico.date,alggenetico.nrgeracoes,alggenetico.tamanhopop,alggenetico.probcruzamento,alggenetico.probmutacao);
 
       if (geneticplanning === null) {
         return Result.fail<IGeneticPlanningDTO>("Planning not found");

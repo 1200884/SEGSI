@@ -8,10 +8,10 @@ export class GeneticPlanningMap extends Mapper<GeneticPlanning> {
   public static toDTO( geneticplanning: GeneticPlanning): IGeneticPlanningDTO {
     return {
       date: geneticplanning.date,
-      geracoes: geneticplanning.geracoes,
-      populacao: geneticplanning.populacao,
-      cruzamento:geneticplanning.cruzamento,
-      mutacao: geneticplanning.mutacao,
+      nrgeracoes: geneticplanning.nrgeracoes,
+      tamanhopop: geneticplanning.tamanhopop,
+      probcruzamento:geneticplanning.probcruzamento,
+      probmutacao: geneticplanning.probmutacao,
     } as IGeneticPlanningDTO
   }
 
