@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Warehouse } from '../_models/Warehouse';
@@ -9,10 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class WarehouseService {
-
-  //private apiUri = "https://localhost:5001/api";
-  //private Warehouses = "/Warehouses"
-  ipAddress = '';
   constructor(private http: HttpClient) { }
 
   getWarehouses(): Observable<Warehouse[]> {

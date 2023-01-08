@@ -74,7 +74,7 @@ export class DeliveriesComponent implements OnInit  {
 
   onTableSizeChange(event:any):void{
     this.tablesize=event.target.value;
-    this.page=1;0
+    this.page=1;
     this.getDeliveries();
   }
 
