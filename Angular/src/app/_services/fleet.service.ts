@@ -4,15 +4,10 @@ import { Observable } from 'rxjs';
 import { Truck } from '../_models/Truck';
 import { environment } from 'src/environments/environment';
 
-//const API_URL = 'http://vsgate-s1.dei.isep.ipp.pt:10136/api';
-//const LOCAL_API_URL = 'http://localhost:2223/api'
-//const TRUCKS_URL = '/trucks';
-
 @Injectable({
   providedIn: 'root'
 })
 export class FleetService {
-
   constructor(private http: HttpClient) { }
 
   getTrucks(): Observable<Truck[]> {

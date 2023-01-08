@@ -11,12 +11,68 @@
     <label for="checkbox3">Disabled</label>
     <input type="checkbox" [(ngModel)]="checkbox3" [ngModelOptions]="{standalone: true}" (change)="updateList()" (click)="uncheckOthers(3)">
   </form>
-  <br>
+<!--   <br>
   <li *ngFor="let truck of trucks">
     <a routerLink="/trucks/{{truck.id}}">
     <span class="badge">{{truck.plate}}</span>
     </a>
   </li>
+  <br> -->
   <br>
+  <table class="table table-striped table-dark table-hover">
+    <thead><tr>
+      <th>
+      Plate
+      </th>
+      <th>
+      Tare
+      </th>
+      <th>
+      Autonomy
+      </th>
+      <th>
+      Max Weight
+      </th>
+      <th>
+      Battery Capacity
+      </th>
+      <th>
+      Charge Time
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let truck of trucks | paginate: { 
+        itemsPerPage:tablesize,currentPage:page,totalItems: count}; let i=index">
+     <th scope="row">
+      <a routerLink="/trucks/{{truck.id}}">{{ truck.plate }}</a>
+     </th>
+        <td>
+          <a routerLink="/trucks/{{truck.id}}">{{ truck.tare }}</a>
+        </td>
+        <td>
+          <a routerLink="/trucks/{{truck.id}}">{{ truck.truckAutonomy }}</a>
+        </td>
+        <td>
+          <a routerLink="/trucks/{{truck.id}}">{{ truck.maxWeight }}</a>
+        </td>
+        <td>
+          <a routerLink="/trucks/{{truck.id}}">{{ truck.batteryCapacity }}</a>
+        </td>
+        <td>
+          <a routerLink="/trucks/{{truck.id}}">{{ truck.chargeTime }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>   
+  <div class="d-flex align-items-start">
+      <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+    </div>
+  <br>
+
   <button type="button" (click)="goBack()">Go Back</button>
 </ul>
