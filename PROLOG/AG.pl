@@ -438,6 +438,9 @@ genetic_planning(Request):-
 :-dynamic delimitadores_list/1.
 :-dynamic valor/1.
 :-dynamic armazens/1.
+:-dynamic melhor/1.
+:-dynamic peso/1.
+
 
 get_lista_entregas_without_trucks([], []).
 get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
@@ -477,6 +480,7 @@ format_output2(NomeCaminhao, NumeroViagens, Armazens, Viagens, RestoArmazens) :-
     append(Viagens, RestoArmazens, Armazens).
 
 gera(Date,Geracoes,Populacao,ProbCruzamento,ProbMutacao,Valor,Resultado):-
+	(retract(peso(_));true),(retract(melhor(_));true),
 	(retract(date(_));true), assert(date(Date)),
 	(retract(geracoes(_));true), assert(geracoes(Geracoes)),
 	(retract(populacao(_));true), assert(populacao(Populacao)),
@@ -541,18 +545,15 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	N1 is N-1,
 	retira(N1,Resto,G,Resto1).
 
-add_cidade_inicial_final(List,Result):-
-	cidade_inicial(City),
-	append([City], List, TempList),
-    append(TempList, [City], Result).
-
 avalia_populacao([],[],_).
 avalia_populacao([Ind|Resto],[Ind*V|Resto1],Valor):-
 	date(Date),
 	tempo_byid(Ind,Date,eTruck01,V),
-	(V =< Valor, ! ; true),
-	write('V= '),write(V),nl,
+	(V < Valor, assert(melhor(Ind)),assert(peso(V));true),
+	%write('V'),write(V),nl,
 	avalia_populacao(Resto,Resto1,Valor).
+avalia_populacao([_|Resto], Resto1, Valor):-
+	avalia_populacao(Resto, Resto1, Valor).
 
 ordena_populacao(PopAv,PopAvOrd):-
 	bsort(PopAv,PopAvOrd).
@@ -588,6 +589,8 @@ gera_geracao(G,G,Pop,_,Resultado):-!,
 	find_ids(ListaArmazens,Date,ListaEntregas),
 	delimitadores_list(ListaDelimitadores),
 	format_output(ListaDelimitadores,ListaEntregas,Resultado),
+	nl,melhor(Melhor),peso(Peso),nl,
+	write('Melhor='),write(Melhor),write('Peso='),write(Peso),nl,
 	write('Gera��o '), write(G), write(':'), nl, write(Pop), nl.
 
 gera_geracao(N,G,Pop,Valor,Resultado):-
