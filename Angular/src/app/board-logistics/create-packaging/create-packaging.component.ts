@@ -29,12 +29,11 @@ export class CreatePackagingComponent implements OnInit {
     this.logisticsService.postPackaging(packaging).subscribe(
       data => {
         this.error = false;
-        this.content = '';
+        this.content = 'Packaging Created';
         this.packaging = data;
       },
       err => {
         this.error = true;
-        this.content = JSON.parse(err.error).message;
       }
     )
   }
