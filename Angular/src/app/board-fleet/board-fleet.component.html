@@ -1,31 +1,8 @@
-<div class="container">
-  <div class="get-trucks-center">
-    <button type="button">
-      <a class="btn" routerLink="/get-trucks">Get Trucks</a>
-    </button>
-  </div>
 
-  <div class="get-truck-center">
-    <button type="button">
-      <a class="btn" routerLink="/get-truck">Get a truck</a>
-    </button>
-  </div>
-
-  <div class="create-truck-center">
-    <button type="button">
-      <a class="btn" routerLink="/create-truck">Create a truck</a>
-    </button>
-  </div>
-
-  <!--<div class="put-truck-center">
-    <button type="button">
-      <a class="btn" routerLink="/put-truck">Update a truck</a>
-    </button>
-  </div>
-
-  <div class="patch-truck-center">
-    <button type="button">
-      <a class="btn" routerLink="/patch-truck">Partially update a truck</a>
-    </button>
-  </div>-->
-</div>
+<h1>{{title}}</h1>
+<nav>
+  <a class="btn" routerLink="/get-trucks">Get Trucks</a>
+  <a class="btn" routerLink="/get-truck">Get a truck</a>
+  <a class="btn" routerLink="/create-truck">Create a truck</a>
+</nav>
+<router-outlet></router-outlet>

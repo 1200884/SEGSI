@@ -25,7 +25,7 @@ import { GetPackagingComponent } from './board-logistics/get-packaging/get-packa
 import { GetPackagingsComponent } from './board-logistics/get-packagings/get-packagings.component';
 import { PutPackagingComponent } from './board-logistics/put-packaging/put-packaging.component';
 import { CreatePackagingComponent } from './board-logistics/create-packaging/create-packaging.component';
-import { GetPathsComponent } from './board-logistics/get-path/get-paths.component';
+import { GetPathsComponent } from './board-logistics/get-paths/get-paths.component';
 import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
 import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
 import { GetUsersComponent } from './board-admin/get-users/get-users.component';

@@ -13,7 +13,7 @@ export class DeliveriesComponent implements OnInit  {
   page: number=1;
   count:number =0;
   tablesize:number=5;
-  tablesizes:any =[5,10,15,20];
+  tablesizes:any =[5,10,15];
   filterText1 = '';
   filterText2 = '';
   filterText3 = '';
@@ -74,7 +74,7 @@ export class DeliveriesComponent implements OnInit  {
 
   onTableSizeChange(event:any):void{
     this.tablesize=event.target.value;
-    this.page=1;0
+    this.page=1;
     this.getDeliveries();
   }
 

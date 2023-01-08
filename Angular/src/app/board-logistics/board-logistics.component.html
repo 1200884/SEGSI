@@ -1,4 +1,19 @@
-<div class="container d-flex justify-content-around mt-5 align-items-center w-100 ">
+<h1>{{title}}</h1>
+<nav>
+  <a routerLink="/get-paths">Get Paths</a>
+  <a routerLink="/create-paths">Create a path</a>
+  <a routerLink="/get-packagings">Get Packagings</a>
+  <a routerLink="/create-packaging">Create a Packaging</a>
+  <a routerLink="/get-packaging">Get Packaging</a>
+  <a routerLink="/put-packaging">Put Packaging</a>
+  <a routerLink="/get-planning">Get planning</a>
+  <a routerLink="/get-geneticplanning">Get GA planning</a>
+</nav>
+<router-outlet></router-outlet>
+
+
+
+<!-- <div class="container d-flex justify-content-around mt-5 align-items-center w-100 ">
 
   <div class="get-paths-center">
     <button type="button" class="btn btn-success" routerLink="/get-paths"> Get Paths
@@ -39,4 +54,4 @@
     <button type="button" class="btn btn-primary" routerLink="/put-packaging"> Put Packaging
     </button>
   </div>
-</div>
+</div> -->

@@ -5,7 +5,7 @@ import Base from "./Base.js";
 import Arco from "./Arco.js";
 import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import Camiao from "./Camiao.js";
-import CamiaoAutomatico from "./CamiaoAutomatico.js";
+import CamiaoAutomatico from "./CamiaoAutomatico.js"
 
 export default class View {
     constructor() {
@@ -83,16 +83,15 @@ export default class View {
             console.log("x 17 is" + armazens[17].position.x);
             console.log("Y 5 is" + armazens[5].position.z);
             console.log("Y 17 is" + armazens[17].position.z);
-            // checkisOnRoad(5,armazens[5],armazens[17]);
             //console.log("Marilio Cardoso "+percentagem(1,2,1,2,1,2,1.5,1.5));
             bola.rotateY(Math.PI);
             let angle = 0;
             let directionside = 0;
             let directionfront = 0;
+            let directionupdown = 0;
             let speed = 0.1;
-            let rotationIndex = Math.PI / 32;
+            let rotationIndex = Math.PI / 64;
             let updates = false;
-
             // Create the button element
             var button = document.createElement('button');
             button.innerHTML = 'Create automatic trucks';
@@ -189,7 +188,6 @@ export default class View {
                 move(camiaoAutomatico, destWarehouseList);
                 //}
             });
-
             window.addEventListener("keydown", event => {
                 if (event.code === "KeyW") {
                     console.log("W");
@@ -239,7 +237,6 @@ export default class View {
                 ladox = armazem3x - armazem4x;
                 ladoy = armazem3y - armazem4y;
                 ladoz = zmaior - zmaispiqui;
-
                 //distanciaEntreArmazens=Math.sqrt(Math.pow(ladox,2)+Math.pow(ladoy,2));
                 ladoxpequeno = newX - armazem4x;
                 ladoypequeno = newY - armazem4y;
@@ -257,8 +254,8 @@ export default class View {
                     //console.log("y1 = "+armazem3y+" x1 = "+armazem3x)
                     //console.log("y2 = "+armazem4y+" x2 = "+armazem4x)
 
-                    console.log(ladoz);
-                    bola.position.y = 1 - (ladoz * distanciaEntreArmazens) + zmaispiqui;
+
+                    bola.position.y = 1-(ladoz * distanciaEntreArmazens) + zmaispiqui;
                     //console.log("z novo é "+bola.position.y);
                     return true;
                 }
@@ -398,15 +395,11 @@ export default class View {
                             }
                         }
                     }
-
-
-                    if (directionfront > 0) { bola.rotateY(rotationIndex); updates = false; directionfront = 0; angle = angle + rotationIndex; if (angle >= Math.PI * 2) { angle = 0; } }
-                    if (directionfront < 0) { bola.rotateY(-rotationIndex); updates = false; directionfront = 0; angle = angle - rotationIndex; if (angle < 0) { angle = Math.PI * 2 - rotationIndex; } }
-                    if (directionupdown > 0) { bola.rotateZ(rotationIndex); updates = false; directionupdown = 0; }
-                    if (directionupdown < 0) { bola.rotateZ(-rotationIndex); updates = false; directionupdown = 0; }
-
-
                 }
+                if (directionfront > 0) { bola.rotateY(rotationIndex); directionfront = 0; angle = angle + rotationIndex; if (angle >= Math.PI * 2) { angle = 0; } }
+                if (directionfront < 0) { bola.rotateY(-rotationIndex); directionfront = 0; angle = angle - rotationIndex; if (angle < 0) { angle = Math.PI * 2 - rotationIndex; } }
+                if (directionupdown > 0) { bola.rotateZ(rotationIndex); directionupdown = 0; }
+                if (directionupdown < 0) { bola.rotateZ(-rotationIndex); directionupdown = 0; }
                 requestAnimationFrame(draw);
             }
 
@@ -495,11 +488,11 @@ export default class View {
             let desnivel = extreme1[1] - extreme2[1];
             if (desnivel > 2) {
                 p += 0.2;
-                view.arco = new Arco(p + 0.20);
+                view.arco = new Arco(p + 0.20,armazem1,armazem2);
                 p -= 2;
             } else {
                 p += 0.3;
-                view.arco = new Arco(p + 0.30);
+                view.arco = new Arco(p + 0.30,armazem1,armazem2);
                 p -= 2;
             }
             let arco1;
@@ -629,8 +622,6 @@ export default class View {
             var result2 = (-1 * b - Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
             return result;
         }
-
-
         function move(camiaoAutomatico, percurso) {
             camiaoAutomatico.percurso = percurso;
             camiaoAutomatico.clock = new THREE.Clock();
@@ -656,7 +647,7 @@ export default class View {
 
             initializeCamiaoAutomatico(camiaoAutomatico);
             camiaoAutomatico.update = true;
-            updateCamiaoAutomatico();
+            //updateCamiaoAutomatico();
 
             function initializeCamiaoAutomatico(camiaoAutomatico) {
                 camiaoAutomatico.i = 2;
