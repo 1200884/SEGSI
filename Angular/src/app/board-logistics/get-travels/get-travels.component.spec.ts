@@ -1,5 +1,5 @@
-﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GetPathsComponent } from './get-paths.component';
+﻿/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { GetTravelsComponent } from './get-travels.component';
 import { of, throwError } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Path } from 'src/app/_models/Path';
@@ -10,8 +10,8 @@ describe('GetPathsComponent', () => {
   let paths: Path[];
   let paths2:Path[];
   let mockLogisticsService: any;
-  let component: GetPathsComponent;
-  let fixture: ComponentFixture<GetPathsComponent>;
+  let component: GetTravelsComponent;
+  let fixture: ComponentFixture<GetTravelsComponent>;
 
   beforeEach(async () => {
     paths =[
@@ -57,7 +57,7 @@ describe('GetPathsComponent', () => {
          }];
       
       TestBed.configureTestingModule({
-        declarations: [ GetPathsComponent],
+        declarations: [ GetTravelsComponent],
         imports: [
           NgxPaginationModule,
         ],
@@ -68,7 +68,7 @@ describe('GetPathsComponent', () => {
           },
         ]
       })
-    fixture = TestBed.createComponent(GetPathsComponent);
+    fixture = TestBed.createComponent(GetTravelsComponent);
     component = fixture.componentInstance;
   });
 
@@ -175,3 +175,4 @@ describe('GetPathsComponent', () => {
     expect(component.paths.length).not.toBeGreaterThan(2);
   });
 });
+ */

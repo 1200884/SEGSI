@@ -6,6 +6,7 @@ import { Planning } from '../_models/Planning';
 import { Packaging } from '../_models/Packaging';
 import { environment } from 'src/environments/environment';
 import { GeneticPlanning } from '../_models/GeneticPlanning';
+import { Travel } from '../_models/Travel';
 
 @Injectable({
   providedIn: 'root'
@@ -27,17 +28,22 @@ export class LogisticsService {
     return this.http.post<Path>(environment.LOGISTICS_URL_LOCAL + environment.PATHS_URL, path);
   }
 
+  getTravels(): Observable<Travel[]> {
+    return this.http.get<Travel[]>(environment.LOGISTICS_URL_LOCAL + environment.TRAVEL_URL, { responseType: 'json' });
+  }
+
   getPlanning(truckId: string, date: string): Observable<Planning> {
     return this.http.get<Planning>(environment.LOGISTICS_URL_LOCAL + environment.PLANNING_URL + '/' + truckId + '/' + date, { responseType: 'json' });
   }
-  getGeneticPlanning(date: string,probcruzamento:string, probmutacao:string, nrgeracoes:string, tamanhopop:string):Observable<GeneticPlanning>{
+  getGeneticPlanning(date: string,probcruzamento:number, probmutacao:number, nrgeracoes:number, tamanhopop:number,termino:number):Observable<GeneticPlanning>{
     console.log("date"+date);
     console.log("probcruzamento"+probcruzamento);
     console.log("probmutacao"+probmutacao);
     console.log("numero geracoes"+nrgeracoes);
     console.log("tamanho populacao"+tamanhopop);
+    console.log("termino is"+termino);
     
-    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL_LOCAL + environment.GENETICPLANNING_URL + '/' + date+ '/' +probcruzamento+ '/'+probmutacao+'/'+nrgeracoes+'/'+tamanhopop, { responseType: 'json' });
+    return this.http.put<GeneticPlanning>(environment.LOGISTICS_URL_LOCAL + environment.GENETICPLANNING_URL + '/' + date+'/'+nrgeracoes+ '/'+tamanhopop+'/' +probcruzamento+ '/'+probmutacao+'/'+termino, { responseType: 'json' });
   }
   //Packaging packaging
   getPackagings(): Observable<Packaging[]> {
@@ -49,11 +55,9 @@ export class LogisticsService {
   }
 
   postPackaging(info: any): Observable<Packaging> {
-    console.log(info);
     return this.http.post<Packaging>(environment.LOGISTICS_URL_LOCAL + environment.PACKAGING_URL, info);
   }
   putPackaging(info: any): Observable<Packaging> {
-    console.log(info);
     return this.http.put<Packaging>(environment.LOGISTICS_URL_LOCAL + environment.PACKAGING_URL, info);
   }
  

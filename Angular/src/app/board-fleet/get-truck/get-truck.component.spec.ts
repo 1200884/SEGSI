@@ -22,4 +22,5 @@ describe('GetTruckComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});*/
+});
+*/

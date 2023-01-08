@@ -29,6 +29,7 @@ import { GetPathsComponent } from './board-logistics/get-paths/get-paths.compone
 import { GetPlanningComponent } from './board-logistics/get-planning/get-planning.component';
 import { GetGeneticplanningComponent } from './board-logistics/get-geneticplanning/get-geneticplanning.component';
 import { GetUsersComponent } from './board-admin/get-users/get-users.component';
+import { GetTravelsComponent } from './board-logistics/get-travels/get-travels.component';
 const routes: Routes = [
   { path: 'users', component: GetUsersComponent },
   { path: '', component: HomeComponent },
@@ -43,22 +44,22 @@ const routes: Routes = [
   { path: 'deliveries', component: DeliveriesComponent },
   { path: 'warehouses/:id/:check3', component: UpdateWarehouseComponent },
   { path: 'deliveries/:id', component: UpdateDeliveryComponent },
-  { path: 'trucks/:id', component: PutTruckComponent},
+  { path: 'trucks/:id', component: PutTruckComponent },
+  { path: 'packagings/:id', component: PutPackagingComponent },
   { path: 'Create warehouses', component: CreateWarehouseComponent },
   { path: 'Create deliveries', component: CreateDeliveryComponent },
   { path: 'get-trucks', component: GetTrucksComponent },
   { path: 'get-truck', component: GetTruckComponent },
   { path: 'create-truck', component: CreateTruckComponent },
-  { path: 'put-truck', component: PutTruckComponent },
   { path: 'patch-truck', component: PatchTruckComponent },
   { path: 'create-paths', component: CreatePathComponent },
   { path: 'get-paths', component: GetPathsComponent },
   { path: 'get-planning', component: GetPlanningComponent },
-  {path: 'get-geneticplanning', component:GetGeneticplanningComponent},
+  { path: 'get-geneticplanning', component: GetGeneticplanningComponent },
   { path: 'get-packagings', component: GetPackagingsComponent },
   { path: 'get-packaging', component: GetPackagingComponent },
   { path: 'create-packaging', component: CreatePackagingComponent },
-  { path: 'put-packaging', component: PutPackagingComponent },
+  { path: 'travels', component: GetTravelsComponent },
   //{ path: 'login/callback', component: OktaCallbackComponent },
 ];
 

@@ -1,30 +1,25 @@
-<div class="container">
-    <div class="output">
-        <li *ngIf="!error">
-            <span class="badge">{{packaging.id}}</span>
-            {{packaging.boxId}},{{packaging.positionX}},{{packaging.positionY}},{{packaging.positionZ}}
-        </li>
-        <li *ngIf="error">
-            <p>{{ content }}</p>
-        </li>
+<div *ngIf="packaging">
+<!--     <h2>Packaging {{packaging.id | uppercase}} Details</h2> -->
+    <div><label class="labelbig">id: {{packaging.id}}</label></div>
+    <div>
+      <label for="packaging-boxId">boxId: </label>
+      <input id="packaging-boxId" [(ngModel)]="packaging.boxId" placeholder="packaging boxId"/>
+      <br>
+      <br>
+      <label for="packaging-positionX">positionX: </label>
+      <input id="packaging-positionX" [(ngModel)]="packaging.positionX" placeholder="packaging positionX"/>
+      <br>
+      <br>
+      <label for="packaging-positionY">positionY: </label>
+      <input id="packaging-positionY" [(ngModel)]="packaging.positionY" placeholder="packaging positionY"/>
+      <br>
+      <br>
+      <label for="packaging-positionZ">positionZ: </label>
+      <input id="packaging-positionZ" [(ngModel)]="packaging.positionZ" placeholder="packaging positionZ"/>
+      <br>
+      <br>
     </div>
-
-    <div class="input-box">
-        <form #packagingForm="ngForm" (ngSubmit)="putPackaging(packagingForm.value)">
-            <label>Box Id: </label>
-            <input type="text" name="boxId" ngModel>
-            <p></p>
-            <label>Position X: </label>
-            <input type="text" name="positionX" ngModel>
-            <p></p>
-            <label>Position Y: </label>
-            <input type="text" name="positionY" ngModel>
-            <p></p>
-            <label>Position Z: </label>
-            <input type="text" name="positionZ" ngModel>
-            <p></p>
-            <h1></h1>
-            <input type="submit" value="Create Packaging">
-        </form>
-    </div>
-</div>
+    <button type="button" (click)="goBack()">go back</button>
+    <button type="button" (click)="Save()">Save</button>
+  </div>
+  

@@ -177,4 +177,31 @@ describe('ServiceAndComponent Warehouse', () => {
 
     expect(component.warehouses).toEqual(mockWarehouses);
   });
+  it('should trhrow error trying to retreive a list of all warehouses from the server', () => {
+    component.DisplayAll();
+
+    const req = httpMock.expectOne(environment.WAREHOUSE_URL_LOCAL + environment.WAREHOUSES_URL);
+    expect(req.request.method).toEqual('GET');
+    req.flush(new Error('Error geting disabled warehouses'));
+
+    expect(component.DisplayDisabled).toThrowError();
+  });
+  it('should trhrow error trying to retreive a list of enabled warehouses from the server', () => {
+    component.DisplayEnabled();
+
+    const req = httpMock.expectOne(environment.WAREHOUSE_URL_LOCAL + environment.WAREHOUSES_URL + "/Enabled");
+    expect(req.request.method).toEqual('GET');
+    req.flush(new Error('Error geting enabled warehouses'));
+
+    expect(component.DisplayDisabled).toThrowError();
+  });
+  it('should trhrow error trying to retreive a list of disabled warehouses from the server', () => {
+    component.DisplayDisabled();
+
+    const req = httpMock.expectOne(environment.WAREHOUSE_URL_LOCAL + environment.WAREHOUSES_URL + "/Disabled");
+    expect(req.request.method).toEqual('GET');
+    req.flush(new Error('Error geting disabled warehouses'));
+
+    expect(component.DisplayDisabled).toThrowError();
+  });
 });

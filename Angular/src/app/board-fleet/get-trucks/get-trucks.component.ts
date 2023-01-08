@@ -17,7 +17,7 @@ export class GetTrucksComponent implements OnInit {
   page: number=1;
   count:number =0;
   tablesize:number=10;
-  tablesizes:any =[5,10,15];
+  tablesizes:any =[5,10,15,20];
   constructor(private fleetService: FleetService,
               private location: Location) { }
 

@@ -302,6 +302,7 @@ entrega(4437, 20221205, 180, 12, 9, 11).
 entrega(4451, 20221205, 220, 6, 9, 12).
 entrega(4452, 20221205, 390, 13, 21, 26).
 entrega(4444, 20221205, 380, 2, 20, 25).
+entrega(6455, 20221205, 560, 7, 28, 38).
 %carateristicasCam(<nome_camiao>,<tara>,<capacidade_carga>,<carga_total_baterias>,<autonomia>,<t_recarr_bat_20a80>).
 carateristicasCam(eTruck01,7500,4300,80,100,60).
 carateristicasCam(eTruck02,7500,4300,80,100,60).
@@ -430,12 +431,19 @@ genetic_planning(Request):-
         format('Places: ~w',Resultado).
 
 
+
 :-dynamic geracoes/1.
 :-dynamic populacao/1.
 :-dynamic prob_cruzamento/1.
 :-dynamic prob_mutacao/1.
+:-dynamic date/1.
 :-dynamic lista_armazens/1.
-%:-dynamic armazens/1.
+:-dynamic delimitadores_list/1.
+:-dynamic valor/1.
+:-dynamic armazens/1.
+:-dynamic melhor/1.
+:-dynamic peso/1.
+
 
 get_lista_entregas_without_trucks([], []).
 get_lista_entregas_without_trucks([[_|T]|Tail], Result) :-
@@ -449,52 +457,73 @@ search_entrega([H|T], [Result|TailResult]) :-
     entrega(H, _, _, Result, _, _),
     search_entrega(T, TailResult).
 
-% parameteriza��o
-inicializa:-
-	%write('Numero de novas Geracoes(numero de melhorias): '),read(NG),
-	(retract(geracoes(_));true), asserta(geracoes(10)),
-	%write('Dimensao da Populacao(numero de viagens permutadas): '),read(DP),
-	(retract(populacao(_));true), asserta(populacao(10)),
-	%write('Probabilidade de Cruzamento (%):'), read(P1),
-	%PC is P1/100,
-	(retract(prob_cruzamento(_));true), asserta(prob_cruzamento(0.1)),
-%	write('Probabilidade de Mutacao (%):'), read(P2),
-%	PM is P2/100,
-	(retract(prob_mutacao(_));true), asserta(prob_mutacao(0.1)).
+get_delimitadores_list([], []).
+get_delimitadores_list([[H|T]|Tail], [[H,L]|Lengths]) :-
+    length(T, L),
+    get_delimitadores_list(Tail, Lengths).
 
-gera:-
-	write('Data das entregas: '),read(DATE),
-	(retract(date(_));true), asserta(date(DATE)),
-	%write('Id do camiao: '),read(IDCAMIAO),
-	%(retract(idcamiao(_));true), asserta(idcamiao(IDCAMIAO)),
-	inicializa,
-	atribuicao_lote(DATE,ListaViagens),
+get_travel_by_truck_id(Lists, ID, Result) :-
+	member([ID|Result], Lists).
+
+first_element(L, X) :-
+  nth0(0, L, X).
+  
+
+format_output(ListaDelimitadores, ListaArmazens, ListaViagens) :-
+    format_output(ListaDelimitadores, ListaArmazens, [], ReversedListaViagens),
+    reverse(ReversedListaViagens, ListaViagens).
+
+format_output([], _, Acc, Acc).
+format_output([[NomeCaminhao, NumeroViagens]|T], Armazens, Acc, ListaViagens) :-
+    format_output2(NomeCaminhao, NumeroViagens, Armazens, Viagens, RestoArmazens),
+    format_output(T, RestoArmazens, [[NomeCaminhao|Viagens]|Acc], ListaViagens).
+
+format_output2(NomeCaminhao, NumeroViagens, Armazens, Viagens, RestoArmazens) :-
+    length(Viagens, NumeroViagens),
+    append(Viagens, RestoArmazens, Armazens).
+
+gera(Date,Geracoes,Populacao,ProbCruzamento,ProbMutacao,Valor,Resultado):-
+	(retract(peso(_));true),(retract(melhor(_));true),
+	(retract(date(_));true), assert(date(Date)),
+	(retract(geracoes(_));true), assert(geracoes(Geracoes)),
+	(retract(populacao(_));true), assert(populacao(Populacao)),
+	PC is ProbCruzamento/100,
+	(retract(prob_cruzamento(_));true), assert(prob_cruzamento(PC)),
+	PM is ProbMutacao/100,
+	(retract(prob_mutacao(_));true), assert(prob_mutacao(PM)),
+	atribuicao_lote(Date,ListaViagens),
 	write('ListaViagens='),write(ListaViagens),nl,
+	get_delimitadores_list(ListaViagens,ListaDelimitadores),
+	(retract(delimitadores_list(_));true), assert(delimitadores_list(ListaDelimitadores)),
+	write('ListaDelimitadores='),write(ListaDelimitadores),nl,
 	get_lista_entregas_without_trucks(ListaViagens,ListaEntregas),
-	search_entrega(ListaEntregas,ListArmazens),
-	%get_armazem_list_by_truck_date(IDCAMIAO,DATE,ListArmazens),
-	%add_cidade_inicial_final(ListArmazens,Final),
-	write('ListArmazens='),write(ListArmazens),nl,
-	(retract(lista_armazens(_));true), asserta(lista_armazens(ListArmazens)),
+	write('ListaEntregas='),write(ListaEntregas),nl,
+	search_entrega(ListaEntregas,ListaArmazens),
+	length(ListaArmazens,NumArmazens),
+	%NumArmazens is NumArmazensA-1,
+	(retract(armazens(_));true), assert(armazens(NumArmazens)),
+	write('ListaArmazens='),write(ListaArmazens),nl,
+	(retract(lista_armazens(_));true), assert(lista_armazens(ListaArmazens)),
+	(retract(valor(_));true), assert(valor(Valor)),
 	gera_populacao(Pop),
-	%write('Passou do geraPop'),nl,
 	write('Pop='),write(Pop),nl,
-	avalia_populacao(Pop,PopAv,DATE,IDCAMIAO),
+	avalia_populacao(Pop,PopAv,Valor),
 	write('PopAv='),write(PopAv),nl,
 	ordena_populacao(PopAv,PopOrd),
+	first_element(PopOrd,ListMelhorCaminho),
+/* 	write('ListMelhorCaminho='),write(ListMelhorCaminho),nl,
+	get_last_element(ListMelhorCaminho,MelhorCaminho),nl, */
+	%write('MelhorCaminho='),write(MelhorCaminho),nl, 
 	geracoes(NG),
-	gera_geracao(0,NG,PopOrd,DATE,IDCAMIAO).
+	gera_geracao(0,NG,PopOrd,Valor,Resultado),!.
 
 gera_populacao(Pop):-
 	populacao(TamPop),
 	lista_armazens(ListaArmazens),
-	length(ListaArmazens,NumArmazens),
-	(retract(armazens(_));true), asserta(armazens(NumArmazens)),
-	write('NumArmazens_permutar='),write(NumArmazens),nl,
-	write('Lista_gera_pop='),write(ListaArmazens),nl,
+	armazens(NumArmazens),
 	gera_populacao(TamPop,ListaArmazens,NumArmazens,Pop).
 
-gera_populacao(0,_,_,[]):-!.
+gera_populacao(1,_,_,[]):-!.
 
 gera_populacao(TamPop,ListaArmazens,NumArmazens,[Ind|Resto]):-
 	TamPop1 is TamPop-1,
@@ -519,16 +548,15 @@ retira(N,[G1|Resto],G,[G1|Resto1]):-
 	N1 is N-1,
 	retira(N1,Resto,G,Resto1).
 
-add_cidade_inicial_final(List,Result):-
-	cidade_inicial(City),
-	append([City], List, TempList),
-    append(TempList, [City], Result).
-
-avalia_populacao([],[],_,_).
-avalia_populacao([Ind|Resto],[Ind*V|Resto1],Date,IdTruck):-
-	%add_cidade_inicial_final(Ind,Final),
-	tempo_byid(Ind,Date,IdTruck,V),
-	avalia_populacao(Resto,Resto1,Date,IdTruck).
+avalia_populacao([],[],_).
+avalia_populacao([Ind|Resto],[Ind*V|Resto1],Valor):-
+	date(Date),
+	tempo_byid(Ind,Date,eTruck01,V),
+	(V < Valor, assert(melhor(Ind)),assert(peso(V));true),
+	%write('V'),write(V),nl,
+	avalia_populacao(Resto,Resto1,Valor).
+avalia_populacao([_|Resto], Resto1, Valor):-
+	avalia_populacao(Resto, Resto1, Valor).
 
 ordena_populacao(PopAv,PopAvOrd):-
 	bsort(PopAv,PopAvOrd).
@@ -537,7 +565,6 @@ bsort([X],[X]):-!.
 bsort([X|Xs],Ys):-
 	bsort(Xs,Zs),
 	btroca([X|Zs],Ys).
-
 
 btroca([X],[X]):-!.
 
@@ -548,17 +575,35 @@ btroca([X*VX,Y*VY|L1],[Y*VY|L2]):-
 btroca([X|L1],[X|L2]):-btroca(L1,L2).
 
 
-gera_geracao(G,G,Pop,_,_):-!,
+first_element(L, X) :-
+  L = [X|_].
+
+extract_element([A|B]*_, [A|B]).
+
+find_ids(Armazems, Date, Ids) :-
+    is_list(Armazems),
+    findall(Id, (member(A, Armazems), entrega(Id, Date, _, A, _, _)), Ids).
+
+
+gera_geracao(G,G,Pop,_,Resultado):-!,
+	first_element(Pop,Ind),
+ 	extract_element(Ind,ListaArmazens),
+	date(Date),
+	find_ids(ListaArmazens,Date,ListaEntregas),
+	delimitadores_list(ListaDelimitadores),
+	format_output(ListaDelimitadores,ListaEntregas,Resultado),
+	nl,melhor(Melhor),peso(Peso),nl,
+	write('Melhor='),write(Melhor),write('Peso='),write(Peso),nl,
 	write('Gera��o '), write(G), write(':'), nl, write(Pop), nl.
 
-gera_geracao(N,G,Pop,DATE,IDCAMIAO):-
+gera_geracao(N,G,Pop,Valor,Resultado):-
 	write('Gera��o '), write(N), write(':'), nl, write(Pop), nl,
 	cruzamento(Pop,NPop1),
 	mutacao(NPop1,NPop),
-	avalia_populacao(NPop,NPopAv,DATE,IDCAMIAO),
+	avalia_populacao(NPop,NPopAv,Valor),
 	ordena_populacao(NPopAv,NPopOrd),
 	N1 is N+1,
-	gera_geracao(N1,G,NPopOrd,_,_).
+	gera_geracao(N1,G,NPopOrd,Valor,Resultado).
 
 gerar_pontos_cruzamento(P1,P2):-
 	gerar_pontos_cruzamento1(P1,P2).
@@ -573,6 +618,16 @@ gerar_pontos_cruzamento1(P1,P2):-
 gerar_pontos_cruzamento1(P1,P2):-
 	gerar_pontos_cruzamento1(P1,P2).
 
+cruzamento([Ind1*_,Ind2*_|Resto],[NInd1,NInd2,NInd3|Resto1],0):-
+	gerar_pontos_cruzamento(P1,P2),
+	prob_cruzamento(Pcruz),random(0.0,1.0,Pc),
+	((Pc =< Pcruz,!,
+        cruzar(Ind1,Ind2,P1,P2,NInd1),
+	  cruzar(Ind2,Ind1,P1,P2,NInd2))
+	;
+	(NInd1=Ind1,NInd2=Ind2)),
+	(NInd3=Ind1),
+	cruzamento(Resto,Resto1).
 
 cruzamento([],[]).
 cruzamento([Ind*_],[Ind]).
@@ -590,7 +645,6 @@ preencheh([],[]).
 
 preencheh([_|R1],[h|R2]):-
 	preencheh(R1,R2).
-
 
 sublista(L1,I1,I2,L):-
 	I1 < I2,!,
@@ -623,7 +677,6 @@ rr(N,[X|R],R2):-
 	append(R,[X],R1),
 	rr(N1,R1,R2).
 
-
 elimina([],_,[]):-!.
 
 elimina([X|R1],L,[X|R2]):-
@@ -641,7 +694,6 @@ insere([X|R],L,N,L2):-
 	N2 is N + 1,
 	insere(R,L1,N2,L2).
 
-
 insere1(X,1,L,[X|L]):-!.
 insere1(X,N,[Y|L],[Y|L1]):-
 	N1 is N-1,
@@ -656,7 +708,6 @@ cruzar(Ind1,Ind2,P1,P2,NInd11):-
 	P3 is P2 + 1,
 	insere(Sub2,Sub1,P3,NInd1),
 	eliminah(NInd1,NInd11).
-
 
 eliminah([],[]).
 

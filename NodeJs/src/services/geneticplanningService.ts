@@ -14,12 +14,12 @@ export default class GeneticPlanningService implements IGeneticPlanningService {
     //@Inject(config.repos.delivery.name) private deliveryRepo: IDeliveryRepo
   ) { }
 
-  public async getGeneticPlanning(date: string,geracoes:string,populacao:string,cruzamento:string,mutacao:string): Promise<Result<IGeneticPlanningDTO>> {
+  public async getGeneticPlanning(alggenetico:IGeneticPlanningDTO): Promise<Result<IGeneticPlanningDTO>> {
     try {
 
       //const deliveries = await this.deliveryRepo.findAll();
 
-      const geneticplanning = await this.geneticplanningRepo.findByDomainId(date,geracoes,populacao,cruzamento,mutacao);
+      const geneticplanning = await this.geneticplanningRepo.findByDomainId(alggenetico.date,alggenetico.geracoes,alggenetico.populacao,alggenetico.cruzamento,alggenetico.mutacao);
 
       if (geneticplanning === null) {
         return Result.fail<IGeneticPlanningDTO>("Planning not found");
