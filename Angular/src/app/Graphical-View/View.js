@@ -620,7 +620,7 @@ export default class View {
             var result2 = (-1 * b - Math.sqrt(Math.pow(b, 2) - (4 * a * c))) / (2 * a);
             return result;
         }
-
+        
 
     }
 
