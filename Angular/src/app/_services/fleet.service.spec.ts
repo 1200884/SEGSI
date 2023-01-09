@@ -123,7 +123,7 @@ describe('FleetService', () => {
       expect(httpClientSpy.delete).toHaveBeenCalledTimes(1);
     });
 
-    it('should handle error when deleting a truck with empty', () => {
+    it('should handle error when deleting a truck with empty id', () => {
       const error = new Error('Error deleting truck: ID is required');
   
       httpClientSpy.delete.and.returnValue(throwError(error));

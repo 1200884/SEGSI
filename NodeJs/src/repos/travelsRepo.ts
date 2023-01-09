@@ -39,7 +39,7 @@ export default class TravelsRepo implements ITravelsRepo {
     var request = require('request');
     var options = {
       'method': 'POST',
-      'url': 'http://localhost:5000/travels',
+      'url': 'http://localhost:8000/travels',
       'headers': {
         'Content-Type': 'application/json'
       },

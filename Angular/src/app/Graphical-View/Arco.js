@@ -3,7 +3,13 @@ import * as THREE from "three";
 export default class Arco extends THREE.Mesh{
     constructor(size, armazemOrigem, armazemDestino) {
         super();
-        let geometry = new THREE.BoxGeometry(size - 1.5, 0.25, 0.25);
+        this.armazemOrigem = armazemOrigem;
+        this.armazemDestino = armazemDestino;
+        this.rotationVertical = 0;
+        this.rotationHorizontal = 0;
+        this.size = size -1.5;
+        this.width = 0.25;
+        let geometry= new THREE.BoxGeometry(this.size,this.width,this.width);
         this.object = new THREE.Group();
         let material = new THREE.MeshStandardMaterial({ color: 0x808080 });
         let cube = new THREE.Mesh(geometry, material);
@@ -11,8 +17,10 @@ export default class Arco extends THREE.Mesh{
         var ud = cube.userData;
         ud.name = "Arco";
         this.object.castShadow = true;
+        this.object.receiveShadow = true;
         this.object.add(cube);
         this.initialize();
+
     }
 
     initialize() {

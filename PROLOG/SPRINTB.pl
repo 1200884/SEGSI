@@ -13,14 +13,14 @@
 :- json_object data(time:number, places:list).
 :- json_object list(viagens:list(list)).
 
-% Relaï¿½ï¿½o entre pedidos HTTP e predicados que os processam
+% Relação entre pedidos HTTP e predicados que os processam
 :- http_handler('/create_path',path_creator, []).
 :- http_handler('/planning', p_json, []).
 :- http_handler('/travels', get_travels, []).
 :- http_handler('/deliveries', get_deliveries, []).
 
 
-% Criaï¿½ï¿½o de servidor HTTP no porto 'Port'
+% Criação de servidor HTTP no porto 'Port'
 server() :-
         http_server(http_dispatch, [port(8000)]).
 
