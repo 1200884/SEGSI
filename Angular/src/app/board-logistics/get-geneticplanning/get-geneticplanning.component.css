@@ -1,15 +1,14 @@
-output {
-    margin: 0;
-    position: absolute;
-    top: 20%;
-    right: 50%;
-    -ms-transform: translateY(0%);
-    transform: translateY(-50%);
+.output {
+  float: right;
+  vertical-align: middle;
+  line-height: 20em;
 }
+
 label {
-    color: #eaeaea;
-    font-weight: bold;
-  }
+  display: block;
+  margin-bottom: 0.5em;
+}
+
   input-box {
     font-size: 1em;
     padding: .9rem;

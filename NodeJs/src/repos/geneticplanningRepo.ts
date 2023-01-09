@@ -20,7 +20,7 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
     throw new Error('Method not implemented.');
   }*/
 
-  public async findByDomainId(date: number,nrgeracoes:number,tamanhopop:number,probcruzamento:number,probmutacao:number): Promise<GeneticPlanning> {
+  public async findByDomainId(date: number,nrgeracoes:number,tamanhopop:number,probcruzamento:number,probmutacao:number): Promise<String> {
 
     var request = require('request');
     var options = {
@@ -49,12 +49,14 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
             console.log("response body is"+response.body);
             geneticplanning =response.body;
             resolve(geneticplanning);
+           return response.body;
           }
         })
       });
     }
  
     geneticplanning = getPromise(options);
+    console.log("geneticc planing is "+geneticplanning);
     return geneticplanning;
   }
 }
