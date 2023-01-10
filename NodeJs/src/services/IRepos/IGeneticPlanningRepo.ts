@@ -1,6 +1,6 @@
 import { Repo } from "../../core/infra/Repo";
-import { GeneticPlanning } from "../../domain/geneticplanning";
+import { GeneticPlanningAnswer } from "../../domain/geneticplanningAnswer";
 
-export default interface IGeneticPlanningRepo extends Repo<GeneticPlanning> {
+export default interface IGeneticPlanningRepo extends Repo<GeneticPlanningAnswer> {
   findByDomainId (date: number,geracoes:number,populacao:number,cruzamento:number,mutacao:number): Promise<String>;
 }

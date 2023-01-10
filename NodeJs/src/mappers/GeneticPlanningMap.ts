@@ -1,6 +1,8 @@
 import { Mapper } from "../core/infra/Mapper";
 
 import { GeneticPlanning } from "../domain/geneticplanning";
+import { GeneticPlanningAnswer } from "../domain/geneticplanningAnswer";
+import IGeneticPlanningAnswerDTO from "../dto/IGeneticPlanningAnswerDTO";
 import IGeneticPlanningDTO from "../dto/IGeneticPlanningDTO";
 
 export class GeneticPlanningMap extends Mapper<GeneticPlanning> {
@@ -24,11 +26,4 @@ export class GeneticPlanningMap extends Mapper<GeneticPlanning> {
 
     return geneticplanningOrError.isSuccess ? geneticplanningOrError.getValue() : null;
   }
-
-  /*public static toPersistence (geneticplanning: GeneticPlanning): any {
-    return {
-    
-      places: geneticplanning.places
-    }
-  }*/
 }

@@ -2,18 +2,20 @@ import { Service, Inject } from 'typedi';
 
 import IGeneticPlanningRepo from '../services/IRepos/IGeneticPlanningRepo';
 import { GeneticPlanning } from '../domain/geneticplanning';
-import { GeneticPlanningMap } from '../mappers/GeneticPlanningMap';
 import { callbackify } from 'util';
 import { reject } from 'lodash';
+import { GeneticPlanningAnswerMap } from '../mappers/GeneticPlanningAnswerMap';
+import { GeneticPlanningAnswer } from '../domain/geneticplanningAnswer';
+import { response } from 'express';
 
 @Service()
 export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
 
   constructor() { }
-    save(t: GeneticPlanning): Promise<GeneticPlanning> {
+    save(t: GeneticPlanningAnswer): Promise<GeneticPlanningAnswer> {
         throw new Error('Method not implemented.');
     }
-  exists(t: GeneticPlanning): Promise<boolean> {
+  exists(t: GeneticPlanningAnswer): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
  /* save(t: GeneticPlanning): Promise<GeneticPlanning> {
@@ -21,7 +23,7 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
   }*/
 
   public async findByDomainId(date: number,nrgeracoes:number,tamanhopop:number,probcruzamento:number,probmutacao:number): Promise<String> {
-
+    let planniing;
     var request = require('request');
     var options = {
       'method': 'POST',
@@ -30,11 +32,11 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "date": date,
-        "nrgeracoes":nrgeracoes,
-        "tamanhopop":tamanhopop,
-        "probcruzamento":probcruzamento,
-        "probmutacao":probmutacao,
+        "date": new Number(date),
+        "nrgeracoes": new Number(nrgeracoes),
+        "tamanhopop": new Number(tamanhopop),
+        "probcruzamento": new Number(probcruzamento),
+        "probmutacao": new Number(probmutacao)
       })
 
     };
@@ -46,15 +48,20 @@ export default class GeneticPlanningRepo implements IGeneticPlanningRepo {
           if (error) {
             reject(error);
           } else {
-            console.log("response body is"+response.body);
-            geneticplanning =response.body;
-            resolve(geneticplanning);
-           return response.body;
+            
+            console.log("response body is "+JSON.parse(response.body).places);
+            planniing=JSON.parse(response.body).places;
+
+            console.log("response body is not");
+            var planning = GeneticPlanningAnswerMap.toDomain(JSON.parse(response.body));
+            console.log("ai pai " + planning);
+            resolve(planniing);
           }
         })
       });
     }
- 
+    geneticplanning = getPromise(options);
+    return geneticplanning;
     geneticplanning = getPromise(options);
     console.log("geneticc planing is "+geneticplanning);
     return geneticplanning;
