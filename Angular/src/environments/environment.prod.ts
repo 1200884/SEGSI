@@ -6,6 +6,7 @@ export const environment = {
   WAREHOUSE_URL_LOCAL: "https://localhost:5001/api",
 
   TRUCKS_URL: '/trucks',
+  TRAVEL_URL: "/travels",
   PATHS_URL: '/paths',
   PLANNING_URL: '/planning',
   PACKAGING_URL: '/packagings',

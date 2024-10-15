@@ -293,7 +293,7 @@ cidade_inicial(5).
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
 %entrega(4439, 20221205, 200, 1, 8, 10).
 entrega(4438, 20221205, 150, 9, 7, 9).
-entrega(4445, 20221205, 100, 3, 5, 7).
+entrega(4445, 20221205, 1000, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
 entrega(4449, 20221205, 300, 11, 15, 20).
 entrega(4398, 20221205, 310, 17, 16, 20).
@@ -586,6 +586,12 @@ gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior)
 	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
 	gera_individuo(ListaEntregas,NumEntregas,Ind),
 	not(member(Ind,Resto)).
+
+
+
+
+
+
 
 gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
 	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).

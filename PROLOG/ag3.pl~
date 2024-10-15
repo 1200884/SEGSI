@@ -291,7 +291,7 @@ dadosCam_t_e_ta(eTruck01,17,16,67,25,0).
 cidade_inicial(5).
 
 %entrega(<idEntrega>,<data>,<massaEntrefa>,<armazemEntrega>,<tempoColoc>,<tempoRet>).
-entrega(4439, 20221205, 200, 1, 8, 10).
+%entrega(4439, 20221205, 200, 1, 8, 10).
 entrega(4438, 20221205, 150, 9, 7, 9).
 entrega(4445, 20221205, 100, 3, 5, 7).
 entrega(4443, 20221205, 120, 8, 6, 8).
@@ -586,6 +586,12 @@ gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,[Ind|Resto],PopAnterior)
 	gera_populacaodinamica(TamPop1,ListaEntregas,NumEntregas,Resto,PopAnterior),
 	gera_individuo(ListaEntregas,NumEntregas,Ind),
 	not(member(Ind,Resto)).
+
+
+
+
+
+
 
 gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior):-
 	gera_populacaodinamica(TamPop,ListaEntregas,NumEntregas,L,PopAnterior).
